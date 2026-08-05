@@ -1,0 +1,91 @@
+# Backpropagation
+
+::: {.callout-tip}
+## Slides
+[Slides](https://docs.google.com/presentation/d/18J7G3N0W3XRP6AX0RHrYfOgiPV_2NHDUMjjXkqI_knc/edit?slide=id.g33a6271ded3_0_0#slide=id.g33a6271ded3_0_0)
+::: 
+
+<img src="assets/Chap07/Train2BPIntuitions.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation forward pass. The goal is to compute the derivatives
+of the loss ℓ with respect to each of the weights (arrows) and biases (not shown).
+In other words, we want to know how a small change to each parameter will affect
+the loss. Each weight multiplies the hidden unit at its source and contributes the
+result to the hidden unit at its destination. Consequently, the effects of any small
+change to the weight will be scaled by the activation of the source hidden unit.
+For example, the blue weight is applied to the second hidden unit at layer 1; if
+the activation of this unit doubles, then the effect of a small change to the blue
+weight will double too. Hence, to compute the derivatives of the weights, we need
+to calculate and store the activations at the hidden layers. This is known as the
+forward pass since it involves running the network equations sequentially.
+
+<img src="assets/Chap07/Train2BPIntuitions2.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation backward pass. a) To compute how a change to
+a weight feeding into layer h3 (blue arrow) changes the loss, we need to know
+how the hidden unit in h3 changes the model output f and how f changes the
+loss (orange arrows). b) To compute how a small change to a weight feeding
+into h2 (blue arrow) changes the loss, we need to know (i) how the hidden unit
+in h2 changes h3, (ii) how h3 changes f , and (iii) how f changes the loss (orange
+arrows). c) Similarly, to compute how a small change to a weight feeding into h1
+(blue arrow) changes the loss, we need to know how h1 changes h2 and how
+these changes propagate through to the loss (orange arrows). The backward pass
+first computes derivatives at the end of the network and then works backward to
+exploit the inherent redundancy of these computations.
+
+<img src="assets/Chap07/Train2BP1.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation forward pass. We compute and store each of the
+intermediate variables in turn until we finally calculate the loss.
+
+<img src="assets/Chap07/Train2BP2.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation backward pass #1. We work backward from the end
+of the function computing the derivatives ∂ℓi/∂fk and ∂ℓi/∂hk of the loss with
+respect to the intermediate quantities. Each derivative is computed from the
+previous one by multiplying by terms of the form ∂fk/∂hk or ∂hk/∂fk−1.
+
+<img src="assets/Chap07/Train2BP3.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation backward pass #2. Finally, we compute the derivatives
+∂ℓi/∂βk and ∂ℓi/∂ωk. Each derivative is computed by multiplying the
+term ∂ℓi/∂fk by ∂fk/∂βk or ∂fk/∂ωk as appropriate.
+
+<center><img src="assets/Chap07/Train2ReLUDeriv.svg" style="filter: invert(1);" width="50%"></center>
+
+Derivative of rectified linear
+unit. The rectified linear unit (orange
+curve) returns zero when the input is
+less than zero and returns the input otherwise.
+Its derivative (cyan curve) returns
+zero when the input is less than
+zero (since the slope here is zero) and
+one when the input is greater than zero
+(since the slope here is one).
+
+
+<img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%">
+
+Weight initialization. Consider a deep network with 50 hidden layers
+and Dh = 100 hidden units per layer. The network has a 100-dimensional input x
+initialized from a standard normal distribution, a single fixed target y = 0, and
+a least squares loss function. The bias vectors βk are initialized to zero, and the
+weight matrices Ωk are initialized with a normal distribution with mean zero and
+five different variances σ2Ω
+∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden
+unit activations computed in forward pass as a function of the network layer. For
+He initialization (σ2Ω
+= 2/Dh = 0.02), the variance is stable. However, for larger
+values, it increases rapidly, and for smaller values, it decreases rapidly (note
+log scale). b) The variance of the gradients in the backward pass (solid lines)
+continues this trend; if we initialize with a value larger than 0.02, the magnitude
+of the gradients increases rapidly as we pass back through the network. If we
+initialize with a value smaller, then the magnitude decreases. These are known
+as the exploding gradient and vanishing gradient problems, respectively.
+
+
+
+<img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%">
+
+Computational graph for problem 7.12 and problem 7.13. Adapted
+from Domke (2010).

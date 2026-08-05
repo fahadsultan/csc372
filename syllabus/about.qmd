@@ -1,0 +1,28 @@
+
+# Course Description and Goals
+
+<!-- ## Pre-requisites
+
+* CSC-121 Introduction to Computer Programming
+
+## Fulfills requirements
+
+* Core course requirement for Data Analytics minor
+* Human Behavior (HB) General Education Requirement (GER) 
+* Pre-requisite for CSC-372: Machine Learning with Big Data -->
+
+## Course Description
+
+This course provides a comprehensive introduction to deep learning, progressing from linear regression to state-of-the-art architectures like transformers. Students will implement fully connected neural networks from scratch to build a solid foundation and explore convolutional neural networks (CNNs), transformers, and generative models. Hands-on experience with modern tools like PyTorch will be emphasized, enabling students to design, train, and evaluate deep learning models for tasks in computer vision, natural language processing, and beyond.
+
+## Course Goals
+
+* Understand the theoretical foundations of deep learning and implement feedforward neural networks from scratch.
+
+* Gain hands-on experience using PyTorch to design, train, and evaluate deep learning models.
+
+* Apply convolutional neural networks (CNNs), transformers, and diffusion models to real-world tasks.
+
+* Explore generative models like GANs and VAEs and their applications in AI.
+
+* Build and optimize deep learning solutions for domains such as computer vision and natural language processing.

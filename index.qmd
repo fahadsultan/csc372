@@ -1,0 +1,40 @@
+---
+title: "CSC-372: Machine Learning with Big Data"
+toc: true
+---
+
+Hi! Welcome to the CSC-372 Machine Learning with Big Data course website 👋🏾
+
+I am excited to talk math 🔢, programming 💻 and all-things data 📊 in this course with you!
+
+From the navigation bar on the top ☝🏾 and sidebar on the left 👈🏾, you should be able to navigate to any topic relevant to the course. If that does not help, there should also be a search icon 🔍 in the top left corner ↗️
+
+👇🏾 Below, you can find important links and important announcements.
+
+<!-- ::: {.callout-caution}
+# Final Poster
+The poster template can be found [here](https://docs.google.com/presentation/d/12WyL8m-YKPqiJ7r9GkSo76Du0YdzAppPeT3xjPy1yj0/edit#slide=id.g279418aeb01_2_75)
+
+Final Posters due by Thursday, Dec 5th, 11:59 PM.
+::: 
+
+::: {.callout-caution}
+# Poster Presentation
+The poster presentation for the project is scheduled for Monday, Dec 9th at 2:30 PM. 
+:::
+
+
+::: {.callout-caution}
+# Final Exam
+Final Exam is scheduled for Dec 17th (Tuesday) from in Patrick Lecture Hall from 8:30 AM - 11:00 AM. 
+:::  -->
+
+<!-- ::: {.callout-caution}
+# Programming Assignment 7
+Please note that the [Programming Assignment 7](https://colab.research.google.com/drive/1oOTyWbIVeAfiAR0rCfIgUt6BAV3Tcor7?usp=sharing) is due before next lab on Nov 11th (Monday) at 2:30 PM.
+:::  -->
+
+::: {.callout-tip}
+## Go over the syllabus
+Please go over the [syllabus](/syllabus/about.html) to familiarize yourself with the course policies, grading scheme and other important information.
+::: 

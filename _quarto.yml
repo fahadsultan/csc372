@@ -1,0 +1,79 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  favicon: favicon.png
+  navbar:
+    logo: logo.png
+    background: dark
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      # - text: "Calendar"
+      #   href: calendar.qmd
+      - sidebar:syllabus
+      # - text: "Project"
+      #   href: project/project.qmd
+      # - text: "Datasets"
+      #   href: project/data.qmd
+      - text: "Moodle Page"
+        href: https://courses.furman.edu/course/view.php?id=20763
+      - text: "Office Hours"
+        href: syllabus/appointment.qmd
+      - text: "Set an Appointment"
+        href: https://calendly.com/ssultan-dpq/
+  sidebar:
+    - id: syllabus
+      title: "Syllabus"
+      background: light
+      collapse-level: 2
+      contents:
+        - syllabus/about.qmd
+        - syllabus/grading.qmd
+        - syllabus/academic_success.md
+        - syllabus/textbook.md
+        - syllabus/integrity.md
+        - syllabus/mental_health.md
+        - syllabus/accomodations.md
+        - syllabus/title_9.md
+    - id: content
+      background: "#2d2d2d"
+      style: "floating"
+      search: true
+      contents:
+        - text: "Home"
+          href: index.qmd
+        - intro.qmd
+        - types.qmd
+        - section: models.qmd
+          contents:
+          - linearregression.qmd
+          - snn.qmd
+          - dnn.qmd
+        - loss.qmd
+        - section: fitting.qmd
+          contents:
+          - gradientdescent.qmd
+          - backprop.qmd
+        - performance.qmd
+        - transformers.qmd
+        
+
+format:
+  html:
+    theme:
+      - darkly
+      - custom.scss
+    css: style.css
+    toc: true
+    # monobackgroundcolor: "#CCCCFF"
+    monobackgroundcolor: "black"
+    highlight-style: monokai #atom-one, github, dracula, monokai
+    anchor-sections: true
+    smooth-scroll: true
+    # number-sections: true
+
+
+
