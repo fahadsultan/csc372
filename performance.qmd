@@ -165,15 +165,53 @@ small. Although the most likely point is at the mean of the distribution, the
 typical samples are found in a relatively narrow shell.
 
 
+\begin{eqnarray}
+  \mu[x] = \mathbb{E}_{y}[y[x]] = \int y[x] Pr(y|x) dy,
+ \end{eqnarray}
 
+\begin{eqnarray}
+  L[x] &=& \bigl(\mbox{f}[x,\boldsymbol\phi]-y[x]\bigr)^2 \\
+  &=& \Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)+\bigl(\mu[x]-y[x]\bigr)\Bigr)^2\nonumber \\
+  &=& \bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2 + 2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]-y[x]\bigr) + \bigl(\mu[x]-y[x]\bigr)^2,\nonumber
+ \end{eqnarray}
 
+\begin{eqnarray}\label{eq:perf_biasvariance_plus_noise}
+  \mathbb{E}_{y}\bigl[L[x]\bigr]
+  &=&\mathbb{E}_{y}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\bigl(\mu[x]\!-\!y[x]\bigr)+\bigl(\mu[x]\!-\!y[x]\bigr)^2\Bigr]\nonumber \\
+  &=& \bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]\!-\!\mathbb{E}_y\left[y[x]\right]\bigr)+\mathbb{E}_y\left[(\mu[x]\!-\!y[x])^2\right]\nonumber\\ 
+  &=&\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\cdot 0 +\mathbb{E}_y\left[\bigl(\mu[x]\!-\!y[x]\bigr)^2\right]\nonumber \\
+  &=&\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2+\sigma^{2},
+ \end{eqnarray}
 
+\begin{eqnarray}
+  \mbox{f}_{\mu}[x] = \mathbb{E}_{\mathcal{D}}\Bigl[ \mbox{f}\bigl[x,\boldsymbol\phi[\mathcal{D}]\bigr] \Bigr].
+ \end{eqnarray}
 
+\begin{eqnarray}
+  \bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\!\mu[x]\bigr)^2 &&\\
+  &&\hspace{-2.5cm}=\Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)+\bigl( \mbox{f}_{\mu}[x]-\mu[x]\bigr)\Bigr)^2 \nonumber \\ 
+  &&\hspace{-2.5cm}=\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)+\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2.\nonumber
+ \end{eqnarray}
 
+\begin{eqnarray}\label{eq:perf_bv2}
+ \mathbb{E}_{\mathcal{D}}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]-\mu[x]\bigr)^2\Bigr] = \mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]+\bigl(\mbox{f}_{\mu}[x]-\mu[x]\bigr)^2,
+ \end{eqnarray}
 
+\begin{eqnarray}\label{eq:perf_bias_variance_final}
+ \mathbb{E}_{\mathcal{D}}\Bigl[\mathbb{E}_{y}[L[x]]\Bigr] = 
+ \begingroup\color{red}
+  \underbrace{\color{black}\mystrut{2.0ex}\mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]}_{\mbox{variance}} 
+  \endgroup
+ +
+ \begingroup\color{red}
+  \underbrace{\color{black}\mystrut{2.0ex}\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2}_{\mbox{bias}} 
+  \endgroup
+ +
+ \begingroup\color{red}
+  \underbrace{\color{black}\mystrut{2.0ex}\sigma^2.}_{\mbox{noise}} 
+  \endgroup
+ \end{eqnarray}
 
-
-
-
-
-
+\begin{eqnarray}
+  \mbox{Vol}[r] = \frac{r^{D}\pi^{D/2}}{\Gamma[D/2+1]},
+ \end{eqnarray}

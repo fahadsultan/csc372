@@ -38,6 +38,7 @@ website:
         - syllabus/mental_health.md
         - syllabus/accomodations.md
         - syllabus/title_9.md
+        - syllabus/aipolicy.qmd
     - id: content
       background: "#2d2d2d"
       style: "floating"
@@ -46,17 +47,16 @@ website:
         - text: "Home"
           href: index.qmd
         - intro.qmd
-        - types.qmd
-        - section: models.qmd
-          contents:
-          - linearregression.qmd
-          - snn.qmd
-          - dnn.qmd
+        # - section: models.qmd
+        #   contents:
+        - linearregression.md
+        - snn.md
+        - dnn.md 
         - loss.qmd
-        - section: fitting.qmd
-          contents:
-          - gradientdescent.qmd
-          - backprop.qmd
+        # - section: fitting.qmd
+        #   contents:
+        - gradientdescent.qmd
+        - backprop.qmd
         - performance.qmd
         - transformers.qmd
         

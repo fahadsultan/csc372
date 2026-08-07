@@ -26,3 +26,21 @@ This course provides a comprehensive introduction to deep learning, progressing 
 * Explore generative models like GANs and VAEs and their applications in AI.
 
 * Build and optimize deep learning solutions for domains such as computer vision and natural language processing.
+
+
+## Expect lots of Programming and lots of Math! 
+
+<img src="https://i.guim.co.uk/img/media/8a840f693b91fe67d42555b24c6334e9298f4680/251_1497_2178_1306/master/2178.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=eeb2238745a593ec04237613a5798b3b" width="35%" align="right" style="border: 1px solid white;">
+
+_"But wait, I am not a Math Person!"_ you say!  
+
+There is no such thing as a "_Math Person_". I do recognize, however, that **Math Anxiety** is a real thing and is very common. It is a feeling of fear based on a belief that one is not good at math or that math is inherently difficult. 
+
+Please use this course as an opportunity to overcome your Math anxiety!
+
+In this course, the code you write will be mostly math. Most modern _"AI"_ is just that: math, in code.
+
+This presents a unique opportunity for you to overcome your Math anxiety. You will be able to see the math in action, be able to visualize the results and have a conversation with it. 
+
+Trust me, there is a tremendous amount of beauty and joy to be found in mathematics. And if beauty and joy aren't really your thing, then let me also assure you there is a lot of money to be made these days by being good at coding math. Either way, the rewards are well worth the effort! 
+

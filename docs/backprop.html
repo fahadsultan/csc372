@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -131,6 +160,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./syllabus/title_9.html">
  <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -156,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fitting.html">Fitting Models</a></li><li class="breadcrumb-item"><a href="./backprop.html">Backpropagation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./backprop.html">Backpropagation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -190,68 +223,40 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Types of Learning</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dnn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Neural Networks</span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./loss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loss Functions</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./fitting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fitting Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gradient Descent</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Backpropagation</span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./performance.html" class="sidebar-item-text sidebar-link">
@@ -317,6 +322,204 @@ Slides
 <p>Weight initialization. Consider a deep network with 50 hidden layers and Dh = 100 hidden units per layer. The network has a 100-dimensional input x initialized from a standard normal distribution, a single fixed target y = 0, and a least squares loss function. The bias vectors βk are initialized to zero, and the weight matrices Ωk are initialized with a normal distribution with mean zero and five different variances σ2Ω ∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (σ2Ω = 2/Dh = 0.02), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale). b) The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the exploding gradient and vanishing gradient problems, respectively.</p>
 <p><img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%"></p>
 <p>Computational graph for problem 7.12 and problem 7.13. Adapted from Domke (2010).</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
+  \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}] \nonumber\\
+  \mathbf{h}_{3} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}] \nonumber\\
+  \mbox{\bf f}[\mathbf{x},\boldsymbol\phi] &amp;=&amp; \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  L[\boldsymbol\phi]= \sum_{i=1}^{I} \ell_{i}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_sgd}
+  \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \frac{\partial \ell_{i}}{\partial\boldsymbol\beta_{k}} \quad\quad \mbox{and} \quad\quad \frac{\partial \ell_{i}}{\partial\boldsymbol\Omega_{k}},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mbox{f}[x,\boldsymbol\phi] = \beta_3+\omega_3\cdot\cos\Bigl[\beta_2+\omega_2\cdot\exp\bigl[\beta_1+\omega_1\cdot\sin[\beta_0+\omega_0\cdot x]\bigr]\Bigr],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\ell_i = (\mbox{f}[x_i,\boldsymbol\phi]-y_i)^2,
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_i}{\partial \beta_{0}}, \quad \frac{\partial \ell_i}{\partial \omega_0}, \quad \frac{\partial \ell_i}{\partial \beta_{1}}, \quad \frac{\partial \ell_i}{\partial \omega_1}, \quad
+\frac{\partial \ell_i}{\partial \beta_{2}}, \quad \frac{\partial \ell_i}{\partial \omega_{2}}, \quad \frac{\partial \ell_i}{\partial \beta_{3}}, \quad\mbox{and} \quad \frac{\partial \ell_i}{\partial \omega_{3}}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_complicated_deriv}
+\frac{\partial \ell_i}{\partial \omega_{0}} &amp;=&amp; -2 \left( \beta_3+\omega_3\cdot\cos\Bigl[\beta_2+\omega_2\cdot\exp\bigl[\beta_1+\omega_1\cdot\sin[\beta_0+\omega_0\cdot x_i]\bigr]\Bigr]-y_i\right)\nonumber \\
+&amp;&amp;\hspace{0.5cm}\cdot \omega_1\omega_2\omega_3\cdot x_i\cdot\cos[\beta_0+\omega_0 \cdot x_i]\cdot\exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\nonumber\\
+&amp;&amp; \hspace{1cm}\cdot \sin\biggl[\beta_2+\omega_2\cdot \exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\biggr].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+f_{0} &amp;=&amp; \beta_{0} + \omega_{0}\cdot x_i\nonumber\\
+h_{1} &amp;=&amp; \sin[f_{0}]\nonumber\\
+f_{1} &amp;=&amp; \beta_{1} + \omega_{1}\cdot h_{1}\nonumber\\
+h_{2} &amp;=&amp; \exp[f_{1}]\nonumber\\
+f_{2} &amp;=&amp; \beta_{2} + \omega_{2} \cdot h_{2}\nonumber\\
+h_{3} &amp;=&amp; \cos[f_{2}]\nonumber\\
+f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
+\ell_{i} &amp;=&amp; (f_{3}-y_{i})^2.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_i}{\partial f_{3}}, \quad \frac{\partial \ell_i}{\partial h_3}, \quad \frac{\partial \ell_i}{\partial f_2}, \quad
+\frac{\partial \ell_i}{\partial h_2}, \quad \frac{\partial \ell_i}{\partial f_1}, \quad \frac{\partial \ell_i}{\partial h_1}, \quad\mbox{and} \quad \frac{\partial \ell_i}{\partial f_0}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_i}{\partial f_{3}} = 2(f_3-y_i).
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_i}{\partial h_{3}} =\frac{\partial f_{3}}{\partial h_{3}} \frac{\partial \ell_i}{\partial f_{3}} .
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_i}{\partial f_{2}} &amp;=&amp; \frac{\partial h_{3}}{\partial f_{2}}\left(
+\frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right)
+\nonumber \\
+\frac{\partial \ell_i}{\partial h_{2}} &amp;=&amp; \frac{\partial f_{2}}{\partial h_{2}}\left(\frac{\partial h_{3}}{\partial f_{2}}\frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}}\right)\nonumber \\
+\frac{\partial \ell_i}{\partial f_{1}} &amp;=&amp; \frac{\partial h_{2}}{\partial f_{1}}\left( \frac{\partial f_{2}}{\partial h_{2}}\frac{\partial h_{3}}{\partial f_{2}}\frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right)\nonumber \\
+\frac{\partial \ell_i}{\partial h_{1}} &amp;=&amp; \frac{\partial f_{1}}{\partial h_{1}}\left(\frac{\partial h_{2}}{\partial f_{1}} \frac{\partial f_{2}}{\partial h_{2}}\frac{\partial h_{3}}{\partial f_{2}}\frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right)\nonumber \\
+\frac{\partial \ell_i}{\partial f_{0}} &amp;=&amp; \frac{\partial h_{1}}{\partial f_{0}}\left(\frac{\partial f_{1}}{\partial h_{1}}\frac{\partial h_{2}}{\partial f_{1}} \frac{\partial f_{2}}{\partial h_{2}}\frac{\partial h_{3}}{\partial f_{2}}\frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right).\label{eq:train2_simple_chain}
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_i}{\partial \beta_{k}} &amp;=&amp; \frac{\partial f_{k}}{\partial \beta_{k}}\frac{\partial \ell_i}{\partial f_{k}}\nonumber \\
+\frac{\partial \ell_i}{\partial \omega_{k}} &amp;=&amp; \frac{\partial f_{k}}{\partial \omega_{k}}\frac{\partial \ell_i}{\partial f_{k}}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial f_{k}}{\partial \beta_{k}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{k}}{\partial \omega_{k}} &amp;=&amp; h_{k}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial f_{0}}{\partial \beta_{0}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{0}}{\partial \omega_{0}} &amp;=&amp; x_{i}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{f}_{0} &amp;=&amp; \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
+  \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\mathbf{f}_{0}]\nonumber \\
+  \mathbf{f}_{1} &amp;=&amp; \boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}\nonumber \\
+  \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\mathbf{f}_{1}]\nonumber \\
+  \mathbf{f}_{2} &amp;=&amp; \boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}\nonumber \\
+  \mathbf{h}_{3} &amp;=&amp; \mathbf{a}[\mathbf{f}_{2}]\nonumber \\
+  \mathbf{f}_{3}&amp;=&amp; \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\nonumber \\
+  \ell_{i} &amp;=&amp; \mbox{l}[\mathbf{f}_{3},y_{i}],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_backward1}
+\frac{\partial \ell_{i}}{\partial \mathbf{f}_{2}}=\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_backward2}
+\frac{\partial \ell_{i}}{\partial \mathbf{f}_{1}}&amp;=&amp; \frac{\partial \mathbf{h}_{2}}{\partial \mathbf{f}_{1}}\frac{\partial \mathbf{f}_{2}}{\partial \mathbf{h}_{2}}
+\left(\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}\right)  \\
+\frac{\partial \ell_{i}}{\partial \mathbf{f}_{0}}&amp;=&amp;\frac{\partial \mathbf{h}_{1}}{\partial \mathbf{f}_{0}}\frac{\partial \mathbf{f}_{1}}{\partial \mathbf{h}_{1}}\left(\frac{\partial \mathbf{h}_{2}}{\partial \mathbf{f}_{1}}\frac{\partial \mathbf{f}_{2}}{\partial \mathbf{h}_{2}}
+\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}\right).\label{eq:train2_backward2a}
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} = \frac{\partial}{\partial \mathbf{h}_{3}}\left(\boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\right) = \boldsymbol\Omega_{3}^{T}.
+  \end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &amp;=&amp; \frac{\partial \mathbf{f}_{k}}{\partial \boldsymbol\beta_k} \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber\\
+&amp;=&amp; \frac{\partial}{\partial \boldsymbol\beta_k}\left(\boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\right) \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber \\
+&amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_k} &amp;=&amp; \frac{\partial \mathbf{f}_{k}}{\partial \boldsymbol\Omega_k} \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber\\
+&amp;=&amp; \frac{\partial}{\partial \boldsymbol\Omega_k}\left(\boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\right) \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber \\
+&amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}}\mathbf{h}_k^{T}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{f}_{0} &amp;=&amp; \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
+  \mathbf{h}_{k} &amp;=&amp; \mathbf{a}[\mathbf{f}_{k-1}]\hspace{2.76cm} k\in\{1,2,\ldots, K\}\nonumber \\
+  \mathbf{f}_{k} &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}.\hspace{2cm} k\in\{1,2,\ldots, K\}
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_bp_backward_summary}
+\frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_k} \hspace{4.1cm} k\in\{K,K-1,\ldots, 1\}\nonumber\\
+\frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_k} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_k}\mathbf{h}_{k}^{T}\hspace{3.65cm} k\in\{K,K-1,\ldots, 1\}\nonumber\\
+\frac{\partial \ell_{i}}{\partial \mathbf{f}_{k-1}} &amp;=&amp; \mathbb{I}[\mathbf{f}_{k-1}&gt;0]\odot \left(\boldsymbol\Omega_{k}^{T}\frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}}\right),\hspace{0.82cm} k\in\{K,K-1,\ldots, 1\}
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \ell_{i}}{\partial \boldsymbol\beta_0} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_0} \nonumber\\
+\frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_0} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_0}\mathbf{x}_{i}^{T}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mathbf{f}_{k} &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\nonumber\\
+&amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\textbf{a}[\mathbf{f}_{k-1}],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{h} &amp;=&amp; \mbox{\bf a}[\mathbf{f}],\nonumber \\
+  \mathbf{f}' &amp;=&amp; \boldsymbol\beta +\boldsymbol\Omega\mathbf{h}
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbb{E}[f'_{i}] &amp;=&amp; \mathbb{E}\left[\beta_{i} + \sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right]\nonumber \\
+  &amp;=&amp; \mathbb{E}\left[\beta_{i}\right] +\sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}h_{j}\right] \nonumber\\
+  &amp;=&amp; \mathbb{E}\left[\beta_{i}\right] +\sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}\right]\mathbb{E}\left[h_{j}\right] \nonumber\\
+  &amp;=&amp; 0 + \sum_{j=1}^{D_h} 0\cdot\mathbb{E}\left[h_{j}\right] = 0,
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \sigma^{2}_{f'_i} &amp;=&amp; \mathbb{E}[f_{i}^{\prime 2}]-\mathbb{E}[f'_{i}]^{2} \nonumber \\
+  &amp;=&amp; \mathbb{E}\left[\left(\beta_{i}+\sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right)^2\right]-0\nonumber\\
+  &amp;=&amp; \mathbb{E}\left[\left(\sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right)^2\right]\nonumber\\
+  &amp;=&amp; \sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}^2\right]\mathbb{E}\left[h_{j}^2\right]\nonumber \\
+  &amp;=&amp;\sum_{j=1}^{D_h} \sigma_\Omega^2 \mathbb{E}\left[h_{j}^2\right] = \sigma_\Omega^2 \sum_{j=1}^{D_h} \mathbb{E}\left[h_{j}^2\right],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\sigma^{2}_{f'_{i}} = \sigma_\Omega^2 \sum_{j=1}^{D_h} \frac{\sigma_{f}^2}{2} = \frac{1}{2}D_{h} \sigma_\Omega^2 \sigma_{f}^2.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_forward}
+\sigma_\Omega^2 = \frac{2}{D_h},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_back}
+\sigma_\Omega^2 = \frac{2}{D_{h'}},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\sigma_\Omega^2 = \frac{4}{D_{h}+D_{h'}}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+y &amp;=&amp; \phi_{0}+\phi_{1}\mbox{a}\Bigl[\psi_{01} + \psi_{11}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{21}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr]\nonumber \\
+&amp;&amp;\hspace{0.55cm}+\phi_{2}\mbox{a}\Bigl[\psi_{02} + \psi_{12}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \ell_i = (y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^2.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\ell_{i} = -(1-y_{i})\log\Bigl[1-\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr] - y_{i}\log\Bigl[\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_logistic}
+\mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\frac{\partial \mathbf{z}}{\partial \mathbf{h}} = \boldsymbol\Omega^{T},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mbox{Heaviside}[z] = \begin{cases} 0 &amp; \quad z &lt;0 \\ 1 &amp; \quad z\geq 0\end{cases},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mbox{rect}[z] = \begin{cases} 0 &amp; \quad z &lt; 0 \\ 1 &amp; \quad 0 \leq z\leq 1 \\ 0 &amp; \quad z &gt; 1\end{cases}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+     \frac{\partial \ell}{\partial \boldsymbol\Omega} = \frac{\partial \ell}{\partial \mathbf{f}}\mathbf{h}^{T}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_prob_leaky_relu}
+\mbox{a}[z] = \mbox{ReLU}[z] = \begin{cases} \alpha \cdot z &amp; \quad z &lt;0 \\ z &amp; \quad z\geq 0\end{cases},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:prob_comp_graph}\index{reverse-mode differentiation}\index{differentiation!reverse mode}\index{backpropagation!on acyclic graph}
+  y = \exp\left[\exp[x]+\exp[x]^2\right]+ \sin[\exp[x]+\exp[x]^2].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+f_{1} &amp;=&amp; \exp[x]\nonumber \\
+f_{2} &amp;=&amp; f_{1}^2\nonumber \\
+f_{3} &amp;=&amp; f_{1}+f_{2}\nonumber \\
+f_{4} &amp;=&amp; \exp[f_{3}]\nonumber \\
+f_{5} &amp;=&amp; \sin[f_{3}]\nonumber \\
+y &amp;=&amp; f_{4}+f_{5}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \frac{\partial y}{\partial f_{5}}, \frac{\partial y}{\partial f_{4}}, \frac{\partial y}{\partial f_{3}},
+  \frac{\partial y}{\partial f_{2}}, \frac{\partial y}{\partial f_{1}} \mbox{ and } \frac{\partial y}{\partial x},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \frac{\partial f_{1}}{\partial x}, \frac{\partial f_{2}}{\partial x}, \frac{\partial f_{3}}{\partial x}, \frac{\partial f_4}{\partial x},
+  \frac{\partial f_{5}}{\partial x}, \mbox{ and } \frac{\partial y}{\partial x},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+b = \mbox{ReLU}[a] = \begin{cases} 0 &amp; \quad a &lt;0 \\ a&amp; \quad a\geq 0\end{cases},
+\end{eqnarray}\]</span></p>
 
 
 </section>

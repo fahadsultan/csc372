@@ -1,4 +1,7 @@
-# Transformers
+---
+title: Transformers
+
+---
 
 ::: {.callout-tip}
 ## Slides
@@ -250,3 +253,103 @@ RNNs sometimes gradually “forget” about tokens that are further back in time
 
 <img src="assets/Chap12/TransformerSWIN_compressed.svg" style="filter: invert(1);" width="100%">
 
+\begin{eqnarray}
+  \mbox{{\bf f}}[\mathbf{x}] = \mbox{{\bf ReLU}}[\boldsymbol\beta +\boldsymbol\Omega\mathbf{x}],
+ \end{eqnarray}
+
+
+
+\begin{eqnarray}\label{eq:transformer_values}
+  \mathbf{v}_{m} = \boldsymbol\beta_{v}+\boldsymbol\Omega_{v}\mathbf{x}_{m},
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_sattention1}
+  \mbox{{\bf sa}}_{n}[\mathbf{x}_{1},\ldots, \mathbf{x}_{N}] = \sum_{m=1}^{N}a[\mathbf{x}_{m}, \mathbf{x}_{n}]\mathbf{v}_{m}.
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mathbf{q}_{n} &=& \boldsymbol\beta_{q}+\boldsymbol\Omega_{q}\mathbf{x}_{n}\nonumber \\
+  \mathbf{k}_{m} &=& \boldsymbol\beta_{k}+\boldsymbol\Omega_{k}\mathbf{x}_{m},
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_sattention2}
+  a[\mathbf{x}_{m},\mathbf{x}_{n}] &=& \mbox{softmax}_{m}\left[\mathbf{k}_{\bullet}^{T}\mathbf{q}_{n}\right]\nonumber\\
+  &=& \frac{\exp\left[\mathbf{k}_{m}^{T}\mathbf{q}_{n}\right]}{\sum_{m'=1}^{N}\exp\left[\mathbf{k}_{m'}^{T}\mathbf{q}_{n} \right]},
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \mathbf{V}[\mathbf{X}] &=& \boldsymbol\beta_{v}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{v}}\mathbf{X}\nonumber \\
+ \mathbf{Q}[\mathbf{X}] &=& \boldsymbol\beta_{q}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{q}}\mathbf{X}\nonumber \\
+ \mathbf{K}[\mathbf{X}] &=& \boldsymbol\beta_{k}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{k}}\mathbf{X},
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}[\mathbf{X}]\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}[\mathbf{X}]^{T}\mathbf{Q}[\mathbf{X}]\Bigr],
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_sa_matrix}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}^{T}\mathbf{Q}\Bigr].
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right].
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \mathbf{V}_h &=& \boldsymbol\beta_{vh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{vh}}\mathbf{X}\nonumber \\
+ \mathbf{Q}_h &=& \boldsymbol\beta_{qh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{qh}}\mathbf{X}\nonumber \\
+ \mathbf{K}_h &=& \boldsymbol\beta_{kh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{kh}}\mathbf{X}.
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mbox{{\bf Sa}}_{h}[\mathbf{X}] =\mathbf{V}_h\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}_h^{T}\mathbf{Q}_h}{\sqrt{D}_{q}}\right],
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mbox{{\bf MhSa}}[\mathbf{X}] = \boldsymbol\Omega_{c}\Bigl[\mbox{{\bf Sa}}_{1}[\mathbf{X}]^T,\mbox{{\bf Sa}}_{2}[\mathbf{X}]^T,\ldots,\mbox{{\bf Sa}}_{H}[\mathbf{X}]^T \Bigr]^T.
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mathbf{X} &\leftarrow& \mathbf{X} + \mbox{\bf{MhSa}}[\mathbf{X}] \nonumber \\
+  \mathbf{X} &\leftarrow& \mbox{\bf{LayerNorm}}[\mathbf{X}] \hspace{3cm}\nonumber\\
+  \mathbf{x}_{n} &\leftarrow& \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
+  \mathbf{X} &\leftarrow& \mbox{\bf{LayerNorm}}[\mathbf{X}],
+ \end{eqnarray}
+
+\begin{eqnarray}
+  Pr(\mbox{\textcolor{red}{It takes great courage to let yourself appear weak}}) &=&\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{takes}}|\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{great}}|\mbox{\textcolor{red}{It takes}})\times Pr(\mbox{\textcolor{red}{courage}}|\mbox{\textcolor{red}{It takes great}})\times\nonumber \\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{to}}|\mbox{\textcolor{red}{It takes great courage}})\times Pr(\mbox{\textcolor{red}{let}}|\mbox{\textcolor{red}{It takes great courage to}})\times\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{yourself}}|\mbox{\textcolor{red}{It takes great courage to let}})\times\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{appear}}|\mbox{\textcolor{red}{It takes great courage to let yourself}})\times\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{weak}}|\mbox{\textcolor{red}{It takes great courage to let yourself appear}}).
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_autoregressive}
+  Pr(t_{1},t_{2},\ldots, t_{N}) = Pr(t_{1})\prod_{n=2}^{N}Pr(t_{n}|t_{1},\ldots, t_{n-1}).
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_position_quad}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right],
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \mathbf{V} &=& \boldsymbol\beta_{v}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{v}}\mathbf{X}\nonumber \\
+ \mathbf{Q} &=& \boldsymbol\beta_{q}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{q}}(\mathbf{X}+\boldsymbol\Pi)\nonumber \\
+ \mathbf{K} &=& \boldsymbol\beta_{k}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{k}}(\mathbf{X}+\boldsymbol\Pi).
+ \end{eqnarray}
+
+
+
+\begin{eqnarray}
+     \mbox{\bf Sa}[\mathbf{X}\mathbf{P}] = \mbox{\bf Sa}[\mathbf{X}]\mathbf{P}.
+ \end{eqnarray}
+
+\begin{eqnarray}
+ y_{i} = \mbox{softmax}_{i}[\mathbf{z}] = \frac{\exp[z_{i}]}{\sum_{j=1}^{5}\exp[z_{j}]},
+ \end{eqnarray}
+
+\begin{eqnarray}
+  a[\mathbf{x}_{m},\mathbf{x}_{n}] = \mbox{softmax}_{m}\left[\mathbf{k}_{\bullet}^T\mathbf{q}_{n}\right]
+  = \frac{\exp\left[\mathbf{k}_m^T\mathbf{q}_{n}\right]}{\sum_{m'=1}^{N}\exp\left[\mathbf{k}_{m'}^{T}\mathbf{q}_{n} \right]}.
+ \end{eqnarray}

@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -131,6 +160,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./syllabus/title_9.html">
  <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -156,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./models.html">Models</a></li><li class="breadcrumb-item"><a href="./dnn.html">Deep Neural Networks</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dnn.html">Deep Neural Networks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -190,68 +223,40 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Types of Learning</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dnn.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Deep Neural Networks</span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./loss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loss Functions</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./fitting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fitting Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gradient Descent</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./performance.html" class="sidebar-item-text sidebar-link">
@@ -317,6 +322,90 @@ Slides
 <p>Composition of two networks for problem 4.1. a) The output y of the first network becomes the input to the second. b) The first network computes this function with output values y ∈ [−1, 1]. c) The second network computes this function on the input range y ∈ [−1, 1].</p>
 <p><img src="assets/Chap04/DeepProbZeroCross.svg" style="filter: invert(1);"></p>
 <p>Hidden unit activations for problem 4.8. a) First hidden unit has a joint at position x = 1/6 and a slope of one in the active region. b) Second hidden unit has a joint at position x = 2/6 and a slope of one in the active region. c) Third hidden unit has a joint at position x = 4/6 and a slope of minus one in the active region.</p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_comp_in}
+h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
+h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
+h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_comp}
+y = \phi_{0}+\phi_{1}h_{1}+\phi_{2}h_{2}+\phi_{3}h_{3}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_comp_2}
+h'_{1} &amp;=&amp; \mbox{a}[\theta'_{10} + \theta'_{11}y] \nonumber \\
+h'_{2} &amp;=&amp; \mbox{a}[\theta'_{20} + \theta'_{21}y] \nonumber \\
+h'_{3} &amp;=&amp; \mbox{a}[\theta'_{30} + \theta'_{31}y],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray} \label{eq:dnn_comp_out}
+y' = \phi'_{0}+\phi'_{1}h'_{1}+\phi'_{2}h'_{2}+\phi'_{3}h'_{3}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_deep_linear}
+h'_{1} &amp;=\quad \mbox{a}[\theta'_{10} + \theta'_{11}y] &amp;=\quad \mbox{a}[\theta'_{10} + \theta'_{11}\phi_{0}+\theta'_{11}\phi_{1}h_{1}+\theta'_{11}\phi_{2}h_{2}+\theta'_{11}\phi_{3}h_{3}] \nonumber \\
+h'_{2} &amp;= \quad\mbox{a}[\theta'_{20} + \theta'_{21}y] &amp;=\quad \mbox{a}[\theta'_{20} + \theta'_{21}\phi_{0}+\theta'_{21}\phi_{1}h_{1}+\theta'_{21}\phi_{2}h_{2}+\theta'_{21}\phi_{3}h_{3}] \nonumber \\
+h'_{3} &amp;=\quad \mbox{a}[\theta'_{30} + \theta'_{31}y] &amp;=\quad \mbox{a}[\theta'_{30} + \theta'_{31}\phi_{0}+\theta'_{31}\phi_{1}h_{1}+\theta'_{31}\phi_{2}h_{2}+\theta'_{31}\phi_{3}h_{3}],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_middle}
+h'_{1} &amp;=&amp; \mbox{a}[\psi_{10} + \psi_{11}h_{1}+ \psi_{12}h_{2}+ \psi_{13}h_{3}] \nonumber \\
+h'_{2} &amp;=&amp; \mbox{a}[\psi_{20} + \psi_{21}h_{1}+ \psi_{22}h_{2}+ \psi_{23}h_{3}] \nonumber \\
+h'_{3} &amp;=&amp; \mbox{a}[\psi_{30} + \psi_{31}h_{1}+ \psi_{32}h_{2}+ \psi_{33}h_{3}],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_in}
+h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
+h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
+h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_middle2}
+h'_{1} &amp;=&amp; \mbox{a}[\psi_{10} + \psi_{11}h_{1}+ \psi_{12}h_{2}+ \psi_{13}h_{3}] \nonumber \\
+h'_{2} &amp;=&amp; \mbox{a}[\psi_{20} + \psi_{21}h_{1}+ \psi_{22}h_{2}+ \psi_{23}h_{3}] \nonumber \\
+h'_{3} &amp;=&amp; \mbox{a}[\psi_{30} + \psi_{31}h_{1}+ \psi_{32}h_{2}+ \psi_{33}h_{3}],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_out}
+y' = \phi'_{0}+\phi'_{1}h'_{1}+\phi'_{2}h'_{2}+\phi'_{3}h'_{3}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_expanded}
+y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{12}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{13}\mbox{a}[\theta_{30} + \theta_{31}x]\right]\nonumber \\
+&amp;&amp;\hspace{0.55cm}+\phi'_{2}\mbox{a}[\psi_{20} + \psi_{21}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{23}\mbox{a}[\theta_{30} + \theta_{31}x]] \nonumber\\
+&amp;&amp;\hspace{0.55cm}+\phi'_{3}\mbox{a}[\psi_{30} + \psi_{31}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{32}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{33}\mbox{a}[\theta_{30} + \theta_{31}x]],\nonumber \\
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \begin{bmatrix}
+  h_{1} \\ h_{2} \\ h_{3}
+  \end{bmatrix}
+  = \mbox{\bf a}\left[\begin{bmatrix}\theta_{10}\\ \theta_{20}\\ \theta_{30} \end{bmatrix}+\begin{bmatrix}\theta_{11}\\\theta_{21}\\\theta_{31}\end{bmatrix}x\right],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \begin{bmatrix}
+  h'_{1} \\ h'_{2} \\h'_{3}
+  \end{bmatrix}
+  =\mbox{\bf a}\left[\begin{bmatrix}\psi_{10} \\ \psi_{20}\\ \psi_{30}\end{bmatrix} + \begin{bmatrix}\psi_{11} &amp;\psi_{12} &amp; \psi_{13} \\\psi_{21} &amp;\psi_{22} &amp; \psi_{23} \\\psi_{31} &amp;\psi_{32} &amp; \psi_{33} \end{bmatrix} \begin{bmatrix}
+  h_{1} \\ h_{2} \\ h_{3}
+  \end{bmatrix} \right],
+  \end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  y' = \phi'_{0} + \begin{bmatrix} \phi'_{1} &amp; \phi'_{2} &amp; \phi'_{3} \end{bmatrix}\begin{bmatrix}h'_{1} \\ h'_{2} \\h'_{3} \end{bmatrix},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{h} &amp;=&amp; \mbox{\bf a}\left[\boldsymbol\theta_{0}+\boldsymbol\theta x\right] \nonumber\\
+  \mathbf{h}' &amp;=&amp; \mbox{\bf a}\left[\boldsymbol\psi_{0}+\boldsymbol\Psi \mathbf{h}\right] \nonumber \\
+  y' &amp;=&amp; \phi'_{0} + \boldsymbol\phi' \mathbf{h}',
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_la1}
+  \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
+  \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}]\nonumber \\
+  \mathbf{h}_{3} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}]\nonumber \\
+  &amp;\vdots&amp;\nonumber\\
+  \mathbf{h}_{K} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{K-1} +\boldsymbol\Omega_{K-1}\mathbf{h}_{K-1}] \nonumber\\
+  \mathbf{y} &amp;=&amp; \boldsymbol\beta_{K} +\boldsymbol\Omega_{K}\mathbf{h}_{K}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_la2}
+  \mathbf{y}\!\! &amp;\!\!=\!\!&amp; \!\!\boldsymbol\beta_{K} +\boldsymbol\Omega_{K}\mathbf{a}\left[\boldsymbol\beta_{K-1} +\boldsymbol\Omega_{K-1}\mathbf{a}\left[\ldots
+  \boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{a}\left[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{a}\left[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}\right]\right]\ldots\right]\right].\nonumber \\
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_deep_param_calc}
+  N_{r} = \left(\frac{D}{D_{i}}+1\right)^{D_{i}(K-1)}\cdot\sum_{j=0}^{D_{i}}\binom{D}{j}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mbox{ReLU}\Bigl[\boldsymbol\beta_{1}\!+\!\lambda_1\!\cdot\!\boldsymbol\Omega_{1}\mbox{ReLU}\left[\boldsymbol\beta_{0}\!+\!\lambda_{0}\cdot\boldsymbol\Omega_{0}\mathbf{x}\right] \Bigr]\!=\! \lambda_0\lambda_{1}\cdot \mbox{ReLU}\left[\frac{1}{\lambda_0\lambda_1}\boldsymbol\beta_{1}\!+\!\boldsymbol\Omega_{1}\mbox{ReLU}\left[\frac{1}{\lambda_0}\boldsymbol\beta_{0}\!+\!\boldsymbol\Omega_{0}\mathbf{x}\right]\right],
+\end{eqnarray}\]</span></p>
 
 
 </section>

@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -131,6 +160,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./syllabus/title_9.html">
  <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -156,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fitting.html">Fitting Models</a></li><li class="breadcrumb-item"><a href="./gradientdescent.html">Gradient Descent</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gradientdescent.html">Gradient Descent</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -190,68 +223,40 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Types of Learning</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dnn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Neural Networks</span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./loss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loss Functions</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./fitting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fitting Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Gradient Descent</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./performance.html" class="sidebar-item-text sidebar-link">
@@ -321,6 +326,86 @@ Slides
 <p>Line search using the bracketing approach. a) The current solution is at position a (orange point), and we wish to search the region [a, d] (gray shaded area). We define two points b, c interior to the search region and evaluate the loss function at these points. Here L[b] &gt; L[c], so we eliminate the range [a, b]. b) We now repeat this procedure in the refined search region and find that L[b] &lt; L[c], so we eliminate the range [c, d]. c) We repeat this process until this minimum is closely bracketed.</p>
 <p><img src="assets/Chap06/TrainConvexProb.svg" style="filter: invert(1);" width="100%"></p>
 <p>Three 1D loss functions for problem 6.6.</p>
+<p><span class="math display">\[\begin{eqnarray}
+\hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \frac{\partial L}{\partial \boldsymbol\phi} = \begin{bmatrix}\frac{\partial L}{\partial \phi_{0}} \\[5pt] \frac{\partial L}{\partial \phi_{1}}\\ \vdots \\[5pt] \frac{\partial L}{\partial \phi_{N}}\end{bmatrix}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_gradient_descent}
+  \boldsymbol\phi\longleftarrow\boldsymbol\phi - \alpha \cdot \frac{\partial L}{\partial \boldsymbol\phi},
+  \end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  y &amp;=&amp; \mbox{f}[x,\boldsymbol\phi]\nonumber \\
+  &amp;=&amp; \phi_{0} + \phi_{1}x.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_lr_cost_function}
+  L[\boldsymbol\phi] \hspace{0.2cm}= \hspace{0.2cm}\sum_{i=1}^{I} \ell_{i} &amp;=&amp; \sum_{i=1}^{I} \left(\mbox{f}[x_i,\boldsymbol\phi]-y_{i}\right)^{2}\nonumber \\
+  &amp;=&amp; \sum_{i=1}^{I} \left(\phi_{0}+\phi_{1}x_{i}-y_{i}\right)^{2},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_linear_deriv1}
+  \frac{\partial L}{\partial \boldsymbol\phi} = \frac{\partial}{\partial \boldsymbol\phi}\sum_{i=1}^{I} \ell_{i} = \sum_{i=1}^{I} \frac{\partial \ell_{i}}{\partial \boldsymbol\phi},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_linear_deriv2}
+  \frac{\partial \ell_{i}}{\partial \boldsymbol\phi} = \begin{bmatrix}\frac{\partial \ell_{i}}{\partial \phi_{0}}\\\vspace{-0.2cm}\\\frac{\partial \ell_{i}}{\partial \phi_{1}}\end{bmatrix} = \begin{bmatrix}2(\phi_{0}+\phi_{1}x_{i}-y_{i})\\ \vspace{-0.2cm}\\ 2x_{i}(\phi_{0}+\phi_{1}x_{i}-y_{i})\end{bmatrix}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_gabor}
+\mbox{f}[x,\boldsymbol\phi] = \sin[\phi_0 + 0.06\cdot\phi_{1}x]\cdot \exp\left(-\frac{(\phi_0+0.06\cdot\phi_{1}x)^2}{32.0}\right).
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  L[\boldsymbol\phi] = \sum_{i=1}^{I}\left(\mbox{f}[x_{i},\boldsymbol\phi]-y_{i}\right)^2.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_sgd}
+  \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \cdot \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_momentum}
+  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_t + (1-\beta) \sum_{i\in\mathcal{B}_t}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \boldsymbol\phi_{t+1} &amp;\leftarrow&amp;\boldsymbol\phi_{t} - \alpha \cdot \mathbf{m}_{t+1},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_nesterov}
+  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}-\alpha\beta\cdot\mathbf{m}_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \boldsymbol\phi_{t+1} &amp;\leftarrow&amp;\boldsymbol\phi_{t} - \alpha\cdot \mathbf{m}_{t+1},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \mathbf{v}_{t+1} &amp;\leftarrow&amp; \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\boldsymbol\phi_{t+1} &amp;\leftarrow &amp; \boldsymbol\phi_{t} - \alpha \cdot \frac{\mathbf{m}_{t+1}}{\sqrt{\mathbf{v}_{t+1}}+\epsilon},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_adam}
+  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \mathbf{v}_{t+1} &amp;\leftarrow&amp; \gamma \cdot \mathbf{v}_{t} + (1-\gamma) \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2,
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_adam_modify}
+\tilde{\mathbf{m}}_{t+1} &amp;\leftarrow &amp; \frac{\mathbf{m}_{t+1}}{1-\beta^{t+1}}\nonumber \\
+\tilde{\mathbf{v}}_{t+1} &amp;\leftarrow &amp; \frac{\mathbf{v}_{t+1}}{1-\gamma^{t+1}}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\boldsymbol\phi_{t+1} &amp;\leftarrow &amp; \boldsymbol\phi_{t} - \alpha\cdot\frac{ \tilde{\mathbf{m}}_{t+1}}{\sqrt{\tilde{\mathbf{v}}_{t+1}}+\epsilon}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train_adam_final}
+  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \mathbf{v}_{t+1} &amp;\leftarrow&amp; \gamma \cdot \mathbf{v}_{t} + (1-\gamma) \left(\sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2,
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mathbf{H}[\boldsymbol\phi] = \begin{bmatrix} \frac{\partial^{2} L}{\partial\phi_{0}^{2}} &amp; \frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{1}} &amp;\hdots &amp;\frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{N}}\\
+\frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{0}} &amp;\frac{\partial^{2} L}{\partial\phi_{1}^{2}} &amp;\hdots&amp;\frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{N}} \\ \vdots &amp;\vdots &amp; \ddots &amp;\vdots\\
+\frac{\partial^{2} L}{\partial\phi_{N}\partial\phi_{0}} &amp;\frac{\partial^{2} L}{\partial\phi_{N}\partial\phi_{1}} &amp;\hdots&amp;\frac{\partial^{2} L}{\partial\phi_{N}^2} \end{bmatrix}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mathbf{H}[\boldsymbol\phi] = \begin{bmatrix} \frac{\partial^{2} L}{\partial\phi_{0}^{2}} &amp; \frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{1}}\\
+\frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{0}} &amp;\frac{\partial^{2} L}{\partial\phi_{1}^{2}} \end{bmatrix},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+Pr(y=1|x) = \mbox{sig}[\phi_{0}+\phi_{1}x],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mbox{f}[x,\boldsymbol\phi]  = \phi_{0}+\phi_{1}\mbox{a}[\theta_{10} + \theta_{11}x]+\phi_{2}\mbox{a}[\theta_{20} + \theta_{21}x]+\phi_{3}\mbox{a}[\theta_{30} + \theta_{31}x].
+\end{eqnarray}\]</span></p>
 
 
 </section>
