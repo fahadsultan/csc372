@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gradientdescent</title>
+<title>Gradient Descent</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -279,18 +279,47 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link active" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
+  <li><a href="#linear-regression-example" id="toc-linear-regression-example" class="nav-link active" data-scroll-target="#linear-regression-example">Linear regression example</a>
+  <ul class="collapse">
+  <li><a href="#gabor-model-example" id="toc-gabor-model-example" class="nav-link" data-scroll-target="#gabor-model-example">Gabor model example</a></li>
+  <li><a href="#local-minima-and-saddle-points" id="toc-local-minima-and-saddle-points" class="nav-link" data-scroll-target="#local-minima-and-saddle-points">Local minima and saddle points</a></li>
+  </ul></li>
+  <li><a href="#stochastic-gradient-descent" id="toc-stochastic-gradient-descent" class="nav-link" data-scroll-target="#stochastic-gradient-descent">Stochastic gradient descent</a>
+  <ul class="collapse">
+  <li><a href="#batches-and-epochs" id="toc-batches-and-epochs" class="nav-link" data-scroll-target="#batches-and-epochs">Batches and epochs</a></li>
+  <li><a href="#properties-of-stochastic-gradient-descent" id="toc-properties-of-stochastic-gradient-descent" class="nav-link" data-scroll-target="#properties-of-stochastic-gradient-descent">Properties of stochastic gradient descent</a></li>
+  </ul></li>
+  <li><a href="#momentum" id="toc-momentum" class="nav-link" data-scroll-target="#momentum">Momentum</a>
+  <ul class="collapse">
+  <li><a href="#nesterov-accelerated-momentum" id="toc-nesterov-accelerated-momentum" class="nav-link" data-scroll-target="#nesterov-accelerated-momentum">Nesterov accelerated momentum</a></li>
+  </ul></li>
+  <li><a href="#adam" id="toc-adam" class="nav-link" data-scroll-target="#adam">Adam</a></li>
+  <li><a href="#training-algorithm-hyperparameters" id="toc-training-algorithm-hyperparameters" class="nav-link" data-scroll-target="#training-algorithm-hyperparameters">Training algorithm hyperparameters</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Gradient Descent</h1>
+</div>
 
 
 
-<section id="gradient-descent" class="level1">
-<h1>Gradient Descent</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -304,28 +333,6 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/1w5PoGsG-RurZ3QpOfFATrXx5ocZJ6e5JKWoIL05Fydk/edit?slide=id.g3345ec7eb95_0_2#slide=id.g3345ec7eb95_0_2">Slides</a></p>
 </div>
 </div>
-<p><img src="assets/Chap06/TrainLRMin.svg" style="filter: invert(1);" width="100%"></p>
-<p>Gradient descent for the linear regression model. a) Training set of I = 12 input/output pairs {xi, yi}. b) Loss function showing iterations of gradient descent. We start at point 0 and move in the steepest downhill direction until we can improve no further to arrive at point 1. We then repeat this procedure. We measure the gradient at point 1 and move downhill to point 2 and so on. c) This can be visualized better as a heatmap, where the brightness represents the loss. After only four iterations, we are already close to the minimum. d) The model with the parameters at point 0 (lightest line) describes the data very badly, but each successive iteration improves the fit. The model with the parameters at point 4 (darkest line) is already a reasonable description of the training data.</p>
-<p><img src="assets/Chap06/TrainGaborModel.svg" style="filter: invert(1);" width="100%"></p>
-<p>Gabor model. This nonlinear model maps scalar input x to scalar output y and has parameters ϕ = [ϕ0, ϕ1]T . It describes a sinusoidal function that decreases in amplitude with distance from its center. Parameter ϕ0 ∈ R determines the position of the center. As ϕ0 increases, the function moves left. Parameter ϕ1 ∈ R+ squeezes the function along the x-axis relative to the center. As ϕ1 increases, the function narrows. a–c) Model with different parameters. (Interactive figure)</p>
-<p><img src="assets/Chap06/TrainGaborData.svg" style="filter: invert(1);"></p>
-<p>Training data for fitting the Gabor model. The training dataset contains 28 input/output examples {xi, yi}. These data were created by uniformly sampling xi ∈ [−15, 15], passing the samples through a Gabor model with parameters ϕ = [0.0, 16.6]T , and adding normally distributed noise.</p>
-<p><img src="assets/Chap06/TrainGaborMin.svg" style="filter: invert(1);" width="100%"></p>
-<p>Loss function for the Gabor model. a) The loss function is non-convex, with multiple local minima (cyan circles) in addition to the global minimum (gray circle). It also contains saddle points where the gradient is locally zero, but the function increases in one direction and decreases in the other. The blue cross is an example of a saddle point; the function decreases as we move horizontally in either direction but increases as we move vertically. b–f) Models associated with the different minima. In each case, there is no small change that decreases the loss. Panel (c) shows the global minimum, which has a loss of 0.64. (Interactive figure)</p>
-<p><img src="assets/Chap06/TrainGaborGDSGD.svg" style="filter: invert(1);" width="100%"></p>
-<p>Gradient descent vs.&nbsp;stochastic gradient descent. a) Gradient descent with line search. As long as the gradient descent algorithm is initialized in the right “valley” of the loss function (e.g., points 1 and 3), the parameter estimate will move steadily toward the global minimum. However, if it is initialized outside this valley (e.g., point 2), it will descend toward one of the local minima. b) Stochastic gradient descent adds noise to the optimization process, so it is possible to escape from the wrong valley (e.g., point 2) and still reach the global minimum.</p>
-<p><img src="assets/Chap06/TrainGaborSGDIter.svg" style="filter: invert(1);" width="100%"></p>
-<p>Alternative view of SGD for the Gabor model with a batch size three. a) Loss function for the entire training dataset. At each iteration, there is a probability distribution of possible parameter changes (inset shows samples). These correspond to different choices of the three batch elements. b) Loss function for one possible batch. The SGD algorithm moves in the downhill direction on this function for a distance that is determined by the learning rate and the local gradient magnitude. The current model (dashed function in inset) changes to better fit the batch data (solid function). c) A different batch creates a different loss function and results in a different update. d) For this batch, the algorithm moves downhill with respect to the batch loss function but in the locally uphill direction with respect to the global loss function in panel (a). This is how SGD can escape local minima.</p>
-<p><img src="assets/Chap06/TrainMomentum.svg" style="filter: invert(1);" width="100%"></p>
-<p>Figure 6.7 Stochastic gradient descent with momentum. a) Regular stochastic descent takes a very indirect path toward the minimum. b) With a momentum term, the change at the current step is a weighted combination of the previous change and the gradient computed from the batch. This smooths out the trajectory and increases the speed of convergence.</p>
-<p><img src="assets/Chap06/TrainNesterov.svg" style="filter: invert(1);" width="100%"></p>
-<p>Nesterov accelerated momentum. The solution has traveled along the dashed line to arrive at point 1. A traditional momentum update measures the gradient at point 1, moves some distance in this direction to point 2, and then adds the momentum term from the previous iteration (i.e., in the same direction as the dashed line), arriving at point 3. The Nesterov momentum update first applies the momentum term (moving from point 1 to point 4) and then measures the gradient and applies an update to arrive at point 5.</p>
-<p><img src="assets/Chap06/TrainADAM.svg" style="filter: invert(1);" width="100%"></p>
-<p>Adaptive moment estimation (Adam). a) This loss function changes quickly in the vertical direction but slowly in the horizontal direction. If we run full-batch gradient descent with a learning rate that makes good progress in the vertical direction, then the algorithm takes a long time to reach the final horizontal position. b) If the learning rate is chosen so that the algorithm makes good progress in the horizontal direction, it overshoots in the vertical direction and becomes unstable. c) A straightforward approach is to move a fixed distance along each axis at each step so that we move downhill in both directions. This is accomplished by normalizing the gradient magnitude and retaining only the sign. However, this does not usually converge to the exact minimum but instead oscillates back and forth around it (here between the last two points). d) The Adam algorithm uses momentum in both the estimated gradient and the normalization term, which creates a smoother path.</p>
-<p><img src="assets/Chap06/TrainLineSearch.svg" style="filter: invert(1);" width="100%"></p>
-<p>Line search using the bracketing approach. a) The current solution is at position a (orange point), and we wish to search the region [a, d] (gray shaded area). We define two points b, c interior to the search region and evaluate the loss function at these points. Here L[b] &gt; L[c], so we eliminate the range [a, b]. b) We now repeat this procedure in the refined search region and find that L[b] &lt; L[c], so we eliminate the range [c, d]. c) We repeat this process until this minimum is closely bracketed.</p>
-<p><img src="assets/Chap06/TrainConvexProb.svg" style="filter: invert(1);" width="100%"></p>
-<p>Three 1D loss functions for problem 6.6.</p>
 <p><span class="math display">\[\begin{eqnarray}
 \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr].
 \end{eqnarray}\]</span></p>
@@ -335,6 +342,8 @@ Slides
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_gradient_descent}
   \boldsymbol\phi\longleftarrow\boldsymbol\phi - \alpha \cdot \frac{\partial L}{\partial \boldsymbol\phi},
   \end{eqnarray}\]</span></p>
+<section id="linear-regression-example" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression-example">Linear regression example</h2>
 <p><span class="math display">\[\begin{eqnarray}
   y &amp;=&amp; \mbox{f}[x,\boldsymbol\phi]\nonumber \\
   &amp;=&amp; \phi_{0} + \phi_{1}x.
@@ -343,29 +352,69 @@ Slides
   L[\boldsymbol\phi] \hspace{0.2cm}= \hspace{0.2cm}\sum_{i=1}^{I} \ell_{i} &amp;=&amp; \sum_{i=1}^{I} \left(\mbox{f}[x_i,\boldsymbol\phi]-y_{i}\right)^{2}\nonumber \\
   &amp;=&amp; \sum_{i=1}^{I} \left(\phi_{0}+\phi_{1}x_{i}-y_{i}\right)^{2},
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap06/TrainLRMin.svg" style="filter: invert(1);" width="100%"></p>
+<p>Gradient descent for the linear regression model. a) Training set of I = 12 input/output pairs {xi, yi}. b) Loss function showing iterations of gradient descent. We start at point 0 and move in the steepest downhill direction until we can improve no further to arrive at point 1. We then repeat this procedure. We measure the gradient at point 1 and move downhill to point 2 and so on. c) This can be visualized better as a heatmap, where the brightness represents the loss. After only four iterations, we are already close to the minimum. d) The model with the parameters at point 0 (lightest line) describes the data very badly, but each successive iteration improves the fit. The model with the parameters at point 4 (darkest line) is already a reasonable description of the training data.</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_linear_deriv1}
   \frac{\partial L}{\partial \boldsymbol\phi} = \frac{\partial}{\partial \boldsymbol\phi}\sum_{i=1}^{I} \ell_{i} = \sum_{i=1}^{I} \frac{\partial \ell_{i}}{\partial \boldsymbol\phi},
 \end{eqnarray}\]</span></p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_linear_deriv2}
   \frac{\partial \ell_{i}}{\partial \boldsymbol\phi} = \begin{bmatrix}\frac{\partial \ell_{i}}{\partial \phi_{0}}\\\vspace{-0.2cm}\\\frac{\partial \ell_{i}}{\partial \phi_{1}}\end{bmatrix} = \begin{bmatrix}2(\phi_{0}+\phi_{1}x_{i}-y_{i})\\ \vspace{-0.2cm}\\ 2x_{i}(\phi_{0}+\phi_{1}x_{i}-y_{i})\end{bmatrix}.
 \end{eqnarray}\]</span></p>
+<section id="gabor-model-example" class="level3">
+<h3 class="anchored" data-anchor-id="gabor-model-example">Gabor model example</h3>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_gabor}
 \mbox{f}[x,\boldsymbol\phi] = \sin[\phi_0 + 0.06\cdot\phi_{1}x]\cdot \exp\left(-\frac{(\phi_0+0.06\cdot\phi_{1}x)^2}{32.0}\right).
 \end{eqnarray}\]</span></p>
 <p><span class="math display">\[\begin{eqnarray}
   L[\boldsymbol\phi] = \sum_{i=1}^{I}\left(\mbox{f}[x_{i},\boldsymbol\phi]-y_{i}\right)^2.
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap06/TrainGaborModel.svg" style="filter: invert(1);" width="100%"></p>
+<p>Gabor model. This nonlinear model maps scalar input x to scalar output y and has parameters ϕ = [ϕ0, ϕ1]T . It describes a sinusoidal function that decreases in amplitude with distance from its center. Parameter ϕ0 ∈ R determines the position of the center. As ϕ0 increases, the function moves left. Parameter ϕ1 ∈ R+ squeezes the function along the x-axis relative to the center. As ϕ1 increases, the function narrows. a–c) Model with different parameters. (Interactive figure)</p>
+<p><img src="assets/Chap06/TrainGaborData.svg" style="filter: invert(1);" align="right" width="40%"></p>
+<p>Training data for fitting the Gabor model. The training dataset contains 28 input/output examples {xi, yi}. These data were created by uniformly sampling xi ∈ [−15, 15], passing the samples through a Gabor model with parameters ϕ = [0.0, 16.6]T , and adding normally distributed noise.</p>
+</section>
+<section id="local-minima-and-saddle-points" class="level3">
+<h3 class="anchored" data-anchor-id="local-minima-and-saddle-points">Local minima and saddle points</h3>
+<p><img src="assets/Chap06/TrainGaborMin.svg" style="filter: invert(1);" width="100%"></p>
+<p>Loss function for the Gabor model. a) The loss function is non-convex, with multiple local minima (cyan circles) in addition to the global minimum (gray circle). It also contains saddle points where the gradient is locally zero, but the function increases in one direction and decreases in the other. The blue cross is an example of a saddle point; the function decreases as we move horizontally in either direction but increases as we move vertically. b–f) Models associated with the different minima. In each case, there is no small change that decreases the loss. Panel (c) shows the global minimum, which has a loss of 0.64. (Interactive figure)</p>
+<p><img src="assets/Chap06/TrainGaborGDSGD.svg" style="filter: invert(1);" width="100%"></p>
+<p>Gradient descent vs.&nbsp;stochastic gradient descent. a) Gradient descent with line search. As long as the gradient descent algorithm is initialized in the right “valley” of the loss function (e.g., points 1 and 3), the parameter estimate will move steadily toward the global minimum. However, if it is initialized outside this valley (e.g., point 2), it will descend toward one of the local minima. b) Stochastic gradient descent adds noise to the optimization process, so it is possible to escape from the wrong valley (e.g., point 2) and still reach the global minimum.</p>
+</section>
+</section>
+<section id="stochastic-gradient-descent" class="level2">
+<h2 class="anchored" data-anchor-id="stochastic-gradient-descent">Stochastic gradient descent</h2>
+<p><img src="assets/Chap06/TrainGaborSGDIter.svg" style="filter: invert(1);" width="100%"></p>
+<p>Alternative view of SGD for the Gabor model with a batch size three. a) Loss function for the entire training dataset. At each iteration, there is a probability distribution of possible parameter changes (inset shows samples). These correspond to different choices of the three batch elements. b) Loss function for one possible batch. The SGD algorithm moves in the downhill direction on this function for a distance that is determined by the learning rate and the local gradient magnitude. The current model (dashed function in inset) changes to better fit the batch data (solid function). c) A different batch creates a different loss function and results in a different update. d) For this batch, the algorithm moves downhill with respect to the batch loss function but in the locally uphill direction with respect to the global loss function in panel (a). This is how SGD can escape local minima.</p>
+<section id="batches-and-epochs" class="level3">
+<h3 class="anchored" data-anchor-id="batches-and-epochs">Batches and epochs</h3>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_sgd}
   \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \cdot \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
 \end{eqnarray}\]</span></p>
+</section>
+<section id="properties-of-stochastic-gradient-descent" class="level3">
+<h3 class="anchored" data-anchor-id="properties-of-stochastic-gradient-descent">Properties of stochastic gradient descent</h3>
+</section>
+</section>
+<section id="momentum" class="level2">
+<h2 class="anchored" data-anchor-id="momentum">Momentum</h2>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_momentum}
   \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_t + (1-\beta) \sum_{i\in\mathcal{B}_t}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
   \boldsymbol\phi_{t+1} &amp;\leftarrow&amp;\boldsymbol\phi_{t} - \alpha \cdot \mathbf{m}_{t+1},
 \end{eqnarray}\]</span></p>
+<section id="nesterov-accelerated-momentum" class="level3">
+<h3 class="anchored" data-anchor-id="nesterov-accelerated-momentum">Nesterov accelerated momentum</h3>
+<p><img src="assets/Chap06/TrainMomentum.svg" style="filter: invert(1);" width="100%"></p>
+<p>Figure 6.7 Stochastic gradient descent with momentum. a) Regular stochastic descent takes a very indirect path toward the minimum. b) With a momentum term, the change at the current step is a weighted combination of the previous change and the gradient computed from the batch. This smooths out the trajectory and increases the speed of convergence.</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_nesterov}
   \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}-\alpha\beta\cdot\mathbf{m}_{t}]}{\partial \boldsymbol\phi}\nonumber \\
   \boldsymbol\phi_{t+1} &amp;\leftarrow&amp;\boldsymbol\phi_{t} - \alpha\cdot \mathbf{m}_{t+1},
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap06/TrainNesterov.svg" style="filter: invert(1);" width="40%" align="right"></p>
+<p>Nesterov accelerated momentum. The solution has traveled along the dashed line to arrive at point 1. A traditional momentum update measures the gradient at point 1, moves some distance in this direction to point 2, and then adds the momentum term from the previous iteration (i.e., in the same direction as the dashed line), arriving at point 3. The Nesterov momentum update first applies the momentum term (moving from point 1 to point 4) and then measures the gradient and applies an update to arrive at point 5.</p>
+</section>
+</section>
+<section id="adam" class="level2">
+<h2 class="anchored" data-anchor-id="adam">Adam</h2>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{m}_{t+1} &amp;\leftarrow&amp; \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
   \mathbf{v}_{t+1} &amp;\leftarrow&amp; \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2.
@@ -373,6 +422,8 @@ Slides
 <p><span class="math display">\[\begin{eqnarray}
 \boldsymbol\phi_{t+1} &amp;\leftarrow &amp; \boldsymbol\phi_{t} - \alpha \cdot \frac{\mathbf{m}_{t+1}}{\sqrt{\mathbf{v}_{t+1}}+\epsilon},
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap06/TrainADAM.svg" style="filter: invert(1);" width="100%"></p>
+<p>Adaptive moment estimation (Adam). a) This loss function changes quickly in the vertical direction but slowly in the horizontal direction. If we run full-batch gradient descent with a learning rate that makes good progress in the vertical direction, then the algorithm takes a long time to reach the final horizontal position. b) If the learning rate is chosen so that the algorithm makes good progress in the horizontal direction, it overshoots in the vertical direction and becomes unstable. c) A straightforward approach is to move a fixed distance along each axis at each step so that we move downhill in both directions. This is accomplished by normalizing the gradient magnitude and retaining only the sign. However, this does not usually converge to the exact minimum but instead oscillates back and forth around it (here between the last two points). d) The Adam algorithm uses momentum in both the estimated gradient and the normalization term, which creates a smoother path.</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train_adam}
   \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
   \mathbf{v}_{t+1} &amp;\leftarrow&amp; \gamma \cdot \mathbf{v}_{t} + (1-\gamma) \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2,
@@ -388,6 +439,13 @@ Slides
   \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
   \mathbf{v}_{t+1} &amp;\leftarrow&amp; \gamma \cdot \mathbf{v}_{t} + (1-\gamma) \left(\sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2,
 \end{eqnarray}\]</span></p>
+</section>
+<section id="training-algorithm-hyperparameters" class="level2">
+<h2 class="anchored" data-anchor-id="training-algorithm-hyperparameters">Training algorithm hyperparameters</h2>
+<p><img src="assets/Chap06/TrainLineSearch.svg" style="filter: invert(1);" width="100%"></p>
+<p>Line search using the bracketing approach. a) The current solution is at position a (orange point), and we wish to search the region [a, d] (gray shaded area). We define two points b, c interior to the search region and evaluate the loss function at these points. Here L[b] &gt; L[c], so we eliminate the range [a, b]. b) We now repeat this procedure in the refined search region and find that L[b] &lt; L[c], so we eliminate the range [c, d]. c) We repeat this process until this minimum is closely bracketed.</p>
+<p><img src="assets/Chap06/TrainConvexProb.svg" style="filter: invert(1);" width="100%"></p>
+<p>Three 1D loss functions for problem 6.6.</p>
 <p><span class="math display">\[\begin{eqnarray}
 \mathbf{H}[\boldsymbol\phi] = \begin{bmatrix} \frac{\partial^{2} L}{\partial\phi_{0}^{2}} &amp; \frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{1}} &amp;\hdots &amp;\frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{N}}\\
 \frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{0}} &amp;\frac{\partial^{2} L}{\partial\phi_{1}^{2}} &amp;\hdots&amp;\frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{N}} \\ \vdots &amp;\vdots &amp; \ddots &amp;\vdots\\

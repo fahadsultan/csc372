@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>dnn</title>
+<title>Deep Neural Networks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -279,18 +279,47 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#deep-neural-networks" id="toc-deep-neural-networks" class="nav-link active" data-scroll-target="#deep-neural-networks">Deep Neural Networks</a></li>
+  <li><a href="#composing-neural-networks" id="toc-composing-neural-networks" class="nav-link active" data-scroll-target="#composing-neural-networks">Composing neural networks</a></li>
+  <li><a href="#from-composing-networks-to-deep-networks" id="toc-from-composing-networks-to-deep-networks" class="nav-link" data-scroll-target="#from-composing-networks-to-deep-networks">From composing networks to deep networks</a></li>
+  <li><a href="#deep-neural-networks" id="toc-deep-neural-networks" class="nav-link" data-scroll-target="#deep-neural-networks">Deep Neural Networks</a>
+  <ul class="collapse">
+  <li><a href="#hyperparameters" id="toc-hyperparameters" class="nav-link" data-scroll-target="#hyperparameters">Hyperparameters</a></li>
+  <li><a href="#matrix-notation" id="toc-matrix-notation" class="nav-link" data-scroll-target="#matrix-notation">Matrix Notation</a></li>
+  <li><a href="#general-formulation" id="toc-general-formulation" class="nav-link" data-scroll-target="#general-formulation">General formulation</a></li>
+  </ul></li>
+  <li><a href="#shallow-vs.-deep-neural-networks" id="toc-shallow-vs.-deep-neural-networks" class="nav-link" data-scroll-target="#shallow-vs.-deep-neural-networks">Shallow vs.&nbsp;deep neural networks</a>
+  <ul class="collapse">
+  <li><a href="#ability-to-approximate-different-functions" id="toc-ability-to-approximate-different-functions" class="nav-link" data-scroll-target="#ability-to-approximate-different-functions">Ability to approximate different functions</a></li>
+  <li><a href="#number-of-linear-regresions-per-parameter" id="toc-number-of-linear-regresions-per-parameter" class="nav-link" data-scroll-target="#number-of-linear-regresions-per-parameter">Number of linear regresions per parameter</a></li>
+  <li><a href="#depth-efficiency" id="toc-depth-efficiency" class="nav-link" data-scroll-target="#depth-efficiency">Depth efficiency</a></li>
+  <li><a href="#large-structured-inputs" id="toc-large-structured-inputs" class="nav-link" data-scroll-target="#large-structured-inputs">Large, structured inputs</a></li>
+  <li><a href="#training-and-generalization" id="toc-training-and-generalization" class="nav-link" data-scroll-target="#training-and-generalization">Training and generalization</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Deep Neural Networks</h1>
+</div>
 
 
 
-<section id="deep-neural-networks" class="level1">
-<h1>Deep Neural Networks</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -304,24 +333,8 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/1Bk61VR7h6q_lAa02fRCy464I2wyXLJg8nJQ1qKdyFLA/edit?slide=id.g32ea142b459_0_0#slide=id.g32ea142b459_0_0">Slides</a></p>
 </div>
 </div>
-<p><img src="assets/Chap04/DeepConcat.svg" style="filter: invert(1);"></p>
-<p>Composing two single-layer networks with three hidden units each. a) The output y of the first network constitutes the input to the second network. b) The first network maps inputs x ∈ [−1, 1] to outputs y ∈ [−1, 1] using a function comprising three linear regions that are chosen so that they alternate the sign of their slope (fourth linear region is outside range of graph). Multiple inputs x (gray circles) now map to the same output y (cyan circle). c) The second network defines a function comprising three linear regions that takes y and returns y ′ (i.e., the cyan circle is mapped to the brown circle). d) The combined effect of these two functions when composed is that (i) three different inputs x are mapped to any given value of y by the first network and (ii) are processed in the same way by the second network; the result is that the function defined by the second network in panel (c) is duplicated three times, variously flipped and rescaled according to the slope of the regions of panel (b). (Interactive figure)</p>
-<p><img src="assets/Chap04/DeepTwoLayer2D.svg" style="filter: invert(1);"></p>
-<p>Composing neural networks with a 2D input. a) The first network (from figure 3.8) has three hidden units and takes two inputs x1 and x2 and returns a scalar output y. This is passed into a second network with two hidden units to produce y ′. b) The first network produces a function consisting of seven linear regions, one of which is flat. c) The second network defines a function comprising two linear regions in y ∈ [−1, 1]. d) When these networks are composed, each of the six non-flat regions from the first network is divided into two new regions by the second network to create a total of 13 linear regions.</p>
-<p><img src="assets/Chap04/DeepFold.svg" style="filter: invert(1);"></p>
-<p>Deep networks as folding input space. a) One way to think about the first network from figure 4.1 is that it “folds” the input space back on top of itself. b) The second network applies its function to the folded space. c) The final output is revealed by “unfolding” again.</p>
-<p><img src="assets/Chap04/DeepTwoLayer.svg" style="filter: invert(1);"></p>
-<p>Neural network with one input, one output, and two hidden layers, each containing three hidden units.</p>
-<p><img src="assets/Chap04/DeepBuildUp.svg" style="filter: invert(1);"></p>
-<p>Computation for the deep network in figure 4.4. a–c) The inputs to the second hidden layer (i.e., the pre-activations) are three piecewise linear functions where the “joints” between the linear regions are at the same places (see figure 3.6). d–f) Each piecewise linear function is clipped to zero by the ReLU activation function. g–i) These clipped functions are then weighted with parameters ϕ ′ 1, ϕ ′ 2, and ϕ ′ 3, respectively. j) Finally, the clipped and weighted functions are summed and an offset ϕ ′ 0 that controls the overall height is added. (Interactive figure)</p>
-<p><img src="assets/Chap04/DeepKLayer.svg" style="filter: invert(1);"></p>
-<p>Matrix notation for network with Di = 3-dimensional input x, Do = 2- dimensional output y, and K = 3 hidden layers h1, h2, and h3 of dimensions D1 = 4, D2 = 2, and D3 = 3 respectively. The weights are stored in matrices Ωk that multiply the activations from the preceding layer to create the pre-activations at the subsequent layer. For example, the weight matrix Ω1 that computes the pre-activations at h2 from the activations at h1 has dimension 2×4. It is applied to the four hidden units in layer one and creates the inputs to the two hidden units at layer two. The biases are stored in vectors βk and have the dimension of the layer into which they feed. For example, the bias vector β2 is length three because layer h3 contains three hidden units.</p>
-<p><img src="assets/Chap04/DeepParams.svg" style="filter: invert(1);"></p>
-<p>The maximum number of linear regions for neural networks increases rapidly with the network depth. a) Network with Di = 1 input. Each curve represents a fixed number of hidden layers K, as we vary the number of hidden units D per layer. For a fixed parameter budget (horizontal position), deeper networks produce more linear regions than shallower ones. A network with K = 5 layers and D = 10 hidden units per layer has 471 parameters (highlighted point) and can produce 161,051 regions. b) Network with Di = 10 inputs. Each subsequent point along a curve represents ten hidden units. Here, a model with K = 5 layers and D = 50 hidden units per layer has 10,801 parameters (highlighted point) and can create more than 1040 linear regions.</p>
-<p><img src="assets/Chap04/DeepConcatQuestion.svg" style="filter: invert(1);"></p>
-<p>Composition of two networks for problem 4.1. a) The output y of the first network becomes the input to the second. b) The first network computes this function with output values y ∈ [−1, 1]. c) The second network computes this function on the input range y ∈ [−1, 1].</p>
-<p><img src="assets/Chap04/DeepProbZeroCross.svg" style="filter: invert(1);"></p>
-<p>Hidden unit activations for problem 4.8. a) First hidden unit has a joint at position x = 1/6 and a slope of one in the active region. b) Second hidden unit has a joint at position x = 2/6 and a slope of one in the active region. c) Third hidden unit has a joint at position x = 4/6 and a slope of minus one in the active region.</p>
+<section id="composing-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="composing-neural-networks">Composing neural networks</h2>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_comp_in}
 h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
 h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
@@ -330,6 +343,8 @@ h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x],
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_comp}
 y = \phi_{0}+\phi_{1}h_{1}+\phi_{2}h_{2}+\phi_{3}h_{3}.
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap04/DeepConcat.svg" style="filter: invert(1);" width="100%"></p>
+<p>Composing two single-layer networks with three hidden units each. a) The output y of the first network constitutes the input to the second network. b) The first network maps inputs x ∈ [−1, 1] to outputs y ∈ [−1, 1] using a function comprising three linear regions that are chosen so that they alternate the sign of their slope (fourth linear region is outside range of graph). Multiple inputs x (gray circles) now map to the same output y (cyan circle). c) The second network defines a function comprising three linear regions that takes y and returns y ′ (i.e., the cyan circle is mapped to the brown circle). d) The combined effect of these two functions when composed is that (i) three different inputs x are mapped to any given value of y by the first network and (ii) are processed in the same way by the second network; the result is that the function defined by the second network in panel (c) is duplicated three times, variously flipped and rescaled according to the slope of the regions of panel (b). (Interactive figure)</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_comp_2}
 h'_{1} &amp;=&amp; \mbox{a}[\theta'_{10} + \theta'_{11}y] \nonumber \\
 h'_{2} &amp;=&amp; \mbox{a}[\theta'_{20} + \theta'_{21}y] \nonumber \\
@@ -338,6 +353,9 @@ h'_{3} &amp;=&amp; \mbox{a}[\theta'_{30} + \theta'_{31}y],
 <p><span class="math display">\[\begin{eqnarray} \label{eq:dnn_comp_out}
 y' = \phi'_{0}+\phi'_{1}h'_{1}+\phi'_{2}h'_{2}+\phi'_{3}h'_{3}.
 \end{eqnarray}\]</span></p>
+</section>
+<section id="from-composing-networks-to-deep-networks" class="level2">
+<h2 class="anchored" data-anchor-id="from-composing-networks-to-deep-networks">From composing networks to deep networks</h2>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_deep_linear}
 h'_{1} &amp;=\quad \mbox{a}[\theta'_{10} + \theta'_{11}y] &amp;=\quad \mbox{a}[\theta'_{10} + \theta'_{11}\phi_{0}+\theta'_{11}\phi_{1}h_{1}+\theta'_{11}\phi_{2}h_{2}+\theta'_{11}\phi_{3}h_{3}] \nonumber \\
 h'_{2} &amp;= \quad\mbox{a}[\theta'_{20} + \theta'_{21}y] &amp;=\quad \mbox{a}[\theta'_{20} + \theta'_{21}\phi_{0}+\theta'_{21}\phi_{1}h_{1}+\theta'_{21}\phi_{2}h_{2}+\theta'_{21}\phi_{3}h_{3}] \nonumber \\
@@ -348,6 +366,15 @@ h'_{1} &amp;=&amp; \mbox{a}[\psi_{10} + \psi_{11}h_{1}+ \psi_{12}h_{2}+ \psi_{13
 h'_{2} &amp;=&amp; \mbox{a}[\psi_{20} + \psi_{21}h_{1}+ \psi_{22}h_{2}+ \psi_{23}h_{3}] \nonumber \\
 h'_{3} &amp;=&amp; \mbox{a}[\psi_{30} + \psi_{31}h_{1}+ \psi_{32}h_{2}+ \psi_{33}h_{3}],
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap04/DeepTwoLayer2D.svg" style="filter: invert(1);" width="100%"></p>
+<p>Composing neural networks with a 2D input. a) The first network (from figure 3.8) has three hidden units and takes two inputs x1 and x2 and returns a scalar output y. This is passed into a second network with two hidden units to produce y ′. b) The first network produces a function consisting of seven linear regions, one of which is flat. c) The second network defines a function comprising two linear regions in y ∈ [−1, 1]. d) When these networks are composed, each of the six non-flat regions from the first network is divided into two new regions by the second network to create a total of 13 linear regions.</p>
+<p><img src="assets/Chap04/DeepFold.svg" style="filter: invert(1);" width="100%"></p>
+<p>Deep networks as folding input space. a) One way to think about the first network from figure 4.1 is that it “folds” the input space back on top of itself. b) The second network applies its function to the folded space. c) The final output is revealed by “unfolding” again.</p>
+<p><img src="assets/Chap04/DeepTwoLayer.svg" style="filter: invert(1);" width="100%"></p>
+<p>Neural network with one input, one output, and two hidden layers, each containing three hidden units.</p>
+</section>
+<section id="deep-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="deep-neural-networks">Deep Neural Networks</h2>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_in}
 h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
 h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
@@ -366,6 +393,15 @@ y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\t
 &amp;&amp;\hspace{0.55cm}+\phi'_{2}\mbox{a}[\psi_{20} + \psi_{21}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{23}\mbox{a}[\theta_{30} + \theta_{31}x]] \nonumber\\
 &amp;&amp;\hspace{0.55cm}+\phi'_{3}\mbox{a}[\psi_{30} + \psi_{31}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{32}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{33}\mbox{a}[\theta_{30} + \theta_{31}x]],\nonumber \\
 \end{eqnarray}\]</span></p>
+<section id="hyperparameters" class="level3">
+<h3 class="anchored" data-anchor-id="hyperparameters">Hyperparameters</h3>
+<p><img src="assets/Chap04/DeepBuildUp.svg" style="filter: invert(1);" width="100%"></p>
+<p>Computation for the deep network in figure 4.4. a–c) The inputs to the second hidden layer (i.e., the pre-activations) are three piecewise linear functions where the “joints” between the linear regions are at the same places (see figure 3.6). d–f) Each piecewise linear function is clipped to zero by the ReLU activation function. g–i) These clipped functions are then weighted with parameters ϕ ′ 1, ϕ ′ 2, and ϕ ′ 3, respectively. j) Finally, the clipped and weighted functions are summed and an offset ϕ ′ 0 that controls the overall height is added. (Interactive figure)</p>
+<p><img src="assets/Chap04/DeepKLayer.svg" style="filter: invert(1);" width="100%"></p>
+<p>Matrix notation for network with Di = 3-dimensional input x, Do = 2- dimensional output y, and K = 3 hidden layers h1, h2, and h3 of dimensions D1 = 4, D2 = 2, and D3 = 3 respectively. The weights are stored in matrices Ωk that multiply the activations from the preceding layer to create the pre-activations at the subsequent layer. For example, the weight matrix Ω1 that computes the pre-activations at h2 from the activations at h1 has dimension 2×4. It is applied to the four hidden units in layer one and creates the inputs to the two hidden units at layer two. The biases are stored in vectors βk and have the dimension of the layer into which they feed. For example, the bias vector β2 is length three because layer h3 contains three hidden units.</p>
+</section>
+<section id="matrix-notation" class="level3">
+<h3 class="anchored" data-anchor-id="matrix-notation">Matrix Notation</h3>
 <p><span class="math display">\[\begin{eqnarray}
   \begin{bmatrix}
   h_{1} \\ h_{2} \\ h_{3}
@@ -388,6 +424,9 @@ y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\t
   \mathbf{h}' &amp;=&amp; \mbox{\bf a}\left[\boldsymbol\psi_{0}+\boldsymbol\Psi \mathbf{h}\right] \nonumber \\
   y' &amp;=&amp; \phi'_{0} + \boldsymbol\phi' \mathbf{h}',
 \end{eqnarray}\]</span></p>
+</section>
+<section id="general-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="general-formulation">General formulation</h3>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_la1}
   \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
   \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}]\nonumber \\
@@ -396,6 +435,30 @@ y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\t
   \mathbf{h}_{K} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{K-1} +\boldsymbol\Omega_{K-1}\mathbf{h}_{K-1}] \nonumber\\
   \mathbf{y} &amp;=&amp; \boldsymbol\beta_{K} +\boldsymbol\Omega_{K}\mathbf{h}_{K}.
 \end{eqnarray}\]</span></p>
+</section>
+</section>
+<section id="shallow-vs.-deep-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="shallow-vs.-deep-neural-networks">Shallow vs.&nbsp;deep neural networks</h2>
+<section id="ability-to-approximate-different-functions" class="level3">
+<h3 class="anchored" data-anchor-id="ability-to-approximate-different-functions">Ability to approximate different functions</h3>
+</section>
+<section id="number-of-linear-regresions-per-parameter" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-linear-regresions-per-parameter">Number of linear regresions per parameter</h3>
+</section>
+<section id="depth-efficiency" class="level3">
+<h3 class="anchored" data-anchor-id="depth-efficiency">Depth efficiency</h3>
+</section>
+<section id="large-structured-inputs" class="level3">
+<h3 class="anchored" data-anchor-id="large-structured-inputs">Large, structured inputs</h3>
+<p><img src="assets/Chap04/DeepParams.svg" style="filter: invert(1);" width="100%"></p>
+<p>The maximum number of linear regions for neural networks increases rapidly with the network depth. a) Network with Di = 1 input. Each curve represents a fixed number of hidden layers K, as we vary the number of hidden units D per layer. For a fixed parameter budget (horizontal position), deeper networks produce more linear regions than shallower ones. A network with K = 5 layers and D = 10 hidden units per layer has 471 parameters (highlighted point) and can produce 161,051 regions. b) Network with Di = 10 inputs. Each subsequent point along a curve represents ten hidden units. Here, a model with K = 5 layers and D = 50 hidden units per layer has 10,801 parameters (highlighted point) and can create more than 1040 linear regions.</p>
+</section>
+<section id="training-and-generalization" class="level3">
+<h3 class="anchored" data-anchor-id="training-and-generalization">Training and generalization</h3>
+<p><img src="assets/Chap04/DeepConcatQuestion.svg" style="filter: invert(1);" width="100%"></p>
+<p>Composition of two networks for problem 4.1. a) The output y of the first network becomes the input to the second. b) The first network computes this function with output values y ∈ [−1, 1]. c) The second network computes this function on the input range y ∈ [−1, 1].</p>
+<p><img src="assets/Chap04/DeepProbZeroCross.svg" style="filter: invert(1);" width="100%"></p>
+<p>Hidden unit activations for problem 4.8. a) First hidden unit has a joint at position x = 1/6 and a slope of one in the active region. b) Second hidden unit has a joint at position x = 2/6 and a slope of one in the active region. c) Third hidden unit has a joint at position x = 4/6 and a slope of minus one in the active region.</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_la2}
   \mathbf{y}\!\! &amp;\!\!=\!\!&amp; \!\!\boldsymbol\beta_{K} +\boldsymbol\Omega_{K}\mathbf{a}\left[\boldsymbol\beta_{K-1} +\boldsymbol\Omega_{K-1}\mathbf{a}\left[\ldots
   \boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{a}\left[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{a}\left[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}\right]\right]\ldots\right]\right].\nonumber \\
@@ -408,6 +471,7 @@ y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\t
 \end{eqnarray}\]</span></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

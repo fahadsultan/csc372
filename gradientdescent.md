@@ -1,9 +1,39 @@
-# Gradient Descent
+---
+title: Gradient Descent
+---
 
 ::: {.callout-tip}
 ## Slides
 [Slides](https://docs.google.com/presentation/d/1w5PoGsG-RurZ3QpOfFATrXx5ocZJ6e5JKWoIL05Fydk/edit?slide=id.g3345ec7eb95_0_2#slide=id.g3345ec7eb95_0_2)
 ::: 
+
+
+\begin{eqnarray}
+ \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr].
+ \end{eqnarray}
+
+
+
+\begin{eqnarray}
+  \frac{\partial L}{\partial \boldsymbol\phi} = \begin{bmatrix}\frac{\partial L}{\partial \phi_{0}} \\[5pt] \frac{\partial L}{\partial \phi_{1}}\\ \vdots \\[5pt] \frac{\partial L}{\partial \phi_{N}}\end{bmatrix}.
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:train_gradient_descent}
+  \boldsymbol\phi\longleftarrow\boldsymbol\phi - \alpha \cdot \frac{\partial L}{\partial \boldsymbol\phi},
+  \end{eqnarray}
+
+## Linear regression example
+
+
+\begin{eqnarray}
+  y &=& \mbox{f}[x,\boldsymbol\phi]\nonumber \\
+  &=& \phi_{0} + \phi_{1}x.
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:train_lr_cost_function}
+  L[\boldsymbol\phi] \hspace{0.2cm}= \hspace{0.2cm}\sum_{i=1}^{I} \ell_{i} &=& \sum_{i=1}^{I} \left(\mbox{f}[x_i,\boldsymbol\phi]-y_{i}\right)^{2}\nonumber \\
+  &=& \sum_{i=1}^{I} \left(\phi_{0}+\phi_{1}x_{i}-y_{i}\right)^{2},
+ \end{eqnarray}
 
 <img src="assets/Chap06/TrainLRMin.svg" style="filter: invert(1);" width="100%">
 
@@ -18,6 +48,27 @@ model with the parameters at point 0 (lightest line) describes the data very bad
 but each successive iteration improves the fit. The model with the parameters at
 point 4 (darkest line) is already a reasonable description of the training data.
 
+
+
+\begin{eqnarray}\label{eq:train_linear_deriv1}
+  \frac{\partial L}{\partial \boldsymbol\phi} = \frac{\partial}{\partial \boldsymbol\phi}\sum_{i=1}^{I} \ell_{i} = \sum_{i=1}^{I} \frac{\partial \ell_{i}}{\partial \boldsymbol\phi},
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:train_linear_deriv2}
+  \frac{\partial \ell_{i}}{\partial \boldsymbol\phi} = \begin{bmatrix}\frac{\partial \ell_{i}}{\partial \phi_{0}}\\\vspace{-0.2cm}\\\frac{\partial \ell_{i}}{\partial \phi_{1}}\end{bmatrix} = \begin{bmatrix}2(\phi_{0}+\phi_{1}x_{i}-y_{i})\\ \vspace{-0.2cm}\\ 2x_{i}(\phi_{0}+\phi_{1}x_{i}-y_{i})\end{bmatrix}.
+ \end{eqnarray}
+
+### Gabor model example
+
+
+\begin{eqnarray}\label{eq:train_gabor}
+ \mbox{f}[x,\boldsymbol\phi] = \sin[\phi_0 + 0.06\cdot\phi_{1}x]\cdot \exp\left(-\frac{(\phi_0+0.06\cdot\phi_{1}x)^2}{32.0}\right).
+ \end{eqnarray}
+
+\begin{eqnarray}
+  L[\boldsymbol\phi] = \sum_{i=1}^{I}\left(\mbox{f}[x_{i},\boldsymbol\phi]-y_{i}\right)^2.
+ \end{eqnarray}
+
 <img src="assets/Chap06/TrainGaborModel.svg" style="filter: invert(1);" width="100%">
 
 Gabor model. This nonlinear model maps scalar input x to scalar
@@ -28,7 +79,7 @@ Parameter ϕ1 ∈ R+ squeezes the function along the x-axis relative to the cent
 As ϕ1 increases, the function narrows. a–c) Model with different parameters.
 (Interactive figure)
 
-<img src="assets/Chap06/TrainGaborData.svg" style="filter: invert(1);">
+<img src="assets/Chap06/TrainGaborData.svg" style="filter: invert(1);" align="right" width="40%">
 
 Training data for fitting the
 Gabor model. The training dataset contains
@@ -38,6 +89,8 @@ sampling xi ∈ [−15, 15], passing the
 samples through a Gabor model with parameters
 ϕ = [0.0, 16.6]T , and adding
 normally distributed noise.
+
+### Local minima and saddle points
 
 <img src="assets/Chap06/TrainGaborMin.svg" style="filter: invert(1);" width="100%">
 
@@ -61,6 +114,8 @@ this valley (e.g., point 2), it will descend toward one of the local minima. b)
 Stochastic gradient descent adds noise to the optimization process, so it is possible
 to escape from the wrong valley (e.g., point 2) and still reach the global minimum.
 
+## Stochastic gradient descent
+
 <img src="assets/Chap06/TrainGaborSGDIter.svg" style="filter: invert(1);" width="100%">
 
 Alternative view of SGD for the Gabor model with a batch size three.
@@ -76,6 +131,26 @@ downhill with respect to the batch loss function but in the locally uphill direc
 with respect to the global loss function in panel (a). This is how SGD can escape
 local minima.
 
+### Batches and epochs
+
+
+\begin{eqnarray}\label{eq:train_sgd}
+  \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \cdot \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
+ \end{eqnarray}
+
+### Properties of stochastic gradient descent
+
+## Momentum 
+
+
+\begin{eqnarray}\label{eq:train_momentum}
+  \mathbf{m}_{t+1} &\leftarrow& \beta \cdot \mathbf{m}_t + (1-\beta) \sum_{i\in\mathcal{B}_t}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \boldsymbol\phi_{t+1} &\leftarrow&\boldsymbol\phi_{t} - \alpha \cdot \mathbf{m}_{t+1},
+ \end{eqnarray}
+
+### Nesterov accelerated momentum
+
+
 <img src="assets/Chap06/TrainMomentum.svg" style="filter: invert(1);" width="100%">
 
 Figure 6.7 Stochastic gradient descent with momentum. a) Regular stochastic
@@ -84,7 +159,12 @@ term, the change at the current step is a weighted combination of the previous
 change and the gradient computed from the batch. This smooths out the
 trajectory and increases the speed of convergence.
 
-<img src="assets/Chap06/TrainNesterov.svg" style="filter: invert(1);" width="100%">
+\begin{eqnarray}\label{eq:train_nesterov}
+  \mathbf{m}_{t+1} &\leftarrow& \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}-\alpha\beta\cdot\mathbf{m}_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \boldsymbol\phi_{t+1} &\leftarrow&\boldsymbol\phi_{t} - \alpha\cdot \mathbf{m}_{t+1},
+ \end{eqnarray}
+
+<img src="assets/Chap06/TrainNesterov.svg" style="filter: invert(1);" width="40%" align="right">
 
 Nesterov accelerated momentum.
 The solution has traveled along
@@ -100,6 +180,19 @@ first applies the momentum term
 (moving from point 1 to point 4) and
 then measures the gradient and applies
 an update to arrive at point 5.
+
+## Adam 
+
+
+\begin{eqnarray}
+  \mathbf{m}_{t+1} &\leftarrow& \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
+  \mathbf{v}_{t+1} &\leftarrow& \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2.
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \boldsymbol\phi_{t+1} &\leftarrow & \boldsymbol\phi_{t} - \alpha \cdot \frac{\mathbf{m}_{t+1}}{\sqrt{\mathbf{v}_{t+1}}+\epsilon},
+ \end{eqnarray}
+
 
 <img src="assets/Chap06/TrainADAM.svg" style="filter: invert(1);" width="100%">
 
@@ -117,83 +210,6 @@ back and forth around it (here between the last two points). d) The Adam
 algorithm uses momentum in both the estimated gradient and the normalization
 term, which creates a smoother path.
 
-<img src="assets/Chap06/TrainLineSearch.svg" style="filter: invert(1);" width="100%">
-
-Line search using the bracketing approach. a) The current solution is
-at position a (orange point), and we wish to search the region [a, d] (gray shaded
-area). We define two points b, c interior to the search region and evaluate the loss
-function at these points. Here L[b] > L[c], so we eliminate the range [a, b]. b) We
-now repeat this procedure in the refined search region and find that L[b] < L[c],
-so we eliminate the range [c, d]. c) We repeat this process until this minimum is
-closely bracketed.
-
-<img src="assets/Chap06/TrainConvexProb.svg" style="filter: invert(1);" width="100%">
-
-Three 1D loss functions for problem 6.6.
-
-
-
-
-\begin{eqnarray}
- \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr].
- \end{eqnarray}
-
-\begin{eqnarray}
-  \frac{\partial L}{\partial \boldsymbol\phi} = \begin{bmatrix}\frac{\partial L}{\partial \phi_{0}} \\[5pt] \frac{\partial L}{\partial \phi_{1}}\\ \vdots \\[5pt] \frac{\partial L}{\partial \phi_{N}}\end{bmatrix}.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_gradient_descent}
-  \boldsymbol\phi\longleftarrow\boldsymbol\phi - \alpha \cdot \frac{\partial L}{\partial \boldsymbol\phi},
-  \end{eqnarray}
-
-\begin{eqnarray}
-  y &=& \mbox{f}[x,\boldsymbol\phi]\nonumber \\
-  &=& \phi_{0} + \phi_{1}x.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_lr_cost_function}
-  L[\boldsymbol\phi] \hspace{0.2cm}= \hspace{0.2cm}\sum_{i=1}^{I} \ell_{i} &=& \sum_{i=1}^{I} \left(\mbox{f}[x_i,\boldsymbol\phi]-y_{i}\right)^{2}\nonumber \\
-  &=& \sum_{i=1}^{I} \left(\phi_{0}+\phi_{1}x_{i}-y_{i}\right)^{2},
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_linear_deriv1}
-  \frac{\partial L}{\partial \boldsymbol\phi} = \frac{\partial}{\partial \boldsymbol\phi}\sum_{i=1}^{I} \ell_{i} = \sum_{i=1}^{I} \frac{\partial \ell_{i}}{\partial \boldsymbol\phi},
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_linear_deriv2}
-  \frac{\partial \ell_{i}}{\partial \boldsymbol\phi} = \begin{bmatrix}\frac{\partial \ell_{i}}{\partial \phi_{0}}\\\vspace{-0.2cm}\\\frac{\partial \ell_{i}}{\partial \phi_{1}}\end{bmatrix} = \begin{bmatrix}2(\phi_{0}+\phi_{1}x_{i}-y_{i})\\ \vspace{-0.2cm}\\ 2x_{i}(\phi_{0}+\phi_{1}x_{i}-y_{i})\end{bmatrix}.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_gabor}
- \mbox{f}[x,\boldsymbol\phi] = \sin[\phi_0 + 0.06\cdot\phi_{1}x]\cdot \exp\left(-\frac{(\phi_0+0.06\cdot\phi_{1}x)^2}{32.0}\right).
- \end{eqnarray}
-
-\begin{eqnarray}
-  L[\boldsymbol\phi] = \sum_{i=1}^{I}\left(\mbox{f}[x_{i},\boldsymbol\phi]-y_{i}\right)^2.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_sgd}
-  \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \cdot \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_momentum}
-  \mathbf{m}_{t+1} &\leftarrow& \beta \cdot \mathbf{m}_t + (1-\beta) \sum_{i\in\mathcal{B}_t}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \boldsymbol\phi_{t+1} &\leftarrow&\boldsymbol\phi_{t} - \alpha \cdot \mathbf{m}_{t+1},
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train_nesterov}
-  \mathbf{m}_{t+1} &\leftarrow& \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}-\alpha\beta\cdot\mathbf{m}_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \boldsymbol\phi_{t+1} &\leftarrow&\boldsymbol\phi_{t} - \alpha\cdot \mathbf{m}_{t+1},
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mathbf{m}_{t+1} &\leftarrow& \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \mathbf{v}_{t+1} &\leftarrow& \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2.
- \end{eqnarray}
-
-\begin{eqnarray}
- \boldsymbol\phi_{t+1} &\leftarrow & \boldsymbol\phi_{t} - \alpha \cdot \frac{\mathbf{m}_{t+1}}{\sqrt{\mathbf{v}_{t+1}}+\epsilon},
- \end{eqnarray}
 
 \begin{eqnarray}\label{eq:train_adam}
   \mathbf{m}_{t+1} &\leftarrow& \beta \cdot \mathbf{m}_{t} + (1-\beta) \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
@@ -213,6 +229,28 @@ Three 1D loss functions for problem 6.6.
   \mathbf{m}_{t+1} &\leftarrow& \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
   \mathbf{v}_{t+1} &\leftarrow& \gamma \cdot \mathbf{v}_{t} + (1-\gamma) \left(\sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2,
  \end{eqnarray}
+
+## Training algorithm hyperparameters 
+
+<img src="assets/Chap06/TrainLineSearch.svg" style="filter: invert(1);" width="100%">
+
+Line search using the bracketing approach. a) The current solution is
+at position a (orange point), and we wish to search the region [a, d] (gray shaded
+area). We define two points b, c interior to the search region and evaluate the loss
+function at these points. Here L[b] > L[c], so we eliminate the range [a, b]. b) We
+now repeat this procedure in the refined search region and find that L[b] < L[c],
+so we eliminate the range [c, d]. c) We repeat this process until this minimum is
+closely bracketed.
+
+<img src="assets/Chap06/TrainConvexProb.svg" style="filter: invert(1);" width="100%">
+
+Three 1D loss functions for problem 6.6.
+
+
+
+
+
+
 
 \begin{eqnarray}
  \mathbf{H}[\boldsymbol\phi] = \begin{bmatrix} \frac{\partial^{2} L}{\partial\phi_{0}^{2}} & \frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{1}} &\hdots &\frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{N}}\\ 

@@ -1,10 +1,13 @@
-# Performance
-
+---
+title: Performance
+---
 
 ::: {.callout-tip}
 ## Slides
 [Slides](https://docs.google.com/presentation/d/1hRlve2y5AhwnZcYESPKUuiQHJkqkJhMCppidV3rnoLQ/edit?slide=id.g3415f9e1348_0_0#slide=id.g3415f9e1348_0_0)
 ::: 
+
+## Training a simple model 
 
 <img src="assets/Chap08/PerfMNIST1D.svg" style="filter: invert(1);" width="100%">
 
@@ -22,7 +25,7 @@ as a function of the training step. The training loss decreases steadily toward
 zero. The test loss decreases at first but subsequently increases as the model
 becomes increasingly confident about its (wrong) predictions.
 
-<center><img src="assets/Chap08/PerfDataSet.svg" style="filter: invert(1);" width="60%"></center>
+<center><img src="assets/Chap08/PerfDataSet.svg" style="filter: invert(1);" width="40%" align="right"></center>
 
 Regression function. Solid
 black line shows ground truth function.
@@ -36,6 +39,8 @@ function at xi and adding Gaussian noise
 (gray region shows ±2 standard deviations).
 The test data are generated in
 the same way.
+
+## Sources of error
 
 <img src="assets/Chap08/PerfModel.svg" style="filter: invert(1);" width="100%">
 
@@ -61,6 +66,52 @@ a slightly different function (cyan line) that reflects idiosyncrasies of the tr
 data. This provides an additional source of error (gray region represents two
 standard deviations). Figure 8.6 shows how this region was calculated.
 
+### Noise, bias and variance 
+
+### Mathematical formulation of test error 
+
+
+\begin{eqnarray}
+  \mu[x] = \mathbb{E}_{y}[y[x]] = \int y[x] Pr(y|x) dy,
+ \end{eqnarray}
+
+\begin{eqnarray}
+  L[x] &=& \bigl(\mbox{f}[x,\boldsymbol\phi]-y[x]\bigr)^2 \\
+  &=& \Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)+\bigl(\mu[x]-y[x]\bigr)\Bigr)^2\nonumber \\
+  &=& \bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2 + 2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]-y[x]\bigr) + \bigl(\mu[x]-y[x]\bigr)^2,\nonumber
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:perf_biasvariance_plus_noise}
+  \mathbb{E}_{y}\bigl[L[x]\bigr]
+  &=&\mathbb{E}_{y}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\bigl(\mu[x]\!-\!y[x]\bigr)+\bigl(\mu[x]\!-\!y[x]\bigr)^2\Bigr]\nonumber \\
+  &=& \bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]\!-\!\mathbb{E}_y\left[y[x]\right]\bigr)+\mathbb{E}_y\left[(\mu[x]\!-\!y[x])^2\right]\nonumber\\ 
+  &=&\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\cdot 0 +\mathbb{E}_y\left[\bigl(\mu[x]\!-\!y[x]\bigr)^2\right]\nonumber \\
+  &=&\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2+\sigma^{2},
+ \end{eqnarray}
+
+
+\begin{eqnarray}
+  \mbox{f}_{\mu}[x] = \mathbb{E}_{\mathcal{D}}\Bigl[ \mbox{f}\bigl[x,\boldsymbol\phi[\mathcal{D}]\bigr] \Bigr].
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\!\mu[x]\bigr)^2 &&\\
+  &&\hspace{-2.5cm}=\Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)+\bigl( \mbox{f}_{\mu}[x]-\mu[x]\bigr)\Bigr)^2 \nonumber \\ 
+  &&\hspace{-2.5cm}=\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)+\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2.\nonumber
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:perf_bv2}
+ \mathbb{E}_{\mathcal{D}}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]-\mu[x]\bigr)^2\Bigr] = \mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]+\bigl(\mbox{f}_{\mu}[x]-\mu[x]\bigr)^2,
+ \end{eqnarray}
+
+## Reducing error 
+
+### Reducing variance 
+
+### Reducing bias 
+
+### Bias-variance trade-off
+
 <img src="assets/Chap08/PerfVariance.svg" style="filter: invert(1);" width="100%">
 
 Reducing variance by increasing training data. a–c) The three-region
@@ -80,6 +131,8 @@ increases, and the model becomes able to fit the true function closely; the bias
 (gray region) decreases. d–f) Unfortunately, increasing the model capacity has
 the side-effect of increasing the variance term (gray region). This is known as the
 bias-variance trade-off.
+
+## Double Descent 
 
 <img src="assets/Chap08/PerfCapacityVariance.svg" style="filter: invert(1);" width="100%">
 
@@ -105,6 +158,8 @@ but the variance (solid cyan line)
 increases. The sum of these two terms
 (dashed gray line) is minimized when the
 capacity is four.
+
+### Explanation 
 
 <img src="assets/Chap08/PerfDoubleDescent.svg" style="filter: invert(1);" width="100%">
 
@@ -141,6 +196,8 @@ will not be smooth. c–f) However, as we add more hidden units, the model has
 the ability to interpolate between the points more smoothly (smoothest possible
 curve plotted in each case). However, unlike in this figure, it is not obliged to.
 
+## Choosing hyperparameters
+
 <img src="assets/Chap08/PerfSmoothness2.svg" style="filter: invert(1);" width="100%">
 
 Regularization. a–c) Each of the three fitted curves passes through
@@ -165,37 +222,6 @@ small. Although the most likely point is at the mean of the distribution, the
 typical samples are found in a relatively narrow shell.
 
 
-\begin{eqnarray}
-  \mu[x] = \mathbb{E}_{y}[y[x]] = \int y[x] Pr(y|x) dy,
- \end{eqnarray}
-
-\begin{eqnarray}
-  L[x] &=& \bigl(\mbox{f}[x,\boldsymbol\phi]-y[x]\bigr)^2 \\
-  &=& \Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)+\bigl(\mu[x]-y[x]\bigr)\Bigr)^2\nonumber \\
-  &=& \bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2 + 2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]-y[x]\bigr) + \bigl(\mu[x]-y[x]\bigr)^2,\nonumber
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:perf_biasvariance_plus_noise}
-  \mathbb{E}_{y}\bigl[L[x]\bigr]
-  &=&\mathbb{E}_{y}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\bigl(\mu[x]\!-\!y[x]\bigr)+\bigl(\mu[x]\!-\!y[x]\bigr)^2\Bigr]\nonumber \\
-  &=& \bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]\!-\!\mathbb{E}_y\left[y[x]\right]\bigr)+\mathbb{E}_y\left[(\mu[x]\!-\!y[x])^2\right]\nonumber\\ 
-  &=&\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\cdot 0 +\mathbb{E}_y\left[\bigl(\mu[x]\!-\!y[x]\bigr)^2\right]\nonumber \\
-  &=&\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2+\sigma^{2},
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mbox{f}_{\mu}[x] = \mathbb{E}_{\mathcal{D}}\Bigl[ \mbox{f}\bigl[x,\boldsymbol\phi[\mathcal{D}]\bigr] \Bigr].
- \end{eqnarray}
-
-\begin{eqnarray}
-  \bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\!\mu[x]\bigr)^2 &&\\
-  &&\hspace{-2.5cm}=\Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)+\bigl( \mbox{f}_{\mu}[x]-\mu[x]\bigr)\Bigr)^2 \nonumber \\ 
-  &&\hspace{-2.5cm}=\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)+\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2.\nonumber
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:perf_bv2}
- \mathbb{E}_{\mathcal{D}}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]-\mu[x]\bigr)^2\Bigr] = \mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]+\bigl(\mbox{f}_{\mu}[x]-\mu[x]\bigr)^2,
- \end{eqnarray}
 
 \begin{eqnarray}\label{eq:perf_bias_variance_final}
  \mathbb{E}_{\mathcal{D}}\Bigl[\mathbb{E}_{y}[L[x]]\Bigr] = 

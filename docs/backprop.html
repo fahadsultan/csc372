@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>backprop</title>
+<title>Backpropagation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -279,18 +279,47 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#backpropagation" id="toc-backpropagation" class="nav-link active" data-scroll-target="#backpropagation">Backpropagation</a></li>
+  <li><a href="#problem-definitions" id="toc-problem-definitions" class="nav-link active" data-scroll-target="#problem-definitions">Problem definitions</a></li>
+  <li><a href="#computing-derivatives" id="toc-computing-derivatives" class="nav-link" data-scroll-target="#computing-derivatives">Computing derivatives</a></li>
+  <li><a href="#toy-example" id="toc-toy-example" class="nav-link" data-scroll-target="#toy-example">Toy example</a></li>
+  <li><a href="#backpropagation-algorithm" id="toc-backpropagation-algorithm" class="nav-link" data-scroll-target="#backpropagation-algorithm">Backpropagation algorithm</a>
+  <ul class="collapse">
+  <li><a href="#backpropagation-algorithm-summary" id="toc-backpropagation-algorithm-summary" class="nav-link" data-scroll-target="#backpropagation-algorithm-summary">Backpropagation algorithm summary</a></li>
+  <li><a href="#algorithmic-differentiation" id="toc-algorithmic-differentiation" class="nav-link" data-scroll-target="#algorithmic-differentiation">Algorithmic differentiation</a></li>
+  <li><a href="#extension-to-arbitrary-computational-graphs" id="toc-extension-to-arbitrary-computational-graphs" class="nav-link" data-scroll-target="#extension-to-arbitrary-computational-graphs">Extension to arbitrary computational graphs</a></li>
+  </ul></li>
+  <li><a href="#parameter-initialization" id="toc-parameter-initialization" class="nav-link" data-scroll-target="#parameter-initialization">Parameter Initialization</a>
+  <ul class="collapse">
+  <li><a href="#initialization-for-forward-pass" id="toc-initialization-for-forward-pass" class="nav-link" data-scroll-target="#initialization-for-forward-pass">Initialization for forward pass</a></li>
+  <li><a href="#initialization-for-backward-pass" id="toc-initialization-for-backward-pass" class="nav-link" data-scroll-target="#initialization-for-backward-pass">Initialization for backward pass</a></li>
+  <li><a href="#initialization-for-both-forward-and-backward-pass" id="toc-initialization-for-both-forward-and-backward-pass" class="nav-link" data-scroll-target="#initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</a></li>
+  </ul></li>
+  <li><a href="#example-training-code" id="toc-example-training-code" class="nav-link" data-scroll-target="#example-training-code">Example training code</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Backpropagation</h1>
+</div>
 
 
 
-<section id="backpropagation" class="level1">
-<h1>Backpropagation</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -304,24 +333,8 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/18J7G3N0W3XRP6AX0RHrYfOgiPV_2NHDUMjjXkqI_knc/edit?slide=id.g33a6271ded3_0_0#slide=id.g33a6271ded3_0_0">Slides</a></p>
 </div>
 </div>
-<p><img src="assets/Chap07/Train2BPIntuitions.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation forward pass. The goal is to compute the derivatives of the loss ℓ with respect to each of the weights (arrows) and biases (not shown). In other words, we want to know how a small change to each parameter will affect the loss. Each weight multiplies the hidden unit at its source and contributes the result to the hidden unit at its destination. Consequently, the effects of any small change to the weight will be scaled by the activation of the source hidden unit. For example, the blue weight is applied to the second hidden unit at layer 1; if the activation of this unit doubles, then the effect of a small change to the blue weight will double too. Hence, to compute the derivatives of the weights, we need to calculate and store the activations at the hidden layers. This is known as the forward pass since it involves running the network equations sequentially.</p>
-<p><img src="assets/Chap07/Train2BPIntuitions2.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation backward pass. a) To compute how a change to a weight feeding into layer h3 (blue arrow) changes the loss, we need to know how the hidden unit in h3 changes the model output f and how f changes the loss (orange arrows). b) To compute how a small change to a weight feeding into h2 (blue arrow) changes the loss, we need to know (i) how the hidden unit in h2 changes h3, (ii) how h3 changes f , and (iii) how f changes the loss (orange arrows). c) Similarly, to compute how a small change to a weight feeding into h1 (blue arrow) changes the loss, we need to know how h1 changes h2 and how these changes propagate through to the loss (orange arrows). The backward pass first computes derivatives at the end of the network and then works backward to exploit the inherent redundancy of these computations.</p>
-<p><img src="assets/Chap07/Train2BP1.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation forward pass. We compute and store each of the intermediate variables in turn until we finally calculate the loss.</p>
-<p><img src="assets/Chap07/Train2BP2.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation backward pass #1. We work backward from the end of the function computing the derivatives ∂ℓi/∂fk and ∂ℓi/∂hk of the loss with respect to the intermediate quantities. Each derivative is computed from the previous one by multiplying by terms of the form ∂fk/∂hk or ∂hk/∂fk−1.</p>
-<p><img src="assets/Chap07/Train2BP3.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation backward pass #2. Finally, we compute the derivatives ∂ℓi/∂βk and ∂ℓi/∂ωk. Each derivative is computed by multiplying the term ∂ℓi/∂fk by ∂fk/∂βk or ∂fk/∂ωk as appropriate.</p>
-<center>
-<img src="assets/Chap07/Train2ReLUDeriv.svg" style="filter: invert(1);" width="50%">
-</center>
-<p>Derivative of rectified linear unit. The rectified linear unit (orange curve) returns zero when the input is less than zero and returns the input otherwise. Its derivative (cyan curve) returns zero when the input is less than zero (since the slope here is zero) and one when the input is greater than zero (since the slope here is one).</p>
-<p><img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%"></p>
-<p>Weight initialization. Consider a deep network with 50 hidden layers and Dh = 100 hidden units per layer. The network has a 100-dimensional input x initialized from a standard normal distribution, a single fixed target y = 0, and a least squares loss function. The bias vectors βk are initialized to zero, and the weight matrices Ωk are initialized with a normal distribution with mean zero and five different variances σ2Ω ∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (σ2Ω = 2/Dh = 0.02), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale). b) The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the exploding gradient and vanishing gradient problems, respectively.</p>
-<p><img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%"></p>
-<p>Computational graph for problem 7.12 and problem 7.13. Adapted from Domke (2010).</p>
+<section id="problem-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="problem-definitions">Problem definitions</h2>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
   \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}] \nonumber\\
@@ -337,6 +350,16 @@ Slides
 <p><span class="math display">\[\begin{eqnarray}
   \frac{\partial \ell_{i}}{\partial\boldsymbol\beta_{k}} \quad\quad \mbox{and} \quad\quad \frac{\partial \ell_{i}}{\partial\boldsymbol\Omega_{k}},
 \end{eqnarray}\]</span></p>
+</section>
+<section id="computing-derivatives" class="level2">
+<h2 class="anchored" data-anchor-id="computing-derivatives">Computing derivatives</h2>
+<p><img src="assets/Chap07/Train2BPIntuitions.svg" style="filter: invert(1);" width="100%"></p>
+<p>Backpropagation forward pass. The goal is to compute the derivatives of the loss ℓ with respect to each of the weights (arrows) and biases (not shown). In other words, we want to know how a small change to each parameter will affect the loss. Each weight multiplies the hidden unit at its source and contributes the result to the hidden unit at its destination. Consequently, the effects of any small change to the weight will be scaled by the activation of the source hidden unit. For example, the blue weight is applied to the second hidden unit at layer 1; if the activation of this unit doubles, then the effect of a small change to the blue weight will double too. Hence, to compute the derivatives of the weights, we need to calculate and store the activations at the hidden layers. This is known as the forward pass since it involves running the network equations sequentially.</p>
+<p><img src="assets/Chap07/Train2BPIntuitions2.svg" style="filter: invert(1);" width="100%"></p>
+<p>Backpropagation backward pass. a) To compute how a change to a weight feeding into layer h3 (blue arrow) changes the loss, we need to know how the hidden unit in h3 changes the model output f and how f changes the loss (orange arrows). b) To compute how a small change to a weight feeding into h2 (blue arrow) changes the loss, we need to know (i) how the hidden unit in h2 changes h3, (ii) how h3 changes f , and (iii) how f changes the loss (orange arrows). c) Similarly, to compute how a small change to a weight feeding into h1 (blue arrow) changes the loss, we need to know how h1 changes h2 and how these changes propagate through to the loss (orange arrows). The backward pass first computes derivatives at the end of the network and then works backward to exploit the inherent redundancy of these computations.</p>
+</section>
+<section id="toy-example" class="level2">
+<h2 class="anchored" data-anchor-id="toy-example">Toy example</h2>
 <p><span class="math display">\[\begin{eqnarray}
   \mbox{f}[x,\boldsymbol\phi] = \beta_3+\omega_3\cdot\cos\Bigl[\beta_2+\omega_2\cdot\exp\bigl[\beta_1+\omega_1\cdot\sin[\beta_0+\omega_0\cdot x]\bigr]\Bigr],
 \end{eqnarray}\]</span></p>
@@ -352,6 +375,8 @@ Slides
 &amp;&amp;\hspace{0.5cm}\cdot \omega_1\omega_2\omega_3\cdot x_i\cdot\cos[\beta_0+\omega_0 \cdot x_i]\cdot\exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\nonumber\\
 &amp;&amp; \hspace{1cm}\cdot \sin\biggl[\beta_2+\omega_2\cdot \exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\biggr].
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap07/Train2BP1.svg" style="filter: invert(1);" width="100%"></p>
+<p>Backpropagation forward pass. We compute and store each of the intermediate variables in turn until we finally calculate the loss.</p>
 <p><span class="math display">\[\begin{eqnarray}
 f_{0} &amp;=&amp; \beta_{0} + \omega_{0}\cdot x_i\nonumber\\
 h_{1} &amp;=&amp; \sin[f_{0}]\nonumber\\
@@ -372,6 +397,8 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial h_{3}} =\frac{\partial f_{3}}{\partial h_{3}} \frac{\partial \ell_i}{\partial f_{3}} .
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap07/Train2BP2.svg" style="filter: invert(1);" width="100%"></p>
+<p>Backpropagation backward pass #1. We work backward from the end of the function computing the derivatives ∂ℓi/∂fk and ∂ℓi/∂hk of the loss with respect to the intermediate quantities. Each derivative is computed from the previous one by multiplying by terms of the form ∂fk/∂hk or ∂hk/∂fk−1.</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial f_{2}} &amp;=&amp; \frac{\partial h_{3}}{\partial f_{2}}\left(
 \frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right)
@@ -388,9 +415,15 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial f_{k}}{\partial \beta_{k}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{k}}{\partial \omega_{k}} &amp;=&amp; h_{k}.
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap07/Train2BP3.svg" style="filter: invert(1);" width="100%"></p>
+<p>Backpropagation backward pass #2. Finally, we compute the derivatives ∂ℓi/∂βk and ∂ℓi/∂ωk. Each derivative is computed by multiplying the term ∂ℓi/∂fk by ∂fk/∂βk or ∂fk/∂ωk as appropriate.</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial f_{0}}{\partial \beta_{0}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{0}}{\partial \omega_{0}} &amp;=&amp; x_{i}.
 \end{eqnarray}\]</span></p>
+</section>
+<section id="backpropagation-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="backpropagation-algorithm">Backpropagation algorithm</h2>
+<p><strong>Forward Pass</strong></p>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{f}_{0} &amp;=&amp; \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
   \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\mathbf{f}_{0}]\nonumber \\
@@ -401,6 +434,11 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
   \mathbf{f}_{3}&amp;=&amp; \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\nonumber \\
   \ell_{i} &amp;=&amp; \mbox{l}[\mathbf{f}_{3},y_{i}],
 \end{eqnarray}\]</span></p>
+<center>
+<img src="assets/Chap07/Train2ReLUDeriv.svg" style="filter: invert(1);" align="right" width="50%">
+</center>
+<p>Derivative of rectified linear unit. The rectified linear unit (orange curve) returns zero when the input is less than zero and returns the input otherwise. Its derivative (cyan curve) returns zero when the input is less than zero (since the slope here is zero) and one when the input is greater than zero (since the slope here is one).</p>
+<p><strong>Backward Pass # 1</strong></p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_backward1}
 \frac{\partial \ell_{i}}{\partial \mathbf{f}_{2}}=\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}.
 \end{eqnarray}\]</span></p>
@@ -413,6 +451,7 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 <p><span class="math display">\[\begin{eqnarray}
   \frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} = \frac{\partial}{\partial \mathbf{h}_{3}}\left(\boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\right) = \boldsymbol\Omega_{3}^{T}.
   \end{eqnarray}\]</span></p>
+<p><strong>Backward Pass # 2</strong></p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &amp;=&amp; \frac{\partial \mathbf{f}_{k}}{\partial \boldsymbol\beta_k} \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber\\
 &amp;=&amp; \frac{\partial}{\partial \boldsymbol\beta_k}\left(\boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\right) \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber \\
@@ -423,11 +462,15 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 &amp;=&amp; \frac{\partial}{\partial \boldsymbol\Omega_k}\left(\boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\right) \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber \\
 &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}}\mathbf{h}_k^{T}.
 \end{eqnarray}\]</span></p>
+<section id="backpropagation-algorithm-summary" class="level3">
+<h3 class="anchored" data-anchor-id="backpropagation-algorithm-summary">Backpropagation algorithm summary</h3>
+<p><strong>Forward Pass</strong></p>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{f}_{0} &amp;=&amp; \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
   \mathbf{h}_{k} &amp;=&amp; \mathbf{a}[\mathbf{f}_{k-1}]\hspace{2.76cm} k\in\{1,2,\ldots, K\}\nonumber \\
   \mathbf{f}_{k} &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}.\hspace{2cm} k\in\{1,2,\ldots, K\}
 \end{eqnarray}\]</span></p>
+<p><strong>Backward Pass</strong></p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_bp_backward_summary}
 \frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_k} \hspace{4.1cm} k\in\{K,K-1,\ldots, 1\}\nonumber\\
 \frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_k} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_k}\mathbf{h}_{k}^{T}\hspace{3.65cm} k\in\{K,K-1,\ldots, 1\}\nonumber\\
@@ -437,10 +480,22 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 \frac{\partial \ell_{i}}{\partial \boldsymbol\beta_0} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_0} \nonumber\\
 \frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_0} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_0}\mathbf{x}_{i}^{T}.
 \end{eqnarray}\]</span></p>
+</section>
+<section id="algorithmic-differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="algorithmic-differentiation">Algorithmic differentiation</h3>
+</section>
+<section id="extension-to-arbitrary-computational-graphs" class="level3">
+<h3 class="anchored" data-anchor-id="extension-to-arbitrary-computational-graphs">Extension to arbitrary computational graphs</h3>
+</section>
+</section>
+<section id="parameter-initialization" class="level2">
+<h2 class="anchored" data-anchor-id="parameter-initialization">Parameter Initialization</h2>
 <p><span class="math display">\[\begin{eqnarray}
 \mathbf{f}_{k} &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\nonumber\\
 &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\textbf{a}[\mathbf{f}_{k-1}],
 \end{eqnarray}\]</span></p>
+<section id="initialization-for-forward-pass" class="level3">
+<h3 class="anchored" data-anchor-id="initialization-for-forward-pass">Initialization for forward pass</h3>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{h} &amp;=&amp; \mbox{\bf a}[\mathbf{f}],\nonumber \\
   \mathbf{f}' &amp;=&amp; \boldsymbol\beta +\boldsymbol\Omega\mathbf{h}
@@ -461,15 +516,29 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 <p><span class="math display">\[\begin{eqnarray}
 \sigma^{2}_{f'_{i}} = \sigma_\Omega^2 \sum_{j=1}^{D_h} \frac{\sigma_{f}^2}{2} = \frac{1}{2}D_{h} \sigma_\Omega^2 \sigma_{f}^2.
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%"></p>
+<p>Weight initialization. Consider a deep network with 50 hidden layers and Dh = 100 hidden units per layer. The network has a 100-dimensional input x initialized from a standard normal distribution, a single fixed target y = 0, and a least squares loss function. The bias vectors βk are initialized to zero, and the weight matrices Ωk are initialized with a normal distribution with mean zero and five different variances σ2Ω ∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (σ2Ω = 2/Dh = 0.02), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale). b) The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the exploding gradient and vanishing gradient problems, respectively.</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_forward}
 \sigma_\Omega^2 = \frac{2}{D_h},
 \end{eqnarray}\]</span></p>
+</section>
+<section id="initialization-for-backward-pass" class="level3">
+<h3 class="anchored" data-anchor-id="initialization-for-backward-pass">Initialization for backward pass</h3>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_back}
 \sigma_\Omega^2 = \frac{2}{D_{h'}},
 \end{eqnarray}\]</span></p>
+</section>
+<section id="initialization-for-both-forward-and-backward-pass" class="level3">
+<h3 class="anchored" data-anchor-id="initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</h3>
 <p><span class="math display">\[\begin{eqnarray}
 \sigma_\Omega^2 = \frac{4}{D_{h}+D_{h'}}.
 \end{eqnarray}\]</span></p>
+</section>
+</section>
+<section id="example-training-code" class="level2">
+<h2 class="anchored" data-anchor-id="example-training-code">Example training code</h2>
+<p><img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%"></p>
+<p>Computational graph for problem 7.12 and problem 7.13. Adapted from Domke (2010).</p>
 <p><span class="math display">\[\begin{eqnarray}
 y &amp;=&amp; \phi_{0}+\phi_{1}\mbox{a}\Bigl[\psi_{01} + \psi_{11}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{21}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr]\nonumber \\
 &amp;&amp;\hspace{0.55cm}+\phi_{2}\mbox{a}\Bigl[\psi_{02} + \psi_{12}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr],

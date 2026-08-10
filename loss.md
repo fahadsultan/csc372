@@ -1,13 +1,15 @@
-# Loss Functions 
-
+---
+title: Loss Functions 
+---
 
 ::: {.callout-tip}
 ## Slides
 [Slides](https://docs.google.com/presentation/d/1PJicP4dPwdDExcHPgTmzYyyfxGkWMxiidqPf03xPtIw/edit?slide=id.g32bda8ab1fc_2_75#slide=id.g32bda8ab1fc_2_75)
 ::: 
 
+## Maximum likelihood
 
-<img src="assets/Chap05/LossDataTypes.svg" style="filter: invert(1);">
+<img src="assets/Chap05/LossDataTypes.svg" style="filter: invert(1);" width="100%">
 
 Predicting distributions over outputs. a) Regression task, where the
 goal is to predict a real-valued output y from the input x based on training data
@@ -21,7 +23,23 @@ a different histogram over the four possible values of yi for each value of
 xi. c) To predict counts y ∈ {0, 1, 2, . . .} and d) direction y ∈ (−π, π], we use
 distributions defined over positive integers and circular domains, respectively.
 
-<img src="assets/Chap05/LossLog.svg" style="filter: invert(1);">
+### Computing a distribution over outputs
+
+### Maximum likelihood criterion 
+
+
+\begin{eqnarray}\label{eq:loss_max_like1}
+  \hat{\boldsymbol\phi} &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i})\right]\nonumber\\
+  &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\boldsymbol\theta_{i})\right] \nonumber \\ &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right].
+ \end{eqnarray}
+
+\begin{eqnarray}
+  Pr(\mathbf{y}_{1},\mathbf{y}_{2},\ldots, \mathbf{y}_{I}|\mathbf{x}_{1},\mathbf{x}_{2},\ldots,\mathbf{x}_{I}) = \prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i}).
+ \end{eqnarray}
+
+### Maximizing log-likelihood
+
+<img src="assets/Chap05/LossLog.svg" style="filter: invert(1);" width="100%">
 
 The log transform. a) The log function is monotonically increasing.
 If z >z
@@ -33,7 +51,34 @@ The logarithm of this function log[g[z]]. All positions on g[z] with a positive 
 retain a positive slope after the log transform, and those with a negative slope
 retain a negative slope. The position of the maximum remains the same.
 
-<img src="assets/Chap05/LossNorm.svg" style="filter: invert(1);">
+
+\begin{eqnarray}\label{eq:loss_max_like2}
+  \hat{\boldsymbol\phi} &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right] \nonumber \\
+  &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\log\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right]\right]\nonumber \\
+  &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
+ \end{eqnarray}
+
+### Minimizing negative log-likelihood
+
+\begin{eqnarray}
+ \hat{\boldsymbol\phi} 
+ &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right]\nonumber \\
+ &=& \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr],
+ \end{eqnarray}
+
+### Inference 
+
+\begin{eqnarray}
+  \hat{\mathbf{y}} = \mathop{\rm argmax}_{\mathbf{y}}\Bigl[Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\hat{\boldsymbol\phi}])\Bigr].
+ \end{eqnarray}
+ 
+## Recipe for constructing loss functions
+
+\begin{eqnarray}
+  \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr] = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
+  \end{eqnarray}
+
+<img src="assets/Chap05/LossNorm.svg" style="filter: invert(1);" align="right" width="40%">
 
 The univariate normal distribution
 (also known as the Gaussian distribution)
@@ -48,7 +93,54 @@ to one, the peak becomes higher as the
 variance decreases and the distribution
 becomes narrower.
 
-<img src="assets/Chap05/LossNormalRegression.svg" style="filter: invert(1);">
+## Example 1: univariate regression 
+
+
+\begin{eqnarray}
+  Pr(y|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mu)^{2}}{2\sigma^{2}}\right].
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:loss_pdf_uni_reg}
+  Pr(y|\mbox{f}[\mathbf{x},\boldsymbol\phi],\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mbox{f}[\mathbf{x},\boldsymbol\phi])^{2}}{2\sigma^{2}}\right].
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:loss_normal_full}
+ L[\boldsymbol\phi] &=& -\sum_{i=1}^{I} \log\left[Pr(y_{i}|\mbox{f}[\mathbf{x}_{i},\boldsymbol\phi],\sigma^{2})\right]\nonumber \\
+ &=&-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right].
+ \end{eqnarray}
+
+### Least squares loss function 
+
+
+\begin{eqnarray}\label{eq:loss_normal_full2}
+ \hat{\boldsymbol\phi} &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right]
+ \nonumber \\
+ &=&\mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \left(\log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\right] -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right)\right]\nonumber \\
+ &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\nonumber \\
+ &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} (y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}\right],
+ \end{eqnarray}
+
+
+\begin{eqnarray}\label{eq:loss_least_squares}
+  L[\boldsymbol\phi] = \sum_{i=1}^{I} \bigl(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr)^{2}.
+ \end{eqnarray}
+
+### Inference 
+
+
+\begin{eqnarray}
+  \hat{y} = \mathop{\rm argmax}_{y}\left[Pr(y|\mbox{f}[\mathbf{x},\hat{\boldsymbol\phi}],\sigma^2)\right].
+ \end{eqnarray}
+
+### Estimating variance 
+
+
+\begin{eqnarray}
+ \hat{\boldsymbol\phi},\hat{\sigma}^{2} = \mathop{\rm argmin}_{\boldsymbol\phi,\sigma^{2}}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right].
+ \end{eqnarray}
+
+
+<img src="assets/Chap05/LossNormalRegression.svg" style="filter: invert(1);" width="100%">
 
 Equivalence of least squares and maximum likelihood loss for the
 normal distribution. a) Consider the linear model from figure 2.2. The least
@@ -63,7 +155,21 @@ probability Pr(yi|xi) of the data (horizontal orange dashed lines) is large (and
 the negative log probability is small). d) For the second case, the model fits badly,
 so the probability is small and the negative log probability is large.
 
-<img src="assets/Chap05/LossHeteroscedastic.svg" style="filter: invert(1);">
+### Heteroscedastic regression
+
+
+\begin{eqnarray}
+ \mu &=& \mbox{f}_1[\mathbf{x},\boldsymbol\phi] \nonumber \\
+ \sigma^2 &=& \mbox{f}_2[\mathbf{x},\boldsymbol\phi]^2,
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \biggl(\log\left[\frac{1}{\sqrt{2\pi\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}}\right] -\frac{(y_i-\mbox{f}_1[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}\biggr)\right].
+ \end{eqnarray}
+
+## Example 2: binary classification 
+
+<img src="assets/Chap05/LossHeteroscedastic.svg" style="filter: invert(1);" width="100%">
 
 Homoscedastic vs. heteroscedastic regression. a) A shallow neural
 network for homoscedastic regression predicts just the mean μ of the output
@@ -74,7 +180,7 @@ network for heteroscedastic regression also predicts the variance σ2 (or, more
 precisely, computes its square root, which we then square). d) The standard
 deviation now also becomes a piecewise linear function of the input x.
 
-<img src="assets/Chap05/LossBern.svg" style="filter: invert(1);">
+<img src="assets/Chap05/LossBern.svg" style="filter: invert(1);" align="right" width="40%">
 
 Bernoulli distribution. The
 Bernoulli distribution is defined on the
@@ -83,7 +189,9 @@ domain z ∈ {0, 1} and has a single parameter
 of observing z = 1. It follows that the
 probability of observing z = 0 is 1 − λ.
 
-<img src="assets/Chap05/LossLogisticSigmoid.svg" style="filter: invert(1);">
+<br/><br/>
+
+<img src="assets/Chap05/LossLogisticSigmoid.svg" style="filter: invert(1);" align="right" width="40%">
 
 Logistic sigmoid function.
 This function maps the real line z ∈
@@ -93,7 +201,30 @@ to 0.5. Negative inputs are mapped to
 numbers below 0.5, and positive inputs
 to numbers above 0.5.
 
-<img src="assets/Chap05/LossBinaryClassification.svg" style="filter: invert(1);">
+
+
+\begin{eqnarray}
+  Pr(y|\lambda) = \begin{cases} 1-\lambda & \quad y =0 \\ \lambda & \quad y= 1\end{cases},
+ \end{eqnarray}
+
+\begin{eqnarray}
+  Pr(y|\lambda) = (1-\lambda)^{1-y}\cdot \lambda^{y}.
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:logistic_sigmoid}
+  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:loss_binary}
+  Pr(y|\mathbf{x}) = (1-\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]])^{1-y}\cdot \mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]^y.
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:loss_binary_cross_entropy}
+ L[\boldsymbol\phi] = \sum_{i=1}^{I}-(1-y_{i})\log\Bigl[1-\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr] - y_{i}\log\Bigl[\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr].
+ \end{eqnarray}
+
+
+<img src="assets/Chap05/LossBinaryClassification.svg" style="filter: invert(1);" width="100%">
 
 Binary classification model. a) The network output is a piecewise
 linear function that can take arbitrary real values. b) This is transformed by the
@@ -105,7 +236,7 @@ figure 5.6. The loss function favors model parameters that produce large values
 of λ at positions xi that are associated with positive examples yi = 1 and small
 values of λ at positions associated with negative examples yi = 0.
 
-<img src="assets/Chap05/LossCategorical.svg" style="filter: invert(1);">
+<img src="assets/Chap05/LossCategorical.svg" style="filter: invert(1);" align="right" width="40%">
 
 Categorical distribution. The
 categorical distribution assigns probabilities
@@ -117,7 +248,11 @@ each parameter λk must lie in the
 range [0, 1], and all K parameters must
 sum to one.
 
-<img src="assets/Chap05/LossMultiClassClassification.svg" style="filter: invert(1);">
+<br/><br/>
+
+## Example 3: multiclass classification 
+
+<img src="assets/Chap05/LossMultiClassClassification.svg" style="filter: invert(1);" width="100%">
 
 Multiclass classification for K=3 classes. a) The network has three
 piecewise linear outputs, which can take arbitrary values. b) After the softmax
@@ -126,13 +261,71 @@ for a given input x, we compute valid parameters for the categorical distributio
 any vertical slice of this plot produces three values that sum to one and would
 form the heights of the bars in a categorical distribution similar to figure 5.9.
 
-<img src="assets/Chap05/LossCrossEntropy.svg" style="filter: invert(1);">
+
+\begin{eqnarray}
+ Pr(y=k) = \lambda_{k}.
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \mbox{softmax}_{k}[\mathbf{z}] = \frac{\exp[z_{k}]}{\sum_{k'=1}^{K}\exp[z_{k'}]},
+ \end{eqnarray}
+
+\begin{eqnarray}
+  Pr(y=k|\mathbf{x}) = \mbox{softmax}_{k}\Bigr[\mbox{\bf f}[\mathbf{x},\boldsymbol\phi]\Bigl].
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:loss_multiclass_class}
+  L[\boldsymbol\phi] &=& -\sum_{i=1}^{I}\log\left[\mbox{softmax}_{y_{i}}\Bigl[\mbox{\bf f}\left[\mathbf{x}_i,\boldsymbol\phi\right]\Bigr]\right]\nonumber\\
+  &=& -\sum_{i=1}^{I}\left(\mbox{f}_{y_{i}}\left[\mathbf{x}_i,\boldsymbol\phi\right]-\log\left[\sum_{k'=1}^{K}\exp\left[\mbox{ f}_{k'}\left[\mathbf{x}_i,\boldsymbol\phi\right]\right]\right]\right),
+ \end{eqnarray}
+
+### Predicting other data types 
+
+## Multiple outputs
+
+\begin{eqnarray}\label{eq:loss_multiple}
+ Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\boldsymbol\phi])= \prod_{d}Pr(y_{d}|\mbox{\bf f}_d[\mathbf{x},\boldsymbol\phi]),
+ \end{eqnarray}
+
+\begin{eqnarray}
+ L[\boldsymbol\phi] = -\sum_{i=1}^{I}\log\Bigl[Pr(\mathbf{y}_i|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]= -\sum_{i=1}^{I}\sum_{d}\log\Bigl[Pr(y_{id}|\mbox{\bf f}_d[\mathbf{x}_{i},\boldsymbol\phi])\Bigr].
+ \end{eqnarray}
+
+## Cross-entropy loss
+
+<img src="assets/Chap05/LossCrossEntropy.svg" style="filter: invert(1);" width="100%">
 
 Cross-entropy method. a) Empirical distribution of training samples
 (arrows denote Dirac delta functions). b) Model distribution (a normal distribution
 with parameters θ = {μ, σ2}). In the cross-entropy approach, we minimize
 the distance (KL divergence) between these two distributions as a function of the
 model parameters θ.
+
+
+\begin{eqnarray}
+ D_{KL}\bigl[q||p\bigr] = \int_{-\infty}^{\infty}q(z) \log\bigl[q(z)\bigr]dz - \int_{-\infty}^{\infty}q(z) \log\bigl[p(z)\bigr]dz.
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:loss_cross_entropy_empirical}
+ q(y) = \frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}],
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \hat{\boldsymbol\theta} &=& \mathop{\rm argmin}_{\boldsymbol\theta}\left[ \int_{-\infty}^{\infty}q(y) \log\bigl[q(y)\bigr]dy - \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right] \nonumber \\
+ &=&\mathop{\rm argmin}_{\boldsymbol\theta}\left[- \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right],
+ \end{eqnarray}
+
+
+\begin{eqnarray}\label{eq:loss_cross_deriv}
+ \hat{\boldsymbol\theta} &=& \mathop{\rm argmin}_{\theta}\left[-\int_{-\infty}^{\infty}\left(\frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}]\right)\log\bigl[Pr(y|\boldsymbol\theta)\bigr]dy\right] \nonumber\\
+ &=&\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\frac{1}{I} \sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right]\nonumber\\
+ &=&\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right].
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\bigr]\right].
+ \end{eqnarray}
+
 
 <img src="assets/Chap05/LossVonMises.svg" style="filter: invert(1);">
 
@@ -169,150 +362,7 @@ known as the rate and is the mean of the distribution. a–c) Poisson distributi
 with rates of 1.4, 2.8, and 6.0, respectively.
 
 
-## Least Squares 
-
-## Negative Log-Likelihood
-
-## Cross-Entropy
-
-\begin{eqnarray}\label{eq:loss_max_like1}
-  \hat{\boldsymbol\phi} &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i})\right]\nonumber\\
-  &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\boldsymbol\theta_{i})\right] \nonumber \\ &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right].
- \end{eqnarray}
-
-\begin{eqnarray}
-  Pr(\mathbf{y}_{1},\mathbf{y}_{2},\ldots, \mathbf{y}_{I}|\mathbf{x}_{1},\mathbf{x}_{2},\ldots,\mathbf{x}_{I}) = \prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i}).
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_max_like2}
-  \hat{\boldsymbol\phi} &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right] \nonumber \\
-  &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\log\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right]\right]\nonumber \\
-  &=& \mathop{\rm argmax}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
- \end{eqnarray}
-
-\begin{eqnarray}
- \hat{\boldsymbol\phi} 
- &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right]\nonumber \\
- &=& \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr],
- \end{eqnarray}
-
-\begin{eqnarray}
-  \hat{\mathbf{y}} = \mathop{\rm argmax}_{\mathbf{y}}\Bigl[Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\hat{\boldsymbol\phi}])\Bigr].
- \end{eqnarray}
-
-\begin{eqnarray}
-  \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr] = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
-  \end{eqnarray}
-
-\begin{eqnarray}
-  Pr(y|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mu)^{2}}{2\sigma^{2}}\right].
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_pdf_uni_reg}
-  Pr(y|\mbox{f}[\mathbf{x},\boldsymbol\phi],\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mbox{f}[\mathbf{x},\boldsymbol\phi])^{2}}{2\sigma^{2}}\right].
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_normal_full}
- L[\boldsymbol\phi] &=& -\sum_{i=1}^{I} \log\left[Pr(y_{i}|\mbox{f}[\mathbf{x}_{i},\boldsymbol\phi],\sigma^{2})\right]\nonumber \\
- &=&-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right].
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_normal_full2}
- \hat{\boldsymbol\phi} &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right]
- \nonumber \\
- &=&\mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \left(\log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\right] -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right)\right]\nonumber \\
- &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\nonumber \\
- &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} (y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}\right],
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_least_squares}
-  L[\boldsymbol\phi] = \sum_{i=1}^{I} \bigl(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr)^{2}.
- \end{eqnarray}
-
-\begin{eqnarray}
-  \hat{y} = \mathop{\rm argmax}_{y}\left[Pr(y|\mbox{f}[\mathbf{x},\hat{\boldsymbol\phi}],\sigma^2)\right].
- \end{eqnarray}
-
-\begin{eqnarray}
- \hat{\boldsymbol\phi},\hat{\sigma}^{2} = \mathop{\rm argmin}_{\boldsymbol\phi,\sigma^{2}}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right].
- \end{eqnarray}
-
-\begin{eqnarray}
- \mu &=& \mbox{f}_1[\mathbf{x},\boldsymbol\phi] \nonumber \\
- \sigma^2 &=& \mbox{f}_2[\mathbf{x},\boldsymbol\phi]^2,
- \end{eqnarray}
-
-\begin{eqnarray}
- \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \biggl(\log\left[\frac{1}{\sqrt{2\pi\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}}\right] -\frac{(y_i-\mbox{f}_1[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}\biggr)\right].
- \end{eqnarray}
-
-\begin{eqnarray}
-  Pr(y|\lambda) = \begin{cases} 1-\lambda & \quad y =0 \\ \lambda & \quad y= 1\end{cases},
- \end{eqnarray}
-
-\begin{eqnarray}
-  Pr(y|\lambda) = (1-\lambda)^{1-y}\cdot \lambda^{y}.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:logistic_sigmoid}
-  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_binary}
-  Pr(y|\mathbf{x}) = (1-\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]])^{1-y}\cdot \mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]^y.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_binary_cross_entropy}
- L[\boldsymbol\phi] = \sum_{i=1}^{I}-(1-y_{i})\log\Bigl[1-\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr] - y_{i}\log\Bigl[\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr].
- \end{eqnarray}
-
-\begin{eqnarray}
- Pr(y=k) = \lambda_{k}.
- \end{eqnarray}
-
-\begin{eqnarray}
- \mbox{softmax}_{k}[\mathbf{z}] = \frac{\exp[z_{k}]}{\sum_{k'=1}^{K}\exp[z_{k'}]},
- \end{eqnarray}
-
-\begin{eqnarray}
-  Pr(y=k|\mathbf{x}) = \mbox{softmax}_{k}\Bigr[\mbox{\bf f}[\mathbf{x},\boldsymbol\phi]\Bigl].
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_multiclass_class}
-  L[\boldsymbol\phi] &=& -\sum_{i=1}^{I}\log\left[\mbox{softmax}_{y_{i}}\Bigl[\mbox{\bf f}\left[\mathbf{x}_i,\boldsymbol\phi\right]\Bigr]\right]\nonumber\\
-  &=& -\sum_{i=1}^{I}\left(\mbox{f}_{y_{i}}\left[\mathbf{x}_i,\boldsymbol\phi\right]-\log\left[\sum_{k'=1}^{K}\exp\left[\mbox{ f}_{k'}\left[\mathbf{x}_i,\boldsymbol\phi\right]\right]\right]\right),
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_multiple}
- Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\boldsymbol\phi])= \prod_{d}Pr(y_{d}|\mbox{\bf f}_d[\mathbf{x},\boldsymbol\phi]),
- \end{eqnarray}
-
-\begin{eqnarray}
- L[\boldsymbol\phi] = -\sum_{i=1}^{I}\log\Bigl[Pr(\mathbf{y}_i|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]= -\sum_{i=1}^{I}\sum_{d}\log\Bigl[Pr(y_{id}|\mbox{\bf f}_d[\mathbf{x}_{i},\boldsymbol\phi])\Bigr].
- \end{eqnarray}
-
-\begin{eqnarray}
- D_{KL}\bigl[q||p\bigr] = \int_{-\infty}^{\infty}q(z) \log\bigl[q(z)\bigr]dz - \int_{-\infty}^{\infty}q(z) \log\bigl[p(z)\bigr]dz.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_cross_entropy_empirical}
- q(y) = \frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}],
- \end{eqnarray}
-
-\begin{eqnarray}
- \hat{\boldsymbol\theta} &=& \mathop{\rm argmin}_{\boldsymbol\theta}\left[ \int_{-\infty}^{\infty}q(y) \log\bigl[q(y)\bigr]dy - \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right] \nonumber \\
- &=&\mathop{\rm argmin}_{\boldsymbol\theta}\left[- \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right],
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:loss_cross_deriv}
- \hat{\boldsymbol\theta} &=& \mathop{\rm argmin}_{\theta}\left[-\int_{-\infty}^{\infty}\left(\frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}]\right)\log\bigl[Pr(y|\boldsymbol\theta)\bigr]dy\right] \nonumber\\
- &=&\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\frac{1}{I} \sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right]\nonumber\\
- &=&\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right].
- \end{eqnarray}
-
-\begin{eqnarray}
- \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\bigr]\right].
- \end{eqnarray}
+## Other
 
 \begin{eqnarray}\label{eq:loss_prob_sigmoid}
   \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.

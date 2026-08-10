@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Performance</title>
+<title>unsupervised</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,35 +69,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -189,7 +160,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./performance.html">Performance</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unsupervised.html">Unsupervised learning</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -259,7 +230,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./performance.html" class="sidebar-item-text sidebar-link active">
+  <a href="./performance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance</span></a>
   </div>
 </li>
@@ -267,6 +238,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./transformers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Transformers</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unsupervised.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Unsupervised learning</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Models</span></a>
   </div>
 </li>
     </ul>
@@ -279,168 +262,34 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#training-a-simple-model" id="toc-training-a-simple-model" class="nav-link active" data-scroll-target="#training-a-simple-model">Training a simple model</a></li>
-  <li><a href="#sources-of-error" id="toc-sources-of-error" class="nav-link" data-scroll-target="#sources-of-error">Sources of error</a>
+  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link active" data-scroll-target="#unsupervised-learning">Unsupervised learning</a>
   <ul class="collapse">
-  <li><a href="#noise-bias-and-variance" id="toc-noise-bias-and-variance" class="nav-link" data-scroll-target="#noise-bias-and-variance">Noise, bias and variance</a></li>
-  <li><a href="#mathematical-formulation-of-test-error" id="toc-mathematical-formulation-of-test-error" class="nav-link" data-scroll-target="#mathematical-formulation-of-test-error">Mathematical formulation of test error</a></li>
+  <li><a href="#taxonomy-of-unsupervised-learning-models" id="toc-taxonomy-of-unsupervised-learning-models" class="nav-link" data-scroll-target="#taxonomy-of-unsupervised-learning-models">Taxonomy of unsupervised learning models</a></li>
+  <li><a href="#what-makes-a-good-generative-model" id="toc-what-makes-a-good-generative-model" class="nav-link" data-scroll-target="#what-makes-a-good-generative-model">What makes a good generative model?</a></li>
+  <li><a href="#quantifying-performance" id="toc-quantifying-performance" class="nav-link" data-scroll-target="#quantifying-performance">Quantifying performance</a></li>
   </ul></li>
-  <li><a href="#reducing-error" id="toc-reducing-error" class="nav-link" data-scroll-target="#reducing-error">Reducing error</a>
-  <ul class="collapse">
-  <li><a href="#reducing-variance" id="toc-reducing-variance" class="nav-link" data-scroll-target="#reducing-variance">Reducing variance</a></li>
-  <li><a href="#reducing-bias" id="toc-reducing-bias" class="nav-link" data-scroll-target="#reducing-bias">Reducing bias</a></li>
-  <li><a href="#bias-variance-trade-off" id="toc-bias-variance-trade-off" class="nav-link" data-scroll-target="#bias-variance-trade-off">Bias-variance trade-off</a></li>
-  </ul></li>
-  <li><a href="#double-descent" id="toc-double-descent" class="nav-link" data-scroll-target="#double-descent">Double Descent</a>
-  <ul class="collapse">
-  <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation">Explanation</a></li>
-  </ul></li>
-  <li><a href="#choosing-hyperparameters" id="toc-choosing-hyperparameters" class="nav-link" data-scroll-target="#choosing-hyperparameters">Choosing hyperparameters</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Performance</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Slides
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><a href="https://docs.google.com/presentation/d/1hRlve2y5AhwnZcYESPKUuiQHJkqkJhMCppidV3rnoLQ/edit?slide=id.g3415f9e1348_0_0#slide=id.g3415f9e1348_0_0">Slides</a></p>
-</div>
-</div>
-<section id="training-a-simple-model" class="level2">
-<h2 class="anchored" data-anchor-id="training-a-simple-model">Training a simple model</h2>
-<p><img src="assets/Chap08/PerfMNIST1D.svg" style="filter: invert(1);" width="100%"></p>
-<p>MNIST-1D. a) Templates for 10 classes y ∈ {0, . . . , 9}, based on digits 0–9. b) Training examples x are created by randomly transforming a template and c) adding noise. d) The horizontal offset of the transformed template is then sampled at 40 vertical positions. Adapted from (Greydanus, 2020)</p>
-<p><img src="assets/Chap08/PerfMNIST1DResults.svg" style="filter: invert(1);" width="100%"></p>
-<p>MNIST-1D results. a) Percent classification error as a function of the training step. The training set errors decrease to zero, but the test errors do not drop below ∼ 40%. This model doesn’t generalize well to new test data. b) Loss as a function of the training step. The training loss decreases steadily toward zero. The test loss decreases at first but subsequently increases as the model becomes increasingly confident about its (wrong) predictions.</p>
-<center>
-<img src="assets/Chap08/PerfDataSet.svg" style="filter: invert(1);" width="40%" align="right">
-</center>
-<p>Regression function. Solid black line shows ground truth function. To generate I training examples {xi, yi}, the input space x ∈ [0, 1] is divided into I equal segments and one sample xi is drawn from a uniform distribution within each segment. The corresponding value yi is created by evaluating the function at xi and adding Gaussian noise (gray region shows ±2 standard deviations). The test data are generated in the same way.</p>
+<section id="unsupervised-learning" class="level1">
+<h1>Unsupervised learning</h1>
+<section id="taxonomy-of-unsupervised-learning-models" class="level2">
+<h2 class="anchored" data-anchor-id="taxonomy-of-unsupervised-learning-models">Taxonomy of unsupervised learning models</h2>
 </section>
-<section id="sources-of-error" class="level2">
-<h2 class="anchored" data-anchor-id="sources-of-error">Sources of error</h2>
-<p><img src="assets/Chap08/PerfModel.svg" style="filter: invert(1);" width="100%"></p>
-<p>Simplified neural network with three hidden units. a) The weights and biases between the input and hidden layer are fixed (dashed arrows). b–d) They are chosen so that the hidden unit activations have slope one, and their joints are equally spaced across the interval, with joints at x = 0, x = 1/3, and x = 2/3, respectively. Modifying the remaining parameters ϕ = {β, ω1, ω2, ω3} can create any piecewise linear function over x ∈ [0, 1] with joints at 1/3 and 2/3. e–g) Three example functions with different values of the parameters ϕ.</p>
-<p><img src="assets/Chap08/PerfNoiseBiasVariance.svg" style="filter: invert(1);" width="100%"></p>
-<p>Sources of test error. a) Noise. Data generation is noisy, so even if the model exactly replicates the true underlying function (black line), the noise in the test data (gray points) means that some error will remain (gray region represents two standard deviations). b) Bias. Even with the best possible parameters, the three-region model (cyan line) cannot exactly fit the true function (black line). This bias is another source of error (gray regions represent signed error). c) Variance. In practice, we have limited noisy training data (orange points). When we fit the model, we don’t recover the best possible function from panel (b) but a slightly different function (cyan line) that reflects idiosyncrasies of the training data. This provides an additional source of error (gray region represents two standard deviations). Figure 8.6 shows how this region was calculated.</p>
-<section id="noise-bias-and-variance" class="level3">
-<h3 class="anchored" data-anchor-id="noise-bias-and-variance">Noise, bias and variance</h3>
+<section id="what-makes-a-good-generative-model" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-a-good-generative-model">What makes a good generative model?</h2>
 </section>
-<section id="mathematical-formulation-of-test-error" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-formulation-of-test-error">Mathematical formulation of test error</h3>
-<p><span class="math display">\[\begin{eqnarray}
-  \mu[x] = \mathbb{E}_{y}[y[x]] = \int y[x] Pr(y|x) dy,
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  L[x] &amp;=&amp; \bigl(\mbox{f}[x,\boldsymbol\phi]-y[x]\bigr)^2 \\
-  &amp;=&amp; \Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)+\bigl(\mu[x]-y[x]\bigr)\Bigr)^2\nonumber \\
-  &amp;=&amp; \bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2 + 2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]-y[x]\bigr) + \bigl(\mu[x]-y[x]\bigr)^2,\nonumber
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:perf_biasvariance_plus_noise}
-  \mathbb{E}_{y}\bigl[L[x]\bigr]
-  &amp;=&amp;\mathbb{E}_{y}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\bigl(\mu[x]\!-\!y[x]\bigr)+\bigl(\mu[x]\!-\!y[x]\bigr)^2\Bigr]\nonumber \\
-  &amp;=&amp; \bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)\bigl(\mu[x]\!-\!\mathbb{E}_y\left[y[x]\right]\bigr)+\mathbb{E}_y\left[(\mu[x]\!-\!y[x])^2\right]\nonumber\\
-  &amp;=&amp;\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi]\!-\!\mu[x]\bigr)\cdot 0 +\mathbb{E}_y\left[\bigl(\mu[x]\!-\!y[x]\bigr)^2\right]\nonumber \\
-  &amp;=&amp;\bigl(\mbox{f}[x,\boldsymbol\phi]-\mu[x]\bigr)^2+\sigma^{2},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{f}_{\mu}[x] = \mathbb{E}_{\mathcal{D}}\Bigl[ \mbox{f}\bigl[x,\boldsymbol\phi[\mathcal{D}]\bigr] \Bigr].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\!\mu[x]\bigr)^2 &amp;&amp;\\
-  &amp;&amp;\hspace{-2.5cm}=\Bigl(\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)+\bigl( \mbox{f}_{\mu}[x]-\mu[x]\bigr)\Bigr)^2 \nonumber \\
-  &amp;&amp;\hspace{-2.5cm}=\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)^2+2\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]\!-\! \mbox{f}_{\mu}[x]\bigr)\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)+\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2.\nonumber
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:perf_bv2}
-\mathbb{E}_{\mathcal{D}}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]-\mu[x]\bigr)^2\Bigr] = \mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]+\bigl(\mbox{f}_{\mu}[x]-\mu[x]\bigr)^2,
-\end{eqnarray}\]</span></p>
-</section>
-</section>
-<section id="reducing-error" class="level2">
-<h2 class="anchored" data-anchor-id="reducing-error">Reducing error</h2>
-<section id="reducing-variance" class="level3">
-<h3 class="anchored" data-anchor-id="reducing-variance">Reducing variance</h3>
-</section>
-<section id="reducing-bias" class="level3">
-<h3 class="anchored" data-anchor-id="reducing-bias">Reducing bias</h3>
-</section>
-<section id="bias-variance-trade-off" class="level3">
-<h3 class="anchored" data-anchor-id="bias-variance-trade-off">Bias-variance trade-off</h3>
-<p><img src="assets/Chap08/PerfVariance.svg" style="filter: invert(1);" width="100%"></p>
-<p>Reducing variance by increasing training data. a–c) The three-region model fitted to three different randomly sampled datasets of six points. The fitted model is quite different each time. d) We repeat this experiment many times and plot the mean model predictions (cyan line) and the variance of the model predictions (gray area shows two standard deviations). e–h) We do the same experiment, but this time with datasets of size ten. The variance of the predictions is reduced. i–l) We repeat this experiment with datasets of size 100. Now the fitted model is always similar, and the variance is small.</p>
-<p><img src="assets/Chap08/PerfBias.svg" style="filter: invert(1);" width="100%"></p>
-<p>Bias and variance as a function of model capacity. a–c) As we increase the number of hidden units of the toy model, the number of linear regions increases, and the model becomes able to fit the true function closely; the bias (gray region) decreases. d–f) Unfortunately, increasing the model capacity has the side-effect of increasing the variance term (gray region). This is known as the bias-variance trade-off.</p>
-</section>
-</section>
-<section id="double-descent" class="level2">
-<h2 class="anchored" data-anchor-id="double-descent">Double Descent</h2>
-<p><img src="assets/Chap08/PerfCapacityVariance.svg" style="filter: invert(1);" width="100%"></p>
-<p>Overfitting. a–c) A model with three regions is fit to three different datasets of fifteen points each. The result is similar in all three cases (i.e., the variance is low). d–f) A model with ten regions is fit to the same datasets. The additional flexibility does not necessarily produce better predictions. While these three models each describe the training data better, they are not necessarily closer to the true underlying function (black curve). Instead, they overfit the data and describe the noise, and the variance (difference between fitted curves) is larger.</p>
-<center>
-<img src="assets/Chap08/PerfBiasVarianceTradeoff.svg" style="filter: invert(1);" width="70%">
-</center>
-<p>Bias-variance trade-off. The bias and variance terms from equation 8.7 are plotted as a function of the model capacity (number of hidden units / linear regions in range of data) in the simplified model using training data from figure 8.8. As the capacity increases, the bias (solid orange line) decreases, but the variance (solid cyan line) increases. The sum of these two terms (dashed gray line) is minimized when the capacity is four.</p>
-<section id="explanation" class="level3">
-<h3 class="anchored" data-anchor-id="explanation">Explanation</h3>
-<p><img src="assets/Chap08/PerfDoubleDescent.svg" style="filter: invert(1);" width="100%"></p>
-<p>Double descent. a) Training and test error on MNIST-1D for a two-hidden layer network as we increase the number of hidden units (and hence parameters) in each layer. The training error decreases to zero as the number of parameters approaches the number of training examples (vertical dashed line). The test error does not show the expected bias-variance trade-off but continues to decrease even after the model has memorized the dataset. b) The same experiment is repeated with noisier training data. Again, the training error reduces to zero, although it now takes almost as many parameters as training points to memorize the dataset. The test error shows the predicted bias/variance trade-off; it decreases as the capacity increases but then increases again as we near the point where the training data is exactly memorized. However, it subsequently decreases again and ultimately reaches a better performance level. This is known as double descent. Depending on the loss function, the model, and the amount of noise in the data, the double descent pattern can be seen to a greater or lesser degree across many datasets. c) Results on MNIST (without label noise) with shallow neural network from Belkin et al.&nbsp;(2019). d) Results on CIFAR-100 with ResNet18 network (see chapter 11) from Nakkiran et al.&nbsp;(2021). See original papers for details.</p>
-<p><img src="assets/Chap08/PerfSmoothness.svg" style="filter: invert(1);" width="100%"></p>
-<p>Increasing capacity (hidden units) allows smoother interpolation between sparse data points. a) Consider this situation where the training data (orange circles) are sparse; there is a large region in the center with no data examples to constrain the model to mimic the true function (black curve). b) If we fit a model with just enough capacity to fit the training data (cyan curve), then it has to contort itself to pass through the training data, and the output predictions will not be smooth. c–f) However, as we add more hidden units, the model has the ability to interpolate between the points more smoothly (smoothest possible curve plotted in each case). However, unlike in this figure, it is not obliged to.</p>
-</section>
-</section>
-<section id="choosing-hyperparameters" class="level2">
-<h2 class="anchored" data-anchor-id="choosing-hyperparameters">Choosing hyperparameters</h2>
-<p><img src="assets/Chap08/PerfSmoothness2.svg" style="filter: invert(1);" width="100%"></p>
-<p>Regularization. a–c) Each of the three fitted curves passes through the data points exactly, so the training loss for each is zero. However, we might expect the smooth curve in panel (a) to generalize much better to new data than the erratic curves in panels (b) and (c). Any factor that biases a model toward a subset of the solutions with a similar training loss is known as a regularizer. It is thought that the initialization and/or fitting of neural networks have an implicit regularizing effect. Consequently, in the over-parameterized regime, more reasonable solutions, such as that in panel (a), are encouraged.</p>
-<p><img src="assets/Chap08/PerfTypical.svg" style="filter: invert(1);" width="100%"></p>
-<p>Typical sets. a) Standard normal distribution in two dimensions. Circles are four samples from this distribution. As the distance from the center increases, the probability decreases, but the volume of space at that radius (i.e., the area between adjacent evenly spaced circles) increases. b) These factors trade off so that the histogram of distances of samples from the center has a pronounced peak. c) In higher dimensions, this effect becomes more extreme, and the probability of observing a sample close to the mean becomes vanishingly small. Although the most likely point is at the mean of the distribution, the typical samples are found in a relatively narrow shell.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:perf_bias_variance_final}
-\mathbb{E}_{\mathcal{D}}\Bigl[\mathbb{E}_{y}[L[x]]\Bigr] =
-\begingroup\color{red}
-  \underbrace{\color{black}\mystrut{2.0ex}\mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]}_{\mbox{variance}}
-  \endgroup
-+
-\begingroup\color{red}
-  \underbrace{\color{black}\mystrut{2.0ex}\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2}_{\mbox{bias}}
-  \endgroup
-+
-\begingroup\color{red}
-  \underbrace{\color{black}\mystrut{2.0ex}\sigma^2.}_{\mbox{noise}}
-  \endgroup
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{Vol}[r] = \frac{r^{D}\pi^{D/2}}{\Gamma[D/2+1]},
-\end{eqnarray}\]</span></p>
+<section id="quantifying-performance" class="level2">
+<h2 class="anchored" data-anchor-id="quantifying-performance">Quantifying performance</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

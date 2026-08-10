@@ -22,6 +22,28 @@ title: Linear Regression
   \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L\left[\boldsymbol\phi\right] \Bigr].
 \end{eqnarray}
 
+
+<img src="assets/Chap02/SupervisedLinear.svg" style="filter: invert(1);" align="right" width="50%" border="0px">
+
+Linear regression model. For a given choice of parameters ϕ= [ϕ0,ϕ1], the model makes a prediction for the out-
+put (y-axis) based on the input (x-axis).
+
+Different choices for the y-intercept ϕ0 and the slope ϕ1 change these predictions (cyan, orange, and gray lines). The linear regression model (equation 2.4) defines a family of input/output relations (lines) and the parameters determine the member of the family (the particular line). (Interactive figure)
+
+<br/><br/>
+
+```python
+# Math library
+import numpy as np
+# Plotting library
+import matplotlib.pyplot as plt
+
+# Create some input / output data
+x = np.array([0.03, 0.19, 0.34, 0.46, 0.78, 0.81, 1.08, 1.18, 1.39, 1.60, 1.65, 1.90])
+y = np.array([0.67, 0.85, 1.05, 1.0, 1.40, 1.5, 1.3, 1.54, 1.55, 1.68, 1.73, 1.6 ])
+
+```
+
 ## Linear regression example 
 
 ### 1D linear regression model
@@ -32,6 +54,36 @@ title: Linear Regression
   &=&\phi_{0}+\phi_{1}x.
 \end{eqnarray}
 
+```python
+# Define 1D linear regression model
+def f(x, phi0, phi1):
+  # TODO :  Replace this line with the linear regression model (eq 2.4)
+  y = x
+
+  return y
+```
+
+```python
+# Function to help plot the data
+def plot(x, y, phi0, phi1):
+    fig,ax = plt.subplots()
+    ax.scatter(x,y)
+    plt.xlim([0,2.0])
+    plt.ylim([0,2.0])
+    ax.set_xlabel('Input, $x$')
+    ax.set_ylabel('Output, $y$')
+    # Draw line
+    x_line = np.arange(0,2,0.01)
+    y_line = f(x_line, phi0, phi1)
+    plt.plot(x_line, y_line,'b-',lw=2)
+
+    plt.show()
+
+# Set the intercept and slope as in figure 2.2b
+phi0 = 0.4 ; phi1 = 0.2
+# Plot the data and the model
+plot(x,y,phi0,phi1)
+```
 
 ### Loss
 
@@ -42,6 +94,21 @@ title: Linear Regression
   
  \end{eqnarray}
 
+```python
+# Function to calculate the loss
+def compute_loss(x,y,phi0,phi1):
+
+  # TODO Replace this line with the loss calculation (equation 2.5)
+  loss = 0
+
+
+  return loss
+
+# Compute the loss for our current model
+loss = compute_loss(x,y,phi0,phi1)
+print(f'Your Loss = {loss:3.2f}, Ground truth =7.07')
+```
+
 
 \begin{eqnarray}
   \hat{\boldsymbol\phi} &=& \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr]\nonumber \\
@@ -49,12 +116,6 @@ title: Linear Regression
   &=& \mathop{\rm argmin}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} \left(\phi_{0}+\phi_{1}x_i-y_{i}\right)^{2}\right].
  \end{eqnarray}
 
-<img src="assets/Chap02/SupervisedLinear.svg" style="filter: invert(1);">
-
-Linear regression model. For a given choice of parameters ϕ= [ϕ0,ϕ1], the model makes a prediction for the out-
-put (y-axis) based on the input (x-axis).
-
-Different choices for the y-intercept ϕ0 and the slope ϕ1 change these predictions (cyan, orange, and gray lines). The linear regression model (equation 2.4) defines a family of input/output relations (lines) and the parameters determine the member of the family (the particular line). (Interactive figure)
 
 <img src="assets/Chap02/SupervisedLinearFitError.svg" style="filter: invert(1);" width="100%">
 
@@ -70,6 +131,9 @@ the lines from figure 2.2b–d. b) The loss can also be visualized as a heatmap,
 at the surface in (a) from above and gray ellipses represent isocontours. The best fitting line (figure 2.2d) has the parameters with the smallest loss (green circle).
 
 
+
+### Training
+
 <img src="assets/Chap02/SupervisedOpt.svg" style="filter: invert(1);" width="100%">
 
 Linear regression training. The goal is to find the y-intercept and slope parameters that correspond to the smallest loss. a) Iterative training algorithms
@@ -77,7 +141,5 @@ initialize the parameters randomly and then improve them by “walking downhill�
 a certain distance downhill (perpendicular to the contours) to position 1. Then we re-calculate the downhill direction and move to position 2. Eventually, we
 reach the minimum of the function (position 4). b) Each position 0–4 from panel (a) corresponds to a different y-intercept and slope and so represents a different
 line. As the loss decreases, the lines fit the data more closely. (Interactive figure)
-
-### Training
 
 ### Testing

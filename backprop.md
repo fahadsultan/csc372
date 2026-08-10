@@ -1,9 +1,35 @@
-# Backpropagation
+---
+title: Backpropagation
+---
 
 ::: {.callout-tip}
 ## Slides
 [Slides](https://docs.google.com/presentation/d/18J7G3N0W3XRP6AX0RHrYfOgiPV_2NHDUMjjXkqI_knc/edit?slide=id.g33a6271ded3_0_0#slide=id.g33a6271ded3_0_0)
 ::: 
+
+## Problem definitions 
+
+
+\begin{eqnarray}
+  \mathbf{h}_{1} &=& \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
+  \mathbf{h}_{2} &=& \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}] \nonumber\\
+  \mathbf{h}_{3} &=& \mathbf{a}[\boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}] \nonumber\\
+  \mbox{\bf f}[\mathbf{x},\boldsymbol\phi] &=& \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3},
+ \end{eqnarray}
+
+\begin{eqnarray}
+  L[\boldsymbol\phi]= \sum_{i=1}^{I} \ell_{i}.
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:train2_sgd}
+  \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \frac{\partial \ell_{i}}{\partial\boldsymbol\beta_{k}} \quad\quad \mbox{and} \quad\quad \frac{\partial \ell_{i}}{\partial\boldsymbol\Omega_{k}},
+ \end{eqnarray}
+
+## Computing derivatives
 
 <img src="assets/Chap07/Train2BPIntuitions.svg" style="filter: invert(1);" width="100%">
 
@@ -33,81 +59,8 @@ these changes propagate through to the loss (orange arrows). The backward pass
 first computes derivatives at the end of the network and then works backward to
 exploit the inherent redundancy of these computations.
 
-<img src="assets/Chap07/Train2BP1.svg" style="filter: invert(1);" width="100%">
+## Toy example
 
-Backpropagation forward pass. We compute and store each of the
-intermediate variables in turn until we finally calculate the loss.
-
-<img src="assets/Chap07/Train2BP2.svg" style="filter: invert(1);" width="100%">
-
-Backpropagation backward pass #1. We work backward from the end
-of the function computing the derivatives ∂ℓi/∂fk and ∂ℓi/∂hk of the loss with
-respect to the intermediate quantities. Each derivative is computed from the
-previous one by multiplying by terms of the form ∂fk/∂hk or ∂hk/∂fk−1.
-
-<img src="assets/Chap07/Train2BP3.svg" style="filter: invert(1);" width="100%">
-
-Backpropagation backward pass #2. Finally, we compute the derivatives
-∂ℓi/∂βk and ∂ℓi/∂ωk. Each derivative is computed by multiplying the
-term ∂ℓi/∂fk by ∂fk/∂βk or ∂fk/∂ωk as appropriate.
-
-<center><img src="assets/Chap07/Train2ReLUDeriv.svg" style="filter: invert(1);" width="50%"></center>
-
-Derivative of rectified linear
-unit. The rectified linear unit (orange
-curve) returns zero when the input is
-less than zero and returns the input otherwise.
-Its derivative (cyan curve) returns
-zero when the input is less than
-zero (since the slope here is zero) and
-one when the input is greater than zero
-(since the slope here is one).
-
-
-<img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%">
-
-Weight initialization. Consider a deep network with 50 hidden layers
-and Dh = 100 hidden units per layer. The network has a 100-dimensional input x
-initialized from a standard normal distribution, a single fixed target y = 0, and
-a least squares loss function. The bias vectors βk are initialized to zero, and the
-weight matrices Ωk are initialized with a normal distribution with mean zero and
-five different variances σ2Ω
-∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden
-unit activations computed in forward pass as a function of the network layer. For
-He initialization (σ2Ω
-= 2/Dh = 0.02), the variance is stable. However, for larger
-values, it increases rapidly, and for smaller values, it decreases rapidly (note
-log scale). b) The variance of the gradients in the backward pass (solid lines)
-continues this trend; if we initialize with a value larger than 0.02, the magnitude
-of the gradients increases rapidly as we pass back through the network. If we
-initialize with a value smaller, then the magnitude decreases. These are known
-as the exploding gradient and vanishing gradient problems, respectively.
-
-
-
-<img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%">
-
-Computational graph for problem 7.12 and problem 7.13. Adapted
-from Domke (2010).
-
-\begin{eqnarray}
-  \mathbf{h}_{1} &=& \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
-  \mathbf{h}_{2} &=& \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}] \nonumber\\
-  \mathbf{h}_{3} &=& \mathbf{a}[\boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}] \nonumber\\
-  \mbox{\bf f}[\mathbf{x},\boldsymbol\phi] &=& \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3},
- \end{eqnarray}
-
-\begin{eqnarray}
-  L[\boldsymbol\phi]= \sum_{i=1}^{I} \ell_{i}.
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:train2_sgd}
-  \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
- \end{eqnarray}
-
-\begin{eqnarray}
-  \frac{\partial \ell_{i}}{\partial\boldsymbol\beta_{k}} \quad\quad \mbox{and} \quad\quad \frac{\partial \ell_{i}}{\partial\boldsymbol\Omega_{k}},
- \end{eqnarray}
 
 \begin{eqnarray}
   \mbox{f}[x,\boldsymbol\phi] = \beta_3+\omega_3\cdot\cos\Bigl[\beta_2+\omega_2\cdot\exp\bigl[\beta_1+\omega_1\cdot\sin[\beta_0+\omega_0\cdot x]\bigr]\Bigr],
@@ -127,6 +80,12 @@ from Domke (2010).
  &&\hspace{0.5cm}\cdot \omega_1\omega_2\omega_3\cdot x_i\cdot\cos[\beta_0+\omega_0 \cdot x_i]\cdot\exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\nonumber\\
  && \hspace{1cm}\cdot \sin\biggl[\beta_2+\omega_2\cdot \exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\biggr].
  \end{eqnarray}
+
+
+<img src="assets/Chap07/Train2BP1.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation forward pass. We compute and store each of the
+intermediate variables in turn until we finally calculate the loss.
 
 \begin{eqnarray}
  f_{0} &=& \beta_{0} + \omega_{0}\cdot x_i\nonumber\\
@@ -152,6 +111,15 @@ from Domke (2010).
  \frac{\partial \ell_i}{\partial h_{3}} =\frac{\partial f_{3}}{\partial h_{3}} \frac{\partial \ell_i}{\partial f_{3}} .
  \end{eqnarray}
 
+
+<img src="assets/Chap07/Train2BP2.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation backward pass #1. We work backward from the end
+of the function computing the derivatives ∂ℓi/∂fk and ∂ℓi/∂hk of the loss with
+respect to the intermediate quantities. Each derivative is computed from the
+previous one by multiplying by terms of the form ∂fk/∂hk or ∂hk/∂fk−1.
+
+
 \begin{eqnarray}
  \frac{\partial \ell_i}{\partial f_{2}} &=& \frac{\partial h_{3}}{\partial f_{2}}\left(
  \frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right)
@@ -171,9 +139,19 @@ from Domke (2010).
  \frac{\partial f_{k}}{\partial \beta_{k}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{k}}{\partial \omega_{k}} &=& h_{k}.
  \end{eqnarray}
 
+<img src="assets/Chap07/Train2BP3.svg" style="filter: invert(1);" width="100%">
+
+Backpropagation backward pass #2. Finally, we compute the derivatives
+∂ℓi/∂βk and ∂ℓi/∂ωk. Each derivative is computed by multiplying the
+term ∂ℓi/∂fk by ∂fk/∂βk or ∂fk/∂ωk as appropriate.
+
 \begin{eqnarray}
  \frac{\partial f_{0}}{\partial \beta_{0}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{0}}{\partial \omega_{0}} &=& x_{i}.
  \end{eqnarray}
+
+## Backpropagation algorithm
+
+**Forward Pass**
 
 \begin{eqnarray}
   \mathbf{f}_{0} &=& \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
@@ -185,6 +163,21 @@ from Domke (2010).
   \mathbf{f}_{3}&=& \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\nonumber \\
   \ell_{i} &=& \mbox{l}[\mathbf{f}_{3},y_{i}],
  \end{eqnarray}
+
+<center><img src="assets/Chap07/Train2ReLUDeriv.svg" style="filter: invert(1);" align="right"  width="50%"></center>
+
+Derivative of rectified linear
+unit. The rectified linear unit (orange
+curve) returns zero when the input is
+less than zero and returns the input otherwise.
+Its derivative (cyan curve) returns
+zero when the input is less than
+zero (since the slope here is zero) and
+one when the input is greater than zero
+(since the slope here is one).
+
+**Backward Pass # 1**
+
 
 \begin{eqnarray}\label{eq:train2_backward1}
  \frac{\partial \ell_{i}}{\partial \mathbf{f}_{2}}=\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}.
@@ -201,6 +194,9 @@ from Domke (2010).
   \frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} = \frac{\partial}{\partial \mathbf{h}_{3}}\left(\boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\right) = \boldsymbol\Omega_{3}^{T}.
   \end{eqnarray}
 
+**Backward Pass # 2**
+
+
 \begin{eqnarray}
  \frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &=& \frac{\partial \mathbf{f}_{k}}{\partial \boldsymbol\beta_k} \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber\\
  &=& \frac{\partial}{\partial \boldsymbol\beta_k}\left(\boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\right) \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber \\ 
@@ -213,11 +209,18 @@ from Domke (2010).
  &=& \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}}\mathbf{h}_k^{T}.
  \end{eqnarray}
 
+### Backpropagation algorithm summary
+
+**Forward Pass**
+
 \begin{eqnarray}
   \mathbf{f}_{0} &=& \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
   \mathbf{h}_{k} &=& \mathbf{a}[\mathbf{f}_{k-1}]\hspace{2.76cm} k\in\{1,2,\ldots, K\}\nonumber \\
   \mathbf{f}_{k} &=& \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}.\hspace{2cm} k\in\{1,2,\ldots, K\}
  \end{eqnarray}
+
+**Backward Pass**
+
 
 \begin{eqnarray}\label{eq:train2_bp_backward_summary}
  \frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &=& \frac{\partial \ell_{i}}{\partial \mathbf{f}_k} \hspace{4.1cm} k\in\{K,K-1,\ldots, 1\}\nonumber\\
@@ -230,10 +233,19 @@ from Domke (2010).
  \frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_0} &=& \frac{\partial \ell_{i}}{\partial \mathbf{f}_0}\mathbf{x}_{i}^{T}.
  \end{eqnarray}
 
+### Algorithmic differentiation
+
+### Extension to arbitrary computational graphs 
+
+## Parameter Initialization
+
 \begin{eqnarray}
  \mathbf{f}_{k} &=& \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\nonumber\\
  &=& \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\textbf{a}[\mathbf{f}_{k-1}], 
  \end{eqnarray}
+
+### Initialization for forward pass 
+
 
 \begin{eqnarray}
   \mathbf{h} &=& \mbox{\bf a}[\mathbf{f}],\nonumber \\
@@ -259,17 +271,51 @@ from Domke (2010).
  \sigma^{2}_{f'_{i}} = \sigma_\Omega^2 \sum_{j=1}^{D_h} \frac{\sigma_{f}^2}{2} = \frac{1}{2}D_{h} \sigma_\Omega^2 \sigma_{f}^2.
  \end{eqnarray}
 
+<img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%">
+
+Weight initialization. Consider a deep network with 50 hidden layers
+and Dh = 100 hidden units per layer. The network has a 100-dimensional input x
+initialized from a standard normal distribution, a single fixed target y = 0, and
+a least squares loss function. The bias vectors βk are initialized to zero, and the
+weight matrices Ωk are initialized with a normal distribution with mean zero and
+five different variances σ2Ω
+∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden
+unit activations computed in forward pass as a function of the network layer. For
+He initialization (σ2Ω
+= 2/Dh = 0.02), the variance is stable. However, for larger
+values, it increases rapidly, and for smaller values, it decreases rapidly (note
+log scale). b) The variance of the gradients in the backward pass (solid lines)
+continues this trend; if we initialize with a value larger than 0.02, the magnitude
+of the gradients increases rapidly as we pass back through the network. If we
+initialize with a value smaller, then the magnitude decreases. These are known
+as the exploding gradient and vanishing gradient problems, respectively.
+
+
 \begin{eqnarray}\label{eq:train2_init_forward}
  \sigma_\Omega^2 = \frac{2}{D_h}, 
  \end{eqnarray}
+
+### Initialization for backward pass
 
 \begin{eqnarray}\label{eq:train2_init_back}
  \sigma_\Omega^2 = \frac{2}{D_{h'}}, 
  \end{eqnarray}
 
+### Initialization for both forward and backward pass 
+
+
 \begin{eqnarray}
  \sigma_\Omega^2 = \frac{4}{D_{h}+D_{h'}}. 
  \end{eqnarray}
+
+## Example training code 
+
+<img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%">
+
+Computational graph for problem 7.12 and problem 7.13. Adapted
+from Domke (2010).
+
+
 
 \begin{eqnarray}
  y &=& \phi_{0}+\phi_{1}\mbox{a}\Bigl[\psi_{01} + \psi_{11}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{21}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr]\nonumber \\

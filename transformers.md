@@ -1,6 +1,5 @@
 ---
 title: Transformers
-
 ---
 
 ::: {.callout-tip}
@@ -11,6 +10,20 @@ title: Transformers
 ## Processing text data 
 
 ## Dot-product self-attention
+
+\begin{eqnarray}
+  \mbox{{\bf f}}[\mathbf{x}] = \mbox{{\bf ReLU}}[\boldsymbol\beta +\boldsymbol\Omega\mathbf{x}],
+ \end{eqnarray}
+
+
+
+\begin{eqnarray}\label{eq:transformer_values}
+  \mathbf{v}_{m} = \boldsymbol\beta_{v}+\boldsymbol\Omega_{v}\mathbf{x}_{m},
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_sattention1}
+  \mbox{{\bf sa}}_{n}[\mathbf{x}_{1},\ldots, \mathbf{x}_{N}] = \sum_{m=1}^{N}a[\mathbf{x}_{m}, \mathbf{x}_{n}]\mathbf{v}_{m}.
+ \end{eqnarray}
 
 <img src="assets/Chap12/TransformerRouting.svg" style="filter: invert(1);" width="100%">
 
@@ -24,6 +37,10 @@ and a[x3, x1] = 0.6 times the third value vector. b) Output sa2[x•] is compute
 in the same way, but this time with weights of 0.5, 0.2, and 0.3. c) The weighting
 for output sa3[x•] is different again. Each output can hence be thought of as a
 different routing of the N values.
+
+### Computing and weighting values
+
+### Computing attention weights 
 
 <img src="assets/Chap12/TransformerSA1.svg" style="filter: invert(1);" width="100%">
 
@@ -45,7 +62,19 @@ products between each query and the three keys are passed through a softmax
 function to form non-negative attentions that sum to one. c) These route the
 value vectors (figure 12.1) via the sparse matrix from figure 12.2c.
 
-### Matrix
+
+
+\begin{eqnarray}
+  \mathbf{q}_{n} &=& \boldsymbol\beta_{q}+\boldsymbol\Omega_{q}\mathbf{x}_{n}\nonumber \\
+  \mathbf{k}_{m} &=& \boldsymbol\beta_{k}+\boldsymbol\Omega_{k}\mathbf{x}_{m},
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_sattention2}
+  a[\mathbf{x}_{m},\mathbf{x}_{n}] &=& \mbox{softmax}_{m}\left[\mathbf{k}_{\bullet}^{T}\mathbf{q}_{n}\right]\nonumber\\
+  &=& \frac{\exp\left[\mathbf{k}_{m}^{T}\mathbf{q}_{n}\right]}{\sum_{m'=1}^{N}\exp\left[\mathbf{k}_{m'}^{T}\mathbf{q}_{n} \right]},
+ \end{eqnarray}
+
+### Self-attention summary
 
 <img src="assets/Chap12/TransformerBlockSA.svg" style="filter: invert(1);" width="100%">
 
@@ -57,7 +86,27 @@ and a softmax operation is applied independently to each column of the resulting
 matrix to calculate the attentions. Finally, the values are post-multiplied by the
 attentions to create an output of the same size as the input.
 
-<img src="assets/Chap12/TransformerPE.svg" style="filter: invert(1);" width="100%">
+### Matrix form
+
+
+\begin{eqnarray}
+ \mathbf{V}[\mathbf{X}] &=& \boldsymbol\beta_{v}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{v}}\mathbf{X}\nonumber \\
+ \mathbf{Q}[\mathbf{X}] &=& \boldsymbol\beta_{q}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{q}}\mathbf{X}\nonumber \\
+ \mathbf{K}[\mathbf{X}] &=& \boldsymbol\beta_{k}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{k}}\mathbf{X},
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}[\mathbf{X}]\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}[\mathbf{X}]^{T}\mathbf{Q}[\mathbf{X}]\Bigr],
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_sa_matrix}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}^{T}\mathbf{Q}\Bigr].
+ \end{eqnarray}
+
+
+
+
+<img src="assets/Chap12/TransformerPE.svg" style="filter: invert(1);" width="40%" align="right">
 
 Positional encodings. The
 self-attention architecture is equivariant
@@ -73,12 +122,45 @@ extended to larger values of N if necessary).
 However, in other cases, they are
 learned.
 
+## Extentions to dot-product self-attention
+
+### Positional encoding 
+
+**Absolute positional encodings**
+
+**Relative positional encodings**
+
+### Scaled dot-product self-attention
+
+\begin{eqnarray}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right].
+ \end{eqnarray}
+
+### Multiple heads
+
+
+\begin{eqnarray}
+ \mathbf{V}_h &=& \boldsymbol\beta_{vh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{vh}}\mathbf{X}\nonumber \\
+ \mathbf{Q}_h &=& \boldsymbol\beta_{qh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{qh}}\mathbf{X}\nonumber \\
+ \mathbf{K}_h &=& \boldsymbol\beta_{kh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{kh}}\mathbf{X}.
+ \end{eqnarray}
+
+\begin{eqnarray}
+  \mbox{{\bf Sa}}_{h}[\mathbf{X}] =\mathbf{V}_h\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}_h^{T}\mathbf{Q}_h}{\sqrt{D}_{q}}\right],
+ \end{eqnarray}
+
 <img src="assets/Chap12/TransformerBlockSAMultiHead.svg" style="filter: invert(1);" width="100%">
 
 Multi-head self-attention. Self-attention occurs in parallel across
 multiple “heads.” Each has its own queries, keys, and values. Here two heads are
 depicted, in the cyan and orange boxes, respectively. The outputs are vertically
 concatenated, and another linear transformation Ωc is used to recombine them.
+
+\begin{eqnarray}
+  \mbox{{\bf MhSa}}[\mathbf{X}] = \boldsymbol\Omega_{c}\Bigl[\mbox{{\bf Sa}}_{1}[\mathbf{X}]^T,\mbox{{\bf Sa}}_{2}[\mathbf{X}]^T,\ldots,\mbox{{\bf Sa}}_{H}[\mathbf{X}]^T \Bigr]^T.
+ \end{eqnarray}
+
+## Transformer layers
 
 <img src="assets/Chap12/TransformerBlock.svg" style="filter: invert(1);" width="100%">
 
@@ -91,6 +173,15 @@ inputs are added back to the output. Second, a LayerNorm operation is applied
 separately to each embedding. Third, there is a second residual layer where the
 same fully connected neural network is applied separately to each of the N word
 representations (columns). Finally, LayerNorm is applied again.
+
+\begin{eqnarray}
+  \mathbf{X} &\leftarrow& \mathbf{X} + \mbox{\bf{MhSa}}[\mathbf{X}] \nonumber \\
+  \mathbf{X} &\leftarrow& \mbox{\bf{LayerNorm}}[\mathbf{X}] \hspace{3cm}\nonumber\\
+  \mathbf{x}_{n} &\leftarrow& \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
+  \mathbf{X} &\leftarrow& \mbox{\bf{LayerNorm}}[\mathbf{X}],
+ \end{eqnarray}
+
+## Transformers for natural language processing
 
 
 <img src="assets/Chap12/TransformerBPE.svg" style="filter: invert(1);" width="100%">
@@ -112,6 +203,12 @@ and the algorithm would terminate when the vocabulary size (number of tokens)
 reached a predetermined value. Punctuation and capital letters would also be
 treated as separate input characters.
 
+### Tokenization 
+
+### Embeddings 
+
+### Transformer model 
+
 <img src="assets/Chap12/TransformerVocabulary.svg" style="filter: invert(1);" width="100%">
 
 The input embedding matrix X ∈ RD×N contains N embeddings of
@@ -120,6 +217,12 @@ for the entire vocabulary with a matrix containing one-hot vectors in its column
 that correspond to the word or sub-word indices. The vocabulary matrix Ωe is
 considered a parameter of the model and is learned along with the other parameters.
 Note that the two embeddings for the word an in X are the same.
+
+## Encoder model example: BERT 
+
+
+### Pre-training 
+
 
 <img src="assets/Chap12/TransformerEncoder.svg" style="filter: invert(1);" width="100%">
 
@@ -149,6 +252,30 @@ review is positive. b) Example word classification task. In this named entity
 recognition problem, the embedding for each word is used to predict whether the
 word corresponds to a person, place, or organization, or is not an entity.
 
+### Fine-tuning
+
+## Deocder model example: GPT3
+
+### Language modeling 
+
+
+\begin{eqnarray}
+  Pr(\mbox{\textcolor{red}{It takes great courage to let yourself appear weak}}) &=&\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{takes}}|\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{great}}|\mbox{\textcolor{red}{It takes}})\times Pr(\mbox{\textcolor{red}{courage}}|\mbox{\textcolor{red}{It takes great}})\times\nonumber \\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{to}}|\mbox{\textcolor{red}{It takes great courage}})\times Pr(\mbox{\textcolor{red}{let}}|\mbox{\textcolor{red}{It takes great courage to}})\times\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{yourself}}|\mbox{\textcolor{red}{It takes great courage to let}})\times\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{appear}}|\mbox{\textcolor{red}{It takes great courage to let yourself}})\times\nonumber\\
+  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{weak}}|\mbox{\textcolor{red}{It takes great courage to let yourself appear}}).
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:transformer_autoregressive}
+  Pr(t_{1},t_{2},\ldots, t_{N}) = Pr(t_{1})\prod_{n=2}^{N}Pr(t_{n}|t_{1},\ldots, t_{n-1}).
+ \end{eqnarray}
+
+### Masked self-attention 
+
+### Generating text from a decoder 
+
 <img src="assets/Chap12/TransformerDecoder.svg" style="filter: invert(1);" width="100%">
 
 Training GPT3-type decoder network. The tokens are mapped to
@@ -164,6 +291,8 @@ cheat by looking at subsequent inputs. The autoregressive task has the advantage
 of making efficient use of the data since every word contributes a term to the loss
 function. However, it only exploits the left context of each word.
 
+### GPT3 and few-shot learning 
+
 <img src="assets/Chap12/TransformerEncoderDecoder.svg" style="filter: invert(1);" width="100%">
 
 Encoder-decoder architecture. Two sentences are passed to the
@@ -174,6 +303,8 @@ of the encoder using cross-attention (orange rectangle). The loss function is th
 same as for the decoder model; we want to maximize the probability of the next
 word in the output sequence.
 
+## Encoder-decoder model example: machine translation 
+
 <img src="assets/Chap12/TransformerBlockSACross.svg" style="filter: invert(1);" width="100%">
 
 Cross-attention. The flow of computation is the same as in standard
@@ -182,6 +313,7 @@ and the keys and values from the encoder embeddings Xenc. For translation
 tasks, the encoder contains information about the source language statistics, and
 the decoder contains information about the target language statistics.
 
+## Transformers for long sequences
 
 <img src="assets/Chap12/TransformerLongRange.svg" style="filter: invert(1);" width="100%">
 
@@ -197,7 +329,7 @@ other tokens (encoder case) or all the previous tokens (decoder case pictured).
 h) Alternatively, global tokens can be introduced (left two columns and top two
 rows). These interact with all of the tokens as well as with each other.
 
-
+## Transformers for images
 
 
 <img src="assets/Chap12/TransformerIGPT.svg" style="filter: invert(0);" width="100%">
@@ -213,6 +345,10 @@ In each case, the lower half of the image is removed (top row), and ImageGPT
 completes the remaining part pixel by pixel (three different completions shown).
 Adapted from https://openai.com/blog/image-gpt/.
 
+### ImageGPT 
+
+### Vision Transformer (ViT)
+
 <img src="assets/Chap12/TransformerVisionTransformer.svg" style="filter: invert(1);" width="100%">
 
 Vision transformer. The Vision Transformer (ViT) breaks the image
@@ -221,6 +357,7 @@ is projected via a learned linear transformation to become a patch embedding.
 These patch embeddings are fed into a transformer encoder network, and the
 <cls> token is used to predict the class probabilities.
 
+### Multi-scale vision transformers
 
 <img src="assets/Chap12/TransformerSWIN.svg" style="filter: invert(1);" width="100%">
 
@@ -253,81 +390,10 @@ RNNs sometimes gradually “forget” about tokens that are further back in time
 
 <img src="assets/Chap12/TransformerSWIN_compressed.svg" style="filter: invert(1);" width="100%">
 
-\begin{eqnarray}
-  \mbox{{\bf f}}[\mathbf{x}] = \mbox{{\bf ReLU}}[\boldsymbol\beta +\boldsymbol\Omega\mathbf{x}],
- \end{eqnarray}
+## Equations
 
 
 
-\begin{eqnarray}\label{eq:transformer_values}
-  \mathbf{v}_{m} = \boldsymbol\beta_{v}+\boldsymbol\Omega_{v}\mathbf{x}_{m},
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:transformer_sattention1}
-  \mbox{{\bf sa}}_{n}[\mathbf{x}_{1},\ldots, \mathbf{x}_{N}] = \sum_{m=1}^{N}a[\mathbf{x}_{m}, \mathbf{x}_{n}]\mathbf{v}_{m}.
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mathbf{q}_{n} &=& \boldsymbol\beta_{q}+\boldsymbol\Omega_{q}\mathbf{x}_{n}\nonumber \\
-  \mathbf{k}_{m} &=& \boldsymbol\beta_{k}+\boldsymbol\Omega_{k}\mathbf{x}_{m},
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:transformer_sattention2}
-  a[\mathbf{x}_{m},\mathbf{x}_{n}] &=& \mbox{softmax}_{m}\left[\mathbf{k}_{\bullet}^{T}\mathbf{q}_{n}\right]\nonumber\\
-  &=& \frac{\exp\left[\mathbf{k}_{m}^{T}\mathbf{q}_{n}\right]}{\sum_{m'=1}^{N}\exp\left[\mathbf{k}_{m'}^{T}\mathbf{q}_{n} \right]},
- \end{eqnarray}
-
-\begin{eqnarray}
- \mathbf{V}[\mathbf{X}] &=& \boldsymbol\beta_{v}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{v}}\mathbf{X}\nonumber \\
- \mathbf{Q}[\mathbf{X}] &=& \boldsymbol\beta_{q}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{q}}\mathbf{X}\nonumber \\
- \mathbf{K}[\mathbf{X}] &=& \boldsymbol\beta_{k}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{k}}\mathbf{X},
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}[\mathbf{X}]\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}[\mathbf{X}]^{T}\mathbf{Q}[\mathbf{X}]\Bigr],
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:transformer_sa_matrix}
-  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}^{T}\mathbf{Q}\Bigr].
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right].
- \end{eqnarray}
-
-\begin{eqnarray}
- \mathbf{V}_h &=& \boldsymbol\beta_{vh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{vh}}\mathbf{X}\nonumber \\
- \mathbf{Q}_h &=& \boldsymbol\beta_{qh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{qh}}\mathbf{X}\nonumber \\
- \mathbf{K}_h &=& \boldsymbol\beta_{kh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{kh}}\mathbf{X}.
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mbox{{\bf Sa}}_{h}[\mathbf{X}] =\mathbf{V}_h\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}_h^{T}\mathbf{Q}_h}{\sqrt{D}_{q}}\right],
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mbox{{\bf MhSa}}[\mathbf{X}] = \boldsymbol\Omega_{c}\Bigl[\mbox{{\bf Sa}}_{1}[\mathbf{X}]^T,\mbox{{\bf Sa}}_{2}[\mathbf{X}]^T,\ldots,\mbox{{\bf Sa}}_{H}[\mathbf{X}]^T \Bigr]^T.
- \end{eqnarray}
-
-\begin{eqnarray}
-  \mathbf{X} &\leftarrow& \mathbf{X} + \mbox{\bf{MhSa}}[\mathbf{X}] \nonumber \\
-  \mathbf{X} &\leftarrow& \mbox{\bf{LayerNorm}}[\mathbf{X}] \hspace{3cm}\nonumber\\
-  \mathbf{x}_{n} &\leftarrow& \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
-  \mathbf{X} &\leftarrow& \mbox{\bf{LayerNorm}}[\mathbf{X}],
- \end{eqnarray}
-
-\begin{eqnarray}
-  Pr(\mbox{\textcolor{red}{It takes great courage to let yourself appear weak}}) &=&\nonumber\\
-  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{takes}}|\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{great}}|\mbox{\textcolor{red}{It takes}})\times Pr(\mbox{\textcolor{red}{courage}}|\mbox{\textcolor{red}{It takes great}})\times\nonumber \\
-  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{to}}|\mbox{\textcolor{red}{It takes great courage}})\times Pr(\mbox{\textcolor{red}{let}}|\mbox{\textcolor{red}{It takes great courage to}})\times\nonumber\\
-  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{yourself}}|\mbox{\textcolor{red}{It takes great courage to let}})\times\nonumber\\
-  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{appear}}|\mbox{\textcolor{red}{It takes great courage to let yourself}})\times\nonumber\\
-  &&\hspace{-8cm}Pr(\mbox{\textcolor{red}{weak}}|\mbox{\textcolor{red}{It takes great courage to let yourself appear}}).
- \end{eqnarray}
-
-\begin{eqnarray}\label{eq:transformer_autoregressive}
-  Pr(t_{1},t_{2},\ldots, t_{N}) = Pr(t_{1})\prod_{n=2}^{N}Pr(t_{n}|t_{1},\ldots, t_{n-1}).
- \end{eqnarray}
 
 \begin{eqnarray}\label{eq:transformer_position_quad}
   \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right],

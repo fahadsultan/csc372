@@ -52,13 +52,15 @@ website:
         - linearregression.md
         - snn.md
         - dnn.md 
-        - loss.qmd
+        - loss.md
         # - section: fitting.qmd
         #   contents:
-        - gradientdescent.qmd
-        - backprop.qmd
-        - performance.qmd
-        - transformers.qmd
+        - gradientdescent.md
+        - backprop.md
+        - performance.md
+        - transformers.md
+        - unsupervised.md
+        - diffusion.md
         
 
 format:
