@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>unsupervised</title>
+<title>Unsupervised learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -198,60 +227,279 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multivariate Networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From composing networks to deep networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./loss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Loss Functions</span></a>
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">loss.md</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./backprop.html" class="sidebar-item-text sidebar-link">
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training algorithm hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation algorithm</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./performance.html" class="sidebar-item-text sidebar-link">
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop Code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double Descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for natural language processing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for images</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoding strategies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Language Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unsupervised.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Unsupervised learning</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model (reverse process)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reparameterization of loss function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Families of diffusion models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -262,11 +510,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link active" data-scroll-target="#unsupervised-learning">Unsupervised learning</a>
-  <ul class="collapse">
-  <li><a href="#taxonomy-of-unsupervised-learning-models" id="toc-taxonomy-of-unsupervised-learning-models" class="nav-link" data-scroll-target="#taxonomy-of-unsupervised-learning-models">Taxonomy of unsupervised learning models</a></li>
+  <li><a href="#taxonomy-of-unsupervised-learning-models" id="toc-taxonomy-of-unsupervised-learning-models" class="nav-link active" data-scroll-target="#taxonomy-of-unsupervised-learning-models">Taxonomy of unsupervised learning models</a></li>
   <li><a href="#what-makes-a-good-generative-model" id="toc-what-makes-a-good-generative-model" class="nav-link" data-scroll-target="#what-makes-a-good-generative-model">What makes a good generative model?</a></li>
-  <li><a href="#quantifying-performance" id="toc-quantifying-performance" class="nav-link" data-scroll-target="#quantifying-performance">Quantifying performance</a></li>
+  <li><a href="#quantifying-performance" id="toc-quantifying-performance" class="nav-link" data-scroll-target="#quantifying-performance">Quantifying performance</a>
+  <ul class="collapse">
+  <li><a href="#test-likelihood" id="toc-test-likelihood" class="nav-link" data-scroll-target="#test-likelihood">Test Likelihood</a></li>
+  <li><a href="#inception-score" id="toc-inception-score" class="nav-link" data-scroll-target="#inception-score">Inception Score</a></li>
+  <li><a href="#frechet-inception-distance" id="toc-frechet-inception-distance" class="nav-link" data-scroll-target="#frechet-inception-distance">Frechet Inception Distance</a></li>
+  <li><a href="#manifold-precision-and-recall" id="toc-manifold-precision-and-recall" class="nav-link" data-scroll-target="#manifold-precision-and-recall">Manifold Precision and Recall</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -274,19 +525,61 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unsupervised learning</h1>
+</div>
 
 
 
-<section id="unsupervised-learning" class="level1">
-<h1>Unsupervised learning</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <section id="taxonomy-of-unsupervised-learning-models" class="level2">
 <h2 class="anchored" data-anchor-id="taxonomy-of-unsupervised-learning-models">Taxonomy of unsupervised learning models</h2>
+<p><img src="assets/Chap14/UnsupOverview.svg" width="50%" align="right"></p>
+<p>Taxonomy of unsupervised learning models. Unsupervised learning refers to any model trained on datasets without labels. Generative models can synthesize (generate) new examples with similar statistics to the training data. A subset of these are probabilistic and define a distribution over the data. We draw samples from this distribution to generate new examples. Latent variable models define a mapping between an underlying explanatory (latent) variable and the data and may fall into any of the above categories.</p>
+<p><span class="math display">\[\begin{eqnarray}
+  L[\boldsymbol\phi] = -\sum_{i=1}^{I}\log\Bigl[Pr(\mathbf{x}_{i}|\boldsymbol\phi)\Bigr].
+\end{eqnarray}\]</span></p>
 </section>
 <section id="what-makes-a-good-generative-model" class="level2">
 <h2 class="anchored" data-anchor-id="what-makes-a-good-generative-model">What makes a good generative model?</h2>
+<p><img src="assets/Chap14/UnsupLearning.svg" width="100%" style="filter:invert(1)"></p>
+<p>Fitting generative models a) Generative adversarial models provide a mechanism for generating samples (orange points). As training proceeds (left to right), the loss function encourages these samples to become progressively less distinguishable from real examples (cyan points). b) Probabilistic models (including variational autoencoders, normalizing flows, and diffusion models) learn a probability distribution over the training data. As training proceeds (left to right), the likelihood of the real examples increases under this distribution, which can be used to draw new samples and assess the probability of new data points.</p>
 </section>
 <section id="quantifying-performance" class="level2">
 <h2 class="anchored" data-anchor-id="quantifying-performance">Quantifying performance</h2>
+<section id="test-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="test-likelihood">Test Likelihood</h3>
+</section>
+<section id="inception-score" class="level3">
+<h3 class="anchored" data-anchor-id="inception-score">Inception Score</h3>
+<p><span class="math display">\[\begin{eqnarray}
+IS &amp;=&amp; \exp\left[\frac{1}{I}\sum_{i=1}^{I}D_{KL}\Bigl[Pr(y|\mathbf{x}^*_{i})||Pr(y) \Bigr]\right],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+Pr(y) = \frac{1}{I}\sum_{i=1}^I Pr(y|\mathbf{x}^*_i).
+\end{eqnarray}\]</span></p>
+</section>
+<section id="frechet-inception-distance" class="level3">
+<h3 class="anchored" data-anchor-id="frechet-inception-distance">Frechet Inception Distance</h3>
+</section>
+<section id="manifold-precision-and-recall" class="level3">
+<h3 class="anchored" data-anchor-id="manifold-precision-and-recall">Manifold Precision and Recall</h3>
+<p><img src="assets/Chap14/UnsupInception.svg" width="100%" style="filter:invert(1)"></p>
+<p>Inception score. a) A pretrained network classifies the generated images. If the images are realistic, the resulting class probabilities Pr(y|x ∗ i ) should be peaked at the correct class. b) If the model generates all classes equally frequently, the marginal (average) class probabilities should be flat. The inception score measures the average distance between the distributions in (a) and the distribution in (b). Images from Deng et al.&nbsp;(2009).</p>
+<p><img src="assets/Chap14/UnsupPrecisionRecall.svg" width="100%" style="filter:invert(1)"></p>
+<p>Manifold precision/recall. a) True distributions of real examples and samples synthesized by the generative model. b) The overlap can be summarized by the precision (the proportion of synthesized samples that overlap with the distribution or manifold of real examples), and c) recall (the proportion of real examples that overlap with the manifold of the synthesized samples). d) The manifold of synthesized samples can be approximated by taking the union of a set of hyperspheres centered on each sample. Here, these have constant radius, but more commonly, the radius is based on the distance to the kth nearest neighbor. e) The manifold for real examples is approximated similarly. f) The precision can be computed as the proportion of samples that lie within the approximated manifold of real examples. Similarly, the recall is computed as the proportion of real examples that lie within the approximated manifold of samples (not shown). Adapted from Kynkäänniemi et al.&nbsp;(2019).</p>
 
 
 </section>

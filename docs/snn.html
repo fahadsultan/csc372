@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -227,60 +261,285 @@ window.Quarto = {
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn.html" class="sidebar-item-text sidebar-link active">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multivariate Networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From composing networks to deep networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./loss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Loss Functions</span></a>
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">loss.md</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./backprop.html" class="sidebar-item-text sidebar-link">
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training algorithm hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation algorithm</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./performance.html" class="sidebar-item-text sidebar-link">
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop Code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double Descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for natural language processing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for images</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoding strategies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Language Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Unsupervised learning</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder (forward process)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model (reverse process)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reparameterization of loss function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Families of diffusion models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -297,12 +556,6 @@ window.Quarto = {
   <li><a href="#depicting-neural-networks" id="toc-depicting-neural-networks" class="nav-link" data-scroll-target="#depicting-neural-networks">Depicting neural networks</a></li>
   </ul></li>
   <li><a href="#universal-approximation-theorem" id="toc-universal-approximation-theorem" class="nav-link" data-scroll-target="#universal-approximation-theorem">Universal Approximation theorem</a></li>
-  <li><a href="#multivariate-input-and-output" id="toc-multivariate-input-and-output" class="nav-link" data-scroll-target="#multivariate-input-and-output">Multivariate input and output</a>
-  <ul class="collapse">
-  <li><a href="#visualizing-multivariate-outputs" id="toc-visualizing-multivariate-outputs" class="nav-link" data-scroll-target="#visualizing-multivariate-outputs">Visualizing multivariate outputs</a></li>
-  <li><a href="#visualizing-multivariate-inputs" id="toc-visualizing-multivariate-inputs" class="nav-link" data-scroll-target="#visualizing-multivariate-inputs">Visualizing multivariate inputs</a></li>
-  </ul></li>
-  <li><a href="#shallow-neural-networks-general-case" id="toc-shallow-neural-networks-general-case" class="nav-link" data-scroll-target="#shallow-neural-networks-general-case">Shallow neural networks: general case</a></li>
   </ul>
 </nav>
     </div>
@@ -343,29 +596,239 @@ Slides
 </div>
 <section id="neural-network-example" class="level2">
 <h2 class="anchored" data-anchor-id="neural-network-example">Neural Network Example</h2>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_simple_eq}
-y &amp;=&amp; \mbox{f}[x,\boldsymbol\phi]\nonumber \\
-&amp;=&amp;\phi_{0}+\phi_{1}\mbox{a}[\theta_{10} + \theta_{11}x]+\phi_{2}\mbox{a}[\theta_{20} + \theta_{21}x]+\phi_{3}\mbox{a}[\theta_{30} + \theta_{31}x].
-\end{eqnarray}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+y
+&amp;= f[x,\boldsymbol{\phi}] \\
+&amp;= \phi_0
++ \phi_1 a[\theta_{10}+\theta_{11}x]
++ \phi_2 a[\theta_{20}+\theta_{21}x]
++ \phi_3 a[\theta_{30}+\theta_{31}x].
+\end{aligned}
+\tag{1}
+\]</span></p>
 <p><img src="assets/Chap03/ShallowReLU.svg" style="filter: invert(1);" width="50%" align="right"></p>
 <p>Rectified linear unit (ReLU). This activation function returns zero if the input is less than zero and returns the input unchanged otherwise. In other words, it clips negative values to zero. Note that there are many other possi- ble choices for the activation function (see figure 3.13), but the ReLU is the most commonly used and the easiest to understand.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_relu}
-\mbox{a}[z] = \mbox{ReLU}[z] = \begin{cases} 0 &amp; \quad z &lt;0 \\ z &amp; \quad z\geq 0\end{cases}.
-\end{eqnarray}\]</span></p>
+<p><span class="math display">\[
+a[z]
+=
+\operatorname{ReLU}(z)
+=
+\begin{cases}
+0, &amp; z &lt; 0, \\
+z, &amp; z \geq 0.
+\end{cases}
+\tag{1}
+\]</span></p>
+<div id="e69bf897" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports plotting library</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'dark_background'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the Rectified Linear Unit (ReLU) function</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ReLU(preactivation):</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> []</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> z <span class="kw">in</span> preactivation: </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> z <span class="op">&lt;</span> <span class="dv">0</span>: </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      activation.append(<span class="dv">0</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      activation.append(x)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># One line equivalent</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># activation = preactivation.clip(0, None)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="00985c13" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make an array of inputs</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="fl">0.1</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>RelU_z <span class="op">=</span> ReLU(z)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the ReLU function</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ax.plot(z,RelU_z,<span class="st">'r-'</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlim([<span class="op">-</span><span class="dv">5</span>,<span class="dv">5</span>])<span class="op">;</span>ax.set_ylim([<span class="op">-</span><span class="dv">5</span>,<span class="dv">5</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'z'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'ReLU[z]'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p><img src="assets/Chap03/ShallowFunctions.svg" style="filter: invert(1);" width="100%"></p>
 <p>Family of functions defined by equation 3.1. a–c) Functions for three different choices of the ten parameters ϕ. In each case, the input/output relation is piecewise linear. However, the positions of the joints, the slopes of the linear regions between them, and the overall height vary.</p>
 <section id="neural-network-intuition" class="level3">
 <h3 class="anchored" data-anchor-id="neural-network-intuition">Neural Network intuition</h3>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_simple_eq1b}
-h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
-h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
-h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_simple_eq2}
-y = \phi_{0}+\phi_{1}h_{1}+\phi_{2}h_{2}+\phi_{3}h_{3}.
-\end{eqnarray}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+h_1 &amp;= a[\theta_{10}+\theta_{11}x], \\
+h_2 &amp;= a[\theta_{20}+\theta_{21}x], \\
+h_3 &amp;= a[\theta_{30}+\theta_{31}x].
+\end{aligned}
+\tag{1}
+\]</span></p>
+<p><span class="math display">\[
+y
+=
+\phi_0+\phi_1h_1+\phi_2h_2+\phi_3h_3.
+\tag{2}
+\]</span></p>
 <p><img src="assets/Chap03/ShallowBuildUp.svg" style="filter: invert(1);" width="100%"></p>
 <p>Computation for function in figure 3.2a. a–c) The input x is passed through three linear functions, each with a different y-intercept θ•0 and slope θ•1. d–f) Each line is passed through the ReLU activation function, which clips negative values to zero. g–i) The three clipped lines are then weighted (scaled) by ϕ1, ϕ2, and ϕ3, respectively. j) Finally, the clipped and weighted functions are summed, and an offset ϕ0 that controls the height is added. Each of the four linear regions corresponds to a different activation pattern in the hidden units. In the shaded region, h2 is inactive (clipped), but h1 and h3 are both active. (Interactive figure)</p>
+<div id="f202ab8c" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a shallow neural network with, one input, one output, and three hidden units</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shallow_1_1_3(x, activation_fn, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Replace the code below to compute the three initial lines</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># from the theta parameters (i.e. implement equations at bottom of figure 3.3a-c).  These are the preactivations</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  pre_1 <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  pre_2 <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  pre_3 <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pass these through the ReLU function to compute the activations as in</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># figure 3.3 d-f</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  act_1 <span class="op">=</span> activation_fn(pre_1)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  act_2 <span class="op">=</span> activation_fn(pre_2)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  act_3 <span class="op">=</span> activation_fn(pre_3)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Replace the code below to weight the activations using phi1, phi2 and phi3</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># To create the equivalent of figure 3.3 g-i</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  w_act_1 <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  w_act_2 <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  w_act_3 <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Replace the code below to combining the weighted activations and add</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># phi_0 to create the output as in figure 3.3 j</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return everything we have calculated</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8b5bbd0e" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,1] and output [-1,1]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># If the plot_all flag is set to true, then we'll plot all the intermediate stages as in Figure 3.3</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural(x, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3, plot_all<span class="op">=</span><span class="va">False</span>, x_data<span class="op">=</span><span class="va">None</span>, y_data<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot intermediate plots if flag set</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> plot_all:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>,<span class="dv">0</span>].plot(x,pre_1,<span class="st">'r-'</span>)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">0</span>].set_ylabel(<span class="st">'Preactivation'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>,<span class="dv">1</span>].plot(x,pre_2,<span class="st">'b-'</span>)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">1</span>].set_ylabel(<span class="st">'Preactivation'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>,<span class="dv">2</span>].plot(x,pre_3,<span class="st">'g-'</span>)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">2</span>].set_ylabel(<span class="st">'Preactivation'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>,<span class="dv">0</span>].plot(x,act_1,<span class="st">'r-'</span>)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">0</span>].set_ylabel(<span class="st">'Activation'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>,<span class="dv">1</span>].plot(x,act_2,<span class="st">'b-'</span>)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">1</span>].set_ylabel(<span class="st">'Activation'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>,<span class="dv">2</span>].plot(x,act_3,<span class="st">'g-'</span>)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">2</span>].set_ylabel(<span class="st">'Activation'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">2</span>,<span class="dv">0</span>].plot(x,w_act_1,<span class="st">'r-'</span>)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">0</span>].set_ylabel(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">2</span>,<span class="dv">1</span>].plot(x,w_act_2,<span class="st">'b-'</span>)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">1</span>].set_ylabel(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">2</span>,<span class="dv">2</span>].plot(x,w_act_3,<span class="st">'g-'</span>)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">2</span>].set_ylabel(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> plot_y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> plot_x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        ax[plot_y,plot_x].set_xlim([<span class="dv">0</span>,<span class="dv">1</span>])<span class="op">;</span>ax[plot_x,plot_y].set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        ax[plot_y,plot_x].set_aspect(<span class="fl">0.5</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>      ax[<span class="dv">2</span>,plot_y].set_xlabel(<span class="st">'Input, '</span>)<span class="op">;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  ax.plot(x,y)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  ax.set_xlabel(<span class="st">'Input, '</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'Output, '</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  ax.set_xlim([<span class="dv">0</span>,<span class="dv">1</span>])<span class="op">;</span>ax.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="fl">0.5</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> x_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    ax.plot(x_data, y_data, <span class="st">'mo'</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x_data)):</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>      ax.plot(x_data[i], y_data[i],)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3e5eee3b" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the neural network</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="fl">0.3</span> <span class="op">;</span> theta_11 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.65</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>phi_0 <span class="op">=</span> <span class="op">-</span><span class="fl">0.3</span><span class="op">;</span> phi_1 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> phi_2 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span><span class="op">;</span> phi_3 <span class="op">=</span> <span class="fl">7.0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a range of input values</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># We run the neural network for each of these input values</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3 <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    shallow_1_1_3(x, ReLU, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plot_neural(x, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3, plot_all<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_files/figure-html/cell-6-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="8b717a01" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Least squares function</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> least_squares_loss(y_train, y_predict):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Replace the line below to compute the sum of squared</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># differences between the real values of y and the predicted values from the model f[x_i,phi]</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (see figure 2.2 of the book)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># you will need to use the function np.sum</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e23de157" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters, run the neural network, and compute the loss</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="fl">0.3</span> <span class="op">;</span> theta_11 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.65</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>phi_0 <span class="op">=</span> <span class="op">-</span><span class="fl">0.3</span><span class="op">;</span> phi_1 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> phi_2 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span><span class="op">;</span> phi_3 <span class="op">=</span> <span class="fl">7.0</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a range of input values</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>x_train <span class="op">=</span> np.array([<span class="fl">0.09291784</span>,<span class="fl">0.46809093</span>,<span class="fl">0.93089486</span>,<span class="fl">0.67612654</span>,<span class="fl">0.73441752</span>,<span class="fl">0.86847339</span>,<span class="op">\</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                   <span class="fl">0.49873225</span>,<span class="fl">0.51083168</span>,<span class="fl">0.18343972</span>,<span class="fl">0.99380898</span>,<span class="fl">0.27840809</span>,<span class="fl">0.38028817</span>,<span class="op">\</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                   <span class="fl">0.12055708</span>,<span class="fl">0.56715537</span>,<span class="fl">0.92005746</span>,<span class="fl">0.77072270</span>,<span class="fl">0.85278176</span>,<span class="fl">0.05315950</span>,<span class="op">\</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fl">0.87168699</span>,<span class="fl">0.58858043</span>])</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">0.15934537</span>,<span class="fl">0.18195445</span>,<span class="fl">0.451270150</span>,<span class="fl">0.13921448</span>,<span class="fl">0.09366691</span>,<span class="fl">0.30567674</span>,<span class="op">\</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">0.372291170</span>,<span class="fl">0.40716968</span>,<span class="op">-</span><span class="fl">0.08131792</span>,<span class="fl">0.41187806</span>,<span class="fl">0.36943738</span>,<span class="fl">0.3994327</span>,<span class="op">\</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">0.019062570</span>,<span class="fl">0.35820410</span>,<span class="fl">0.452564960</span>,<span class="op">-</span><span class="fl">0.0183121</span>,<span class="fl">0.02957665</span>,<span class="op">-</span><span class="fl">0.24354444</span>, <span class="op">\</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">0.148038840</span>,<span class="fl">0.26824970</span>])</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># We run the neural network for each of these input values</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3 <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    shallow_1_1_3(x, ReLU, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>plot_neural(x, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3, plot_all<span class="op">=</span><span class="va">True</span>, x_data <span class="op">=</span> x_train, y_data <span class="op">=</span> y_train)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the neural network on the training data</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>y_predict, <span class="op">*</span>_ <span class="op">=</span> shallow_1_1_3(x_train, ReLU, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the least squares loss and print it out</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> least_squares_loss(y_train,y_predict)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Your Loss = </span><span class="sc">%3.3f</span><span class="st">, True value = 9.385'</span><span class="op">%</span>(loss))</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">.  Manipulate the parameters (by hand!) to make the function</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the data better and try to reduce the loss to as small a number</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co"># as possible.  The best that I could do was 0.181</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Tip... start by manipulating phi_0.</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># It's not that easy, so don't spend too much time on this!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="depicting-neural-networks" class="level3">
 <h3 class="anchored" data-anchor-id="depicting-neural-networks">Depicting neural networks</h3>
@@ -381,71 +844,6 @@ h_{d} = \mbox{a}[\theta_{d0} + \theta_{d1}x],
 <p><span class="math display">\[\begin{eqnarray}\label{eq:snn_many_hidden}
 y = \phi_{0}+\sum_{d=1}^{D}\phi_{d}h_{d}.
 \end{eqnarray}\]</span></p>
-</section>
-<section id="multivariate-input-and-output" class="level2">
-<h2 class="anchored" data-anchor-id="multivariate-input-and-output">Multivariate input and output</h2>
-<p><img src="assets/Chap03/ShallowApproximate.svg" style="filter: invert(1);" width="100%"></p>
-<p>Approximation of a 1D function (dashed line) by a piecewise linear model. a–c) As the number of regions increases, the model becomes closer and closer to the continuous function. A neural network with a scalar input creates one extra linear region per hidden unit. This idea generalizes to functions in Di dimensions. The universal approximation theorem proves that, with enough hidden units, there exists a shallow neural network that can describe any given continuous function defined on a compact subset of RDi to arbitrary precision.</p>
-<p><img src="assets/Chap03/ShallowNetTwoOutputs.svg" style="filter: invert(1);" width="100%"></p>
-<p>Network with one input, four hidden units, and two outputs. a) Visualization of network structure. b) This network produces two piecewise linear functions, y1[x] and y2[x]. The four “joints” of these functions (at vertical dotted lines) are constrained to be in the same places since they share the same hidden units, but the slopes and overall height may differ.</p>
-<section id="visualizing-multivariate-outputs" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-multivariate-outputs">Visualizing multivariate outputs</h3>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_multiple_out2}
-h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
-h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
-h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x] \nonumber \\
-h_{4} &amp;=&amp; \mbox{a}[\theta_{40} + \theta_{41}x],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_multiple_out1}
-y_1 &amp;=&amp; \phi_{10}+\phi_{11}h_{1}+\phi_{12}h_{2}+\phi_{13}h_{3}+\phi_{14}h_{4}\nonumber \\
-y_2 &amp;=&amp; \phi_{20}+\phi_{21}h_{1}+\phi_{22}h_{2}+\phi_{23}h_{3}+\phi_{24}h_{4}.
-\end{eqnarray}\]</span></p>
-</section>
-<section id="visualizing-multivariate-inputs" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-multivariate-inputs">Visualizing multivariate inputs</h3>
-<p><img src="assets/Chap03/ShallowNetTwoInputs.svg" style="filter: invert(1);" width="100%"></p>
-<p>Visualization of neural network with 2D multivariate input x = [x1, x2]T and scalar output y.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_multiple3}
-h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x_1+ \theta_{12}x_2] \nonumber \\
-h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x_1+\theta_{22}x_2] \nonumber \\
-h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x_1+\theta_{32}x_2],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_multiple4}
-y = \phi_{0}+\phi_{1}h_{1}+\phi_{2}h_{2}+\phi_{3}h_{3}.
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap03/ShallowBuildUp2D.svg" style="filter: invert(1);" width="100%"></p>
-<p>Visualization of how a shallow neural network builds up a piecewise linear approximation in 2D. Processing in network with two inputs x = [x1, x2]T , three hidden units h1, h2, h3, and one output y. a–c) The input to each hidden unit is a linear function of the two inputs, which corresponds to an oriented plane. Brightness indicates function output. For example, in panel (a), the brightness represents θ10 + θ11x1 + θ12x2. Thin lines are contours. d–f) Each plane is clipped by the ReLU activation function (cyan lines are equivalent to “joints” in figures 3.3d– f). g-i) The clipped planes are then weighted, and j) summed together with an offset that determines the overall height of the surface. The result is a continuous surface made up of convex piecewise linear polygonal regions. (Interactive figure)</p>
-</section>
-</section>
-<section id="shallow-neural-networks-general-case" class="level2">
-<h2 class="anchored" data-anchor-id="shallow-neural-networks-general-case">Shallow neural networks: general case</h2>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_general_1}
-h_{d} = \mbox{a}\left[\theta_{d0} + \sum_{i=1}^{D_{i}}\theta_{di}x_i\right],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_general_2}
-y_j = \phi_{j0}+\sum_{d=1}^{D}\phi_{jd}h_{d},
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap03/ShallowRegions.svg" style="filter: invert(1);" width="100%"></p>
-<p>Linear regions vs.&nbsp;hidden units. a) Maximum possible regions as a function of the number of hidden units for five different input dimensions Di = {1, 5, 10, 50, 100}. The number of regions increases rapidly in high dimensions; with D = 500 units and input size Di = 100, there can be greater than 10107 regions (solid circle). b) The same data are plotted as a function of the number of parameters. The solid circle represents the same model as in panel (a) with D = 500 hidden units. This network has 51, 001 parameters and would be considered very small by modern standards.</p>
-<p><img src="assets/Chap03/ShallowHyperplanes.svg" style="filter: invert(1);" width="100%"></p>
-<p>Figure 3.10 Number of linear regions vs.&nbsp;input dimensions. a) With a single input dimension, a model with one hidden unit creates one joint, which divides the axis into two linear regions. b) With two input dimensions, a model with two hidden units can divide the input space using two lines (here aligned with axes) to create four regions. c) With three input dimensions, a model with three hidden units can divide the input space using three planes (again aligned with axes) to create eight regions. Continuing this argument, it follows that a model with Di input dimensions and Di hidden units can divide the input space with Di hyperplanes to create 2Di linear regions.</p>
-<p><img src="assets/Chap03/ShallowNetThreeInputsTwoOutputs.svg" style="filter: invert(1);" width="100%"></p>
-<p>Visualization of neural network with three inputs and two outputs. This network has twenty parameters. There are fifteen slopes (indicated by arrows) and five offsets (not shown).</p>
-<p><img src="assets/Chap03/ShallowTerminology.svg" style="filter: invert(1);" width="100%"></p>
-<p>Terminology. A shallow network consists of an input layer, a hidden layer, and an output layer. Each layer is connected to the next by forward connections (arrows). For this reason, these models are referred to as feed-forward networks. When every variable in one layer connects to every variable in the next, we call this a fully connected network. Each connection represents a slope parameter in the underlying equation, and these parameters are termed weights. The variables in the hidden layer are termed neurons or hidden units. The values feeding into the hidden units are termed pre-activations, and the values at the hidden units (i.e., after the ReLU function is applied) are termed activations.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:snn_harswish}
-\mbox{HardSwish}[z] = \begin{cases} 0 &amp; \quad z &lt;-3 \\ z(z+3)/6 &amp; \quad -3\leq z\leq 3 \\ z &amp;\quad z&gt;3 \end{cases}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{ReLU}[\alpha \cdot z] = \alpha \cdot \mbox{ReLU}[z].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{heaviside}[z] = \begin{cases} 0 &amp; \quad z &lt;0 \\ 1 &amp; \quad z\geq 0\end{cases} \hspace{2cm} \mbox{rect}[z] = \begin{cases} 0 &amp; \quad z &lt; 0 \\ 1 &amp; \quad 0 \leq z\leq 1 \\ 0 &amp; \quad z &gt; 1\end{cases}.
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap03/ShallowActivations.svg" style="filter: invert(1);" width="100%"></p>
-<p>Activation functions. a) Logistic sigmoid and tanh functions. b) Leaky ReLU and parametric ReLU with parameter 0.25. c) SoftPlus, Gaussian error linear unit, and sigmoid linear unit. d) Exponential linear unit with parameters 0.5 and 1.0, e) Scaled exponential linear unit. f) Swish with parameters 0.4, 1.0, and 1.4.</p>
-<p><img src="assets/Chap03/ShallowChangeSlope.svg" style="filter: invert(1);" width="100%"></p>
-<p>Processing in network with one input, three hidden units, and one output for problem 3.4. a–c) The input to each hidden unit is a linear function of the inputs. The first two are the same as in figure 3.3, but the last one differs.</p>
 
 
 </section>

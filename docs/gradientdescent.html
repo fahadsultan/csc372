@@ -227,60 +227,273 @@ window.Quarto = {
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multivariate Networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From composing networks to deep networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./loss.html" class="sidebar-item-text sidebar-link">
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./loss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loss Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link active">
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./backprop.html" class="sidebar-item-text sidebar-link">
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training algorithm hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation algorithm</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./performance.html" class="sidebar-item-text sidebar-link">
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop Code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double Descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for natural language processing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for images</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoding strategies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Language Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Unsupervised learning</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reparameterization of loss function</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Families of diffusion models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -296,17 +509,6 @@ window.Quarto = {
   <li><a href="#gabor-model-example" id="toc-gabor-model-example" class="nav-link" data-scroll-target="#gabor-model-example">Gabor model example</a></li>
   <li><a href="#local-minima-and-saddle-points" id="toc-local-minima-and-saddle-points" class="nav-link" data-scroll-target="#local-minima-and-saddle-points">Local minima and saddle points</a></li>
   </ul></li>
-  <li><a href="#stochastic-gradient-descent" id="toc-stochastic-gradient-descent" class="nav-link" data-scroll-target="#stochastic-gradient-descent">Stochastic gradient descent</a>
-  <ul class="collapse">
-  <li><a href="#batches-and-epochs" id="toc-batches-and-epochs" class="nav-link" data-scroll-target="#batches-and-epochs">Batches and epochs</a></li>
-  <li><a href="#properties-of-stochastic-gradient-descent" id="toc-properties-of-stochastic-gradient-descent" class="nav-link" data-scroll-target="#properties-of-stochastic-gradient-descent">Properties of stochastic gradient descent</a></li>
-  </ul></li>
-  <li><a href="#momentum" id="toc-momentum" class="nav-link" data-scroll-target="#momentum">Momentum</a>
-  <ul class="collapse">
-  <li><a href="#nesterov-accelerated-momentum" id="toc-nesterov-accelerated-momentum" class="nav-link" data-scroll-target="#nesterov-accelerated-momentum">Nesterov accelerated momentum</a></li>
-  </ul></li>
-  <li><a href="#adam" id="toc-adam" class="nav-link" data-scroll-target="#adam">Adam</a></li>
-  <li><a href="#training-algorithm-hyperparameters" id="toc-training-algorithm-hyperparameters" class="nav-link" data-scroll-target="#training-algorithm-hyperparameters">Training algorithm hyperparameters</a></li>
   </ul>
 </nav>
     </div>
@@ -391,93 +593,9 @@ Slides
 <p>Loss function for the Gabor model. a) The loss function is non-convex, with multiple local minima (cyan circles) in addition to the global minimum (gray circle). It also contains saddle points where the gradient is locally zero, but the function increases in one direction and decreases in the other. The blue cross is an example of a saddle point; the function decreases as we move horizontally in either direction but increases as we move vertically. b–f) Models associated with the different minima. In each case, there is no small change that decreases the loss. Panel (c) shows the global minimum, which has a loss of 0.64. (Interactive figure)</p>
 <p><img src="assets/Chap06/TrainGaborGDSGD.svg" style="filter: invert(1);" width="100%"></p>
 <p>Gradient descent vs.&nbsp;stochastic gradient descent. a) Gradient descent with line search. As long as the gradient descent algorithm is initialized in the right “valley” of the loss function (e.g., points 1 and 3), the parameter estimate will move steadily toward the global minimum. However, if it is initialized outside this valley (e.g., point 2), it will descend toward one of the local minima. b) Stochastic gradient descent adds noise to the optimization process, so it is possible to escape from the wrong valley (e.g., point 2) and still reach the global minimum.</p>
-</section>
-</section>
-<section id="stochastic-gradient-descent" class="level2">
-<h2 class="anchored" data-anchor-id="stochastic-gradient-descent">Stochastic gradient descent</h2>
-<p><img src="assets/Chap06/TrainGaborSGDIter.svg" style="filter: invert(1);" width="100%"></p>
-<p>Alternative view of SGD for the Gabor model with a batch size three. a) Loss function for the entire training dataset. At each iteration, there is a probability distribution of possible parameter changes (inset shows samples). These correspond to different choices of the three batch elements. b) Loss function for one possible batch. The SGD algorithm moves in the downhill direction on this function for a distance that is determined by the learning rate and the local gradient magnitude. The current model (dashed function in inset) changes to better fit the batch data (solid function). c) A different batch creates a different loss function and results in a different update. d) For this batch, the algorithm moves downhill with respect to the batch loss function but in the locally uphill direction with respect to the global loss function in panel (a). This is how SGD can escape local minima.</p>
-<section id="batches-and-epochs" class="level3">
-<h3 class="anchored" data-anchor-id="batches-and-epochs">Batches and epochs</h3>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train_sgd}
-  \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \cdot \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
-\end{eqnarray}\]</span></p>
-</section>
-<section id="properties-of-stochastic-gradient-descent" class="level3">
-<h3 class="anchored" data-anchor-id="properties-of-stochastic-gradient-descent">Properties of stochastic gradient descent</h3>
-</section>
-</section>
-<section id="momentum" class="level2">
-<h2 class="anchored" data-anchor-id="momentum">Momentum</h2>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train_momentum}
-  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_t + (1-\beta) \sum_{i\in\mathcal{B}_t}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \boldsymbol\phi_{t+1} &amp;\leftarrow&amp;\boldsymbol\phi_{t} - \alpha \cdot \mathbf{m}_{t+1},
-\end{eqnarray}\]</span></p>
-<section id="nesterov-accelerated-momentum" class="level3">
-<h3 class="anchored" data-anchor-id="nesterov-accelerated-momentum">Nesterov accelerated momentum</h3>
-<p><img src="assets/Chap06/TrainMomentum.svg" style="filter: invert(1);" width="100%"></p>
-<p>Figure 6.7 Stochastic gradient descent with momentum. a) Regular stochastic descent takes a very indirect path toward the minimum. b) With a momentum term, the change at the current step is a weighted combination of the previous change and the gradient computed from the batch. This smooths out the trajectory and increases the speed of convergence.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train_nesterov}
-  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}-\alpha\beta\cdot\mathbf{m}_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \boldsymbol\phi_{t+1} &amp;\leftarrow&amp;\boldsymbol\phi_{t} - \alpha\cdot \mathbf{m}_{t+1},
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap06/TrainNesterov.svg" style="filter: invert(1);" width="40%" align="right"></p>
-<p>Nesterov accelerated momentum. The solution has traveled along the dashed line to arrive at point 1. A traditional momentum update measures the gradient at point 1, moves some distance in this direction to point 2, and then adds the momentum term from the previous iteration (i.e., in the same direction as the dashed line), arriving at point 3. The Nesterov momentum update first applies the momentum term (moving from point 1 to point 4) and then measures the gradient and applies an update to arrive at point 5.</p>
-</section>
-</section>
-<section id="adam" class="level2">
-<h2 class="anchored" data-anchor-id="adam">Adam</h2>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \mathbf{v}_{t+1} &amp;\leftarrow&amp; \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\boldsymbol\phi_{t+1} &amp;\leftarrow &amp; \boldsymbol\phi_{t} - \alpha \cdot \frac{\mathbf{m}_{t+1}}{\sqrt{\mathbf{v}_{t+1}}+\epsilon},
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap06/TrainADAM.svg" style="filter: invert(1);" width="100%"></p>
-<p>Adaptive moment estimation (Adam). a) This loss function changes quickly in the vertical direction but slowly in the horizontal direction. If we run full-batch gradient descent with a learning rate that makes good progress in the vertical direction, then the algorithm takes a long time to reach the final horizontal position. b) If the learning rate is chosen so that the algorithm makes good progress in the horizontal direction, it overshoots in the vertical direction and becomes unstable. c) A straightforward approach is to move a fixed distance along each axis at each step so that we move downhill in both directions. This is accomplished by normalizing the gradient magnitude and retaining only the sign. However, this does not usually converge to the exact minimum but instead oscillates back and forth around it (here between the last two points). d) The Adam algorithm uses momentum in both the estimated gradient and the normalization term, which creates a smoother path.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train_adam}
-  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \mathbf{v}_{t+1} &amp;\leftarrow&amp; \gamma \cdot \mathbf{v}_{t} + (1-\gamma) \left(\frac{\partial L[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2,
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train_adam_modify}
-\tilde{\mathbf{m}}_{t+1} &amp;\leftarrow &amp; \frac{\mathbf{m}_{t+1}}{1-\beta^{t+1}}\nonumber \\
-\tilde{\mathbf{v}}_{t+1} &amp;\leftarrow &amp; \frac{\mathbf{v}_{t+1}}{1-\gamma^{t+1}}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\boldsymbol\phi_{t+1} &amp;\leftarrow &amp; \boldsymbol\phi_{t} - \alpha\cdot\frac{ \tilde{\mathbf{m}}_{t+1}}{\sqrt{\tilde{\mathbf{v}}_{t+1}}+\epsilon}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train_adam_final}
-  \mathbf{m}_{t+1} &amp;\leftarrow&amp; \beta \cdot \mathbf{m}_{t} + (1-\beta) \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\nonumber \\
-  \mathbf{v}_{t+1} &amp;\leftarrow&amp; \gamma \cdot \mathbf{v}_{t} + (1-\gamma) \left(\sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_i[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi}\right)^2,
-\end{eqnarray}\]</span></p>
-</section>
-<section id="training-algorithm-hyperparameters" class="level2">
-<h2 class="anchored" data-anchor-id="training-algorithm-hyperparameters">Training algorithm hyperparameters</h2>
-<p><img src="assets/Chap06/TrainLineSearch.svg" style="filter: invert(1);" width="100%"></p>
-<p>Line search using the bracketing approach. a) The current solution is at position a (orange point), and we wish to search the region [a, d] (gray shaded area). We define two points b, c interior to the search region and evaluate the loss function at these points. Here L[b] &gt; L[c], so we eliminate the range [a, b]. b) We now repeat this procedure in the refined search region and find that L[b] &lt; L[c], so we eliminate the range [c, d]. c) We repeat this process until this minimum is closely bracketed.</p>
-<p><img src="assets/Chap06/TrainConvexProb.svg" style="filter: invert(1);" width="100%"></p>
-<p>Three 1D loss functions for problem 6.6.</p>
-<p><span class="math display">\[\begin{eqnarray}
-\mathbf{H}[\boldsymbol\phi] = \begin{bmatrix} \frac{\partial^{2} L}{\partial\phi_{0}^{2}} &amp; \frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{1}} &amp;\hdots &amp;\frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{N}}\\
-\frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{0}} &amp;\frac{\partial^{2} L}{\partial\phi_{1}^{2}} &amp;\hdots&amp;\frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{N}} \\ \vdots &amp;\vdots &amp; \ddots &amp;\vdots\\
-\frac{\partial^{2} L}{\partial\phi_{N}\partial\phi_{0}} &amp;\frac{\partial^{2} L}{\partial\phi_{N}\partial\phi_{1}} &amp;\hdots&amp;\frac{\partial^{2} L}{\partial\phi_{N}^2} \end{bmatrix}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mathbf{H}[\boldsymbol\phi] = \begin{bmatrix} \frac{\partial^{2} L}{\partial\phi_{0}^{2}} &amp; \frac{\partial^{2} L}{\partial\phi_{0}\partial\phi_{1}}\\
-\frac{\partial^{2} L}{\partial\phi_{1}\partial\phi_{0}} &amp;\frac{\partial^{2} L}{\partial\phi_{1}^{2}} \end{bmatrix},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-Pr(y=1|x) = \mbox{sig}[\phi_{0}+\phi_{1}x],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{f}[x,\boldsymbol\phi]  = \phi_{0}+\phi_{1}\mbox{a}[\theta_{10} + \theta_{11}x]+\phi_{2}\mbox{a}[\theta_{20} + \theta_{21}x]+\phi_{3}\mbox{a}[\theta_{30} + \theta_{31}x].
-\end{eqnarray}\]</span></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -227,60 +261,273 @@ window.Quarto = {
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multivariate Networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From composing networks to deep networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./loss.html" class="sidebar-item-text sidebar-link">
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./loss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loss Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./backprop.html" class="sidebar-item-text sidebar-link active">
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training algorithm hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation algorithm</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./performance.html" class="sidebar-item-text sidebar-link">
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop Code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double Descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for natural language processing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for images</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoding strategies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Language Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Unsupervised learning</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reparameterization of loss function</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Families of diffusion models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -300,13 +547,6 @@ window.Quarto = {
   <li><a href="#algorithmic-differentiation" id="toc-algorithmic-differentiation" class="nav-link" data-scroll-target="#algorithmic-differentiation">Algorithmic differentiation</a></li>
   <li><a href="#extension-to-arbitrary-computational-graphs" id="toc-extension-to-arbitrary-computational-graphs" class="nav-link" data-scroll-target="#extension-to-arbitrary-computational-graphs">Extension to arbitrary computational graphs</a></li>
   </ul></li>
-  <li><a href="#parameter-initialization" id="toc-parameter-initialization" class="nav-link" data-scroll-target="#parameter-initialization">Parameter Initialization</a>
-  <ul class="collapse">
-  <li><a href="#initialization-for-forward-pass" id="toc-initialization-for-forward-pass" class="nav-link" data-scroll-target="#initialization-for-forward-pass">Initialization for forward pass</a></li>
-  <li><a href="#initialization-for-backward-pass" id="toc-initialization-for-backward-pass" class="nav-link" data-scroll-target="#initialization-for-backward-pass">Initialization for backward pass</a></li>
-  <li><a href="#initialization-for-both-forward-and-backward-pass" id="toc-initialization-for-both-forward-and-backward-pass" class="nav-link" data-scroll-target="#initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</a></li>
-  </ul></li>
-  <li><a href="#example-training-code" id="toc-example-training-code" class="nav-link" data-scroll-target="#example-training-code">Example training code</a></li>
   </ul>
 </nav>
     </div>
@@ -498,111 +738,109 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 </section>
 <section id="extension-to-arbitrary-computational-graphs" class="level3">
 <h3 class="anchored" data-anchor-id="extension-to-arbitrary-computational-graphs">Extension to arbitrary computational graphs</h3>
-</section>
-</section>
-<section id="parameter-initialization" class="level2">
-<h2 class="anchored" data-anchor-id="parameter-initialization">Parameter Initialization</h2>
-<p><span class="math display">\[\begin{eqnarray}
-\mathbf{f}_{k} &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\nonumber\\
-&amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\textbf{a}[\mathbf{f}_{k-1}],
-\end{eqnarray}\]</span></p>
-<section id="initialization-for-forward-pass" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-for-forward-pass">Initialization for forward pass</h3>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{h} &amp;=&amp; \mbox{\bf a}[\mathbf{f}],\nonumber \\
-  \mathbf{f}' &amp;=&amp; \boldsymbol\beta +\boldsymbol\Omega\mathbf{h}
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbb{E}[f'_{i}] &amp;=&amp; \mathbb{E}\left[\beta_{i} + \sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right]\nonumber \\
-  &amp;=&amp; \mathbb{E}\left[\beta_{i}\right] +\sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}h_{j}\right] \nonumber\\
-  &amp;=&amp; \mathbb{E}\left[\beta_{i}\right] +\sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}\right]\mathbb{E}\left[h_{j}\right] \nonumber\\
-  &amp;=&amp; 0 + \sum_{j=1}^{D_h} 0\cdot\mathbb{E}\left[h_{j}\right] = 0,
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \sigma^{2}_{f'_i} &amp;=&amp; \mathbb{E}[f_{i}^{\prime 2}]-\mathbb{E}[f'_{i}]^{2} \nonumber \\
-  &amp;=&amp; \mathbb{E}\left[\left(\beta_{i}+\sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right)^2\right]-0\nonumber\\
-  &amp;=&amp; \mathbb{E}\left[\left(\sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right)^2\right]\nonumber\\
-  &amp;=&amp; \sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}^2\right]\mathbb{E}\left[h_{j}^2\right]\nonumber \\
-  &amp;=&amp;\sum_{j=1}^{D_h} \sigma_\Omega^2 \mathbb{E}\left[h_{j}^2\right] = \sigma_\Omega^2 \sum_{j=1}^{D_h} \mathbb{E}\left[h_{j}^2\right],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\sigma^{2}_{f'_{i}} = \sigma_\Omega^2 \sum_{j=1}^{D_h} \frac{\sigma_{f}^2}{2} = \frac{1}{2}D_{h} \sigma_\Omega^2 \sigma_{f}^2.
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%"></p>
-<p>Weight initialization. Consider a deep network with 50 hidden layers and Dh = 100 hidden units per layer. The network has a 100-dimensional input x initialized from a standard normal distribution, a single fixed target y = 0, and a least squares loss function. The bias vectors βk are initialized to zero, and the weight matrices Ωk are initialized with a normal distribution with mean zero and five different variances σ2Ω ∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (σ2Ω = 2/Dh = 0.02), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale). b) The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the exploding gradient and vanishing gradient problems, respectively.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_forward}
-\sigma_\Omega^2 = \frac{2}{D_h},
-\end{eqnarray}\]</span></p>
-</section>
-<section id="initialization-for-backward-pass" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-for-backward-pass">Initialization for backward pass</h3>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_back}
-\sigma_\Omega^2 = \frac{2}{D_{h'}},
-\end{eqnarray}\]</span></p>
-</section>
-<section id="initialization-for-both-forward-and-backward-pass" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</h3>
-<p><span class="math display">\[\begin{eqnarray}
-\sigma_\Omega^2 = \frac{4}{D_{h}+D_{h'}}.
-\end{eqnarray}\]</span></p>
-</section>
-</section>
-<section id="example-training-code" class="level2">
-<h2 class="anchored" data-anchor-id="example-training-code">Example training code</h2>
-<p><img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%"></p>
-<p>Computational graph for problem 7.12 and problem 7.13. Adapted from Domke (2010).</p>
-<p><span class="math display">\[\begin{eqnarray}
-y &amp;=&amp; \phi_{0}+\phi_{1}\mbox{a}\Bigl[\psi_{01} + \psi_{11}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{21}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr]\nonumber \\
-&amp;&amp;\hspace{0.55cm}+\phi_{2}\mbox{a}\Bigl[\psi_{02} + \psi_{12}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \ell_i = (y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^2.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\ell_{i} = -(1-y_{i})\log\Bigl[1-\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr] - y_{i}\log\Bigl[\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_logistic}
-\mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\frac{\partial \mathbf{z}}{\partial \mathbf{h}} = \boldsymbol\Omega^{T},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{Heaviside}[z] = \begin{cases} 0 &amp; \quad z &lt;0 \\ 1 &amp; \quad z\geq 0\end{cases},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{rect}[z] = \begin{cases} 0 &amp; \quad z &lt; 0 \\ 1 &amp; \quad 0 \leq z\leq 1 \\ 0 &amp; \quad z &gt; 1\end{cases}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-     \frac{\partial \ell}{\partial \boldsymbol\Omega} = \frac{\partial \ell}{\partial \mathbf{f}}\mathbf{h}^{T}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_prob_leaky_relu}
-\mbox{a}[z] = \mbox{ReLU}[z] = \begin{cases} \alpha \cdot z &amp; \quad z &lt;0 \\ z &amp; \quad z\geq 0\end{cases},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:prob_comp_graph}\index{reverse-mode differentiation}\index{differentiation!reverse mode}\index{backpropagation!on acyclic graph}
-  y = \exp\left[\exp[x]+\exp[x]^2\right]+ \sin[\exp[x]+\exp[x]^2].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-f_{1} &amp;=&amp; \exp[x]\nonumber \\
-f_{2} &amp;=&amp; f_{1}^2\nonumber \\
-f_{3} &amp;=&amp; f_{1}+f_{2}\nonumber \\
-f_{4} &amp;=&amp; \exp[f_{3}]\nonumber \\
-f_{5} &amp;=&amp; \sin[f_{3}]\nonumber \\
-y &amp;=&amp; f_{4}+f_{5}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \frac{\partial y}{\partial f_{5}}, \frac{\partial y}{\partial f_{4}}, \frac{\partial y}{\partial f_{3}},
-  \frac{\partial y}{\partial f_{2}}, \frac{\partial y}{\partial f_{1}} \mbox{ and } \frac{\partial y}{\partial x},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \frac{\partial f_{1}}{\partial x}, \frac{\partial f_{2}}{\partial x}, \frac{\partial f_{3}}{\partial x}, \frac{\partial f_4}{\partial x},
-  \frac{\partial f_{5}}{\partial x}, \mbox{ and } \frac{\partial y}{\partial x},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-b = \mbox{ReLU}[a] = \begin{cases} 0 &amp; \quad a &lt;0 \\ a&amp; \quad a\geq 0\end{cases},
-\end{eqnarray}\]</span></p>
+<div id="def7ce82" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import library</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fn(x, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> beta3<span class="op">+</span>omega3 <span class="op">*</span> np.cos(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1 <span class="op">+</span> omega1 <span class="op">*</span> np.sin(beta0 <span class="op">+</span> omega0 <span class="op">*</span> x)))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loss(x, y, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  diff <span class="op">=</span> fn(x, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3) <span class="op">-</span> y</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> diff <span class="op">*</span> diff</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>beta0 <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span> beta1 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> beta2 <span class="op">=</span> <span class="op">-</span><span class="fl">3.0</span><span class="op">;</span> beta3 <span class="op">=</span> <span class="fl">0.4</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>omega0 <span class="op">=</span> <span class="fl">0.1</span><span class="op">;</span> omega1 <span class="op">=</span> <span class="op">-</span><span class="fl">0.4</span><span class="op">;</span> omega2 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> omega3 <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">2.3</span><span class="op">;</span> y <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>l_i_func <span class="op">=</span> loss(x,y,beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'l_i=</span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>l_i_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e9222c2d" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dldbeta3_func <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (beta3 <span class="op">+</span>omega3 <span class="op">*</span> np.cos(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1<span class="op">+</span>omega1 <span class="op">*</span> np.sin(beta0<span class="op">+</span>omega0 <span class="op">*</span> x)))<span class="op">-</span>y)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dldomega0_func <span class="op">=</span> <span class="op">-</span><span class="dv">2</span> <span class="op">*</span>(beta3 <span class="op">+</span>omega3 <span class="op">*</span> np.cos(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1<span class="op">+</span>omega1 <span class="op">*</span> np.sin(beta0<span class="op">+</span>omega0 <span class="op">*</span> x)))<span class="op">-</span>y) <span class="op">*</span> <span class="op">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              omega1 <span class="op">*</span> omega2 <span class="op">*</span> omega3 <span class="op">*</span> x <span class="op">*</span> np.cos(beta0 <span class="op">+</span> omega0 <span class="op">*</span> x) <span class="op">*</span> np.exp(beta1 <span class="op">+</span>omega1 <span class="op">*</span> np.sin(beta0 <span class="op">+</span> omega0 <span class="op">*</span> x)) <span class="op">*\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              np.sin(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1<span class="op">+</span> omega1<span class="op">*</span> np.sin(beta0<span class="op">+</span>omega0 <span class="op">*</span> x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f055e571" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dldomega0_fd <span class="op">=</span> (loss(x,y,beta0,beta1,beta2,beta3,omega0<span class="op">+</span><span class="fl">0.00001</span>,omega1,omega2,omega3)<span class="op">-</span>loss(x,y,beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3))<span class="op">/</span><span class="fl">0.00001</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dydomega0: Function value = </span><span class="sc">%3.3f</span><span class="st">, Finite difference value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega0_func,dldomega0_fd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="91f243ed" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> compute all the f_k and h_k terms</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the code below</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>f0 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>h1 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>h2 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>f2 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>h3 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>f3 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>l_i <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ab958836" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check we got that right:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f0: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">1.230</span>, f0))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"h1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">0.942</span>, h1)) </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">1.623</span>, f1))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"h2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">5.068</span>, h2))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">7.137</span>, f2))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"h3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">0.657</span>, h3))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">2.372</span>, f3))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"l_i original = </span><span class="sc">%3.3f</span><span class="st">, l_i from forward pass = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(l_i_func, l_i))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e4613a55" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- Compute the derivatives of the output with respect</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to the intermediate computations h_k and f_k (i.e, run the backward pass)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># I've done the first two for you.  You replace the code below:</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>dldf3 <span class="op">=</span> <span class="dv">2</span><span class="op">*</span> (f3 <span class="op">-</span> y)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>dldh3 <span class="op">=</span> omega3 <span class="op">*</span> dldf3</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the code below</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>dldf2 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>dldh2 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>dldf1 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>dldh1 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>dldf0 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check we got that right</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">0.745</span>, dldf3))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldh3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">2.234</span>, dldh3))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="op">-</span><span class="fl">1.683</span>, dldf2))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldh2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="op">-</span><span class="fl">3.366</span>, dldh2))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="op">-</span><span class="fl">17.060</span>, dldf1))</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldh1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">6.824</span>, dldh1))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf0: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">2.281</span>, dldf0))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="6f9bdd9c" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- Calculate the final derivatives with respect to the beta and omega terms</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dldbeta3 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>dldomega3 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>dldbeta2 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>dldomega2 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>dldbeta1 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>dldomega1 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>dldbeta0 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>dldomega0 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check we got them right</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta3: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta3, <span class="fl">0.745</span>))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega3: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega3, <span class="fl">0.489</span>))</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta2: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta2, <span class="op">-</span><span class="fl">1.683</span>))</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega2: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega2, <span class="op">-</span><span class="fl">8.530</span>))</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta1: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta1, <span class="op">-</span><span class="fl">17.060</span>))</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega1: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega1, <span class="op">-</span><span class="fl">16.079</span>))</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta0: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta0, <span class="fl">2.281</span>))</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega0: Your value = </span><span class="sc">%3.3f</span><span class="st">, Function value = </span><span class="sc">%3.3f</span><span class="st">, Finite difference value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega0, dldomega0_func, dldomega0_fd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

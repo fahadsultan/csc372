@@ -28,7 +28,7 @@ website:
     - id: syllabus
       title: "Syllabus"
       background: light
-      collapse-level: 2
+      collapse-level: 1
       contents:
         - syllabus/about.qmd
         - syllabus/grading.qmd
@@ -49,19 +49,64 @@ website:
         - intro.qmd
         # - section: models.qmd
         #   contents:
-        - linearregression.md
-        - snn.md
-        - dnn.md 
-        - loss.md
-        # - section: fitting.qmd
+        # - linearregression.md
+        - linearregression.ipynb
+        # - snn.md
+        - section: snn.ipynb
+          contents:
+          - snn_multivariate.ipynb
+          - snn_general.ipynb
+          - snn_activations.ipynb
+        # - dnn.md 
+        - section: dnn.ipynb 
+          contents:
+          - dnn_clipping.ipynb
+          - dnn_deep.ipynb
+        - section: loss.md
+          contents:
+          - loss_regression.ipynb
+          - loss_classification.ipynb
+          - loss_multiclass.ipynb
+        # - section: fitting.qmd 
         #   contents:
-        - gradientdescent.md
-        - backprop.md
-        - performance.md
-        - transformers.md
+        # - gradientdescent.md
+        - section: gradientdescent.ipynb
+          contents:
+          - gradientdescent_sgd.ipynb
+          - gradientdescent_momentum.ipynb
+          - gradientdescent_adam.ipynb
+          - gradientdescent_linesearch.ipynb
+        # - backprop.md
+        - section: backprop.ipynb
+          contents: 
+          - backprop_algo.ipynb
+          - backprop_init.ipynb
+          - backprop_code.ipynb
+        # - performance.md
+        - section: performance.ipynb
+          contents: 
+          - performance_biasvariance.ipynb
+          - performance_doubledescent.ipynb
+          - performance_highdimensions.ipynb
+        # - transformers.md
+        - section: transformers.ipynb
+          contents:
+          - transformers_multi.ipynb
+          - transformers_nlp.ipynb
+          - transformers_others.ipynb
+          - transformers_decoding.ipynb
+        - section: llms.ipynb
+          contents: 
+          - llms_pretraining.ipynb
+          - llms_finetuning.ipynb
+          - llms_rlhf.ipynb
         - unsupervised.md
-        - diffusion.md
-        
+        - section: diffusion.ipynb
+          contents: 
+          - diffusion_encoder.ipynb 
+          - diffusion_decoder.ipynb
+          - diffusion_reparameterization.ipynb
+          - diffusion_family.ipynb
 
 format:
   html:

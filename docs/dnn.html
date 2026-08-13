@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -227,60 +261,273 @@ window.Quarto = {
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multivariate Networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dnn.html" class="sidebar-item-text sidebar-link active">
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From composing networks to deep networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./loss.html" class="sidebar-item-text sidebar-link">
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./loss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loss Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./backprop.html" class="sidebar-item-text sidebar-link">
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training algorithm hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation algorithm</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./performance.html" class="sidebar-item-text sidebar-link">
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop Code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double Descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for natural language processing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for images</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoding strategies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Language Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Unsupervised learning</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reparameterization of loss function</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Families of diffusion models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -292,21 +539,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#composing-neural-networks" id="toc-composing-neural-networks" class="nav-link active" data-scroll-target="#composing-neural-networks">Composing neural networks</a></li>
-  <li><a href="#from-composing-networks-to-deep-networks" id="toc-from-composing-networks-to-deep-networks" class="nav-link" data-scroll-target="#from-composing-networks-to-deep-networks">From composing networks to deep networks</a></li>
-  <li><a href="#deep-neural-networks" id="toc-deep-neural-networks" class="nav-link" data-scroll-target="#deep-neural-networks">Deep Neural Networks</a>
-  <ul class="collapse">
-  <li><a href="#hyperparameters" id="toc-hyperparameters" class="nav-link" data-scroll-target="#hyperparameters">Hyperparameters</a></li>
-  <li><a href="#matrix-notation" id="toc-matrix-notation" class="nav-link" data-scroll-target="#matrix-notation">Matrix Notation</a></li>
-  <li><a href="#general-formulation" id="toc-general-formulation" class="nav-link" data-scroll-target="#general-formulation">General formulation</a></li>
-  </ul></li>
-  <li><a href="#shallow-vs.-deep-neural-networks" id="toc-shallow-vs.-deep-neural-networks" class="nav-link" data-scroll-target="#shallow-vs.-deep-neural-networks">Shallow vs.&nbsp;deep neural networks</a>
-  <ul class="collapse">
-  <li><a href="#ability-to-approximate-different-functions" id="toc-ability-to-approximate-different-functions" class="nav-link" data-scroll-target="#ability-to-approximate-different-functions">Ability to approximate different functions</a></li>
-  <li><a href="#number-of-linear-regresions-per-parameter" id="toc-number-of-linear-regresions-per-parameter" class="nav-link" data-scroll-target="#number-of-linear-regresions-per-parameter">Number of linear regresions per parameter</a></li>
-  <li><a href="#depth-efficiency" id="toc-depth-efficiency" class="nav-link" data-scroll-target="#depth-efficiency">Depth efficiency</a></li>
-  <li><a href="#large-structured-inputs" id="toc-large-structured-inputs" class="nav-link" data-scroll-target="#large-structured-inputs">Large, structured inputs</a></li>
-  <li><a href="#training-and-generalization" id="toc-training-and-generalization" class="nav-link" data-scroll-target="#training-and-generalization">Training and generalization</a></li>
-  </ul></li>
+  <li><a href="#take-away-conclusion" id="toc-take-away-conclusion" class="nav-link" data-scroll-target="#take-away-conclusion">Take away conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -365,125 +598,139 @@ h'_{3} &amp;=&amp; \mbox{a}[\theta'_{30} + \theta'_{31}y],
 <p><span class="math display">\[\begin{eqnarray} \label{eq:dnn_comp_out}
 y' = \phi'_{0}+\phi'_{1}h'_{1}+\phi'_{2}h'_{2}+\phi'_{3}h'_{3}.
 \end{eqnarray}\]</span></p>
+<div id="97317149" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports plotting library</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f9633d98" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the Rectified Linear Unit (ReLU) function</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ReLU(preactivation):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> preactivation.clip(<span class="fl">0.0</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="faa34a90" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a shallow neural network with, one input, one output, and three hidden units</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shallow_1_1_3(x, activation_fn, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initial lines</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  pre_1 <span class="op">=</span> theta_10 <span class="op">+</span> theta_11 <span class="op">*</span> x</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  pre_2 <span class="op">=</span> theta_20 <span class="op">+</span> theta_21 <span class="op">*</span> x</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  pre_3 <span class="op">=</span> theta_30 <span class="op">+</span> theta_31 <span class="op">*</span> x</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Activation functions</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  act_1 <span class="op">=</span> activation_fn(pre_1)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  act_2 <span class="op">=</span> activation_fn(pre_2)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  act_3 <span class="op">=</span> activation_fn(pre_3)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Weight activations</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  w_act_1 <span class="op">=</span> phi_1 <span class="op">*</span> act_1</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  w_act_2 <span class="op">=</span> phi_2 <span class="op">*</span> act_2</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  w_act_3 <span class="op">=</span> phi_3 <span class="op">*</span> act_3</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine weighted activation and add y offset</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> phi_0 <span class="op">+</span> w_act_1 <span class="op">+</span> w_act_2 <span class="op">+</span> w_act_3</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return everything we have calculated</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="258252e9" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Plot two shallow neural networks and the composition of the two</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural_two_components(x_in, net1_out, net2_out, net12_out<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the two networks separately</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">0</span>].plot(x_in, net1_out,<span class="st">'r-'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">0</span>].set_xlabel(<span class="st">'Net 1 input'</span>)<span class="op">;</span> ax[<span class="dv">0</span>].set_ylabel(<span class="st">'Net 1 output'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">0</span>].set_xlim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])<span class="op">;</span>ax[<span class="dv">0</span>].set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">0</span>].set_aspect(<span class="fl">1.0</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">1</span>].plot(x_in, net2_out,<span class="st">'b-'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">1</span>].set_xlabel(<span class="st">'Net 2 input'</span>)<span class="op">;</span> ax[<span class="dv">1</span>].set_ylabel(<span class="st">'Net 2 output'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">1</span>].set_xlim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])<span class="op">;</span>ax[<span class="dv">1</span>].set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">1</span>].set_aspect(<span class="fl">1.0</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> net12_out <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot their composition</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    ax.plot(x_in ,net12_out,<span class="st">'g-'</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Net 1 Input'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'Net 2 Output'</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])<span class="op">;</span>ax.set_ylim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    ax.set_aspect(<span class="fl">1.0</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s define two networks. We’ll put the prefixes n1_ and n2_ before all the variables to make it clear which network is which. We’ll just consider the inputs and outputs over the range [-1,1].</p>
+<div id="5e9881e7" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the first neural network</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>n1_theta_10 <span class="op">=</span> <span class="fl">0.0</span>   <span class="op">;</span> n1_theta_11 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n1_theta_20 <span class="op">=</span> <span class="dv">0</span>     <span class="op">;</span> n1_theta_21 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>n1_theta_30 <span class="op">=</span> <span class="op">-</span><span class="fl">0.67</span> <span class="op">;</span> n1_theta_31 <span class="op">=</span>  <span class="fl">1.0</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>n1_phi_0 <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span> n1_phi_1 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> n1_phi_2 <span class="op">=</span> <span class="op">-</span><span class="fl">3.0</span><span class="op">;</span> n1_phi_3 <span class="op">=</span> <span class="fl">9.3</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the second neural network</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>n2_theta_10 <span class="op">=</span>  <span class="op">-</span><span class="fl">0.6</span> <span class="op">;</span> n2_theta_11 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>n2_theta_20 <span class="op">=</span>  <span class="fl">0.2</span>  <span class="op">;</span> n2_theta_21 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>n2_theta_30 <span class="op">=</span>  <span class="op">-</span><span class="fl">0.5</span>  <span class="op">;</span> n2_theta_31 <span class="op">=</span>  <span class="fl">1.0</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>n2_phi_0 <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span> n2_phi_1 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span><span class="op">;</span> n2_phi_2 <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span><span class="op">;</span> n2_phi_3 <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the two inputs</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">0.001</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># We run the first  and second neural networks for each of these input values</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>net1_out <span class="op">=</span> shallow_1_1_3(x, ReLU, n1_phi_0, n1_phi_1, n1_phi_2, n1_phi_3, n1_theta_10, n1_theta_11, n1_theta_20, n1_theta_21, n1_theta_30, n1_theta_31)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>net2_out <span class="op">=</span> shallow_1_1_3(x, ReLU, n2_phi_0, n2_phi_1, n2_phi_2, n2_phi_3, n2_theta_10, n2_theta_11, n2_theta_20, n2_theta_21, n2_theta_30, n2_theta_31)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot both graphs</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c3e72af7" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> feed the output of first network into second network (replace this line)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>net12_out <span class="op">=</span> np.zeros_like(x)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all three graphs</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out, net12_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="70d99dd9" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we'll change things a up a bit.  What happens if we change the second network? (note the *-1 change)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>net1_out <span class="op">=</span> shallow_1_1_3(x, ReLU, n1_phi_0, n1_phi_1, n1_phi_2, n1_phi_3, n1_theta_10, n1_theta_11, n1_theta_20, n1_theta_21, n1_theta_30, n1_theta_31)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>net2_out <span class="op">=</span> shallow_1_1_3(x, ReLU, n2_phi_0, n2_phi_1<span class="op">*-</span><span class="dv">1</span>, n2_phi_2, n2_phi_3, n2_theta_10, n2_theta_11, n2_theta_20, n2_theta_21, n2_theta_30, n2_theta_31)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># When you have a prediction, run this code to see if you were right</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>net12_out <span class="op">=</span> shallow_1_1_3(net1_out, ReLU, n2_phi_0, n2_phi_1<span class="op">*-</span><span class="dv">1</span>, n2_phi_2, n2_phi_3, n2_theta_10, n2_theta_11, n2_theta_20, n2_theta_21, n2_theta_30, n2_theta_31)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out, net12_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1e9c810e" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's change things again.  What happens if we change the first network? (note the changes)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>net1_out <span class="op">=</span> shallow_1_1_3(x, ReLU, n1_phi_0, n1_phi_1<span class="op">*</span><span class="fl">0.5</span>, n1_phi_2, n1_phi_3, n1_theta_10, n1_theta_11, n1_theta_20, n1_theta_21, n1_theta_30, n1_theta_31)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>net2_out <span class="op">=</span> shallow_1_1_3(x, ReLU, n2_phi_0, n2_phi_1, n2_phi_2, n2_phi_3, n2_theta_10, n2_theta_11, n2_theta_20, n2_theta_21, n2_theta_30, n2_theta_31)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># When you have a prediction, run this code to see if you were right</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>net12_out <span class="op">=</span> shallow_1_1_3(net1_out, ReLU, n2_phi_0, n2_phi_1, n2_phi_2, n2_phi_3, n2_theta_10, n2_theta_11, n2_theta_20, n2_theta_21, n2_theta_30, n2_theta_31)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out, net12_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c7e7aed0" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's change things again.  What happens if the first network and second networks are the same?</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>net1_out <span class="op">=</span> shallow_1_1_3(x, ReLU, n1_phi_0, n1_phi_1, n1_phi_2, n1_phi_3, n1_theta_10, n1_theta_11, n1_theta_20, n1_theta_21, n1_theta_30, n1_theta_31)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>net2_out_new <span class="op">=</span> shallow_1_1_3(x, ReLU, n1_phi_0, n1_phi_1, n1_phi_2, n1_phi_3, n1_theta_10, n1_theta_11, n1_theta_20, n1_theta_21, n1_theta_30, n1_theta_31)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out_new)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># When you have a prediction, run this code to see if you were right</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>net12_out <span class="op">=</span> shallow_1_1_3(net1_out, ReLU, n1_phi_0, n1_phi_1, n1_phi_2, n1_phi_3, n1_theta_10, n1_theta_11, n1_theta_20, n1_theta_21, n1_theta_30, n1_theta_31)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net1_out, net2_out_new, net12_out)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="71ac0566" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Contemplate what you think will happen when we feed the</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># output of the original first network into a second copy of the original first network, and then</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the output of that into the original second network (so now we have a three layer network)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># How many total linear regions will we have in the output?</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>net123_out <span class="op">=</span> shallow_1_1_3(net12_out, ReLU, n2_phi_0, n2_phi_1, n2_phi_2, n2_phi_3, n2_theta_10, n2_theta_11, n2_theta_20, n2_theta_21, n2_theta_30, n2_theta_31)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plot_neural_two_components(x, net12_out, net2_out, net123_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="from-composing-networks-to-deep-networks" class="level2">
-<h2 class="anchored" data-anchor-id="from-composing-networks-to-deep-networks">From composing networks to deep networks</h2>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_deep_linear}
-h'_{1} &amp;=\quad \mbox{a}[\theta'_{10} + \theta'_{11}y] &amp;=\quad \mbox{a}[\theta'_{10} + \theta'_{11}\phi_{0}+\theta'_{11}\phi_{1}h_{1}+\theta'_{11}\phi_{2}h_{2}+\theta'_{11}\phi_{3}h_{3}] \nonumber \\
-h'_{2} &amp;= \quad\mbox{a}[\theta'_{20} + \theta'_{21}y] &amp;=\quad \mbox{a}[\theta'_{20} + \theta'_{21}\phi_{0}+\theta'_{21}\phi_{1}h_{1}+\theta'_{21}\phi_{2}h_{2}+\theta'_{21}\phi_{3}h_{3}] \nonumber \\
-h'_{3} &amp;=\quad \mbox{a}[\theta'_{30} + \theta'_{31}y] &amp;=\quad \mbox{a}[\theta'_{30} + \theta'_{31}\phi_{0}+\theta'_{31}\phi_{1}h_{1}+\theta'_{31}\phi_{2}h_{2}+\theta'_{31}\phi_{3}h_{3}],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_middle}
-h'_{1} &amp;=&amp; \mbox{a}[\psi_{10} + \psi_{11}h_{1}+ \psi_{12}h_{2}+ \psi_{13}h_{3}] \nonumber \\
-h'_{2} &amp;=&amp; \mbox{a}[\psi_{20} + \psi_{21}h_{1}+ \psi_{22}h_{2}+ \psi_{23}h_{3}] \nonumber \\
-h'_{3} &amp;=&amp; \mbox{a}[\psi_{30} + \psi_{31}h_{1}+ \psi_{32}h_{2}+ \psi_{33}h_{3}],
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap04/DeepTwoLayer2D.svg" style="filter: invert(1);" width="100%"></p>
-<p>Composing neural networks with a 2D input. a) The first network (from figure 3.8) has three hidden units and takes two inputs x1 and x2 and returns a scalar output y. This is passed into a second network with two hidden units to produce y ′. b) The first network produces a function consisting of seven linear regions, one of which is flat. c) The second network defines a function comprising two linear regions in y ∈ [−1, 1]. d) When these networks are composed, each of the six non-flat regions from the first network is divided into two new regions by the second network to create a total of 13 linear regions.</p>
-<p><img src="assets/Chap04/DeepFold.svg" style="filter: invert(1);" width="100%"></p>
-<p>Deep networks as folding input space. a) One way to think about the first network from figure 4.1 is that it “folds” the input space back on top of itself. b) The second network applies its function to the folded space. c) The final output is revealed by “unfolding” again.</p>
-<p><img src="assets/Chap04/DeepTwoLayer.svg" style="filter: invert(1);" width="100%"></p>
-<p>Neural network with one input, one output, and two hidden layers, each containing three hidden units.</p>
-</section>
-<section id="deep-neural-networks" class="level2">
-<h2 class="anchored" data-anchor-id="deep-neural-networks">Deep Neural Networks</h2>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_in}
-h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
-h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
-h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_middle2}
-h'_{1} &amp;=&amp; \mbox{a}[\psi_{10} + \psi_{11}h_{1}+ \psi_{12}h_{2}+ \psi_{13}h_{3}] \nonumber \\
-h'_{2} &amp;=&amp; \mbox{a}[\psi_{20} + \psi_{21}h_{1}+ \psi_{22}h_{2}+ \psi_{23}h_{3}] \nonumber \\
-h'_{3} &amp;=&amp; \mbox{a}[\psi_{30} + \psi_{31}h_{1}+ \psi_{32}h_{2}+ \psi_{33}h_{3}],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_three_layer_out}
-y' = \phi'_{0}+\phi'_{1}h'_{1}+\phi'_{2}h'_{2}+\phi'_{3}h'_{3}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_expanded}
-y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{12}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{13}\mbox{a}[\theta_{30} + \theta_{31}x]\right]\nonumber \\
-&amp;&amp;\hspace{0.55cm}+\phi'_{2}\mbox{a}[\psi_{20} + \psi_{21}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{23}\mbox{a}[\theta_{30} + \theta_{31}x]] \nonumber\\
-&amp;&amp;\hspace{0.55cm}+\phi'_{3}\mbox{a}[\psi_{30} + \psi_{31}\mbox{a}[\theta_{10} + \theta_{11}x] + \psi_{32}\mbox{a}[\theta_{20} + \theta_{21}x]+ \psi_{33}\mbox{a}[\theta_{30} + \theta_{31}x]],\nonumber \\
-\end{eqnarray}\]</span></p>
-<section id="hyperparameters" class="level3">
-<h3 class="anchored" data-anchor-id="hyperparameters">Hyperparameters</h3>
-<p><img src="assets/Chap04/DeepBuildUp.svg" style="filter: invert(1);" width="100%"></p>
-<p>Computation for the deep network in figure 4.4. a–c) The inputs to the second hidden layer (i.e., the pre-activations) are three piecewise linear functions where the “joints” between the linear regions are at the same places (see figure 3.6). d–f) Each piecewise linear function is clipped to zero by the ReLU activation function. g–i) These clipped functions are then weighted with parameters ϕ ′ 1, ϕ ′ 2, and ϕ ′ 3, respectively. j) Finally, the clipped and weighted functions are summed and an offset ϕ ′ 0 that controls the overall height is added. (Interactive figure)</p>
-<p><img src="assets/Chap04/DeepKLayer.svg" style="filter: invert(1);" width="100%"></p>
-<p>Matrix notation for network with Di = 3-dimensional input x, Do = 2- dimensional output y, and K = 3 hidden layers h1, h2, and h3 of dimensions D1 = 4, D2 = 2, and D3 = 3 respectively. The weights are stored in matrices Ωk that multiply the activations from the preceding layer to create the pre-activations at the subsequent layer. For example, the weight matrix Ω1 that computes the pre-activations at h2 from the activations at h1 has dimension 2×4. It is applied to the four hidden units in layer one and creates the inputs to the two hidden units at layer two. The biases are stored in vectors βk and have the dimension of the layer into which they feed. For example, the bias vector β2 is length three because layer h3 contains three hidden units.</p>
-</section>
-<section id="matrix-notation" class="level3">
-<h3 class="anchored" data-anchor-id="matrix-notation">Matrix Notation</h3>
-<p><span class="math display">\[\begin{eqnarray}
-  \begin{bmatrix}
-  h_{1} \\ h_{2} \\ h_{3}
-  \end{bmatrix}
-  = \mbox{\bf a}\left[\begin{bmatrix}\theta_{10}\\ \theta_{20}\\ \theta_{30} \end{bmatrix}+\begin{bmatrix}\theta_{11}\\\theta_{21}\\\theta_{31}\end{bmatrix}x\right],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \begin{bmatrix}
-  h'_{1} \\ h'_{2} \\h'_{3}
-  \end{bmatrix}
-  =\mbox{\bf a}\left[\begin{bmatrix}\psi_{10} \\ \psi_{20}\\ \psi_{30}\end{bmatrix} + \begin{bmatrix}\psi_{11} &amp;\psi_{12} &amp; \psi_{13} \\\psi_{21} &amp;\psi_{22} &amp; \psi_{23} \\\psi_{31} &amp;\psi_{32} &amp; \psi_{33} \end{bmatrix} \begin{bmatrix}
-  h_{1} \\ h_{2} \\ h_{3}
-  \end{bmatrix} \right],
-  \end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  y' = \phi'_{0} + \begin{bmatrix} \phi'_{1} &amp; \phi'_{2} &amp; \phi'_{3} \end{bmatrix}\begin{bmatrix}h'_{1} \\ h'_{2} \\h'_{3} \end{bmatrix},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{h} &amp;=&amp; \mbox{\bf a}\left[\boldsymbol\theta_{0}+\boldsymbol\theta x\right] \nonumber\\
-  \mathbf{h}' &amp;=&amp; \mbox{\bf a}\left[\boldsymbol\psi_{0}+\boldsymbol\Psi \mathbf{h}\right] \nonumber \\
-  y' &amp;=&amp; \phi'_{0} + \boldsymbol\phi' \mathbf{h}',
-\end{eqnarray}\]</span></p>
-</section>
-<section id="general-formulation" class="level3">
-<h3 class="anchored" data-anchor-id="general-formulation">General formulation</h3>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_la1}
-  \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
-  \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}]\nonumber \\
-  \mathbf{h}_{3} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}]\nonumber \\
-  &amp;\vdots&amp;\nonumber\\
-  \mathbf{h}_{K} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{K-1} +\boldsymbol\Omega_{K-1}\mathbf{h}_{K-1}] \nonumber\\
-  \mathbf{y} &amp;=&amp; \boldsymbol\beta_{K} +\boldsymbol\Omega_{K}\mathbf{h}_{K}.
-\end{eqnarray}\]</span></p>
-</section>
-</section>
-<section id="shallow-vs.-deep-neural-networks" class="level2">
-<h2 class="anchored" data-anchor-id="shallow-vs.-deep-neural-networks">Shallow vs.&nbsp;deep neural networks</h2>
-<section id="ability-to-approximate-different-functions" class="level3">
-<h3 class="anchored" data-anchor-id="ability-to-approximate-different-functions">Ability to approximate different functions</h3>
-</section>
-<section id="number-of-linear-regresions-per-parameter" class="level3">
-<h3 class="anchored" data-anchor-id="number-of-linear-regresions-per-parameter">Number of linear regresions per parameter</h3>
-</section>
-<section id="depth-efficiency" class="level3">
-<h3 class="anchored" data-anchor-id="depth-efficiency">Depth efficiency</h3>
-</section>
-<section id="large-structured-inputs" class="level3">
-<h3 class="anchored" data-anchor-id="large-structured-inputs">Large, structured inputs</h3>
-<p><img src="assets/Chap04/DeepParams.svg" style="filter: invert(1);" width="100%"></p>
-<p>The maximum number of linear regions for neural networks increases rapidly with the network depth. a) Network with Di = 1 input. Each curve represents a fixed number of hidden layers K, as we vary the number of hidden units D per layer. For a fixed parameter budget (horizontal position), deeper networks produce more linear regions than shallower ones. A network with K = 5 layers and D = 10 hidden units per layer has 471 parameters (highlighted point) and can produce 161,051 regions. b) Network with Di = 10 inputs. Each subsequent point along a curve represents ten hidden units. Here, a model with K = 5 layers and D = 50 hidden units per layer has 10,801 parameters (highlighted point) and can create more than 1040 linear regions.</p>
-</section>
-<section id="training-and-generalization" class="level3">
-<h3 class="anchored" data-anchor-id="training-and-generalization">Training and generalization</h3>
-<p><img src="assets/Chap04/DeepConcatQuestion.svg" style="filter: invert(1);" width="100%"></p>
-<p>Composition of two networks for problem 4.1. a) The output y of the first network becomes the input to the second. b) The first network computes this function with output values y ∈ [−1, 1]. c) The second network computes this function on the input range y ∈ [−1, 1].</p>
-<p><img src="assets/Chap04/DeepProbZeroCross.svg" style="filter: invert(1);" width="100%"></p>
-<p>Hidden unit activations for problem 4.8. a) First hidden unit has a joint at position x = 1/6 and a slope of one in the active region. b) Second hidden unit has a joint at position x = 2/6 and a slope of one in the active region. c) Third hidden unit has a joint at position x = 4/6 and a slope of minus one in the active region.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_la2}
-  \mathbf{y}\!\! &amp;\!\!=\!\!&amp; \!\!\boldsymbol\beta_{K} +\boldsymbol\Omega_{K}\mathbf{a}\left[\boldsymbol\beta_{K-1} +\boldsymbol\Omega_{K-1}\mathbf{a}\left[\ldots
-  \boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{a}\left[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{a}\left[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}\right]\right]\ldots\right]\right].\nonumber \\
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_deep_param_calc}
-  N_{r} = \left(\frac{D}{D_{i}}+1\right)^{D_{i}(K-1)}\cdot\sum_{j=0}^{D_{i}}\binom{D}{j}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{ReLU}\Bigl[\boldsymbol\beta_{1}\!+\!\lambda_1\!\cdot\!\boldsymbol\Omega_{1}\mbox{ReLU}\left[\boldsymbol\beta_{0}\!+\!\lambda_{0}\cdot\boldsymbol\Omega_{0}\mathbf{x}\right] \Bigr]\!=\! \lambda_0\lambda_{1}\cdot \mbox{ReLU}\left[\frac{1}{\lambda_0\lambda_1}\boldsymbol\beta_{1}\!+\!\boldsymbol\Omega_{1}\mbox{ReLU}\left[\frac{1}{\lambda_0}\boldsymbol\beta_{0}\!+\!\boldsymbol\Omega_{0}\mathbf{x}\right]\right],
-\end{eqnarray}\]</span></p>
+<section id="take-away-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="take-away-conclusion">Take away conclusion</h2>
+<p>With very few parameters, we can make A LOT of linear regions, but they depend on one another in complex ways that quickly become too difficult to understand intuitively.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

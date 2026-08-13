@@ -227,60 +227,273 @@ window.Quarto = {
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multivariate Networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From composing networks to deep networks</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./loss.html" class="sidebar-item-text sidebar-link active">
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./loss.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Loss Functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./backprop.html" class="sidebar-item-text sidebar-link">
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training algorithm hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation algorithm</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./performance.html" class="sidebar-item-text sidebar-link">
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop Code</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Performance</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double Descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for natural language processing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for images</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoding strategies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Language Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Unsupervised learning</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reparameterization of loss function</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Families of diffusion models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -300,21 +513,6 @@ window.Quarto = {
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
   </ul></li>
   <li><a href="#recipe-for-constructing-loss-functions" id="toc-recipe-for-constructing-loss-functions" class="nav-link" data-scroll-target="#recipe-for-constructing-loss-functions">Recipe for constructing loss functions</a></li>
-  <li><a href="#example-1-univariate-regression" id="toc-example-1-univariate-regression" class="nav-link" data-scroll-target="#example-1-univariate-regression">Example 1: univariate regression</a>
-  <ul class="collapse">
-  <li><a href="#least-squares-loss-function" id="toc-least-squares-loss-function" class="nav-link" data-scroll-target="#least-squares-loss-function">Least squares loss function</a></li>
-  <li><a href="#inference-1" id="toc-inference-1" class="nav-link" data-scroll-target="#inference-1">Inference</a></li>
-  <li><a href="#estimating-variance" id="toc-estimating-variance" class="nav-link" data-scroll-target="#estimating-variance">Estimating variance</a></li>
-  <li><a href="#heteroscedastic-regression" id="toc-heteroscedastic-regression" class="nav-link" data-scroll-target="#heteroscedastic-regression">Heteroscedastic regression</a></li>
-  </ul></li>
-  <li><a href="#example-2-binary-classification" id="toc-example-2-binary-classification" class="nav-link" data-scroll-target="#example-2-binary-classification">Example 2: binary classification</a></li>
-  <li><a href="#example-3-multiclass-classification" id="toc-example-3-multiclass-classification" class="nav-link" data-scroll-target="#example-3-multiclass-classification">Example 3: multiclass classification</a>
-  <ul class="collapse">
-  <li><a href="#predicting-other-data-types" id="toc-predicting-other-data-types" class="nav-link" data-scroll-target="#predicting-other-data-types">Predicting other data types</a></li>
-  </ul></li>
-  <li><a href="#multiple-outputs" id="toc-multiple-outputs" class="nav-link" data-scroll-target="#multiple-outputs">Multiple outputs</a></li>
-  <li><a href="#cross-entropy-loss" id="toc-cross-entropy-loss" class="nav-link" data-scroll-target="#cross-entropy-loss">Cross-entropy loss</a></li>
-  <li><a href="#other" id="toc-other" class="nav-link" data-scroll-target="#other">Other</a></li>
   </ul>
 </nav>
     </div>
@@ -402,163 +600,6 @@ Slides
   \end{eqnarray}\]</span></p>
 <p><img src="assets/Chap05/LossNorm.svg" style="filter: invert(1);" align="right" width="40%"></p>
 <p>The univariate normal distribution (also known as the Gaussian distribution) is defined on the real line z ∈ R and has parameters μ and σ2. The mean μ determines the position of the peak. The positive root of the variance σ2 (the standard deviation) determines the width of the distribution. Since the total probability density sums to one, the peak becomes higher as the variance decreases and the distribution becomes narrower.</p>
-</section>
-<section id="example-1-univariate-regression" class="level2">
-<h2 class="anchored" data-anchor-id="example-1-univariate-regression">Example 1: univariate regression</h2>
-<p><span class="math display">\[\begin{eqnarray}
-  Pr(y|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mu)^{2}}{2\sigma^{2}}\right].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_pdf_uni_reg}
-  Pr(y|\mbox{f}[\mathbf{x},\boldsymbol\phi],\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mbox{f}[\mathbf{x},\boldsymbol\phi])^{2}}{2\sigma^{2}}\right].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_normal_full}
-L[\boldsymbol\phi] &amp;=&amp; -\sum_{i=1}^{I} \log\left[Pr(y_{i}|\mbox{f}[\mathbf{x}_{i},\boldsymbol\phi],\sigma^{2})\right]\nonumber \\
-&amp;=&amp;-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right].
-\end{eqnarray}\]</span></p>
-<section id="least-squares-loss-function" class="level3">
-<h3 class="anchored" data-anchor-id="least-squares-loss-function">Least squares loss function</h3>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_normal_full2}
-\hat{\boldsymbol\phi} &amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right]
-\nonumber \\
-&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \left(\log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\right] -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right)\right]\nonumber \\
-&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\nonumber \\
-&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} (y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}\right],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_least_squares}
-  L[\boldsymbol\phi] = \sum_{i=1}^{I} \bigl(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr)^{2}.
-\end{eqnarray}\]</span></p>
-</section>
-<section id="inference-1" class="level3">
-<h3 class="anchored" data-anchor-id="inference-1">Inference</h3>
-<p><span class="math display">\[\begin{eqnarray}
-  \hat{y} = \mathop{\rm argmax}_{y}\left[Pr(y|\mbox{f}[\mathbf{x},\hat{\boldsymbol\phi}],\sigma^2)\right].
-\end{eqnarray}\]</span></p>
-</section>
-<section id="estimating-variance" class="level3">
-<h3 class="anchored" data-anchor-id="estimating-variance">Estimating variance</h3>
-<p><span class="math display">\[\begin{eqnarray}
-\hat{\boldsymbol\phi},\hat{\sigma}^{2} = \mathop{\rm argmin}_{\boldsymbol\phi,\sigma^{2}}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right].
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap05/LossNormalRegression.svg" style="filter: invert(1);" width="100%"></p>
-<p>Equivalence of least squares and maximum likelihood loss for the normal distribution. a) Consider the linear model from figure 2.2. The least squares criterion minimizes the sum of the squares of the deviations (dashed lines) between the model prediction f[xi,ϕ] (green line) and the true output values yi (orange points). Here the fit is good, so these deviations are small (e.g., for the two highlighted points). b) For these parameters, the fit is bad, and the squared deviations are large. c) The least squares criterion follows from the assumption that the model predicts the mean of a normal distribution over the outputs and that we maximize the probability. For the first case, the model fits well, so the probability Pr(yi|xi) of the data (horizontal orange dashed lines) is large (and the negative log probability is small). d) For the second case, the model fits badly, so the probability is small and the negative log probability is large.</p>
-</section>
-<section id="heteroscedastic-regression" class="level3">
-<h3 class="anchored" data-anchor-id="heteroscedastic-regression">Heteroscedastic regression</h3>
-<p><span class="math display">\[\begin{eqnarray}
-\mu &amp;=&amp; \mbox{f}_1[\mathbf{x},\boldsymbol\phi] \nonumber \\
-\sigma^2 &amp;=&amp; \mbox{f}_2[\mathbf{x},\boldsymbol\phi]^2,
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \biggl(\log\left[\frac{1}{\sqrt{2\pi\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}}\right] -\frac{(y_i-\mbox{f}_1[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}\biggr)\right].
-\end{eqnarray}\]</span></p>
-</section>
-</section>
-<section id="example-2-binary-classification" class="level2">
-<h2 class="anchored" data-anchor-id="example-2-binary-classification">Example 2: binary classification</h2>
-<p><img src="assets/Chap05/LossHeteroscedastic.svg" style="filter: invert(1);" width="100%"></p>
-<p>Homoscedastic vs.&nbsp;heteroscedastic regression. a) A shallow neural network for homoscedastic regression predicts just the mean μ of the output distribution from the input x. b) The result is that while the mean (blue line) is a piecewise linear function of the input x, the variance is constant everywhere (arrows and gray region show ±2 standard deviations). c) A shallow neural network for heteroscedastic regression also predicts the variance σ2 (or, more precisely, computes its square root, which we then square). d) The standard deviation now also becomes a piecewise linear function of the input x.</p>
-<p><img src="assets/Chap05/LossBern.svg" style="filter: invert(1);" align="right" width="40%"></p>
-<p>Bernoulli distribution. The Bernoulli distribution is defined on the domain z ∈ {0, 1} and has a single parameter λ that denotes the probability of observing z = 1. It follows that the probability of observing z = 0 is 1 − λ.</p>
-<p><br><br></p>
-<p><img src="assets/Chap05/LossLogisticSigmoid.svg" style="filter: invert(1);" align="right" width="40%"></p>
-<p>Logistic sigmoid function. This function maps the real line z ∈ R to numbers between zero and one, so sig[z] ∈ [0, 1]. An input of 0 is mapped to 0.5. Negative inputs are mapped to numbers below 0.5, and positive inputs to numbers above 0.5.</p>
-<p><span class="math display">\[\begin{eqnarray}
-  Pr(y|\lambda) = \begin{cases} 1-\lambda &amp; \quad y =0 \\ \lambda &amp; \quad y= 1\end{cases},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  Pr(y|\lambda) = (1-\lambda)^{1-y}\cdot \lambda^{y}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:logistic_sigmoid}
-  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_binary}
-  Pr(y|\mathbf{x}) = (1-\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]])^{1-y}\cdot \mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]^y.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_binary_cross_entropy}
-L[\boldsymbol\phi] = \sum_{i=1}^{I}-(1-y_{i})\log\Bigl[1-\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr] - y_{i}\log\Bigl[\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr].
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap05/LossBinaryClassification.svg" style="filter: invert(1);" width="100%"></p>
-<p>Binary classification model. a) The network output is a piecewise linear function that can take arbitrary real values. b) This is transformed by the logistic sigmoid function, which compresses these values to the range [0, 1]. c) The transformed output predicts the probability λ that y = 1 (solid line). The probability that y = 0 is hence 1 − λ (dashed line). For any fixed x (vertical slice), we retrieve the two values of a Bernoulli distribution similar to that in figure 5.6. The loss function favors model parameters that produce large values of λ at positions xi that are associated with positive examples yi = 1 and small values of λ at positions associated with negative examples yi = 0.</p>
-<p><img src="assets/Chap05/LossCategorical.svg" style="filter: invert(1);" align="right" width="40%"></p>
-<p>Categorical distribution. The categorical distribution assigns probabilities to K&gt;2 categories, with associated probabilities λ1, λ2, . . . , λK. Here, there are five categories, so K = 5. To ensure that this is a valid probability distribution, each parameter λk must lie in the range [0, 1], and all K parameters must sum to one.</p>
-<p><br><br></p>
-</section>
-<section id="example-3-multiclass-classification" class="level2">
-<h2 class="anchored" data-anchor-id="example-3-multiclass-classification">Example 3: multiclass classification</h2>
-<p><img src="assets/Chap05/LossMultiClassClassification.svg" style="filter: invert(1);" width="100%"></p>
-<p>Multiclass classification for K=3 classes. a) The network has three piecewise linear outputs, which can take arbitrary values. b) After the softmax function, these outputs are constrained to be non-negative and sum to one. Hence, for a given input x, we compute valid parameters for the categorical distribution: any vertical slice of this plot produces three values that sum to one and would form the heights of the bars in a categorical distribution similar to figure 5.9.</p>
-<p><span class="math display">\[\begin{eqnarray}
-Pr(y=k) = \lambda_{k}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{softmax}_{k}[\mathbf{z}] = \frac{\exp[z_{k}]}{\sum_{k'=1}^{K}\exp[z_{k'}]},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  Pr(y=k|\mathbf{x}) = \mbox{softmax}_{k}\Bigr[\mbox{\bf f}[\mathbf{x},\boldsymbol\phi]\Bigl].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_multiclass_class}
-  L[\boldsymbol\phi] &amp;=&amp; -\sum_{i=1}^{I}\log\left[\mbox{softmax}_{y_{i}}\Bigl[\mbox{\bf f}\left[\mathbf{x}_i,\boldsymbol\phi\right]\Bigr]\right]\nonumber\\
-  &amp;=&amp; -\sum_{i=1}^{I}\left(\mbox{f}_{y_{i}}\left[\mathbf{x}_i,\boldsymbol\phi\right]-\log\left[\sum_{k'=1}^{K}\exp\left[\mbox{ f}_{k'}\left[\mathbf{x}_i,\boldsymbol\phi\right]\right]\right]\right),
-\end{eqnarray}\]</span></p>
-<section id="predicting-other-data-types" class="level3">
-<h3 class="anchored" data-anchor-id="predicting-other-data-types">Predicting other data types</h3>
-</section>
-</section>
-<section id="multiple-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="multiple-outputs">Multiple outputs</h2>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_multiple}
-Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\boldsymbol\phi])= \prod_{d}Pr(y_{d}|\mbox{\bf f}_d[\mathbf{x},\boldsymbol\phi]),
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-L[\boldsymbol\phi] = -\sum_{i=1}^{I}\log\Bigl[Pr(\mathbf{y}_i|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]= -\sum_{i=1}^{I}\sum_{d}\log\Bigl[Pr(y_{id}|\mbox{\bf f}_d[\mathbf{x}_{i},\boldsymbol\phi])\Bigr].
-\end{eqnarray}\]</span></p>
-</section>
-<section id="cross-entropy-loss" class="level2">
-<h2 class="anchored" data-anchor-id="cross-entropy-loss">Cross-entropy loss</h2>
-<p><img src="assets/Chap05/LossCrossEntropy.svg" style="filter: invert(1);" width="100%"></p>
-<p>Cross-entropy method. a) Empirical distribution of training samples (arrows denote Dirac delta functions). b) Model distribution (a normal distribution with parameters θ = {μ, σ2}). In the cross-entropy approach, we minimize the distance (KL divergence) between these two distributions as a function of the model parameters θ.</p>
-<p><span class="math display">\[\begin{eqnarray}
-D_{KL}\bigl[q||p\bigr] = \int_{-\infty}^{\infty}q(z) \log\bigl[q(z)\bigr]dz - \int_{-\infty}^{\infty}q(z) \log\bigl[p(z)\bigr]dz.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_cross_entropy_empirical}
-q(y) = \frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\hat{\boldsymbol\theta} &amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\theta}\left[ \int_{-\infty}^{\infty}q(y) \log\bigl[q(y)\bigr]dy - \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right] \nonumber \\
-&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\theta}\left[- \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_cross_deriv}
-\hat{\boldsymbol\theta} &amp;=&amp; \mathop{\rm argmin}_{\theta}\left[-\int_{-\infty}^{\infty}\left(\frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}]\right)\log\bigl[Pr(y|\boldsymbol\theta)\bigr]dy\right] \nonumber\\
-&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\frac{1}{I} \sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right]\nonumber\\
-&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\bigr]\right].
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap05/LossVonMises.svg" style="filter: invert(1);"></p>
-<p>The von Mises distribution is defined over the circular domain (−π, π]. It has two parameters. The mean μ determines the position of the peak. The concentration κ &gt; 0 acts like the inverse of the variance. Hence 1/ √ κ is roughly equivalent to the standard deviation in a normal distribution.</p>
-<p><img src="assets/Chap05/LossMoG.svg" style="filter: invert(1);"></p>
-<p>Multimodal data and mixture of Gaussians density. a) Example training data where, for intermediate values of the input x, the corresponding output y follows one of two paths. For example, at x = 0, the output y might be roughly −2 or +3 but is unlikely to be between these values. b) The mixture of Gaussians is a probability model suited to this kind of data. As the name suggests, the model is a weighted sum (solid cyan curve) of two or more normal distributions with different means and variances (here, two normal distributions, dashed blue and orange curves). When the means are far apart, this forms a multimodal distribution. c) When the means are close, the mixture can model unimodal but non-normal densities.</p>
-<p><img src="assets/Chap05/LossPoisson.svg" style="filter: invert(1);"></p>
-<p>Poisson distribution. This discrete distribution is defined over nonnegative integers z ∈ {0, 1, 2, . . .}. It has a single parameter λ ∈ R+, which is known as the rate and is the mean of the distribution. a–c) Poisson distributions with rates of 1.4, 2.8, and 6.0, respectively.</p>
-</section>
-<section id="other" class="level2">
-<h2 class="anchored" data-anchor-id="other">Other</h2>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_prob_sigmoid}
-  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-L = -(1-y)\log\Bigl[1-\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]\Bigr] - y\log\Bigl[\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]\Bigr],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-Pr(y|\mu,\kappa) = \frac{\exp\bigl[\kappa \cos[y-\mu]\bigr]}{2\pi \cdot \mbox{Bessel}_{0}[\kappa]} ,
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  Pr(y|\lambda,\mu_1,\mu_2,\sigma^2_1,\sigma^2_2) = \frac{\lambda}{\sqrt{2\pi\sigma_1^{2}}}\exp\left[\frac{-(y-\mu_1)^{2}}{2\sigma_1^{2}}\right]+\frac{1-\lambda}{\sqrt{2\pi\sigma_2^{2}}}\exp\left[\frac{-(y-\mu_2)^{2}}{2\sigma_2^{2}}\right],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  Pr(y=k)=\frac{\lambda^{k}e^{-\lambda}}{k!}.
-\end{eqnarray}\]</span></p>
 
 
 </section>

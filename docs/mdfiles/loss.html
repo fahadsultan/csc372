@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Loss Functions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-syllabus" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Syllabus</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-syllabus">    
+        <li>
+    <a class="dropdown-item" href="../syllabus/about.html">
+ <span class="dropdown-text">Course Description and Goals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/grading.html">
+ <span class="dropdown-text">Grading</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/academic_success.html">
+ <span class="dropdown-text">Center for Academic Success</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/textbook.html">
+ <span class="dropdown-text">Textbooks &amp; Other Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/integrity.html">
+ <span class="dropdown-text">Academic Integrity</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/mental_health.html">
+ <span class="dropdown-text">Mental Health Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/accomodations.html">
+ <span class="dropdown-text">Accomodations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/title_9.html">
+ <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=20763"> 
+<span class="menu-text">Moodle Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus/appointment.html"> 
+<span class="menu-text">Office Hours</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://calendly.com/ssultan-dpq/"> 
+<span class="menu-text">Set an Appointment</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#maximum-likelihood" id="toc-maximum-likelihood" class="nav-link active" data-scroll-target="#maximum-likelihood">Maximum likelihood</a>
+  <ul class="collapse">
+  <li><a href="#computing-a-distribution-over-outputs" id="toc-computing-a-distribution-over-outputs" class="nav-link" data-scroll-target="#computing-a-distribution-over-outputs">Computing a distribution over outputs</a></li>
+  <li><a href="#maximum-likelihood-criterion" id="toc-maximum-likelihood-criterion" class="nav-link" data-scroll-target="#maximum-likelihood-criterion">Maximum likelihood criterion</a></li>
+  <li><a href="#maximizing-log-likelihood" id="toc-maximizing-log-likelihood" class="nav-link" data-scroll-target="#maximizing-log-likelihood">Maximizing log-likelihood</a></li>
+  <li><a href="#minimizing-negative-log-likelihood" id="toc-minimizing-negative-log-likelihood" class="nav-link" data-scroll-target="#minimizing-negative-log-likelihood">Minimizing negative log-likelihood</a></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
+  </ul></li>
+  <li><a href="#recipe-for-constructing-loss-functions" id="toc-recipe-for-constructing-loss-functions" class="nav-link" data-scroll-target="#recipe-for-constructing-loss-functions">Recipe for constructing loss functions</a></li>
+  <li><a href="#example-1-univariate-regression" id="toc-example-1-univariate-regression" class="nav-link" data-scroll-target="#example-1-univariate-regression">Example 1: univariate regression</a>
+  <ul class="collapse">
+  <li><a href="#least-squares-loss-function" id="toc-least-squares-loss-function" class="nav-link" data-scroll-target="#least-squares-loss-function">Least squares loss function</a></li>
+  <li><a href="#inference-1" id="toc-inference-1" class="nav-link" data-scroll-target="#inference-1">Inference</a></li>
+  <li><a href="#estimating-variance" id="toc-estimating-variance" class="nav-link" data-scroll-target="#estimating-variance">Estimating variance</a></li>
+  <li><a href="#heteroscedastic-regression" id="toc-heteroscedastic-regression" class="nav-link" data-scroll-target="#heteroscedastic-regression">Heteroscedastic regression</a></li>
+  </ul></li>
+  <li><a href="#example-2-binary-classification" id="toc-example-2-binary-classification" class="nav-link" data-scroll-target="#example-2-binary-classification">Example 2: binary classification</a></li>
+  <li><a href="#example-3-multiclass-classification" id="toc-example-3-multiclass-classification" class="nav-link" data-scroll-target="#example-3-multiclass-classification">Example 3: multiclass classification</a>
+  <ul class="collapse">
+  <li><a href="#predicting-other-data-types" id="toc-predicting-other-data-types" class="nav-link" data-scroll-target="#predicting-other-data-types">Predicting other data types</a></li>
+  </ul></li>
+  <li><a href="#multiple-outputs" id="toc-multiple-outputs" class="nav-link" data-scroll-target="#multiple-outputs">Multiple outputs</a></li>
+  <li><a href="#cross-entropy-loss" id="toc-cross-entropy-loss" class="nav-link" data-scroll-target="#cross-entropy-loss">Cross-entropy loss</a></li>
+  <li><a href="#other" id="toc-other" class="nav-link" data-scroll-target="#other">Other</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Loss Functions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Slides
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://docs.google.com/presentation/d/1PJicP4dPwdDExcHPgTmzYyyfxGkWMxiidqPf03xPtIw/edit?slide=id.g32bda8ab1fc_2_75#slide=id.g32bda8ab1fc_2_75">Slides</a></p>
+</div>
+</div>
+<section id="maximum-likelihood" class="level2">
+<h2 class="anchored" data-anchor-id="maximum-likelihood">Maximum likelihood</h2>
+<p><img src="assets/Chap05/LossDataTypes.svg" style="filter: invert(1);" width="100%"></p>
+<p>Predicting distributions over outputs. a) Regression task, where the goal is to predict a real-valued output y from the input x based on training data {xi, yi} (orange points). For each input value x, the machine learning model predicts a distribution Pr(y|x) over the output y ∈ R (cyan curves show distributions for x=2.0 and x=7.0). Minimizing the loss function corresponds to maximizing the probability of the training outputs yi under the distribution predicted from the corresponding inputs xi. b) To predict discrete classes y ∈ {1, 2, 3, 4} in a classification task, we use a discrete probability distribution, so the model predicts a different histogram over the four possible values of yi for each value of xi. c) To predict counts y ∈ {0, 1, 2, . . .} and d) direction y ∈ (−π, π], we use distributions defined over positive integers and circular domains, respectively.</p>
+<section id="computing-a-distribution-over-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="computing-a-distribution-over-outputs">Computing a distribution over outputs</h3>
+</section>
+<section id="maximum-likelihood-criterion" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-likelihood-criterion">Maximum likelihood criterion</h3>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_max_like1}
+  \hat{\boldsymbol\phi} &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i})\right]\nonumber\\
+  &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\boldsymbol\theta_{i})\right] \nonumber \\ &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  Pr(\mathbf{y}_{1},\mathbf{y}_{2},\ldots, \mathbf{y}_{I}|\mathbf{x}_{1},\mathbf{x}_{2},\ldots,\mathbf{x}_{I}) = \prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i}).
+\end{eqnarray}\]</span></p>
+</section>
+<section id="maximizing-log-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="maximizing-log-likelihood">Maximizing log-likelihood</h3>
+<p><img src="assets/Chap05/LossLog.svg" style="filter: invert(1);" width="100%"></p>
+<p>The log transform. a) The log function is monotonically increasing. If z &gt;z ′, then log[z]&gt;log[z ′]. It follows that the maximum of any function g[z] will be at the same position as the maximum of log[g[z]]. b) A function g[z]. c) The logarithm of this function log[g[z]]. All positions on g[z] with a positive slope retain a positive slope after the log transform, and those with a negative slope retain a negative slope. The position of the maximum remains the same.</p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_max_like2}
+  \hat{\boldsymbol\phi} &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right] \nonumber \\
+  &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\log\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right]\right]\nonumber \\
+  &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
+\end{eqnarray}\]</span></p>
+</section>
+<section id="minimizing-negative-log-likelihood" class="level3">
+<h3 class="anchored" data-anchor-id="minimizing-negative-log-likelihood">Minimizing negative log-likelihood</h3>
+<p><span class="math display">\[\begin{eqnarray}
+\hat{\boldsymbol\phi}
+&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right]\nonumber \\
+&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr],
+\end{eqnarray}\]</span></p>
+</section>
+<section id="inference" class="level3">
+<h3 class="anchored" data-anchor-id="inference">Inference</h3>
+<p><span class="math display">\[\begin{eqnarray}
+  \hat{\mathbf{y}} = \mathop{\rm argmax}_{\mathbf{y}}\Bigl[Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\hat{\boldsymbol\phi}])\Bigr].
+\end{eqnarray}\]</span></p>
+</section>
+</section>
+<section id="recipe-for-constructing-loss-functions" class="level2">
+<h2 class="anchored" data-anchor-id="recipe-for-constructing-loss-functions">Recipe for constructing loss functions</h2>
+<p><span class="math display">\[\begin{eqnarray}
+  \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr] = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
+  \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap05/LossNorm.svg" style="filter: invert(1);" align="right" width="40%"></p>
+<p>The univariate normal distribution (also known as the Gaussian distribution) is defined on the real line z ∈ R and has parameters μ and σ2. The mean μ determines the position of the peak. The positive root of the variance σ2 (the standard deviation) determines the width of the distribution. Since the total probability density sums to one, the peak becomes higher as the variance decreases and the distribution becomes narrower.</p>
+</section>
+<section id="example-1-univariate-regression" class="level2">
+<h2 class="anchored" data-anchor-id="example-1-univariate-regression">Example 1: univariate regression</h2>
+<p><span class="math display">\[\begin{eqnarray}
+  Pr(y|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mu)^{2}}{2\sigma^{2}}\right].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_pdf_uni_reg}
+  Pr(y|\mbox{f}[\mathbf{x},\boldsymbol\phi],\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y-\mbox{f}[\mathbf{x},\boldsymbol\phi])^{2}}{2\sigma^{2}}\right].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_normal_full}
+L[\boldsymbol\phi] &amp;=&amp; -\sum_{i=1}^{I} \log\left[Pr(y_{i}|\mbox{f}[\mathbf{x}_{i},\boldsymbol\phi],\sigma^{2})\right]\nonumber \\
+&amp;=&amp;-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right].
+\end{eqnarray}\]</span></p>
+<section id="least-squares-loss-function" class="level3">
+<h3 class="anchored" data-anchor-id="least-squares-loss-function">Least squares loss function</h3>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_normal_full2}
+\hat{\boldsymbol\phi} &amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right]
+\nonumber \\
+&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \left(\log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\right] -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right)\right]\nonumber \\
+&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} -\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\nonumber \\
+&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} (y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}\right],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_least_squares}
+  L[\boldsymbol\phi] = \sum_{i=1}^{I} \bigl(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr)^{2}.
+\end{eqnarray}\]</span></p>
+</section>
+<section id="inference-1" class="level3">
+<h3 class="anchored" data-anchor-id="inference-1">Inference</h3>
+<p><span class="math display">\[\begin{eqnarray}
+  \hat{y} = \mathop{\rm argmax}_{y}\left[Pr(y|\mbox{f}[\mathbf{x},\hat{\boldsymbol\phi}],\sigma^2)\right].
+\end{eqnarray}\]</span></p>
+</section>
+<section id="estimating-variance" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-variance">Estimating variance</h3>
+<p><span class="math display">\[\begin{eqnarray}
+\hat{\boldsymbol\phi},\hat{\sigma}^{2} = \mathop{\rm argmin}_{\boldsymbol\phi,\sigma^{2}}\left[-\sum_{i=1}^{I} \log\left[\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left[-\frac{(y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\sigma^{2}}\right]\right]\right].
+\end{eqnarray}\]</span></p>
+<p><img src="assets/Chap05/LossNormalRegression.svg" style="filter: invert(1);" width="100%"></p>
+<p>Equivalence of least squares and maximum likelihood loss for the normal distribution. a) Consider the linear model from figure 2.2. The least squares criterion minimizes the sum of the squares of the deviations (dashed lines) between the model prediction f[xi,ϕ] (green line) and the true output values yi (orange points). Here the fit is good, so these deviations are small (e.g., for the two highlighted points). b) For these parameters, the fit is bad, and the squared deviations are large. c) The least squares criterion follows from the assumption that the model predicts the mean of a normal distribution over the outputs and that we maximize the probability. For the first case, the model fits well, so the probability Pr(yi|xi) of the data (horizontal orange dashed lines) is large (and the negative log probability is small). d) For the second case, the model fits badly, so the probability is small and the negative log probability is large.</p>
+</section>
+<section id="heteroscedastic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="heteroscedastic-regression">Heteroscedastic regression</h3>
+<p><span class="math display">\[\begin{eqnarray}
+\mu &amp;=&amp; \mbox{f}_1[\mathbf{x},\boldsymbol\phi] \nonumber \\
+\sigma^2 &amp;=&amp; \mbox{f}_2[\mathbf{x},\boldsymbol\phi]^2,
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \biggl(\log\left[\frac{1}{\sqrt{2\pi\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}}\right] -\frac{(y_i-\mbox{f}_1[\mathbf{x}_i,\boldsymbol\phi])^{2}}{2\mbox{f}_2[\mathbf{x}_i,\boldsymbol\phi]^2}\biggr)\right].
+\end{eqnarray}\]</span></p>
+</section>
+</section>
+<section id="example-2-binary-classification" class="level2">
+<h2 class="anchored" data-anchor-id="example-2-binary-classification">Example 2: binary classification</h2>
+<p><img src="assets/Chap05/LossHeteroscedastic.svg" style="filter: invert(1);" width="100%"></p>
+<p>Homoscedastic vs.&nbsp;heteroscedastic regression. a) A shallow neural network for homoscedastic regression predicts just the mean μ of the output distribution from the input x. b) The result is that while the mean (blue line) is a piecewise linear function of the input x, the variance is constant everywhere (arrows and gray region show ±2 standard deviations). c) A shallow neural network for heteroscedastic regression also predicts the variance σ2 (or, more precisely, computes its square root, which we then square). d) The standard deviation now also becomes a piecewise linear function of the input x.</p>
+<p><img src="assets/Chap05/LossBern.svg" style="filter: invert(1);" align="right" width="40%"></p>
+<p>Bernoulli distribution. The Bernoulli distribution is defined on the domain z ∈ {0, 1} and has a single parameter λ that denotes the probability of observing z = 1. It follows that the probability of observing z = 0 is 1 − λ.</p>
+<p><br><br></p>
+<p><img src="assets/Chap05/LossLogisticSigmoid.svg" style="filter: invert(1);" align="right" width="40%"></p>
+<p>Logistic sigmoid function. This function maps the real line z ∈ R to numbers between zero and one, so sig[z] ∈ [0, 1]. An input of 0 is mapped to 0.5. Negative inputs are mapped to numbers below 0.5, and positive inputs to numbers above 0.5.</p>
+<p><span class="math display">\[\begin{eqnarray}
+  Pr(y|\lambda) = \begin{cases} 1-\lambda &amp; \quad y =0 \\ \lambda &amp; \quad y= 1\end{cases},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  Pr(y|\lambda) = (1-\lambda)^{1-y}\cdot \lambda^{y}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:logistic_sigmoid}
+  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_binary}
+  Pr(y|\mathbf{x}) = (1-\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]])^{1-y}\cdot \mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]^y.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_binary_cross_entropy}
+L[\boldsymbol\phi] = \sum_{i=1}^{I}-(1-y_{i})\log\Bigl[1-\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr] - y_{i}\log\Bigl[\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr].
+\end{eqnarray}\]</span></p>
+<p><img src="assets/Chap05/LossBinaryClassification.svg" style="filter: invert(1);" width="100%"></p>
+<p>Binary classification model. a) The network output is a piecewise linear function that can take arbitrary real values. b) This is transformed by the logistic sigmoid function, which compresses these values to the range [0, 1]. c) The transformed output predicts the probability λ that y = 1 (solid line). The probability that y = 0 is hence 1 − λ (dashed line). For any fixed x (vertical slice), we retrieve the two values of a Bernoulli distribution similar to that in figure 5.6. The loss function favors model parameters that produce large values of λ at positions xi that are associated with positive examples yi = 1 and small values of λ at positions associated with negative examples yi = 0.</p>
+<p><img src="assets/Chap05/LossCategorical.svg" style="filter: invert(1);" align="right" width="40%"></p>
+<p>Categorical distribution. The categorical distribution assigns probabilities to K&gt;2 categories, with associated probabilities λ1, λ2, . . . , λK. Here, there are five categories, so K = 5. To ensure that this is a valid probability distribution, each parameter λk must lie in the range [0, 1], and all K parameters must sum to one.</p>
+<p><br><br></p>
+</section>
+<section id="example-3-multiclass-classification" class="level2">
+<h2 class="anchored" data-anchor-id="example-3-multiclass-classification">Example 3: multiclass classification</h2>
+<p><img src="assets/Chap05/LossMultiClassClassification.svg" style="filter: invert(1);" width="100%"></p>
+<p>Multiclass classification for K=3 classes. a) The network has three piecewise linear outputs, which can take arbitrary values. b) After the softmax function, these outputs are constrained to be non-negative and sum to one. Hence, for a given input x, we compute valid parameters for the categorical distribution: any vertical slice of this plot produces three values that sum to one and would form the heights of the bars in a categorical distribution similar to figure 5.9.</p>
+<p><span class="math display">\[\begin{eqnarray}
+Pr(y=k) = \lambda_{k}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\mbox{softmax}_{k}[\mathbf{z}] = \frac{\exp[z_{k}]}{\sum_{k'=1}^{K}\exp[z_{k'}]},
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  Pr(y=k|\mathbf{x}) = \mbox{softmax}_{k}\Bigr[\mbox{\bf f}[\mathbf{x},\boldsymbol\phi]\Bigl].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_multiclass_class}
+  L[\boldsymbol\phi] &amp;=&amp; -\sum_{i=1}^{I}\log\left[\mbox{softmax}_{y_{i}}\Bigl[\mbox{\bf f}\left[\mathbf{x}_i,\boldsymbol\phi\right]\Bigr]\right]\nonumber\\
+  &amp;=&amp; -\sum_{i=1}^{I}\left(\mbox{f}_{y_{i}}\left[\mathbf{x}_i,\boldsymbol\phi\right]-\log\left[\sum_{k'=1}^{K}\exp\left[\mbox{ f}_{k'}\left[\mathbf{x}_i,\boldsymbol\phi\right]\right]\right]\right),
+\end{eqnarray}\]</span></p>
+<section id="predicting-other-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="predicting-other-data-types">Predicting other data types</h3>
+</section>
+</section>
+<section id="multiple-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-outputs">Multiple outputs</h2>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_multiple}
+Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\boldsymbol\phi])= \prod_{d}Pr(y_{d}|\mbox{\bf f}_d[\mathbf{x},\boldsymbol\phi]),
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+L[\boldsymbol\phi] = -\sum_{i=1}^{I}\log\Bigl[Pr(\mathbf{y}_i|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]= -\sum_{i=1}^{I}\sum_{d}\log\Bigl[Pr(y_{id}|\mbox{\bf f}_d[\mathbf{x}_{i},\boldsymbol\phi])\Bigr].
+\end{eqnarray}\]</span></p>
+</section>
+<section id="cross-entropy-loss" class="level2">
+<h2 class="anchored" data-anchor-id="cross-entropy-loss">Cross-entropy loss</h2>
+<p><img src="assets/Chap05/LossCrossEntropy.svg" style="filter: invert(1);" width="100%"></p>
+<p>Cross-entropy method. a) Empirical distribution of training samples (arrows denote Dirac delta functions). b) Model distribution (a normal distribution with parameters θ = {μ, σ2}). In the cross-entropy approach, we minimize the distance (KL divergence) between these two distributions as a function of the model parameters θ.</p>
+<p><span class="math display">\[\begin{eqnarray}
+D_{KL}\bigl[q||p\bigr] = \int_{-\infty}^{\infty}q(z) \log\bigl[q(z)\bigr]dz - \int_{-\infty}^{\infty}q(z) \log\bigl[p(z)\bigr]dz.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_cross_entropy_empirical}
+q(y) = \frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\hat{\boldsymbol\theta} &amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\theta}\left[ \int_{-\infty}^{\infty}q(y) \log\bigl[q(y)\bigr]dy - \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right] \nonumber \\
+&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\theta}\left[- \int_{-\infty}^{\infty}q(y) \log\bigl[Pr(y|\boldsymbol\theta)\bigr] dy\right],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_cross_deriv}
+\hat{\boldsymbol\theta} &amp;=&amp; \mathop{\rm argmin}_{\theta}\left[-\int_{-\infty}^{\infty}\left(\frac{1}{I} \sum_{i=1}^{I} \delta[y-y_{i}]\right)\log\bigl[Pr(y|\boldsymbol\theta)\bigr]dy\right] \nonumber\\
+&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\frac{1}{I} \sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right]\nonumber\\
+&amp;=&amp;\mathop{\rm argmin}_{\boldsymbol\theta}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_i|\boldsymbol\theta)\bigr]\right].
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+\hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\bigl[Pr(y_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\bigr]\right].
+\end{eqnarray}\]</span></p>
+<p><img src="assets/Chap05/LossVonMises.svg" style="filter: invert(1);"></p>
+<p>The von Mises distribution is defined over the circular domain (−π, π]. It has two parameters. The mean μ determines the position of the peak. The concentration κ &gt; 0 acts like the inverse of the variance. Hence 1/ √ κ is roughly equivalent to the standard deviation in a normal distribution.</p>
+<p><img src="assets/Chap05/LossMoG.svg" style="filter: invert(1);"></p>
+<p>Multimodal data and mixture of Gaussians density. a) Example training data where, for intermediate values of the input x, the corresponding output y follows one of two paths. For example, at x = 0, the output y might be roughly −2 or +3 but is unlikely to be between these values. b) The mixture of Gaussians is a probability model suited to this kind of data. As the name suggests, the model is a weighted sum (solid cyan curve) of two or more normal distributions with different means and variances (here, two normal distributions, dashed blue and orange curves). When the means are far apart, this forms a multimodal distribution. c) When the means are close, the mixture can model unimodal but non-normal densities.</p>
+<p><img src="assets/Chap05/LossPoisson.svg" style="filter: invert(1);"></p>
+<p>Poisson distribution. This discrete distribution is defined over nonnegative integers z ∈ {0, 1, 2, . . .}. It has a single parameter λ ∈ R+, which is known as the rate and is the mean of the distribution. a–c) Poisson distributions with rates of 1.4, 2.8, and 6.0, respectively.</p>
+</section>
+<section id="other" class="level2">
+<h2 class="anchored" data-anchor-id="other">Other</h2>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_prob_sigmoid}
+  \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+L = -(1-y)\log\Bigl[1-\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]\Bigr] - y\log\Bigl[\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]\Bigr],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+Pr(y|\mu,\kappa) = \frac{\exp\bigl[\kappa \cos[y-\mu]\bigr]}{2\pi \cdot \mbox{Bessel}_{0}[\kappa]} ,
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  Pr(y|\lambda,\mu_1,\mu_2,\sigma^2_1,\sigma^2_2) = \frac{\lambda}{\sqrt{2\pi\sigma_1^{2}}}\exp\left[\frac{-(y-\mu_1)^{2}}{2\sigma_1^{2}}\right]+\frac{1-\lambda}{\sqrt{2\pi\sigma_2^{2}}}\exp\left[\frac{-(y-\mu_2)^{2}}{2\sigma_2^{2}}\right],
+\end{eqnarray}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}
+  Pr(y=k)=\frac{\lambda^{k}e^{-\lambda}}{k!}.
+\end{eqnarray}\]</span></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
