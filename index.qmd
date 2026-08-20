@@ -11,6 +11,21 @@ From the navigation bar on the top ☝🏾 and sidebar on the left 👈🏾, you
 
 👇🏾 Below, you can find important links and important announcements.
 
+::: {.callout-important}
+
+# Test your understanding
+
+What is the correct way to flatten a tensor `emb` of shape `(6, 2, 6)` into a tensor of shape `(6, 12)`?
+
+<details><summary>Solution</summary>
+
+```python
+emb_flat = emb.view(6, -1)   # or emb.reshape(6, 12)
+```
+</details>
+::: 
+
+
 <!-- ::: {.callout-caution}
 # Final Poster
 The poster template can be found [here](https://docs.google.com/presentation/d/12WyL8m-YKPqiJ7r9GkSo76Du0YdzAppPeT3xjPy1yj0/edit#slide=id.g279418aeb01_2_75)
@@ -38,20 +53,3 @@ Please note that the [Programming Assignment 7](https://colab.research.google.co
 ## Go over the syllabus
 Please go over the [syllabus](/syllabus/about.html) to familiarize yourself with the course policies, grading scheme and other important information.
 ::: 
-
-| Week | Prince material | Main topic |
-|---|---|---|
-| 1 | Chapters 1–2 | ML framing and supervised learning |
-| 2 | Chapter 3 | Shallow neural networks |
-| 3 | Chapter 4 | Deep networks and representations |
-| 4 | Chapter 5 | Likelihood and loss functions |
-| 5 | Chapters 6–7 | Optimization, backpropagation and micrograd |
-| 6 | Chapters 8–9 | Generalization and regularization |
-| 7 | Chapter 10 | Convolutions and image models |
-| 8 | Selected Chapter 11 | Residual connections and normalization |
-| 9 | Chapter 12.1–12.3 | Tokens, embeddings and attention |
-| 10 | Chapter 12.4–12.8 | Transformers, BERT and GPT |
-| 11 | Chapter 14 | Generative-model framework |
-| 12 | Chapter 18.1–18.3 | Forward and reverse diffusion |
-| 13 | Chapter 18.4–18.6 | Training and implementation |
-| 14 | — | Projects, comparison and synthesis |

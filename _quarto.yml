@@ -62,7 +62,7 @@ website:
           contents:
           - dnn_clipping.ipynb
           - dnn_deep.ipynb
-        - section: loss.md
+        - section: loss.ipynb
           contents:
           - loss_regression.ipynb
           - loss_classification.ipynb

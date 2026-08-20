@@ -20,13 +20,13 @@ I don’t hold fixed office hours, but I’m available for on-demand meetings in
 
 
 <center>
-<img width="60%" style="filter:invert(1)" src="assets/office.png"></img>
+<img width="80%" style="filter:invert(1)" src="https://fahadsultan.com/csc272/assets/office.png"></img>
 </center>
 
 
 ## About the Course
  
-Course website: **[https://fahadsultan.com/csc272](https://fahadsultan.com/csc272)**
+Course website: **[https://fahadsultan.com/csc372](https://fahadsultan.com/csc372)**
 
 The **[Syllabus]()** is available on the course website. In particular, please make sure to read the **[Grading]()**, **[Academic Integrity]()** and **[Textbook and other Resources]()** sections carefully.
 

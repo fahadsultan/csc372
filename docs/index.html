@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -511,6 +545,25 @@ ul.task-list li input[type="checkbox"] {
 <p>I am excited to talk math 🔢, programming 💻 and all-things data 📊 in this course with you!</p>
 <p>From the navigation bar on the top ☝🏾 and sidebar on the left 👈🏾, you should be able to navigate to any topic relevant to the course. If that does not help, there should also be a search icon 🔍 in the top right corner ↗️</p>
 <p>👇🏾 Below, you can find important links and important announcements.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Test your understanding
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the correct way to flatten a tensor <code>emb</code> of shape <code>(6, 2, 6)</code> into a tensor of shape <code>(6, 12)</code>?</p>
+<details>
+<summary>
+Solution
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>emb_flat <span class="op">=</span> emb.view(<span class="dv">6</span>, <span class="op">-</span><span class="dv">1</span>)   <span class="co"># or emb.reshape(6, 12)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
 <!-- ::: {.callout-caution}
 # Final Poster
 The poster template can be found [here](https://docs.google.com/presentation/d/12WyL8m-YKPqiJ7r9GkSo76Du0YdzAppPeT3xjPy1yj0/edit#slide=id.g279418aeb01_2_75)
@@ -545,87 +598,6 @@ Go over the syllabus
 <p>Please go over the <a href="./syllabus/about.html">syllabus</a> to familiarize yourself with the course policies, grading scheme and other important information.</p>
 </div>
 </div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Week</th>
-<th>Prince material</th>
-<th>Main topic</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Chapters 1–2</td>
-<td>ML framing and supervised learning</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Chapter 3</td>
-<td>Shallow neural networks</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Chapter 4</td>
-<td>Deep networks and representations</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Chapter 5</td>
-<td>Likelihood and loss functions</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Chapters 6–7</td>
-<td>Optimization, backpropagation and micrograd</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>Chapters 8–9</td>
-<td>Generalization and regularization</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>Chapter 10</td>
-<td>Convolutions and image models</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>Selected Chapter 11</td>
-<td>Residual connections and normalization</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>Chapter 12.1–12.3</td>
-<td>Tokens, embeddings and attention</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>Chapter 12.4–12.8</td>
-<td>Transformers, BERT and GPT</td>
-</tr>
-<tr class="odd">
-<td>11</td>
-<td>Chapter 14</td>
-<td>Generative-model framework</td>
-</tr>
-<tr class="even">
-<td>12</td>
-<td>Chapter 18.1–18.3</td>
-<td>Forward and reverse diffusion</td>
-</tr>
-<tr class="odd">
-<td>13</td>
-<td>Chapter 18.4–18.6</td>
-<td>Training and implementation</td>
-</tr>
-<tr class="even">
-<td>14</td>
-<td>—</td>
-<td>Projects, comparison and synthesis</td>
-</tr>
-</tbody>
-</table>
 
 
 
