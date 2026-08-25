@@ -399,6 +399,8 @@ window.Quarto = {
 </section>
 <section id="assignments" class="level3">
 <h3 class="anchored" data-anchor-id="assignments">Assignments</h3>
+<p>Assignments are an important part of the course and will constitute <strong>15%</strong> of your course grade. Assignments will be posted on the course website and submitted on Moodle.</p>
+<p>The questions in exams are going to be very similar to the questions in assignments. So, if you do well on assignments, you will do well on exams.</p>
 </section>
 <section id="project" class="level3">
 <h3 class="anchored" data-anchor-id="project">Project</h3>
@@ -429,16 +431,16 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="machine-learning-models">Machine Learning Models</h2>
 <p>A machine-learning model can be represented as a function:</p>
 <p><span class="math display">\[
-\hat{\mathbf{y}}=f_\theta(\mathbf{x})
+\hat{\mathbf{y}}=f_\phi[\mathbf{x}]
 \]</span></p>
 <p>where:</p>
 <ul>
 <li><span class="math inline">\(\mathbf{x}\)</span> is the input,</li>
 <li><span class="math inline">\(\hat{\mathbf{y}}\)</span> is the model’s prediction,</li>
-<li><span class="math inline">\(f_\theta\)</span> is the model,</li>
-<li><span class="math inline">\(\theta\)</span> represents the model’s learned parameters.</li>
+<li><span class="math inline">\(f_\phi\)</span> is the model,</li>
+<li><span class="math inline">\(\phi\)</span> represents the model’s learned parameters.</li>
 </ul>
-<p>Training is the process of finding values of <span class="math inline">\(\theta\)</span> that make the model useful for a particular task.</p>
+<p>Training is the process of finding values of <span class="math inline">\(\phi\)</span> that make the model useful for a particular task.</p>
 <p>Machine learning model. The model represents a family of relationships that relate the input (age of child) to the output (height of child). The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.</p>
 <p><img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);"></p>
 </section>
@@ -457,31 +459,147 @@ window.Quarto = {
 </section>
 <section id="supervised-learning" class="level2">
 <h2 class="anchored" data-anchor-id="supervised-learning">Supervised Learning</h2>
-<p>In supervised learning, the training data contain input-output pairs:</p>
-<p><span class="math display">\[
+<!-- 
+In supervised learning, the training data contain input-output pairs:
+
+$$
 \mathcal{D}=\{(\mathbf{x}_i,\mathbf{y}_i)\}_{i=1}^{I}
-\]</span></p>
-<p>The model receives <span class="math inline">\(\mathbf{x}_i\)</span> (an observation or a ‘row’) and produces a prediction <span class="math inline">\(\hat{\mathbf{y}}_i\)</span></p>
-<p><span class="math display">\[
-\hat{\mathbf{y}}_i=f_\theta[\mathbf{x}_i],
-\]</span></p>
-<p>and compares that prediction with the known correct answer <span class="math inline">\(\mathbf{y}_i\)</span>.</p>
-<p>The model is trained by minimizing a loss function:</p>
-<p><span class="math display">\[
-\theta^*
+$$
+
+The model receives $\mathbf{x}_i$ (an observation or a 'row') and produces a prediction $\hat{\mathbf{y}}_i$
+
+$$
+\hat{\mathbf{y}}_i=f_\phi[\mathbf{x}_i],
+$$
+
+and compares that prediction with the known correct answer $\mathbf{y}_i$.
+
+The model is trained by minimizing a loss function:
+
+$$
+\phi^*
 =
-\arg\min_\theta
+\arg\min_\phi
 \frac{1}{N}\sum_{i=1}^{N}
 \mathcal{L}\left(\hat{\mathbf{y}_i},\mathbf{y}_i\right)
-\]</span></p>
-<p>For regression, a common loss is mean squared error:</p>
-<p><span class="math display">\[
+$$
+
+For regression, a common loss is mean squared error:
+
+$$
 \mathcal{L}(\hat{y},y)=(\hat{y}-y)^2
-\]</span></p>
-<p>For classification, a common loss is negative log-likelihood:</p>
-<p><span class="math display">\[
+$$
+
+For classification, a common loss is negative log-likelihood:
+
+$$
 \mathcal{L}(\hat{p},y)=-\log \hat{p}(y\mid x)
+$$ -->
+<p>In supervised learning, the training data consist of input–output pairs:</p>
+<p><span class="math display">\[
+\mathcal{D}=\left\{(\mathbf{x}_i,\mathbf{y}_i)\right\}_{i=1}^{I},
 \]</span></p>
+<p>where <span class="math inline">\(\mathbf{x}_i\)</span> is the input for observation <span class="math inline">\(i\)</span>, and <span class="math inline">\(\mathbf{y}_i\)</span> is its known target or label. A model with parameters <span class="math inline">\(\boldsymbol{\phi}\)</span> maps each input to a prediction:</p>
+<p><span class="math display">\[
+\hat{\mathbf{y}}_i=f_{\boldsymbol{\phi}}[\mathbf{x}_i].
+\]</span></p>
+<p>The parameters are learned by minimizing the average loss over the training set:</p>
+<p><span class="math display">\[
+\boldsymbol{\phi}^{*}
+=
+\arg\min_{\boldsymbol{\phi}}
+\frac{1}{I}
+\sum_{i=1}^{I}
+\mathcal{L}\left(
+f_{\boldsymbol{\phi}}[\mathbf{x}_i],
+\mathbf{y}_i
+\right).
+\]</span></p>
+<p>The loss function measures how different a prediction is from the corresponding known target. The appropriate loss depends on whether the task is regression or classification.</p>
+<section id="regression" class="level3">
+<h3 class="anchored" data-anchor-id="regression">Regression</h3>
+<p>Regression is used when the target is a continuous numerical quantity, such as temperature, income, or house price. For scalar regression:</p>
+<p><span class="math display">\[
+y_i\in\mathbb{R},
+\qquad
+\hat{y}_i=f_{\boldsymbol{\phi}}[\mathbf{x}_i]\in\mathbb{R}.
+\]</span></p>
+<p>A common regression loss is squared error:</p>
+<p><span class="math display">\[
+\mathcal{L}(\hat{y}_i,y_i)
+=
+(\hat{y}_i-y_i)^2.
+\]</span></p>
+<p>Averaging this loss over the training data gives the mean squared error:</p>
+<p><span class="math display">\[
+\operatorname{MSE}
+=
+\frac{1}{I}
+\sum_{i=1}^{I}
+(\hat{y}_i-y_i)^2.
+\]</span></p>
+<p>Minimizing MSE encourages predictions to be close to the observed numerical targets and penalizes large errors more heavily than small ones. Under a probabilistic interpretation, minimizing MSE is equivalent to maximum-likelihood estimation when the target is assumed to equal the model prediction plus Gaussian noise:</p>
+<p><span class="math display">\[
+y_i=f_{\boldsymbol{\phi}}[\mathbf{x}_i]+\varepsilon_i,
+\qquad
+\varepsilon_i\sim\mathcal{N}(0,\sigma^2).
+\]</span></p>
+</section>
+<section id="classification" class="level3">
+<h3 class="anchored" data-anchor-id="classification">Classification</h3>
+<p>Classification is used when the target belongs to one of a finite set of categories. For a problem with <span class="math inline">\(K\)</span> classes:</p>
+<p><span class="math display">\[
+y_i\in\{1,\ldots,K\}.
+\]</span></p>
+<p>Rather than directly predicting a class, a classification model commonly produces a probability distribution over the possible classes:</p>
+<p><span class="math display">\[
+\hat{\mathbf{p}}_i
+=
+f_{\boldsymbol{\phi}}[\mathbf{x}_i],
+\qquad
+\hat{p}_{ik}
+=
+P_{\boldsymbol{\phi}}(y_i=k\mid\mathbf{x}_i).
+\]</span></p>
+<p>These probabilities satisfy:</p>
+<p><span class="math display">\[
+\hat{p}_{ik}\geq 0,
+\qquad
+\sum_{k=1}^{K}\hat{p}_{ik}=1.
+\]</span></p>
+<p>The predicted class is usually the class with the highest estimated probability:</p>
+<p><span class="math display">\[
+\hat{y}_i
+=
+\arg\max_{k\in\{1,\ldots,K\}}
+\hat{p}_{ik}.
+\]</span></p>
+<p>A common classification loss is the negative log-likelihood:</p>
+<p><span class="math display">\[
+\mathcal{L}(\hat{\mathbf{p}}_i,y_i)
+=
+-\log \hat{p}_{i,y_i}
+=
+-\log P_{\boldsymbol{\phi}}(y_i\mid\mathbf{x}_i).
+\]</span></p>
+<p>Using a one-hot representation <span class="math inline">\(y_{ik}\)</span>, where <span class="math inline">\(y_{ik}=1\)</span> if observation <span class="math inline">\(i\)</span> belongs to class <span class="math inline">\(k\)</span> and <span class="math inline">\(0\)</span> otherwise, this can be written as categorical cross-entropy:</p>
+<p><span class="math display">\[
+\mathcal{L}(\hat{\mathbf{p}}_i,\mathbf{y}_i)
+=
+-\sum_{k=1}^{K}
+y_{ik}\log\hat{p}_{ik}.
+\]</span></p>
+<p>For binary classification, with <span class="math inline">\(y_i\in\{0,1\}\)</span> and <span class="math inline">\(\hat{p}_i=P(y_i=1\mid\mathbf{x}_i)\)</span>, the binary cross-entropy loss is:</p>
+<p><span class="math display">\[
+\mathcal{L}(\hat{p}_i,y_i)
+=
+-\left[
+y_i\log\hat{p}_i
++
+(1-y_i)\log(1-\hat{p}_i)
+\right].
+\]</span></p>
+<p>This loss strongly penalizes a model when it assigns a low probability to the correct class. Thus, regression models learn to predict numerical values, whereas classification models learn probabilities over discrete categories.</p>
 <p>Examples include:</p>
 <ul>
 <li>Predicting a house price from its characteristics</li>
@@ -492,13 +610,6 @@ window.Quarto = {
 <p>The defining feature of supervised learning is that the desired output <span class="math inline">\(y\)</span> is provided during training.</p>
 <p>Regression and classification problems. a) b) This multivariate regression model takes the structure of a chemical molecule and predicts its freezing and boiling points. c) This binary classification model takes a restaurant review and classifies it as either positive or negative. d) This multiclass classification problem assigns a snippet of audio to one of N genres. e) A second multiclass classification problem in which the model classifies an image according to which of N possible objects it might contain.</p>
 <p><img src="assets/Chap01/IntroModels.svg" width="100%" style="filter: invert(1);"></p>
-<section id="regression" class="level3">
-<h3 class="anchored" data-anchor-id="regression">Regression</h3>
-<p>Regression models predict a continuous output variable based on one or more input variables. For instance, the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.</p>
-<p>For instance the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.</p>
-</section>
-<section id="classification" class="level3">
-<h3 class="anchored" data-anchor-id="classification">Classification</h3>
 </section>
 <section id="structured-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="structured-outputs">Structured Outputs</h3>
@@ -514,16 +625,16 @@ window.Quarto = {
 <p>Instead of learning a direct mapping from a given <span class="math inline">\(x\)</span> to a given <span class="math inline">\(y\)</span>, the model attempts to discover structure in the data.</p>
 <p>For clustering, the model might assign each input to a cluster:</p>
 <p><span class="math display">\[
-z_i=f_\theta(x_i)
+z_i=f_\phi[\mathbf{x}_i]
 \]</span></p>
 <p>where <span class="math inline">\(z_i\)</span> is a learned cluster assignment rather than a human-provided label.</p>
 <p>For dimensionality reduction, the model may learn a lower-dimensional representation:</p>
 <p><span class="math display">\[
-z=f_\theta(x)
+z=f_\phi[\mathbf{x}]
 \]</span></p>
 <p>An autoencoder first encodes <span class="math inline">\(x\)</span> and then reconstructs it:</p>
 <p><span class="math display">\[
-z=f_\theta(x)
+z=f_\phi(x)
 \]</span></p>
 <p><span class="math display">\[
 \hat{x}=g_\phi(z)
@@ -535,7 +646,7 @@ z=f_\theta(x)
 \arg\min_{\theta,\phi}
 \frac{1}{N}\sum_{i=1}^{N}
 \left\|
-x_i-g_\phi(f_\theta(x_i))
+x_i-g_\phi(f_\phi(x_i))
 \right\|^2
 \]</span></p>
 <p>Examples include:</p>
@@ -576,7 +687,7 @@ x_i-g_\phi(f_\theta(x_i))
 <p>In reinforcement learning, an agent repeatedly interacts with an environment.</p>
 <p>At time <span class="math inline">\(t\)</span>, the agent observes a state <span class="math inline">\(s_t\)</span> and uses a policy to select an action:</p>
 <p><span class="math display">\[
-a_t=f_\theta(s_t)
+a_t=f_\phi(s_t)
 \]</span></p>
 <p>The environment then returns a reward <span class="math inline">\(r_t\)</span> and a new state <span class="math inline">\(s_{t+1}\)</span>:</p>
 <p><span class="math display">\[
@@ -584,9 +695,9 @@ a_t=f_\theta(s_t)
 \]</span></p>
 <p>The objective is not simply to predict a known <span class="math inline">\(y\)</span>. Instead, the agent learns a policy that maximizes its expected cumulative reward:</p>
 <p><span class="math display">\[
-\theta^*
+\phi^*
 =
-\arg\max_\theta
+\arg\max_\phi
 \mathbb{E}\left[
 \sum_{t=0}^{T}\gamma^t r_t
 \right]
