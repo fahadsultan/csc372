@@ -19,7 +19,7 @@ website:
       # - text: "Datasets"
       #   href: project/data.qmd
       - text: "Moodle Page"
-        href: https://courses.furman.edu/course/view.php?id=20763
+        href: https://courses.furman.edu/course/view.php?id=23022
       - text: "Office Hours"
         href: syllabus/appointment.qmd
       - text: "Set an Appointment"
@@ -51,62 +51,64 @@ website:
         #   contents:
         # - linearregression.md
         - linearregression.ipynb
-        # - snn.md
-        - section: snn.ipynb
-          contents:
-          - snn_multivariate.ipynb
-          - snn_general.ipynb
-          - snn_activations.ipynb
-        # - dnn.md 
-        - section: dnn.ipynb 
-          contents:
-          - dnn_clipping.ipynb
-          - dnn_deep.ipynb
-        - section: loss.ipynb
-          contents:
-          - loss_regression.ipynb
-          - loss_classification.ipynb
-          - loss_multiclass.ipynb
-        # - section: fitting.qmd 
+        - text: "Shallow Neural Networks"
+        - text: "Deep Neural Networks"
+        - text: "Loss Functions"
+        - text: "Gradient Descent"
+        - text: "Back Propagation"
+        - text: "Performance"
+        - text: "Regularization"
+        - text: "Transformers"
+        - text: "Large Language Models"
+        - text: "Diffusion Models"
+        # - section: snn.ipynb
         #   contents:
-        # - gradientdescent.md
-        - section: gradientdescent.ipynb
-          contents:
-          - gradientdescent_sgd.ipynb
-          - gradientdescent_momentum.ipynb
-          - gradientdescent_adam.ipynb
-          - gradientdescent_linesearch.ipynb
-        # - backprop.md
-        - section: backprop.ipynb
-          contents: 
-          - backprop_algo.ipynb
-          - backprop_init.ipynb
-          - backprop_code.ipynb
-        # - performance.md
-        - section: performance.ipynb
-          contents: 
-          - performance_biasvariance.ipynb
-          - performance_doubledescent.ipynb
-          - performance_highdimensions.ipynb
-        # - transformers.md
-        - section: transformers.ipynb
-          contents:
-          - transformers_multi.ipynb
-          - transformers_nlp.ipynb
-          - transformers_others.ipynb
-          - transformers_decoding.ipynb
-        - section: llms.ipynb
-          contents: 
-          - llms_pretraining.ipynb
-          - llms_finetuning.ipynb
-          - llms_rlhf.ipynb
-        - unsupervised.md
-        - section: diffusion.ipynb
-          contents: 
-          - diffusion_encoder.ipynb 
-          - diffusion_decoder.ipynb
-          - diffusion_reparameterization.ipynb
-          - diffusion_family.ipynb
+        #   - snn_multivariate.ipynb
+        #   - snn_general.ipynb
+        #   - snn_activations.ipynb
+        # - section: dnn.ipynb 
+        #   contents:
+        #   - dnn_clipping.ipynb
+        #   - dnn_deep.ipynb
+        # - section: loss.ipynb
+        #   contents:
+        #   - loss_regression.ipynb
+        #   - loss_classification.ipynb
+        #   - loss_multiclass.ipynb
+        # - section: gradientdescent.ipynb
+        #   contents:
+        #   - gradientdescent_sgd.ipynb
+        #   - gradientdescent_momentum.ipynb
+        #   - gradientdescent_adam.ipynb
+        #   - gradientdescent_linesearch.ipynb
+        # - section: backprop.ipynb
+        #   contents: 
+        #   - backprop_algo.ipynb
+        #   - backprop_init.ipynb
+        #   - backprop_code.ipynb
+        # - section: performance.ipynb
+        #   contents: 
+        #   - performance_biasvariance.ipynb
+        #   - performance_doubledescent.ipynb
+        #   - performance_highdimensions.ipynb
+        # - section: transformers.ipynb
+        #   contents:
+        #   - transformers_multi.ipynb
+        #   - transformers_nlp.ipynb
+        #   - transformers_others.ipynb
+        #   - transformers_decoding.ipynb
+        # - section: llms.ipynb
+        #   contents: 
+        #   - llms_pretraining.ipynb
+        #   - llms_finetuning.ipynb
+        #   - llms_rlhf.ipynb
+        # - unsupervised.md
+        # - section: diffusion.ipynb
+        #   contents: 
+        #   - diffusion_encoder.ipynb 
+        #   - diffusion_decoder.ipynb
+        #   - diffusion_reparameterization.ipynb
+        #   - diffusion_family.ipynb
 
 format:
   html:

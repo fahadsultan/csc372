@@ -10,7 +10,7 @@ I am excited to talk math 🔢, programming 💻 and all-things data 📊 in thi
 From the navigation bar on the top ☝🏾 and sidebar on the left 👈🏾, you should be able to navigate to any topic relevant to the course. If that does not help, there should also be a search icon 🔍 in the top right corner ↗️
 
 👇🏾 Below, you can find important links and important announcements.
-
+<!-- 
 ::: {.callout-important}
 
 # Test your understanding
@@ -23,7 +23,7 @@ What is the correct way to flatten a tensor `emb` of shape `(6, 2, 6)` into a te
 emb_flat = emb.view(6, -1)   # or emb.reshape(6, 12)
 ```
 </details>
-::: 
+:::  -->
 
 
 <!-- ::: {.callout-caution}

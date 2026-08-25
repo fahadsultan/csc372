@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -172,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=20763"> 
+    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
 <span class="menu-text">Moodle Page</span></a>
   </li>  
   <li class="nav-item">
@@ -232,284 +198,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./snn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shallow Neural Networks</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multivariate Networks</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">General case</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Activations</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Deep Neural Networks</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From composing networks to deep networks</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./loss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Loss Functions</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 1: univariate regression</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 2: binary classification</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 3: multiclass classification</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Gradient Descent</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Stochastic gradient descent</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Momentum</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Adam</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Training algorithm hyperparameters</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation algorithm</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parameter Initialization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backprop Code</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./performance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Performance</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources of error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Double Descent</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Choosing hyperparameters</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extentions to dot-product self-attention</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for natural language processing</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for images</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoding strategies</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./llms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large Language Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Pretraining</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
-  </div>
-</li>
-      </ul>
+        <li class="sidebar-item">
+ <span class="menu-text">Shallow Neural Networks</span>
   </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unsupervised learning</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Encoder (forward process)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_decoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoder model (reverse process)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reparameterization of loss function</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Families of diffusion models</span></a>
-  </div>
-</li>
-      </ul>
+ <span class="menu-text">Deep Neural Networks</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Loss Functions</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Gradient Descent</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Back Propagation</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Performance</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Regularization</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Transformers</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Large Language Models</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Diffusion Models</span>
   </li>
     </ul>
     </div>
@@ -544,26 +261,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Hi! Welcome to the CSC-372 Machine Learning with Big Data course website 👋🏾</p>
 <p>I am excited to talk math 🔢, programming 💻 and all-things data 📊 in this course with you!</p>
 <p>From the navigation bar on the top ☝🏾 and sidebar on the left 👈🏾, you should be able to navigate to any topic relevant to the course. If that does not help, there should also be a search icon 🔍 in the top right corner ↗️</p>
-<p>👇🏾 Below, you can find important links and important announcements.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Test your understanding
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>What is the correct way to flatten a tensor <code>emb</code> of shape <code>(6, 2, 6)</code> into a tensor of shape <code>(6, 12)</code>?</p>
-<details>
-<summary>
-Solution
-</summary>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>emb_flat <span class="op">=</span> emb.view(<span class="dv">6</span>, <span class="op">-</span><span class="dv">1</span>)   <span class="co"># or emb.reshape(6, 12)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>👇🏾 Below, you can find important links and important announcements. <!-- 
+::: {.callout-important}
+
+# Test your understanding
+
+What is the correct way to flatten a tensor `emb` of shape `(6, 2, 6)` into a tensor of shape `(6, 12)`?
+
+<details><summary>Solution</summary>
+
+```python
+emb_flat = emb.view(6, -1)   # or emb.reshape(6, 12)
+```
 </details>
-</div>
-</div>
+:::  --></p>
 <!-- ::: {.callout-caution}
 # Final Poster
 The poster template can be found [here](https://docs.google.com/presentation/d/12WyL8m-YKPqiJ7r9GkSo76Du0YdzAppPeT3xjPy1yj0/edit#slide=id.g279418aeb01_2_75)

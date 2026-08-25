@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -138,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=20763"> 
+    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
 <span class="menu-text">Moodle Page</span></a>
   </li>  
   <li class="nav-item">
@@ -198,284 +227,35 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./snn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shallow Neural Networks</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multivariate Networks</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">General case</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Activations</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Deep Neural Networks</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From composing networks to deep networks</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shallow vs.&nbsp;deep neural networks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./loss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Loss Functions</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 1: univariate regression</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 2: binary classification</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 3: multiclass classification</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Gradient Descent</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Stochastic gradient descent</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Momentum</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Adam</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gradientdescent_linesearch.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Training algorithm hyperparameters</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation algorithm</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parameter Initialization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backprop Code</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./performance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Performance</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources of error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Double Descent</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Choosing hyperparameters</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extentions to dot-product self-attention</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for natural language processing</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for images</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoding strategies</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./llms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large Language Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Pretraining</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
-  </div>
-</li>
-      </ul>
+        <li class="sidebar-item">
+ <span class="menu-text">Shallow Neural Networks</span>
   </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unsupervised learning</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Encoder (forward process)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_decoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoder model (reverse process)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reparameterization of loss function</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Families of diffusion models</span></a>
-  </div>
-</li>
-      </ul>
+ <span class="menu-text">Deep Neural Networks</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Loss Functions</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Gradient Descent</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Back Propagation</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Performance</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Regularization</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Transformers</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Large Language Models</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Diffusion Models</span>
   </li>
     </ul>
     </div>
@@ -490,18 +270,20 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#how-to-reach-me" id="toc-how-to-reach-me" class="nav-link active" data-scroll-target="#how-to-reach-me">How to Reach Me</a></li>
   <li><a href="#about-the-course" id="toc-about-the-course" class="nav-link" data-scroll-target="#about-the-course">About the Course</a>
   <ul class="collapse">
-  <li><a href="#class-participation" id="toc-class-participation" class="nav-link" data-scroll-target="#class-participation">Class Participation</a></li>
+  <li><a href="#mandatory-asking-questions-in-class" id="toc-mandatory-asking-questions-in-class" class="nav-link" data-scroll-target="#mandatory-asking-questions-in-class">Mandatory: Asking Questions in Class</a></li>
+  <li><a href="#purposeful-pathways" id="toc-purposeful-pathways" class="nav-link" data-scroll-target="#purposeful-pathways">Purposeful Pathways</a></li>
   <li><a href="#exams" id="toc-exams" class="nav-link" data-scroll-target="#exams">Exams</a></li>
+  <li><a href="#assignments" id="toc-assignments" class="nav-link" data-scroll-target="#assignments">Assignments</a></li>
+  <li><a href="#project" id="toc-project" class="nav-link" data-scroll-target="#project">Project</a></li>
   <li><a href="#giant-asterisk" id="toc-giant-asterisk" class="nav-link" data-scroll-target="#giant-asterisk">Giant Asterisk *</a></li>
   </ul></li>
-  <li><a href="#types-of-learning" id="toc-types-of-learning" class="nav-link" data-scroll-target="#types-of-learning">Types of Learning</a>
-  <ul class="collapse">
+  <li><a href="#expect-lots-of-programming-and-lots-of-math" id="toc-expect-lots-of-programming-and-lots-of-math" class="nav-link" data-scroll-target="#expect-lots-of-programming-and-lots-of-math">Expect lots of Programming and lots of Math!</a></li>
+  <li><a href="#machine-learning-models" id="toc-machine-learning-models" class="nav-link" data-scroll-target="#machine-learning-models">Machine Learning Models</a></li>
+  <li><a href="#types-of-learning" id="toc-types-of-learning" class="nav-link" data-scroll-target="#types-of-learning">Types of Learning</a></li>
   <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning">Supervised Learning</a>
   <ul class="collapse">
   <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a></li>
   <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification">Classification</a></li>
-  <li><a href="#machine-learning-models" id="toc-machine-learning-models" class="nav-link" data-scroll-target="#machine-learning-models">Machine Learning Models</a></li>
-  <li><a href="#deep-neural-networks" id="toc-deep-neural-networks" class="nav-link" data-scroll-target="#deep-neural-networks">Deep Neural Networks</a></li>
   <li><a href="#structured-outputs" id="toc-structured-outputs" class="nav-link" data-scroll-target="#structured-outputs">Structured Outputs</a></li>
   </ul></li>
   <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning">Unsupervised Learning</a>
@@ -510,7 +292,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#latent-variables" id="toc-latent-variables" class="nav-link" data-scroll-target="#latent-variables">Latent Variables</a></li>
   </ul></li>
   <li><a href="#reinforcement-learning" id="toc-reinforcement-learning" class="nav-link" data-scroll-target="#reinforcement-learning">Reinforcement Learning</a></li>
-  </ul></li>
+  <li><a href="#comparison" id="toc-comparison" class="nav-link" data-scroll-target="#comparison">Comparison</a></li>
   </ul>
 </nav>
     </div>
@@ -536,6 +318,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><span style="font-size: 1.5em; font-weight: bold;"> Syed Fahad Sultan سید فہد سلطان </span></p>
+<p><strong>Pronunciation</strong>: <a href="https://en.wikipedia.org/wiki/Sayyid">Saiyyudh</a> <a href="https://en.wikipedia.org/wiki/Fahd">Fahad</a> <a href="https://en.wikipedia.org/wiki/Sultan">Sool-tahn</a></p>
+<p><em>Just call me <strong>“Dr.&nbsp;Sultan”</strong></em> (click on the speaker for a short audio clip: <a href="https://upload.wikimedia.org/wikipedia/commons/c/cd/LL-Q9292_%28aze%29-Azerbaijani_audiorecordings-sultan.wav">🔈</a>)</p>
+<br>
+<center>
+<img style="filter:invert(1)" width="80%" src="assets/name.png">
+</center>
+<p><br></p>
 <section id="how-to-reach-me" class="level3">
 <h3 class="anchored" data-anchor-id="how-to-reach-me">How to Reach Me</h3>
 <p><strong>Office</strong>: Riley Hall 200-H</p>
@@ -550,35 +340,110 @@ ul.task-list li input[type="checkbox"] {
 <section id="about-the-course" class="level2">
 <h2 class="anchored" data-anchor-id="about-the-course">About the Course</h2>
 <p>Course website: <strong><a href="https://fahadsultan.com/csc372">https://fahadsultan.com/csc372</a></strong></p>
-<p>The <strong><a href="">Syllabus</a></strong> is available on the course website. In particular, please make sure to read the <strong><a href="">Grading</a></strong>, <strong><a href="">Academic Integrity</a></strong> and <strong><a href="">Textbook and other Resources</a></strong> sections carefully.</p>
+<p>The <strong><a href="syllabus/index.html">Syllabus</a></strong> is available on the course website. In particular, please make sure to read the <strong><a href="syllabus/grading.html">Grading</a></strong>, <strong><a href="syllabus/integrity.html">Academic Integrity</a></strong> and <strong><a href="syllabus/textbook.html">Textbook and other Resources</a></strong> sections carefully.</p>
 <p>All of the course content will be posted on this website.</p>
 <p>Important announcements will be made on both the course website homepage and in class.</p>
-<p>You are to submit assignments and exams on <strong><a href="https://courses.furman.edu/course/view.php?id=20763">the course Moodle page</a></strong>. I will also upload all of your grades there.</p>
-<section id="class-participation" class="level3">
-<h3 class="anchored" data-anchor-id="class-participation">Class Participation</h3>
-<p>Given the glut of information accessible online and otherwise in this day and age, <strong>meaningful interactions with your peers and teachers is essentially why you are paying your college tuition</strong>.</p>
-<p>To encourage this, I have allocated <strong>5% of your course grade to class participation</strong>. Ways to earn class participation points include:</p>
+<p>You are to submit assignments and exams on <strong><a href="https://courses.furman.edu/course/view.php?id=23022">the course Moodle page</a></strong>. I will also upload all of your grades there.</p>
+<section id="mandatory-asking-questions-in-class" class="level3">
+<h3 class="anchored" data-anchor-id="mandatory-asking-questions-in-class">Mandatory: Asking Questions in Class</h3>
+<p>Answering questions during class is strictly optional but asking questions is mandatory. You will not be penalized for asking questions, but you will be penalized for not asking questions.</p>
+<p>Everything we are going to cover in this class is available online and in textbooks. You can read about it, watch videos about it, and even ask AI to explain it to you. <u><i>The only reason you’re mortgaging your future to a lender for the next twenty years is to ask questions and interact with your fellow debtors and the supposed experts paid to pretend they have the answers.</i></u></p>
+<p>To encourage this, I have allocated <strong>5% of your course grade to asking questions in class</strong>. Ways to earn class participation points include:</p>
 <ol type="1">
 <li>Coming to class and labs regularly</li>
 <li>Asking questions during class</li>
 <li>Sharing your thoughts and comments during class discussions</li>
-<li>(Optional) Answering questions during class</li>
 </ol>
 <p>Class participation is somewhat subjective, but I will do my best to be as fair as possible. I will share your overall class participation points with you with each graded exam.</p>
 </section>
+<section id="purposeful-pathways" class="level3">
+<h3 class="anchored" data-anchor-id="purposeful-pathways">Purposeful Pathways</h3>
+<p>During the semester, you must attend two events that are designated as Purposeful Pathways events for Computer Science.</p>
+<p>A list of such events will be provided to you, and you may ask for approval of additional events not on the list. You are then required to write a reflection on each event.</p>
+<p>Each reflection must:</p>
+<ul>
+<li>List at the top of document:
+<ul>
+<li>The name of the event.</li>
+<li>The date of the event.</li>
+<li>The date of submission of your reflection.</li>
+<li>The category of the event (Career Exploration, Professional Preparation, or Networking). When seeking approval of an event not on the pre-approved list, make sure to inquire about the category.</li>
+<li>State your question or prompt you are answering. (See below for more details.)</li>
+</ul></li>
+<li>Be 400-500 words in length.</li>
+<li>Be submitted within 7 days of an event on Moodle. No reflections will be accepted after the last day of classes for the semester.</li>
+<li>Follow the guidelines described below.</li>
+</ul>
+<p>Successful completion of the Purposeful Pathways requirement includes developing a specific prompt (or question) prior to the event that is clearly stated in the reflection document. An example of a satisfactory prompt geared toward an Employer Engagement event may be “What are common expectations in the positions that are being described and how does my Furman education prepare for that role?” Your reflection should then attempt to address your prompt.</p>
+<p>It is reasonable for a reflection to ask and answer two questions that you define before the talk, but no more than two are allowed. (If you feel like the question(s) you are asking were not answered, ask the speaker: engage!)</p>
+<p><strong>A reflection is not a retelling of the events that occurred</strong>. Any such ‘retelling’ will receive credit for completing the task towards the graduation requirement (if applicable; see below), but a 0 for the assignment as a course grade.</p>
+<section id="requirements-for-majors" class="level4">
+<h4 class="anchored" data-anchor-id="requirements-for-majors">Requirements for Majors</h4>
+<p>All Computer Science and Information Technology majors are required to attend and reflect upon a minimum of six Purposeful Pathways activities during their careers.</p>
+<p>These activities will be categorized as follows, with a minimum of one attendance required for each category:</p>
+<ul>
+<li><p>Career Exploration (alumni career panel, guest speaker, connection with alumni mentor, informational interview, taking a career assessment)</p></li>
+<li><p>Professional Preparation (senior etiquette seminar, CS/Math career skills workshop, CS Powerpoint night, appointment with a career advisor, resume writing workshop, interview preparation workshop, Career Fair prep workshop, LinkedIn profile development)</p></li>
+<li><p>Networking &amp; Employer Engagement (CS summer research and internship showcase, Career Fair, Career Trek, conference attendance, employer or grad school information sessions, company site visits, grad school site visits) Implementation of this requirement will be through standardized, graded requirements in individual courses. Each student in the following courses will be required to attend and reflect upon two activities:</p></li>
+<li><p>All 300-level electives (CSC-372 this semester)</p></li>
+<li><p>CSC-475 or CSC-502</p></li>
+<li><p>CSC-122</p></li>
+</ul>
+<p>This will prompt IT majors to reach the minimum of six activities, while CS majors will ultimately participate in 10.</p>
+</section>
+</section>
 <section id="exams" class="level3">
 <h3 class="anchored" data-anchor-id="exams">Exams</h3>
-<p>There will be <strong>three</strong> exams in the course, including the final. The final exam will be cumulative. Exams constitute <strong>60%</strong> of your course grade.</p>
-<p>All exams will be on paper and closed-book. Exam 3 will be on the last day of class.</p>
-<p>The finals week will be used for project presentations.</p>
+<p>There will be <strong>three</strong> exams in the course, including the final. The final exam will be cumulative. Exams constitute <strong>45%</strong> of your course grade.</p>
+<p>All exams will be on paper and closed-book.</p>
+</section>
+<section id="assignments" class="level3">
+<h3 class="anchored" data-anchor-id="assignments">Assignments</h3>
+</section>
+<section id="project" class="level3">
+<h3 class="anchored" data-anchor-id="project">Project</h3>
+<p>In this course we will use weekly lab sessions to work towards a large language model project. The project is to be completed in teams of 2-3 students. The project will constitute <strong>30%</strong> of your course grade.</p>
+<p>The project will be broken down into several milestones, each of which will be graded.</p>
+<p>The project will be loosely aligned with lecture topics, but might require you to learn new concepts and techniques on your own.</p>
+<p>All programming in this course will be done in Python and PyTorch. You are expected to have a working knowledge of Python before the course begins.</p>
 </section>
 <section id="giant-asterisk" class="level3">
 <h3 class="anchored" data-anchor-id="giant-asterisk">Giant Asterisk *</h3>
+<p><img src="https://i.pinimg.com/originals/21/48/fd/2148fd1767e18ce65e7366951b75ace6.gif" width="50%" align="right"></p>
 <p><i><u><strong>Everything is tentative and subject to change</strong></u></i></p>
+<p>I am a firm believer in flexibility, adaptability and experimentation in teaching. I will do my best to keep the course schedule, grading, and content as consistent as possible, but I reserve the right to make changes if I feel it is in the best interest of the learning experience of the class.</p>
+<p>I will keep you informed of any changes to the course schedule, grading, or content.</p>
 </section>
 </section>
-<section id="types-of-learning" class="level1">
-<h1>Types of Learning</h1>
+<section id="expect-lots-of-programming-and-lots-of-math" class="level2">
+<h2 class="anchored" data-anchor-id="expect-lots-of-programming-and-lots-of-math">Expect lots of Programming and lots of Math!</h2>
+<p><img src="https://i.guim.co.uk/img/media/8a840f693b91fe67d42555b24c6334e9298f4680/251_1497_2178_1306/master/2178.jpg?width=1200&amp;height=1200&amp;quality=85&amp;auto=format&amp;fit=crop&amp;s=eeb2238745a593ec04237613a5798b3b" width="35%" align="right" style="border: 1px solid white;"></p>
+<p><em>“But wait, I am not a Math Person!”</em> you say!</p>
+<p>There is no such thing as a “<em>Math Person</em>”. I do recognize, however, that <strong>Math Anxiety</strong> is a real thing and is very common. It is a feeling of fear based on a belief that one is not good at math or that math is inherently difficult.</p>
+<p>Please use this course as an opportunity to overcome your Math anxiety!</p>
+<p>In this course, the code you write will be mostly math. Most modern <em>“AI”</em> is just that: math, in code.</p>
+<p>This presents a unique opportunity for you to overcome your Math anxiety. You will be able to see the math in action, be able to visualize the results and have a conversation with it.</p>
+<p>Trust me, there is a tremendous amount of beauty and joy to be found in mathematics. And if beauty and joy aren’t really your thing, then let me also assure you there is a lot of money to be made these days by being good at coding math. Either way, the rewards are well worth the effort!</p>
+</section>
+<section id="machine-learning-models" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-models">Machine Learning Models</h2>
+<p>A machine-learning model can be represented as a function:</p>
+<p><span class="math display">\[
+\hat{\mathbf{y}}=f_\theta(\mathbf{x})
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(\mathbf{x}\)</span> is the input,</li>
+<li><span class="math inline">\(\hat{\mathbf{y}}\)</span> is the model’s prediction,</li>
+<li><span class="math inline">\(f_\theta\)</span> is the model,</li>
+<li><span class="math inline">\(\theta\)</span> represents the model’s learned parameters.</li>
+</ul>
+<p>Training is the process of finding values of <span class="math inline">\(\theta\)</span> that make the model useful for a particular task.</p>
+<p>Machine learning model. The model represents a family of relationships that relate the input (age of child) to the output (height of child). The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.</p>
+<p><img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);"></p>
+</section>
+<section id="types-of-learning" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-learning">Types of Learning</h2>
 <p>Machine learning is an area of artificial intelligence that fits mathematical models to observed data.</p>
 <p>Machine learning can be broadly categorized into three main types based on the learning signal or feedback available to the learning system.</p>
 <p>These types are:</p>
@@ -589,23 +454,51 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>As of August 2026, the cutting-edge methods in all three areas rely on deep learning.</p>
 <p><img src="assets/Chap01/IntroOverview.svg" style="filter: invert(1);"></p>
+</section>
 <section id="supervised-learning" class="level2">
 <h2 class="anchored" data-anchor-id="supervised-learning">Supervised Learning</h2>
-<p>Regression and classification problems. a) This regression model takes a vector of numbers that characterize a property and predicts its price. b) This multivariate regression model takes the structure of a chemical molecule and predicts its freezing and boiling points. c) This binary classification model takes a restaurant review and classifies it as either positive or negative. d) This multiclass classification problem assigns a snippet of audio to one of N genres. e) A second multiclass classification problem in which the model classifies an image according to which of N possible objects it might contain.</p>
+<p>In supervised learning, the training data contain input-output pairs:</p>
+<p><span class="math display">\[
+\mathcal{D}=\{(\mathbf{x}_i,\mathbf{y}_i)\}_{i=1}^{I}
+\]</span></p>
+<p>The model receives <span class="math inline">\(\mathbf{x}_i\)</span> (an observation or a ‘row’) and produces a prediction <span class="math inline">\(\hat{\mathbf{y}}_i\)</span></p>
+<p><span class="math display">\[
+\hat{\mathbf{y}}_i=f_\theta[\mathbf{x}_i],
+\]</span></p>
+<p>and compares that prediction with the known correct answer <span class="math inline">\(\mathbf{y}_i\)</span>.</p>
+<p>The model is trained by minimizing a loss function:</p>
+<p><span class="math display">\[
+\theta^*
+=
+\arg\min_\theta
+\frac{1}{N}\sum_{i=1}^{N}
+\mathcal{L}\left(\hat{\mathbf{y}_i},\mathbf{y}_i\right)
+\]</span></p>
+<p>For regression, a common loss is mean squared error:</p>
+<p><span class="math display">\[
+\mathcal{L}(\hat{y},y)=(\hat{y}-y)^2
+\]</span></p>
+<p>For classification, a common loss is negative log-likelihood:</p>
+<p><span class="math display">\[
+\mathcal{L}(\hat{p},y)=-\log \hat{p}(y\mid x)
+\]</span></p>
+<p>Examples include:</p>
+<ul>
+<li>Predicting a house price from its characteristics</li>
+<li>Classifying an email as spam or not spam</li>
+<li>Identifying an object in an image</li>
+<li>Predicting whether a student will complete a course</li>
+</ul>
+<p>The defining feature of supervised learning is that the desired output <span class="math inline">\(y\)</span> is provided during training.</p>
+<p>Regression and classification problems. a) b) This multivariate regression model takes the structure of a chemical molecule and predicts its freezing and boiling points. c) This binary classification model takes a restaurant review and classifies it as either positive or negative. d) This multiclass classification problem assigns a snippet of audio to one of N genres. e) A second multiclass classification problem in which the model classifies an image according to which of N possible objects it might contain.</p>
 <p><img src="assets/Chap01/IntroModels.svg" width="100%" style="filter: invert(1);"></p>
 <section id="regression" class="level3">
 <h3 class="anchored" data-anchor-id="regression">Regression</h3>
+<p>Regression models predict a continuous output variable based on one or more input variables. For instance, the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.</p>
+<p>For instance the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.</p>
 </section>
 <section id="classification" class="level3">
 <h3 class="anchored" data-anchor-id="classification">Classification</h3>
-</section>
-<section id="machine-learning-models" class="level3">
-<h3 class="anchored" data-anchor-id="machine-learning-models">Machine Learning Models</h3>
-<p>Machine learning model. The model represents a family of relationships that relate the input (age of child) to the output (height of child). The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.</p>
-<p><img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);"></p>
-</section>
-<section id="deep-neural-networks" class="level3">
-<h3 class="anchored" data-anchor-id="deep-neural-networks">Deep Neural Networks</h3>
 </section>
 <section id="structured-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="structured-outputs">Structured Outputs</h3>
@@ -614,9 +507,49 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="unsupervised-learning" class="level2">
 <h2 class="anchored" data-anchor-id="unsupervised-learning">Unsupervised Learning</h2>
+<p>In unsupervised learning, the training data contain inputs but no supplied target outputs:</p>
+<p><span class="math display">\[
+\mathcal{D}=\{x_i\}_{i=1}^{I}
+\]</span></p>
+<p>Instead of learning a direct mapping from a given <span class="math inline">\(x\)</span> to a given <span class="math inline">\(y\)</span>, the model attempts to discover structure in the data.</p>
+<p>For clustering, the model might assign each input to a cluster:</p>
+<p><span class="math display">\[
+z_i=f_\theta(x_i)
+\]</span></p>
+<p>where <span class="math inline">\(z_i\)</span> is a learned cluster assignment rather than a human-provided label.</p>
+<p>For dimensionality reduction, the model may learn a lower-dimensional representation:</p>
+<p><span class="math display">\[
+z=f_\theta(x)
+\]</span></p>
+<p>An autoencoder first encodes <span class="math inline">\(x\)</span> and then reconstructs it:</p>
+<p><span class="math display">\[
+z=f_\theta(x)
+\]</span></p>
+<p><span class="math display">\[
+\hat{x}=g_\phi(z)
+\]</span></p>
+<p>The parameters are learned by minimizing reconstruction error:</p>
+<p><span class="math display">\[
+(\theta^*,\phi^*)
+=
+\arg\min_{\theta,\phi}
+\frac{1}{N}\sum_{i=1}^{N}
+\left\|
+x_i-g_\phi(f_\theta(x_i))
+\right\|^2
+\]</span></p>
+<p>Examples include:</p>
+<ul>
+<li>Grouping customers with similar behavior</li>
+<li>Discovering topics in documents</li>
+<li>Detecting unusual transactions</li>
+<li>Compressing high-dimensional data</li>
+<li>Learning useful representations of images or text</li>
+</ul>
+<p>The defining feature of unsupervised learning is that no correct target <span class="math inline">\(y\)</span> is supplied. The model must discover patterns or structure from <span class="math inline">\(x\)</span> alone.</p>
 <section id="generative-models" class="level3">
 <h3 class="anchored" data-anchor-id="generative-models">Generative Models</h3>
-<p><img src="assets/Chap01/IntroSynthesis.svg" style="filter: invert(1);"></p>
+<p><img src="assets/Chap01/IntroSynthesis.svg"></p>
 <p><img src="assets/Chap01/IntroCompletion.svg"></p>
 <blockquote class="blockquote">
 <p>I was a little nervous before my first lecture at the University of Bath. It seemed like there were hundreds of students and they looked intimidating. I stepped up to the lectern and was about to speak when something bizarre happened.</p>
@@ -634,16 +567,109 @@ ul.task-list li input[type="checkbox"] {
 <p>Latent variables. Many generative models use a deep learning model to describe the relationship between a low-dimensional “latent” variable and the observed high-dimensional data. The latent variables have a simple probability distribution by design. Hence, new examples can be generated by sampling from the simple distribution over the latent variables and then using the deep learning model to map the sample to the observed data space.</p>
 <p><img src="assets/Chap01/IntroInterpolate.svg" style="filter: invert(0);"></p>
 <p>Image interpolation. In each row the left and right images are real and the three images in between represent a sequence of interpolations created by a generative model. The generative models that underpin these interpolations have learned that all images can be created by a set of underlying latent variables. By finding these variables for the two real images, interpolating their values, and then using these intermediate variables to create new images, we can generate intermediate results that are both visually plausible and mix the characteristics of the two original images. Top row adapted from Sauer et al.&nbsp;(2022). Bottom row adapted from Ramesh et al.&nbsp;(2022).</p>
-<p><img src="assets/Chap01/IntroVariety.svg" style="filter: invert(1);"> Multiple images generated from the caption “A teddy bear on a skateboard in Times Square.” Generated by DALL·E-2 (Ramesh et al., 2022).</p>
+<p><img src="assets/Chap01/IntroVariety.svg"></p>
+<p>Multiple images generated from the caption “A teddy bear on a skateboard in Times Square.” Generated by DALL·E-2 (Ramesh et al., 2022).</p>
 </section>
 </section>
 <section id="reinforcement-learning" class="level2">
 <h2 class="anchored" data-anchor-id="reinforcement-learning">Reinforcement Learning</h2>
+<p>In reinforcement learning, an agent repeatedly interacts with an environment.</p>
+<p>At time <span class="math inline">\(t\)</span>, the agent observes a state <span class="math inline">\(s_t\)</span> and uses a policy to select an action:</p>
+<p><span class="math display">\[
+a_t=f_\theta(s_t)
+\]</span></p>
+<p>The environment then returns a reward <span class="math inline">\(r_t\)</span> and a new state <span class="math inline">\(s_{t+1}\)</span>:</p>
+<p><span class="math display">\[
+(s_t,a_t)\longrightarrow (r_t,s_{t+1})
+\]</span></p>
+<p>The objective is not simply to predict a known <span class="math inline">\(y\)</span>. Instead, the agent learns a policy that maximizes its expected cumulative reward:</p>
+<p><span class="math display">\[
+\theta^*
+=
+\arg\max_\theta
+\mathbb{E}\left[
+\sum_{t=0}^{T}\gamma^t r_t
+\right]
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(r_t\)</span> is the reward received at time <span class="math inline">\(t\)</span>,</li>
+<li><span class="math inline">\(\gamma\in[0,1]\)</span> is a discount factor,</li>
+<li><span class="math inline">\(T\)</span> is the length of the interaction.</li>
+</ul>
+<p>The discount factor determines how much the agent values future rewards:</p>
+<p><span class="math display">\[
+R_t=r_t+\gamma r_{t+1}+\gamma^2r_{t+2}+\cdots
+\]</span></p>
+<p>Examples include:</p>
+<ul>
+<li>Teaching a computer to play a game</li>
+<li>Controlling a robot</li>
+<li>Selecting recommendations over time</li>
+<li>Managing traffic signals</li>
+<li>Learning a strategy for sequential decision-making</li>
+</ul>
+<p>The defining feature of reinforcement learning is that the model learns through actions and rewards rather than from a collection of correct input-output pairs.</p>
 <p><img src="assets/Chap01/IntroReinforce.svg" style="filter: invert(1);"></p>
 <p>Policy networks for reinforcement learning. One way to incorporate deep neural networks into reinforcement learning is to use them to define a mapping from the state (here position on chessboard) to the actions (possible moves). This mapping is known as a policy.</p>
-
-
 </section>
+<section id="comparison" class="level2">
+<h2 class="anchored" data-anchor-id="comparison">Comparison</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Learning type</th>
+<th>Available information</th>
+<th>Model interpretation</th>
+<th>Objective</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Supervised</td>
+<td>Inputs <span class="math inline">\(x\)</span> and targets <span class="math inline">\(y\)</span></td>
+<td><span class="math inline">\(\hat{y}=f_\theta[x]\)</span></td>
+<td>Minimize prediction error</td>
+</tr>
+<tr class="even">
+<td>Unsupervised</td>
+<td>Inputs <span class="math inline">\(x\)</span> only</td>
+<td><span class="math inline">\(z=f_\theta[x]\)</span></td>
+<td>Discover structure or representations</td>
+</tr>
+<tr class="odd">
+<td>Reinforcement</td>
+<td>States, actions and rewards</td>
+<td><span class="math inline">\(a=f_\theta[s]\)</span></td>
+<td>Maximize cumulative reward</td>
+</tr>
+</tbody>
+</table>
+<p>In summary:</p>
+<p><span class="math display">\[
+\text{Supervised:}\qquad
+x\longrightarrow f_\theta\longrightarrow\hat{y},
+\quad \text{compare with }y
+\]</span></p>
+<p><span class="math display">\[
+\text{Unsupervised:}\qquad
+x\longrightarrow f_\theta\longrightarrow
+\text{patterns or representations}
+\]</span></p>
+<p><span class="math display">\[
+\text{Reinforcement:}\qquad
+s_t\longrightarrow f_\theta\longrightarrow a_t
+\longrightarrow r_t
+\]</span></p>
+<p>All three approaches learn a function <span class="math inline">\(f_\theta\)</span>, but they differ in the information available during training and in the objective used to learn the parameters.</p>
+
+
 </section>
 
 </main> <!-- /main -->

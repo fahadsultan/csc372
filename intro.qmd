@@ -3,6 +3,19 @@ title: Introduction
 toc: true
 ---
 
+<span style="font-size: 1.5em; font-weight: bold;">
+Syed Fahad Sultan سید فہد سلطان </span> 
+
+**Pronunciation**:  <a href="https://en.wikipedia.org/wiki/Sayyid">Saiyyudh</a> <a href="https://en.wikipedia.org/wiki/Fahd">Fahad</a> <a href="https://en.wikipedia.org/wiki/Sultan">Sool-tahn</a>
+
+_Just call me **“Dr. Sultan”**_ (click on the speaker for a short audio clip: [🔈](https://upload.wikimedia.org/wikipedia/commons/c/cd/LL-Q9292_%28aze%29-Azerbaijani_audiorecordings-sultan.wav))
+
+<br/>
+<center><img style="filter:invert(1)" width="80%" src="assets/name.png"></center>
+<br/>
+
+
+
 ### How to Reach Me
 
 **Office**: Riley Hall 200-H
@@ -28,40 +41,141 @@ I don’t hold fixed office hours, but I’m available for on-demand meetings in
  
 Course website: **[https://fahadsultan.com/csc372](https://fahadsultan.com/csc372)**
 
-The **[Syllabus]()** is available on the course website. In particular, please make sure to read the **[Grading]()**, **[Academic Integrity]()** and **[Textbook and other Resources]()** sections carefully.
+The **[Syllabus](syllabus/index.html)** is available on the course website. In particular, please make sure to read the **[Grading](syllabus/grading.html)**, **[Academic Integrity](syllabus/integrity.html)** and **[Textbook and other Resources](syllabus/textbook.html)** sections carefully.
 
 All of the course content will be posted on this website.
 
 Important announcements will be made on both the course website homepage and in class. 
 
-You are to submit assignments and exams on **[the course Moodle page](https://courses.furman.edu/course/view.php?id=20763)**. I will also upload all of your grades there.
+You are to submit assignments and exams on **[the course Moodle page](https://courses.furman.edu/course/view.php?id=23022)**. I will also upload all of your grades there.
 
-### Class Participation
+### Mandatory: Asking Questions in Class
 
-Given the glut of information accessible online and otherwise in this day and age, **meaningful interactions with your peers and teachers is essentially why you are paying your college tuition**. 
+Answering questions during class is strictly optional but asking questions is mandatory. You will not be penalized for asking questions, but you will be penalized for not asking questions.
 
-To encourage this, I have allocated **5% of your course grade to class participation**. Ways to earn class participation points include:
+Everything we are going to cover in this class is available online and in textbooks. You can read about it, watch videos about it, and even ask AI to explain it to you. <u><i>The only reason you're mortgaging your future to a lender for the next twenty years is to ask questions and interact with your fellow debtors and the supposed experts paid to pretend they have the answers.</u></i>
+
+To encourage this, I have allocated **5% of your course grade to asking questions in class**. Ways to earn class participation points include:
 
 1. Coming to class and labs regularly
 2. Asking questions during class
 3. Sharing your thoughts and comments during class discussions
-4. (Optional) Answering questions during class
+
+
 
 Class participation is somewhat subjective, but I will do my best to be as fair as possible. I will share your overall class participation points with you with each graded exam. 
 
+### Purposeful Pathways 
+
+During the semester, you must attend two events that are designated as Purposeful Pathways events for Computer Science. 
+
+A list of such events will be provided to you, and you may ask for approval of additional events not on the list. You are then required to write a reflection on each event. 
+
+Each reflection must:
+
+* List at the top of document:
+    * The name of the event.
+    * The date of the event.
+    * The date of submission of your reflection.
+    * The category of the event (Career Exploration, Professional Preparation, or Networking). When seeking approval of an event not on the pre-approved list, make sure to inquire about the category.
+    * State your question or prompt you are answering. (See below for more details.)
+* Be 400-500 words in length.
+* Be submitted within 7 days of an event on Moodle. No reflections will be accepted after the last day of classes for the semester.
+* Follow the guidelines described below.
+
+Successful completion of the Purposeful Pathways requirement includes developing a specific prompt (or question) prior to the event that is clearly stated in the reflection document. An example of a satisfactory prompt geared toward an Employer Engagement event may be “What are common expectations in the positions that are being described and how does my Furman education prepare for that role?” Your reflection should then attempt to address your prompt. 
+
+It is reasonable for a reflection to ask and answer two questions that you define before the talk, but no more than two are allowed. (If you feel like the question(s) you are asking were not answered, ask the speaker: engage!) 
+
+**A reflection is not a retelling of the events that occurred**. Any such ‘retelling’ will receive credit for completing the task towards the graduation requirement (if applicable; see below), but a 0 for the assignment as a course grade.
+
+
+#### Requirements for Majors 
+
+All Computer Science and Information Technology majors are required to attend and reflect upon a minimum of six Purposeful Pathways activities during their careers.
+
+These activities will be categorized as follows, with a minimum of one attendance required for each category:
+
+* Career Exploration (alumni career panel, guest speaker, connection with alumni mentor, informational interview, taking a career assessment)
+* Professional Preparation (senior etiquette seminar, CS/Math career skills workshop, CS Powerpoint night, appointment with a career advisor, resume writing workshop, interview preparation workshop, Career Fair prep workshop, LinkedIn profile development)
+* Networking & Employer Engagement (CS summer research and internship showcase, Career Fair, Career Trek, conference attendance, employer or grad school information sessions, company site visits, grad school site visits) 
+ Implementation of this requirement will be through standardized, graded requirements in individual courses.  Each student in the following courses will be required to attend and reflect upon two activities:
+
+* All 300-level electives (CSC-372 this semester)
+* CSC-475 or CSC-502
+* CSC-122
+
+This will prompt IT majors to reach the minimum of six activities, while CS majors will ultimately participate in 10.
+
 ### Exams 
 
-There will be **three** exams in the course, including the final. The final exam will be cumulative. Exams constitute **60%** of your course grade.
+There will be **three** exams in the course, including the final. The final exam will be cumulative. Exams constitute **45%** of your course grade.
 
-All exams will be on paper and closed-book. Exam 3 will be on the last day of class. 
+All exams will be on paper and closed-book. 
 
-The finals week will be used for project presentations.
+### Assignments 
+
+### Project 
+
+In this course we will use weekly lab sessions to work towards a large language model project. The project is to be completed in teams of 2-3 students. The project will constitute **30%** of your course grade. 
+
+The project will be broken down into several milestones, each of which will be graded. 
+
+The project will be loosely aligned with lecture topics, but might require you to learn new concepts and techniques on your own.
+
+All programming in this course will be done in Python and PyTorch. You are expected to have a working knowledge of Python before the course begins.
+
 
 ### Giant Asterisk * 
 
+<img src="https://i.pinimg.com/originals/21/48/fd/2148fd1767e18ce65e7366951b75ace6.gif" width="50%" align="right">
+
 <i><u>**Everything is tentative and subject to change**</u></i>
 
-# Types of Learning 
+I am a firm believer in flexibility, adaptability and experimentation in teaching. I will do my best to keep the course schedule, grading, and content as consistent as possible, but I reserve the right to make changes if I feel it is in the best interest of the learning experience of the class.
+
+I will keep you informed of any changes to the course schedule, grading, or content.
+
+## Expect lots of Programming and lots of Math! 
+
+<img src="https://i.guim.co.uk/img/media/8a840f693b91fe67d42555b24c6334e9298f4680/251_1497_2178_1306/master/2178.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=eeb2238745a593ec04237613a5798b3b" width="35%" align="right" style="border: 1px solid white;">
+
+_"But wait, I am not a Math Person!"_ you say!  
+
+There is no such thing as a "_Math Person_". I do recognize, however, that **Math Anxiety** is a real thing and is very common. It is a feeling of fear based on a belief that one is not good at math or that math is inherently difficult. 
+
+Please use this course as an opportunity to overcome your Math anxiety!
+
+In this course, the code you write will be mostly math. Most modern _"AI"_ is just that: math, in code.
+
+This presents a unique opportunity for you to overcome your Math anxiety. You will be able to see the math in action, be able to visualize the results and have a conversation with it. 
+
+Trust me, there is a tremendous amount of beauty and joy to be found in mathematics. And if beauty and joy aren't really your thing, then let me also assure you there is a lot of money to be made these days by being good at coding math. Either way, the rewards are well worth the effort! 
+
+
+## Machine Learning Models 
+
+A machine-learning model can be represented as a function:
+
+$$
+\hat{\mathbf{y}}=f_\theta(\mathbf{x})
+$$
+
+where:
+
+- $\mathbf{x}$ is the input,
+- $\hat{\mathbf{y}}$ is the model’s prediction,
+- $f_\theta$ is the model,
+- $\theta$ represents the model’s learned parameters.
+
+Training is the process of finding values of $\theta$ that make the model useful for a particular task.
+
+
+Machine learning model. The model represents a family of relationships that relate the input (age of child) to the output (height of child). The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.
+
+<img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);">
+
+## Types of Learning 
 
 Machine learning is an area
 of artificial intelligence that fits mathematical models to observed data.
@@ -78,24 +192,67 @@ As of August 2026, the cutting-edge methods in all three areas rely on deep lear
 
 <img src="assets/Chap01/IntroOverview.svg" style="filter: invert(1);">
 
-
 ## Supervised Learning
 
-Regression and classification problems. a) This regression model takes a vector of numbers that characterize a property and predicts its price. b) This multivariate regression model takes the structure of a chemical molecule and predicts its freezing and boiling points. c) This binary classification model takes a restaurant review and classifies it as either positive or negative. d) This multiclass classification problem assigns a snippet of audio to one of N genres. e) A second multiclass classification problem in which the model classifies an image according to which of N possible objects it might contain.
+
+In supervised learning, the training data contain input-output pairs:
+
+$$
+\mathcal{D}=\{(\mathbf{x}_i,\mathbf{y}_i)\}_{i=1}^{I}
+$$
+
+The model receives $\mathbf{x}_i$ (an observation or a 'row') and produces a prediction $\hat{\mathbf{y}}_i$
+
+$$
+\hat{\mathbf{y}}_i=f_\theta[\mathbf{x}_i],
+$$
+
+and compares that prediction with the known correct answer $\mathbf{y}_i$.
+
+The model is trained by minimizing a loss function:
+
+$$
+\theta^*
+=
+\arg\min_\theta
+\frac{1}{N}\sum_{i=1}^{N}
+\mathcal{L}\left(\hat{\mathbf{y}_i},\mathbf{y}_i\right)
+$$
+
+For regression, a common loss is mean squared error:
+
+$$
+\mathcal{L}(\hat{y},y)=(\hat{y}-y)^2
+$$
+
+For classification, a common loss is negative log-likelihood:
+
+$$
+\mathcal{L}(\hat{p},y)=-\log \hat{p}(y\mid x)
+$$
+
+Examples include:
+
+- Predicting a house price from its characteristics
+- Classifying an email as spam or not spam
+- Identifying an object in an image
+- Predicting whether a student will complete a course
+
+The defining feature of supervised learning is that the desired output $y$ is provided during training.
+
+
+Regression and classification problems. a)  b) This multivariate regression model takes the structure of a chemical molecule and predicts its freezing and boiling points. c) This binary classification model takes a restaurant review and classifies it as either positive or negative. d) This multiclass classification problem assigns a snippet of audio to one of N genres. e) A second multiclass classification problem in which the model classifies an image according to which of N possible objects it might contain.
 
 <img src="assets/Chap01/IntroModels.svg" width="100%" style="filter: invert(1);">
 
 ### Regression 
 
+Regression models predict a continuous output variable based on one or more input variables. For instance, the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.
+
+For instance the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.
+
 ### Classification
 
-### Machine Learning Models 
-
-Machine learning model. The model represents a family of relationships that relate the input (age of child) to the output (height of child). The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.
-
-<img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);">
-
-### Deep Neural Networks
 
 
 ### Structured Outputs
@@ -105,9 +262,63 @@ Machine learning model. The model represents a family of relationships that rela
 
 ## Unsupervised Learning
 
+In unsupervised learning, the training data contain inputs but no supplied target outputs:
+
+$$
+\mathcal{D}=\{x_i\}_{i=1}^{I}
+$$
+
+Instead of learning a direct mapping from a given $x$ to a given $y$, the model attempts to discover structure in the data.
+
+For clustering, the model might assign each input to a cluster:
+
+$$
+z_i=f_\theta(x_i)
+$$
+
+where $z_i$ is a learned cluster assignment rather than a human-provided label.
+
+For dimensionality reduction, the model may learn a lower-dimensional representation:
+
+$$
+z=f_\theta(x)
+$$
+
+An autoencoder first encodes $x$ and then reconstructs it:
+
+$$
+z=f_\theta(x)
+$$
+
+$$
+\hat{x}=g_\phi(z)
+$$
+
+The parameters are learned by minimizing reconstruction error:
+
+$$
+(\theta^*,\phi^*)
+=
+\arg\min_{\theta,\phi}
+\frac{1}{N}\sum_{i=1}^{N}
+\left\|
+x_i-g_\phi(f_\theta(x_i))
+\right\|^2
+$$
+
+Examples include:
+
+- Grouping customers with similar behavior
+- Discovering topics in documents
+- Detecting unusual transactions
+- Compressing high-dimensional data
+- Learning useful representations of images or text
+
+The defining feature of unsupervised learning is that no correct target $y$ is supplied. The model must discover patterns or structure from $x$ alone.
+
 ### Generative Models
 
-<img src="assets/Chap01/IntroSynthesis.svg" style="filter: invert(1);">
+<img src="assets/Chap01/IntroSynthesis.svg">
 
 <img src="assets/Chap01/IntroCompletion.svg">
 
@@ -143,14 +354,90 @@ model to map the sample to the observed data space.
 Image interpolation. In each row the left and right images are real and the three images in between represent a sequence of interpolations created by a generative model. The generative models that underpin these interpolations
 have learned that all images can be created by a set of underlying latent variables. By finding these variables for the two real images, interpolating their values, and then using these intermediate variables to create new images, we can generate intermediate results that are both visually plausible and mix the characteristics of the two original images. Top row adapted from Sauer et al. (2022). Bottom row adapted from Ramesh et al. (2022).
 
-<img src="assets/Chap01/IntroVariety.svg" style="filter: invert(1);">
+<img src="assets/Chap01/IntroVariety.svg">
+
 Multiple images generated from the caption “A teddy bear on a skateboard in Times Square.” Generated by DALL·E-2 (Ramesh et al., 2022).
 
 ## Reinforcement Learning
+
+In reinforcement learning, an agent repeatedly interacts with an environment.
+
+At time $t$, the agent observes a state $s_t$ and uses a policy to select an action:
+
+$$
+a_t=f_\theta(s_t)
+$$
+
+The environment then returns a reward $r_t$ and a new state $s_{t+1}$:
+
+$$
+(s_t,a_t)\longrightarrow (r_t,s_{t+1})
+$$
+
+The objective is not simply to predict a known $y$. Instead, the agent learns a policy that maximizes its expected cumulative reward:
+
+$$
+\theta^*
+=
+\arg\max_\theta
+\mathbb{E}\left[
+\sum_{t=0}^{T}\gamma^t r_t
+\right]
+$$
+
+where:
+
+- $r_t$ is the reward received at time $t$,
+- $\gamma\in[0,1]$ is a discount factor,
+- $T$ is the length of the interaction.
+
+The discount factor determines how much the agent values future rewards:
+
+$$
+R_t=r_t+\gamma r_{t+1}+\gamma^2r_{t+2}+\cdots
+$$
+
+Examples include:
+
+- Teaching a computer to play a game
+- Controlling a robot
+- Selecting recommendations over time
+- Managing traffic signals
+- Learning a strategy for sequential decision-making
+
+The defining feature of reinforcement learning is that the model learns through actions and rewards rather than from a collection of correct input-output pairs.
 
 <img src="assets/Chap01/IntroReinforce.svg" style="filter: invert(1);">
 
 Policy networks for reinforcement learning. One way to incorporate deep neural networks into reinforcement learning is to use them to define a mapping from the state (here position on chessboard) to the actions (possible moves). This mapping is known as a policy.
 
+## Comparison
 
+| Learning type | Available information | Model interpretation | Objective |
+|---|---|---|---|
+| Supervised | Inputs $x$ and targets $y$ | $\hat{y}=f_\theta[x]$ | Minimize prediction error |
+| Unsupervised | Inputs $x$ only | $z=f_\theta[x]$ | Discover structure or representations |
+| Reinforcement | States, actions and rewards | $a=f_\theta[s]$ | Maximize cumulative reward |
+
+In summary:
+
+$$
+\text{Supervised:}\qquad
+x\longrightarrow f_\theta\longrightarrow\hat{y},
+\quad \text{compare with }y
+$$
+
+$$
+\text{Unsupervised:}\qquad
+x\longrightarrow f_\theta\longrightarrow
+\text{patterns or representations}
+$$
+
+$$
+\text{Reinforcement:}\qquad
+s_t\longrightarrow f_\theta\longrightarrow a_t
+\longrightarrow r_t
+$$
+
+All three approaches learn a function $f_\theta$, but they differ in the information available during training and in the objective used to learn the parameters.
 
