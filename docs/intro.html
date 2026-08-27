@@ -288,6 +288,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning">Unsupervised Learning</a>
   <ul class="collapse">
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a></li>
+  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction" class="nav-link" data-scroll-target="#dimensionality-reduction">Dimensionality Reduction</a></li>
   <li><a href="#generative-models" id="toc-generative-models" class="nav-link" data-scroll-target="#generative-models">Generative Models</a></li>
   <li><a href="#latent-variables" id="toc-latent-variables" class="nav-link" data-scroll-target="#latent-variables">Latent Variables</a></li>
   </ul></li>
@@ -441,8 +443,9 @@ window.Quarto = {
 <li><span class="math inline">\(\phi\)</span> represents the model’s learned parameters.</li>
 </ul>
 <p>Training is the process of finding values of <span class="math inline">\(\phi\)</span> that make the model useful for a particular task.</p>
-<p>Machine learning model. The model represents a family of relationships that relate the input (age of child) to the output (height of child). The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.</p>
-<p><img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);"></p>
+<p>A machine learning model represents a family of relationships that relate one or more inputs (e.g.&nbsp;age of a child) to one or more outputs (e.g.&nbsp;height of child).</p>
+<p>The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.</p>
+<p><img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);" width="100%"></p>
 </section>
 <section id="types-of-learning" class="level2">
 <h2 class="anchored" data-anchor-id="types-of-learning">Types of Learning</h2>
@@ -455,7 +458,7 @@ window.Quarto = {
 <li>Reinforcement learning</li>
 </ol>
 <p>As of August 2026, the cutting-edge methods in all three areas rely on deep learning.</p>
-<p><img src="assets/Chap01/IntroOverview.svg" style="filter: invert(1);"></p>
+<p><img src="assets/Chap01/IntroOverview.svg" style="filter: invert(1);" width="100%"></p>
 </section>
 <section id="supervised-learning" class="level2">
 <h2 class="anchored" data-anchor-id="supervised-learning">Supervised Learning</h2>
@@ -499,7 +502,8 @@ $$ -->
 <p><span class="math display">\[
 \mathcal{D}=\left\{(\mathbf{x}_i,\mathbf{y}_i)\right\}_{i=1}^{I},
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{x}_i\)</span> is the input for observation <span class="math inline">\(i\)</span>, and <span class="math inline">\(\mathbf{y}_i\)</span> is its known target or label. A model with parameters <span class="math inline">\(\boldsymbol{\phi}\)</span> maps each input to a prediction:</p>
+<p>where <span class="math inline">\(\mathbf{x}_i\)</span> is the input for observation <span class="math inline">\(i\)</span>, and <span class="math inline">\(\mathbf{y}_i\)</span> is its known target or label. The total number of observations is <span class="math inline">\(I\)</span>. The goal of supervised learning is to learn a function that maps inputs to outputs.</p>
+<p>A model with parameters <span class="math inline">\(\boldsymbol{\phi}\)</span> maps each input to a prediction:</p>
 <p><span class="math display">\[
 \hat{\mathbf{y}}_i=f_{\boldsymbol{\phi}}[\mathbf{x}_i].
 \]</span></p>
@@ -613,21 +617,68 @@ y_i\log\hat{p}_i
 </section>
 <section id="structured-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="structured-outputs">Structured Outputs</h3>
-<p><img src="assets/Chap01/IntroModels2a.svg" style="filter: invert(1);"></p>
+<p>Deep Neural networks, a subset of machine learning models, can also be used to predict structured outputs such as sequences, trees, or graphs. For example, a model might take a sentence as input and produce a parse tree as output, or take an image and produce a segmentation map.</p>
+<p>Essentially, structured outputs are multipart outputs that have internal structure and relationships between their parts. In other words, these models predict multiple outputs where each output is not independent of the others.</p>
+<p><img src="assets/Chap01/IntroModels2a.svg" style="filter: invert(1);" width="100%"></p>
 </section>
 </section>
 <section id="unsupervised-learning" class="level2">
 <h2 class="anchored" data-anchor-id="unsupervised-learning">Unsupervised Learning</h2>
-<p>In unsupervised learning, the training data contain inputs but no supplied target outputs:</p>
+<p>In unsupervised learning, the training data contain inputs <span class="math inline">\(\mathbf{x}_i\)</span> but no supplied target outputs $$:</p>
 <p><span class="math display">\[
 \mathcal{D}=\{x_i\}_{i=1}^{I}
 \]</span></p>
 <p>Instead of learning a direct mapping from a given <span class="math inline">\(x\)</span> to a given <span class="math inline">\(y\)</span>, the model attempts to discover structure in the data.</p>
+<section id="clustering" class="level3">
+<h3 class="anchored" data-anchor-id="clustering">Clustering</h3>
 <p>For clustering, the model might assign each input to a cluster:</p>
 <p><span class="math display">\[
 z_i=f_\phi[\mathbf{x}_i]
 \]</span></p>
 <p>where <span class="math inline">\(z_i\)</span> is a learned cluster assignment rather than a human-provided label.</p>
+<p>A clustering algorithm like k-means uses the within-cluster variance as a loss function to learn the cluster assignments:</p>
+<p><span class="math display">\[
+\mathcal{L}({\mu_k}, {z_i}) = \sum_{i=1}^{I} \left\| \mathbf{x}_i - \mu_{z_i} \right\|^2
+\]</span></p>
+<p>where <span class="math inline">\(\mu_{z_i}\)</span> is the mean of the cluster to which <span class="math inline">\(\mathbf{x}_i\)</span> is assigned. The model learns to group similar inputs together without any explicit labels.</p>
+<p>There the optimal parameters are found by minimizing the loss function:</p>
+<p><span class="math display">\[
+\phi^*
+=
+\arg\min_\phi
+\sum_{i=1}^{I}
+\left\|
+\mathbf{x}_i-\mu_{z_i}
+\right\|^2
+\]</span></p>
+<p><span class="math display">\[
+(\boldsymbol{\mu}^*, \mathbf{z}^*)
+=
+\arg\min_{\boldsymbol{\mu},\mathbf{z}}
+\sum_{i=1}^{I}
+\left\|
+\mathbf{x}_i-\boldsymbol{\mu}_{z_i}
+\right\|^2
+\]</span></p>
+<p>If <span class="math inline">\(\boldsymbol{\phi} = (\boldsymbol{\mu}_1,\ldots,\boldsymbol{\mu}_K)\)</span> then we can write the optimization problem as:</p>
+<p><span class="math display">\[
+\boldsymbol{\phi}^*
+=
+\arg\min_{\boldsymbol{\phi}}
+\sum_{i=1}^{I}
+\left\|
+\mathbf{x}_i-\boldsymbol{\mu}_{z_i(\boldsymbol{\phi})}
+\right\|^2
+\]</span></p>
+</section>
+<section id="dimensionality-reduction" class="level3">
+<h3 class="anchored" data-anchor-id="dimensionality-reduction">Dimensionality Reduction</h3>
+<p>Given data <span class="math inline">\(X \in \mathbb{R}^{n \times D}\)</span>, find a low-dimensional representation <span class="math inline">\(Z \in \mathbb{R}^{n \times d}\)</span> (with <span class="math inline">\(d \ll D\)</span>) that minimizes some notion of information loss:</p>
+<p><span class="math display">\[\min_{Z, \theta} ; \mathcal{L}(X, Z, \theta)\]</span></p>
+<p>where <span class="math inline">\(\theta\)</span> parameterizes the mapping. The key differences across methods are (1) what <span class="math inline">\(\mathcal{L}\)</span> measures and (2) whether it’s solved in closed form or iteratively.</p>
+<p>In case of PCA, we minimize squared reconstruction error under a linear projection <span class="math inline">\(W \in \mathbb{R}^{D \times d}\)</span> (orthonormal columns):</p>
+<p><span class="math display">\[\mathcal{L}(W) = |X - XWW^T|_F^2\]</span></p>
+<p>Optimization: no gradient descent needed — the solution is the top-<span class="math inline">\(d\)</span> eigenvectors of the covariance matrix <span class="math inline">\(X^TX\)</span>, equivalently the top-<span class="math inline">\(d\)</span> singular vectors from SVD. It’s a closed-form eigenvalue problem, so the “optimizer” is linear algebra, not iteration.</p>
 <p>For dimensionality reduction, the model may learn a lower-dimensional representation:</p>
 <p><span class="math display">\[
 z=f_\phi[\mathbf{x}]
@@ -658,10 +709,15 @@ x_i-g_\phi(f_\phi(x_i))
 <li>Learning useful representations of images or text</li>
 </ul>
 <p>The defining feature of unsupervised learning is that no correct target <span class="math inline">\(y\)</span> is supplied. The model must discover patterns or structure from <span class="math inline">\(x\)</span> alone.</p>
+</section>
 <section id="generative-models" class="level3">
 <h3 class="anchored" data-anchor-id="generative-models">Generative Models</h3>
-<p><img src="assets/Chap01/IntroSynthesis.svg"></p>
-<p><img src="assets/Chap01/IntroCompletion.svg"></p>
+<p>Generative unsupervised models learn to synthesize new data examples that are statistically indistinguishable from the training data.</p>
+<p>Some generative models explicitly describe the probability distribution over the input data and here new examples are generated by sampling from this distribution.</p>
+<p>Others merely learn a mechanism to generate new examples without explicitly describing their distribution.</p>
+<p>They have been particularly successful at generating images (think DALL·E, Midjourney, Stable Diffusion), audio (think Jukebox, AudioLM), and text (think ChatGPT, Claude and Gemini).</p>
+<p><img src="assets/Chap01/IntroSynthesis.svg" width="100%"></p>
+<p><img src="assets/Chap01/IntroCompletion.svg" width="100%"></p>
 <blockquote class="blockquote">
 <p>I was a little nervous before my first lecture at the University of Bath. It seemed like there were hundreds of students and they looked intimidating. I stepped up to the lectern and was about to speak when something bizarre happened.</p>
 </blockquote>
@@ -669,16 +725,24 @@ x_i-g_\phi(f_\phi(x_i))
 <p><em>Suddenly, the room was filled with a deafening noise, like a giant roar. It was so loud that I couldn’t hear anything else and I had to cover my ears. I could see the students looking around, con- fused and frightened. Then, as quickly as it had started, the noise stopped and the room was silent again. I stood there for a few moments, trying to make sense of what had just happened. Then I realized that the students were all staring at me, waiting for me to say something. I tried to think of something witty or clever to say, but my mind was blank. So I just said, “Well, that was strange,’ and then I started my lecture.</em></p>
 </blockquote>
 <p>Conditional text synthesis. Given an initial body of text (in black), generative models of text can continue the string plausibly by synthesizing the “missing” remaining part of the string. Generated by GPT3 (Brown et al., 2020).</p>
-<p><img src="assets/Chap01/IntroFaceSpace.svg"></p>
+<p><img src="assets/Chap01/IntroFaceSpace.svg" width="100%"></p>
 <p>Variation of the human face. The human face contains roughly 42 muscles, so it’s possible to describe most of the variation in images of the same person in the same lighting with just 42 numbers. In general, datasets of images, music, and text can be described by a relatively small number of underlying variables although it is typically more diﬀicult to tie these to particular physical mechanisms. Images from Dynamic FACES database (Holland et al., 2019).</p>
 </section>
 <section id="latent-variables" class="level3">
 <h3 class="anchored" data-anchor-id="latent-variables">Latent Variables</h3>
-<p><img src="assets/Chap01/IntroLatent.svg" style="filter: invert(1);"></p>
-<p>Latent variables. Many generative models use a deep learning model to describe the relationship between a low-dimensional “latent” variable and the observed high-dimensional data. The latent variables have a simple probability distribution by design. Hence, new examples can be generated by sampling from the simple distribution over the latent variables and then using the deep learning model to map the sample to the observed data space.</p>
-<p><img src="assets/Chap01/IntroInterpolate.svg" style="filter: invert(0);"></p>
+<p>Some (but not all) generative models exploit the fact that data can be lower dimensional than the raw number of observed variables suggests.</p>
+<p>For example, the number of valid and meaningful English sentences is much smaller than the number of strings created by drawing words at random.</p>
+<p>Similarly, real-world images are a tiny subset of the images that can be created by drawing random red, green, and blue (RGB) values for every pixel.</p>
+<p>This is because images are generated by physical processes. This leads to the idea that we can describe each data example using a smaller number of underlying latent variables.</p>
+<p><br></p>
+<p><img src="assets/Chap01/IntroLatent.svg" style="filter: invert(1);" width="100%"></p>
+<p><br></p>
+<p>Here, the role of deep learning is to describe the mapping between these latent variables and the data.</p>
+<p>The latent variables typically have a simple probability distribution by design. By sampling from this distribution and passing the result through the deep learning model, we can create new samples.</p>
+<p>These models lead to new methods for manipulating real data. For example, consider finding the latent variables that underpin two real examples. We can interpolate between these examples by interpolating between their latent representations and mapping the intermediate positions back into the data space.</p>
+<p><img src="assets/Chap01/IntroInterpolate.svg" style="filter: invert(0);" width="100%"></p>
 <p>Image interpolation. In each row the left and right images are real and the three images in between represent a sequence of interpolations created by a generative model. The generative models that underpin these interpolations have learned that all images can be created by a set of underlying latent variables. By finding these variables for the two real images, interpolating their values, and then using these intermediate variables to create new images, we can generate intermediate results that are both visually plausible and mix the characteristics of the two original images. Top row adapted from Sauer et al.&nbsp;(2022). Bottom row adapted from Ramesh et al.&nbsp;(2022).</p>
-<p><img src="assets/Chap01/IntroVariety.svg"></p>
+<p><img src="assets/Chap01/IntroVariety.svg" width="100%"></p>
 <p>Multiple images generated from the caption “A teddy bear on a skateboard in Times Square.” Generated by DALL·E-2 (Ramesh et al., 2022).</p>
 </section>
 </section>
@@ -721,7 +785,7 @@ R_t=r_t+\gamma r_{t+1}+\gamma^2r_{t+2}+\cdots
 <li>Learning a strategy for sequential decision-making</li>
 </ul>
 <p>The defining feature of reinforcement learning is that the model learns through actions and rewards rather than from a collection of correct input-output pairs.</p>
-<p><img src="assets/Chap01/IntroReinforce.svg" style="filter: invert(1);"></p>
+<p><img src="assets/Chap01/IntroReinforce.svg" style="filter: invert(1);" width="100%"></p>
 <p>Policy networks for reinforcement learning. One way to incorporate deep neural networks into reinforcement learning is to use them to define a mapping from the state (here position on chessboard) to the actions (possible moves). This mapping is known as a policy.</p>
 </section>
 <section id="comparison" class="level2">

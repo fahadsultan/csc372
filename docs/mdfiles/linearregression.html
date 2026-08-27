@@ -228,14 +228,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#supervised-learning-overview" id="toc-supervised-learning-overview" class="nav-link active" data-scroll-target="#supervised-learning-overview">Supervised Learning overview</a></li>
-  <li><a href="#linear-regression-example" id="toc-linear-regression-example" class="nav-link" data-scroll-target="#linear-regression-example">Linear regression example</a>
-  <ul class="collapse">
-  <li><a href="#d-linear-regression-model" id="toc-d-linear-regression-model" class="nav-link" data-scroll-target="#d-linear-regression-model">1D linear regression model</a></li>
+  <li><a href="#d-linear-regression-model" id="toc-d-linear-regression-model" class="nav-link active" data-scroll-target="#d-linear-regression-model">1D linear regression model</a></li>
   <li><a href="#loss" id="toc-loss" class="nav-link" data-scroll-target="#loss">Loss</a></li>
   <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a></li>
   <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing">Testing</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -274,21 +270,10 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/19xKdVzZoa0kbkkm8uI9Hp_NWHs4Nfw8Pg-5ONJf0c0Y/edit?slide=id.p#slide=id.p">Slides</a></p>
 </div>
 </div>
-<section id="supervised-learning-overview" class="level2">
-<h2 class="anchored" data-anchor-id="supervised-learning-overview">Supervised Learning overview</h2>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{y} = \mbox{\bf f}[\mathbf{x}]. \tag{1}
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{y} = \mbox{\bf f}[\mathbf{x}, \boldsymbol\phi].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L\left[\boldsymbol\phi\right] \Bigr].
-\end{eqnarray}\]</span></p>
+<p>Linear regression model. For a given choice of parameters <span class="math inline">\(\mathbf{\phi}= [\phi_0,\phi_1]\)</span>, the model makes a prediction for the out- put (y-axis) based on the input (x-axis).</p>
 <p><img src="assets/Chap02/SupervisedLinear.svg" style="filter: invert(1);" align="right" width="50%" border="0px"></p>
-<p>Linear regression model. For a given choice of parameters ϕ= [ϕ0,ϕ1], the model makes a prediction for the out- put (y-axis) based on the input (x-axis).</p>
 <p>Different choices for the y-intercept ϕ0 and the slope ϕ1 change these predictions (cyan, orange, and gray lines). The linear regression model (equation 2.4) defines a family of input/output relations (lines) and the parameters determine the member of the family (the particular line). (Interactive figure)</p>
-<p><br><br></p>
+<p><br></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Math library</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting library</span></span>
@@ -297,9 +282,6 @@ Slides
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create some input / output data</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.03</span>, <span class="fl">0.19</span>, <span class="fl">0.34</span>, <span class="fl">0.46</span>, <span class="fl">0.78</span>, <span class="fl">0.81</span>, <span class="fl">1.08</span>, <span class="fl">1.18</span>, <span class="fl">1.39</span>, <span class="fl">1.60</span>, <span class="fl">1.65</span>, <span class="fl">1.90</span>])</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array([<span class="fl">0.67</span>, <span class="fl">0.85</span>, <span class="fl">1.05</span>, <span class="fl">1.0</span>, <span class="fl">1.40</span>, <span class="fl">1.5</span>, <span class="fl">1.3</span>, <span class="fl">1.54</span>, <span class="fl">1.55</span>, <span class="fl">1.68</span>, <span class="fl">1.73</span>, <span class="fl">1.6</span> ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="linear-regression-example" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression-example">Linear regression example</h2>
 <section id="d-linear-regression-model" class="level3">
 <h3 class="anchored" data-anchor-id="d-linear-regression-model">1D linear regression model</h3>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:sl_linear_regression}
@@ -308,10 +290,8 @@ Slides
 \end{eqnarray}\]</span></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define 1D linear regression model</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, phi0, phi1):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> :  Replace this line with the linear regression model (eq 2.4)</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> x</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> phi0 <span class="op">+</span> phi1<span class="op">*</span>x</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to help plot the data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot(x, y, phi0, phi1):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    fig,ax <span class="op">=</span> plt.subplots()</span>
@@ -370,7 +350,6 @@ Slides
 <h3 class="anchored" data-anchor-id="testing">Testing</h3>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

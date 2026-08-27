@@ -115,6 +115,10 @@ All exams will be on paper and closed-book.
 
 ### Assignments 
 
+Assignments are an important part of the course and will constitute **15%** of your course grade. Assignments will be posted on the course website and submitted on Moodle.
+
+The questions in exams are going to be very similar to the questions in assignments. So, if you do well on assignments, you will do well on exams.
+
 ### Project 
 
 In this course we will use weekly lab sessions to work towards a large language model project. The project is to be completed in teams of 2-3 students. The project will constitute **30%** of your course grade. 
@@ -158,27 +162,28 @@ Trust me, there is a tremendous amount of beauty and joy to be found in mathemat
 A machine-learning model can be represented as a function:
 
 $$
-\hat{\mathbf{y}}=f_\theta(\mathbf{x})
+\hat{\mathbf{y}}=f_\phi[\mathbf{x}]
 $$
 
 where:
 
 - $\mathbf{x}$ is the input,
 - $\hat{\mathbf{y}}$ is the model’s prediction,
-- $f_\theta$ is the model,
-- $\theta$ represents the model’s learned parameters.
+- $f_\phi$ is the model,
+- $\phi$ represents the model’s learned parameters.
 
-Training is the process of finding values of $\theta$ that make the model useful for a particular task.
+Training is the process of finding values of $\phi$ that make the model useful for a particular task.
 
 
-Machine learning model. The model represents a family of relationships that relate the input (age of child) to the output (height of child). The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.
+A machine learning model represents a family of relationships that relate one or more inputs (e.g. age of a child) to one or more outputs (e.g. height of child). 
 
-<img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);">
+The particular relationship is chosen using training data, which consists of input/output pairs (orange points). When we train the model, we search through the possible relationships for one that describes the data well. Here, the trained model is the cyan curve and can be used to compute the height for any age.
+
+<img src="assets/Chap01/IntroAgeHeight.svg" style="filter: invert(1);" width="100%">
 
 ## Types of Learning 
 
-Machine learning is an area
-of artificial intelligence that fits mathematical models to observed data.
+Machine learning is an area of artificial intelligence that fits mathematical models to observed data.
 
 Machine learning can be broadly categorized into three main types based on the learning signal or feedback available to the learning system. 
 
@@ -190,11 +195,10 @@ These types are:
 
 As of August 2026, the cutting-edge methods in all three areas rely on deep learning.
 
-<img src="assets/Chap01/IntroOverview.svg" style="filter: invert(1);">
+<img src="assets/Chap01/IntroOverview.svg" style="filter: invert(1);" width="100%">
 
 ## Supervised Learning
-
-
+<!-- 
 In supervised learning, the training data contain input-output pairs:
 
 $$
@@ -204,7 +208,7 @@ $$
 The model receives $\mathbf{x}_i$ (an observation or a 'row') and produces a prediction $\hat{\mathbf{y}}_i$
 
 $$
-\hat{\mathbf{y}}_i=f_\theta[\mathbf{x}_i],
+\hat{\mathbf{y}}_i=f_\phi[\mathbf{x}_i],
 $$
 
 and compares that prediction with the known correct answer $\mathbf{y}_i$.
@@ -212,9 +216,9 @@ and compares that prediction with the known correct answer $\mathbf{y}_i$.
 The model is trained by minimizing a loss function:
 
 $$
-\theta^*
+\phi^*
 =
-\arg\min_\theta
+\arg\min_\phi
 \frac{1}{N}\sum_{i=1}^{N}
 \mathcal{L}\left(\hat{\mathbf{y}_i},\mathbf{y}_i\right)
 $$
@@ -229,7 +233,143 @@ For classification, a common loss is negative log-likelihood:
 
 $$
 \mathcal{L}(\hat{p},y)=-\log \hat{p}(y\mid x)
+$$ -->
+
+In supervised learning, the training data consist of input–output pairs:
+
 $$
+\mathcal{D}=\left\{(\mathbf{x}_i,\mathbf{y}_i)\right\}_{i=1}^{I},
+$$
+
+where $\mathbf{x}_i$ is the input for observation $i$, and $\mathbf{y}_i$ is its known target or label. The total number of observations is $I$. The goal of supervised learning is to learn a function that maps inputs to outputs.
+
+A model with parameters $\boldsymbol{\phi}$ maps each input to a prediction:
+
+$$
+\hat{\mathbf{y}}_i=f_{\boldsymbol{\phi}}[\mathbf{x}_i].
+$$
+
+The parameters are learned by minimizing the average loss over the training set:
+
+$$
+\boldsymbol{\phi}^{*}
+=
+\arg\min_{\boldsymbol{\phi}}
+\frac{1}{I}
+\sum_{i=1}^{I}
+\mathcal{L}\left(
+f_{\boldsymbol{\phi}}[\mathbf{x}_i],
+\mathbf{y}_i
+\right).
+$$
+
+The loss function measures how different a prediction is from the corresponding known target. The appropriate loss depends on whether the task is regression or classification.
+
+### Regression
+
+Regression is used when the target is a continuous numerical quantity, such as temperature, income, or house price. For scalar regression:
+
+$$
+y_i\in\mathbb{R},
+\qquad
+\hat{y}_i=f_{\boldsymbol{\phi}}[\mathbf{x}_i]\in\mathbb{R}.
+$$
+
+A common regression loss is squared error:
+
+$$
+\mathcal{L}(\hat{y}_i,y_i)
+=
+(\hat{y}_i-y_i)^2.
+$$
+
+Averaging this loss over the training data gives the mean squared error:
+
+$$
+\operatorname{MSE}
+=
+\frac{1}{I}
+\sum_{i=1}^{I}
+(\hat{y}_i-y_i)^2.
+$$
+
+Minimizing MSE encourages predictions to be close to the observed numerical targets and penalizes large errors more heavily than small ones. Under a probabilistic interpretation, minimizing MSE is equivalent to maximum-likelihood estimation when the target is assumed to equal the model prediction plus Gaussian noise:
+
+$$
+y_i=f_{\boldsymbol{\phi}}[\mathbf{x}_i]+\varepsilon_i,
+\qquad
+\varepsilon_i\sim\mathcal{N}(0,\sigma^2).
+$$
+
+### Classification
+
+Classification is used when the target belongs to one of a finite set of categories. For a problem with $K$ classes:
+
+$$
+y_i\in\{1,\ldots,K\}.
+$$
+
+Rather than directly predicting a class, a classification model commonly produces a probability distribution over the possible classes:
+
+$$
+\hat{\mathbf{p}}_i
+=
+f_{\boldsymbol{\phi}}[\mathbf{x}_i],
+\qquad
+\hat{p}_{ik}
+=
+P_{\boldsymbol{\phi}}(y_i=k\mid\mathbf{x}_i).
+$$
+
+These probabilities satisfy:
+
+$$
+\hat{p}_{ik}\geq 0,
+\qquad
+\sum_{k=1}^{K}\hat{p}_{ik}=1.
+$$
+
+The predicted class is usually the class with the highest estimated probability:
+
+$$
+\hat{y}_i
+=
+\arg\max_{k\in\{1,\ldots,K\}}
+\hat{p}_{ik}.
+$$
+
+A common classification loss is the negative log-likelihood:
+
+$$
+\mathcal{L}(\hat{\mathbf{p}}_i,y_i)
+=
+-\log \hat{p}_{i,y_i}
+=
+-\log P_{\boldsymbol{\phi}}(y_i\mid\mathbf{x}_i).
+$$
+
+Using a one-hot representation $y_{ik}$, where $y_{ik}=1$ if observation $i$ belongs to class $k$ and $0$ otherwise, this can be written as categorical cross-entropy:
+
+$$
+\mathcal{L}(\hat{\mathbf{p}}_i,\mathbf{y}_i)
+=
+-\sum_{k=1}^{K}
+y_{ik}\log\hat{p}_{ik}.
+$$
+
+For binary classification, with $y_i\in\{0,1\}$ and $\hat{p}_i=P(y_i=1\mid\mathbf{x}_i)$, the binary cross-entropy loss is:
+
+$$
+\mathcal{L}(\hat{p}_i,y_i)
+=
+-\left[
+y_i\log\hat{p}_i
++
+(1-y_i)\log(1-\hat{p}_i)
+\right].
+$$
+
+This loss strongly penalizes a model when it assigns a low probability to the correct class. Thus, regression models learn to predict numerical values, whereas classification models learn probabilities over discrete categories.
 
 Examples include:
 
@@ -245,24 +385,19 @@ Regression and classification problems. a)  b) This multivariate regression mode
 
 <img src="assets/Chap01/IntroModels.svg" width="100%" style="filter: invert(1);">
 
-### Regression 
-
-Regression models predict a continuous output variable based on one or more input variables. For instance, the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.
-
-For instance the top panel shows a regression model that takes a vector of numbers that characterize a property and predicts its price.
-
-### Classification
-
-
 
 ### Structured Outputs
 
-<img src="assets/Chap01/IntroModels2a.svg" style="filter: invert(1);">
+Deep Neural networks, a subset of machine learning models, can also be used to predict structured outputs such as sequences, trees, or graphs. For example, a model might take a sentence as input and produce a parse tree as output, or take an image and produce a segmentation map.
+
+Essentially, structured outputs are multipart outputs that have internal structure and relationships between their parts. In other words, these models predict multiple outputs where each output is not independent of the others.
+
+<img src="assets/Chap01/IntroModels2a.svg" style="filter: invert(1);" width="100%">
 
 
 ## Unsupervised Learning
 
-In unsupervised learning, the training data contain inputs but no supplied target outputs:
+In unsupervised learning, the training data contain inputs $\mathbf{x}_i$ but no supplied target outputs $$:
 
 $$
 \mathcal{D}=\{x_i\}_{i=1}^{I}
@@ -270,24 +405,82 @@ $$
 
 Instead of learning a direct mapping from a given $x$ to a given $y$, the model attempts to discover structure in the data.
 
+### Clustering
+
 For clustering, the model might assign each input to a cluster:
 
 $$
-z_i=f_\theta(x_i)
+z_i=f_\phi[\mathbf{x}_i]
 $$
 
-where $z_i$ is a learned cluster assignment rather than a human-provided label.
+where $z_i$ is a learned cluster assignment rather than a human-provided label. 
+
+A clustering algorithm like k-means uses the within-cluster variance as a loss function to learn the cluster assignments:
+
+$$
+\mathcal{L}({\mu_k}, {z_i}) = \sum_{i=1}^{I} \left\| \mathbf{x}_i - \mu_{z_i} \right\|^2
+$$
+
+where $\mu_{z_i}$ is the mean of the cluster to which $\mathbf{x}_i$ is assigned. The model learns to group similar inputs together without any explicit labels.
+
+There the optimal parameters are found by minimizing the loss function:
+
+$$
+\phi^*
+=
+\arg\min_\phi
+\sum_{i=1}^{I}
+\left\|
+\mathbf{x}_i-\mu_{z_i}
+\right\|^2
+$$
+
+$$
+(\boldsymbol{\mu}^*, \mathbf{z}^*)
+=
+\arg\min_{\boldsymbol{\mu},\mathbf{z}}
+\sum_{i=1}^{I}
+\left\|
+\mathbf{x}_i-\boldsymbol{\mu}_{z_i}
+\right\|^2
+$$
+
+If $\boldsymbol{\phi} = (\boldsymbol{\mu}_1,\ldots,\boldsymbol{\mu}_K)$ then we can write the optimization problem as:
+
+$$
+\boldsymbol{\phi}^*
+=
+\arg\min_{\boldsymbol{\phi}}
+\sum_{i=1}^{I}
+\left\|
+\mathbf{x}_i-\boldsymbol{\mu}_{z_i(\boldsymbol{\phi})}
+\right\|^2
+$$
+
+### Dimensionality Reduction
+
+Given data $X \in \mathbb{R}^{n \times D}$, find a low-dimensional representation $Z \in \mathbb{R}^{n \times d}$ (with $d \ll D$) that minimizes some notion of information loss:
+
+$$\min_{Z, \theta} ; \mathcal{L}(X, Z, \theta)$$
+
+where $\theta$ parameterizes the mapping. The key differences across methods are (1) what $\mathcal{L}$ measures and (2) whether it's solved in closed form or iteratively.
+
+In case of PCA, we minimize squared reconstruction error under a linear projection $W \in \mathbb{R}^{D \times d}$ (orthonormal columns):
+
+$$\mathcal{L}(W) = |X - XWW^T|_F^2$$
+
+Optimization: no gradient descent needed — the solution is the top-$d$ eigenvectors of the covariance matrix $X^TX$, equivalently the top-$d$ singular vectors from SVD. It's a closed-form eigenvalue problem, so the "optimizer" is linear algebra, not iteration.
 
 For dimensionality reduction, the model may learn a lower-dimensional representation:
 
 $$
-z=f_\theta(x)
+z=f_\phi[\mathbf{x}]
 $$
 
 An autoencoder first encodes $x$ and then reconstructs it:
 
 $$
-z=f_\theta(x)
+z=f_\phi(x)
 $$
 
 $$
@@ -302,7 +495,7 @@ $$
 \arg\min_{\theta,\phi}
 \frac{1}{N}\sum_{i=1}^{N}
 \left\|
-x_i-g_\phi(f_\theta(x_i))
+x_i-g_\phi(f_\phi(x_i))
 \right\|^2
 $$
 
@@ -318,11 +511,21 @@ The defining feature of unsupervised learning is that no correct target $y$ is s
 
 ### Generative Models
 
-<img src="assets/Chap01/IntroSynthesis.svg">
+Generative unsupervised models learn to synthesize new data examples that are statistically indistinguishable from the training data. 
 
-<img src="assets/Chap01/IntroCompletion.svg">
+Some generative models explicitly describe the probability distribution over the input data and
+here new examples are generated by sampling from this distribution. 
 
+Others merely learn a mechanism to generate new examples without explicitly describing their distribution.
 
+They have been particularly successful
+at generating images (think DALL·E, Midjourney, Stable Diffusion), audio (think Jukebox, AudioLM), and text (think ChatGPT, Claude and Gemini).
+
+<img src="assets/Chap01/IntroSynthesis.svg" width="100%">
+
+<img src="assets/Chap01/IntroCompletion.svg" width="100%">
+
+ 
 > I was a little nervous before my first lecture at the University of Bath. It seemed like there were
 hundreds of students and they looked intimidating. I stepped up to the lectern and was about to speak
 when something bizarre happened.
@@ -337,24 +540,48 @@ lecture._
 
 Conditional text synthesis. Given an initial body of text (in black), generative models of text can continue the string plausibly by synthesizing the “missing” remaining part of the string. Generated by GPT3 (Brown et al., 2020).
 
-<img src="assets/Chap01/IntroFaceSpace.svg">
+<img src="assets/Chap01/IntroFaceSpace.svg" width="100%">
 
 Variation of the human face. The human face contains roughly 42 muscles, so it’s possible to describe most of the variation in images of the same person in the same lighting with just 42 numbers. In general, datasets of images, music, and text can be described by a relatively small number of underlying variables although it is typically more diﬀicult to tie these to particular physical
 mechanisms. Images from Dynamic FACES database (Holland et al., 2019).
 
 ### Latent Variables 
 
-<img src="assets/Chap01/IntroLatent.svg" style="filter: invert(1);">
+Some (but not all) generative models exploit the fact that data can be lower dimensional
+than the raw number of observed variables suggests. 
 
-Latent variables. Many generative models use a deep learning model to describe the relationship between a low-dimensional “latent” variable and the observed high-dimensional data. The latent variables have a simple probability distribution by design. Hence, new examples can be generated by sampling from the simple distribution over the latent variables and then using the deep learning
-model to map the sample to the observed data space.
+For example, the number of valid
+and meaningful English sentences is much smaller than the number of strings created by
+drawing words at random. 
 
-<img src="assets/Chap01/IntroInterpolate.svg" style="filter: invert(0);">
+Similarly, real-world images are a tiny subset of the images that can be created by drawing random red, green, and blue (RGB) values for every pixel. 
+
+This is because images are generated by physical processes. This leads to the idea that we can describe each data example using a smaller number
+of underlying latent variables. 
+
+<br/>
+
+<img src="assets/Chap01/IntroLatent.svg" style="filter: invert(1);" width="100%">
+
+<br/>
+
+Here, the role of deep learning is to describe the mapping between these latent variables and the data. 
+
+The latent variables typically have a simple probability distribution by design. By sampling from this distribution and passing the
+result through the deep learning model, we can create new samples.
+
+These models lead to new methods for manipulating real data. For example, consider
+finding the latent variables that underpin two real examples. We can interpolate between
+these examples by interpolating between their latent representations and mapping the
+intermediate positions back into the data space.
+
+
+<img src="assets/Chap01/IntroInterpolate.svg" style="filter: invert(0);" width="100%">
 
 Image interpolation. In each row the left and right images are real and the three images in between represent a sequence of interpolations created by a generative model. The generative models that underpin these interpolations
 have learned that all images can be created by a set of underlying latent variables. By finding these variables for the two real images, interpolating their values, and then using these intermediate variables to create new images, we can generate intermediate results that are both visually plausible and mix the characteristics of the two original images. Top row adapted from Sauer et al. (2022). Bottom row adapted from Ramesh et al. (2022).
 
-<img src="assets/Chap01/IntroVariety.svg">
+<img src="assets/Chap01/IntroVariety.svg" width="100%">
 
 Multiple images generated from the caption “A teddy bear on a skateboard in Times Square.” Generated by DALL·E-2 (Ramesh et al., 2022).
 
@@ -365,7 +592,7 @@ In reinforcement learning, an agent repeatedly interacts with an environment.
 At time $t$, the agent observes a state $s_t$ and uses a policy to select an action:
 
 $$
-a_t=f_\theta(s_t)
+a_t=f_\phi(s_t)
 $$
 
 The environment then returns a reward $r_t$ and a new state $s_{t+1}$:
@@ -377,9 +604,9 @@ $$
 The objective is not simply to predict a known $y$. Instead, the agent learns a policy that maximizes its expected cumulative reward:
 
 $$
-\theta^*
+\phi^*
 =
-\arg\max_\theta
+\arg\max_\phi
 \mathbb{E}\left[
 \sum_{t=0}^{T}\gamma^t r_t
 \right]
@@ -407,7 +634,7 @@ Examples include:
 
 The defining feature of reinforcement learning is that the model learns through actions and rewards rather than from a collection of correct input-output pairs.
 
-<img src="assets/Chap01/IntroReinforce.svg" style="filter: invert(1);">
+<img src="assets/Chap01/IntroReinforce.svg" style="filter: invert(1);" width="100%">
 
 Policy networks for reinforcement learning. One way to incorporate deep neural networks into reinforcement learning is to use them to define a mapping from the state (here position on chessboard) to the actions (possible moves). This mapping is known as a policy.
 

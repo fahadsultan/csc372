@@ -10,6 +10,16 @@ I am excited to talk math 🔢, programming 💻 and all-things data 📊 in thi
 From the navigation bar on the top ☝🏾 and sidebar on the left 👈🏾, you should be able to navigate to any topic relevant to the course. If that does not help, there should also be a search icon 🔍 in the top right corner ↗️
 
 👇🏾 Below, you can find important links and important announcements.
+
+::: {.callout-tip}
+# Acknowledgement
+The content on this website is adopted from Simon J. D. Prince's [Understanding Deep Learning](https://udlbook.github.io/udlbook/) textbook. Go [buy the book](https://mitpress.mit.edu/9780262048644/understanding-deep-learning/) to support the author! 📖
+::: 
+
+<!-- The poster template can be found [here](https://docs.google.com/presentation/d/12WyL8m-YKPqiJ7r9GkSo76Du0YdzAppPeT3xjPy1yj0/edit#slide=id.g279418aeb01_2_75) -->
+
+
+
 <!-- 
 ::: {.callout-important}
 
