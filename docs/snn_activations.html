@@ -327,8 +327,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#general-case" id="toc-general-case" class="nav-link active" data-scroll-target="#general-case">General case</a></li>
-  <li><a href="#sigmoid-activation-function" id="toc-sigmoid-activation-function" class="nav-link" data-scroll-target="#sigmoid-activation-function">Sigmoid activation function</a></li>
+  <li><a href="#sigmoid-activation-function" id="toc-sigmoid-activation-function" class="nav-link active" data-scroll-target="#sigmoid-activation-function">Sigmoid activation function</a></li>
   <li><a href="#heaviside-function" id="toc-heaviside-function" class="nav-link" data-scroll-target="#heaviside-function">Heaviside function</a></li>
   <li><a href="#linear-activation-functions" id="toc-linear-activation-functions" class="nav-link" data-scroll-target="#linear-activation-functions">Linear Activation functions</a></li>
   <li><a href="#derivatives-of-activation-functions" id="toc-derivatives-of-activation-functions" class="nav-link" data-scroll-target="#derivatives-of-activation-functions">Derivatives of Activation Functions</a></li>
@@ -357,8 +356,6 @@ window.Quarto = {
 </header>
 
 
-<section id="general-case" class="level2">
-<h2 class="anchored" data-anchor-id="general-case">General case</h2>
 <!-- Open in Colab -->
 <p><a href="https://colab.research.google.com/github/fahadsultan/csc372/blob/main/snn_activations.ipynb" target="_blank" align="right"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
 <p>Activation functions are what make a neural network more than a fancy linear regression. Recall that a shallow network first combines the input into several linear pre-activations, then passes each one through an activation function <span class="math inline">\(a[\bullet]\)</span> before recombining the results into the output. Without that nonlinear step, composing linear functions of linear functions is still just a linear function – no matter how many hidden units or layers you stack on, the whole network could be collapsed back down to a single linear map (see the Linear Activation Functions section below). It’s specifically the <em>nonlinearity</em> introduced by <span class="math inline">\(a[\bullet]\)</span> that lets the network bend, kink, or curve its output enough to approximate genuinely complicated functions.</p>
@@ -479,7 +476,6 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section>
 <section id="sigmoid-activation-function" class="level2">
 <h2 class="anchored" data-anchor-id="sigmoid-activation-function">Sigmoid activation function</h2>
 <p>The ReLU isn’t the only kind of activation function. For a long time, people used sigmoid functions. A logistic sigmoid function is defined by the equation</p>
