@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Multivariate Networks</title>
+<title>Multiple inputs / outputs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -136,7 +136,7 @@ window.Quarto = {
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -154,7 +154,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -218,27 +218,126 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./snn.html">Shallow Neural Networks</a></li><li class="breadcrumb-item"><a href="./snn_multivariate.html">Multiple inputs / outputs</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Multiple inputs / outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Deep Neural Networks</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Loss Functions</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Gradient Descent</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Back Propagation</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Performance</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Regularization</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Transformers</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Large Language Models</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Diffusion Models</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#multivariate-outputs" id="toc-multivariate-outputs" class="nav-link active" data-scroll-target="#multivariate-outputs">Multivariate outputs</a></li>
-  <li><a href="#multivariate-inputs" id="toc-multivariate-inputs" class="nav-link" data-scroll-target="#multivariate-inputs">Multivariate inputs</a></li>
+  <li><a href="#multiple-outputs" id="toc-multiple-outputs" class="nav-link active" data-scroll-target="#multiple-outputs">Multiple outputs</a></li>
+  <li><a href="#multiple-inputs" id="toc-multiple-inputs" class="nav-link" data-scroll-target="#multiple-inputs">Multiple inputs</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./snn.html">Shallow Neural Networks</a></li><li class="breadcrumb-item"><a href="./snn_multivariate.html">Multiple inputs / outputs</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Multivariate Networks</h1>
+<h1 class="title">Multiple inputs / outputs</h1>
 </div>
 
 
@@ -255,12 +354,16 @@ window.Quarto = {
 </header>
 
 
-<p><img src="assets/Chap03/ShallowApproximate.svg" style="filter: invert(1);" width="100%"></p>
-<p>Approximation of a 1D function (dashed line) by a piecewise linear model. a–c) As the number of regions increases, the model becomes closer and closer to the continuous function. A neural network with a scalar input creates one extra linear region per hidden unit. This idea generalizes to functions in Di dimensions. The universal approximation theorem proves that, with enough hidden units, there exists a shallow neural network that can describe any given continuous function defined on a compact subset of RDi to arbitrary precision.</p>
-<p><img src="assets/Chap03/ShallowNetTwoOutputs.svg" style="filter: invert(1);" width="100%"></p>
-<p>Network with one input, four hidden units, and two outputs. a) Visualization of network structure. b) This network produces two piecewise linear functions, y1[x] and y2[x]. The four “joints” of these functions (at vertical dotted lines) are constrained to be in the same places since they share the same hidden units, but the slopes and overall height may differ.</p>
-<section id="multivariate-outputs" class="level3">
-<h3 class="anchored" data-anchor-id="multivariate-outputs">Multivariate outputs</h3>
+<p>So far our neural network has had a single scalar input <span class="math inline">\(x\)</span> and a single scalar output <span class="math inline">\(y\)</span>.</p>
+<p>However, more generally neural networks map multivariate inputs <span class="math display">\[x = [x_1,x_2,...,x_{D_i} ]^{T}\]</span> to multivariate output predictions <span class="math display">\[y = [y_1,y_2,...,y_{D_o} ]^T\]</span></p>
+<p>Note that <span class="math inline">\(D_i\)</span> represents the number of inputs and <span class="math inline">\(D_o\)</span> represents the number of outputs. <span class="math inline">\(D\)</span> is the number of hidden units.</p>
+<p>Here we explore how to extend the model to predict multivariate inputs and outputs.</p>
+<p><br></p>
+<section id="multiple-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-outputs">Multiple outputs</h3>
+<p><br></p>
+<p>To extend the network to multivariate outputs <span class="math inline">\(y\)</span>, we simply use a different linear function of the hidden units for each output.</p>
+<p>So, a network with a scalar input x, four hidden units <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> , <span class="math inline">\(h_3\)</span>, and <span class="math inline">\(h_4\)</span>, and a 2D multivariate output <span class="math inline">\(y = [y_1,y_2]^T\)</span> would be defined as:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:snn_multiple_out2}
 h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x] \nonumber \\
 h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x] \nonumber \\
@@ -271,232 +374,245 @@ h_{4} &amp;=&amp; \mbox{a}[\theta_{40} + \theta_{41}x],
 y_1 &amp;=&amp; \phi_{10}+\phi_{11}h_{1}+\phi_{12}h_{2}+\phi_{13}h_{3}+\phi_{14}h_{4}\nonumber \\
 y_2 &amp;=&amp; \phi_{20}+\phi_{21}h_{1}+\phi_{22}h_{2}+\phi_{23}h_{3}+\phi_{24}h_{4}.
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap03/ShallowNetTwoOutputs.svg" style="filter: invert(1);" width="100%"></p>
+<p>Network with one input, four hidden units, and two outputs. a) Visualization of network structure. b) This network produces two piecewise linear functions, y1[x] and y2[x]. The four “joints” of these functions (at vertical dotted lines) are constrained to be in the same places since they share the same hidden units, but the slopes and overall height may differ.</p>
+<p>As we saw in figure 3.3, the “joints” in the piecewise functions depend on where the initial linear functions θ•0 + θ•1x are clipped by the ReLU functions a[•] at the hidden units. Since both outputs y1 and y2 are different linear functions of the same four hidden units, the four “joints” in each must be in the same places. However, the slopes of the linear regions and the overall vertical offset can differ</p>
+<div id="7091770d" class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,10],[0,10] and output [-10,10]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural_2_inputs_2_outputs(x1,x2, y1, y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot intermediate plots if flag set</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(<span class="dv">4</span>,<span class="dv">3</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">0</span>, <span class="dv">0</span>].plot(x1, pre_1)<span class="op">;</span> ax[<span class="dv">0</span>, <span class="dv">0</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># draw_2D_function(ax[0,0], x1,x2,pre_1); ax[0,0].set_title('Preactivation')</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">0</span>,<span class="dv">1</span>].plot(x1,pre_2)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">0</span>,<span class="dv">2</span>].plot(x1,pre_3)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">2</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">1</span>,<span class="dv">0</span>].plot(x1,act_1)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">'Activation $h_1$'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">1</span>,<span class="dv">1</span>].plot(x1,act_2)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">'Activation $h_2$'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">1</span>,<span class="dv">2</span>].plot(x1,act_3)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">2</span>].set_title(<span class="st">'Activation $h_3$'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">2</span>,<span class="dv">0</span>].plot(x1,w_act_11, c<span class="op">=</span><span class="st">'blue'</span>)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act 11 $\phi_</span><span class="sc">{11}</span><span class="st"> h_1$'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">2</span>,<span class="dv">1</span>].plot(x1,w_act_12, c<span class="op">=</span><span class="st">'blue'</span>)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act 12 $\phi_</span><span class="sc">{12}</span><span class="st"> h_2$'</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">2</span>,<span class="dv">2</span>].plot(x1,w_act_13, c<span class="op">=</span><span class="st">'blue'</span>)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act 13 $\phi_</span><span class="sc">{13}</span><span class="st"> h_3$'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">3</span>,<span class="dv">0</span>].plot(x1,w_act_21, c<span class="op">=</span><span class="st">'orange'</span>)<span class="op">;</span> ax[<span class="dv">3</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act 21  $\phi_</span><span class="sc">{21}</span><span class="st"> h_1$'</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">3</span>,<span class="dv">2</span>].plot(x1,w_act_23, c<span class="op">=</span><span class="st">'orange'</span>)<span class="op">;</span> ax[<span class="dv">3</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act 22  $\phi_</span><span class="sc">{22}</span><span class="st"> h_2$'</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  ax[<span class="dv">3</span>,<span class="dv">1</span>].plot(x1,w_act_22, c<span class="op">=</span><span class="st">'orange'</span>)<span class="op">;</span> ax[<span class="dv">3</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act 23  $\phi_</span><span class="sc">{23}</span><span class="st"> h_3$'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  ax.plot(x1,y1, c<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ax.set_title('Network output, $y$')</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ax.set_aspect(1.0)</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># plt.show()</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fig, ax = plt.subplots()</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># draw_2D_function(ax,x1,x2,y2)</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  ax.plot(x2,y2, c<span class="op">=</span><span class="st">'orange'</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">'Network outputs, $y_1$ and $y_2$'</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e94f8048" class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a shallow neural network with, two inputs, two outputs, and three hidden units</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shallow_1_2_3(x1, activation_fn, phi_10,phi_11,phi_12,phi_13, phi_20,phi_21,phi_22,phi_23, theta_10, theta_11,<span class="op">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  theta_20, theta_21, theta_30, theta_31):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  pre_1 <span class="op">=</span> theta_10 <span class="op">+</span> theta_11<span class="op">*</span>x1</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  pre_2 <span class="op">=</span> theta_20 <span class="op">+</span> theta_21<span class="op">*</span>x1</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  pre_3 <span class="op">=</span> theta_30 <span class="op">+</span> theta_31<span class="op">*</span>x1</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  act_1 <span class="op">=</span> activation_fn(pre_1)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  act_2 <span class="op">=</span> activation_fn(pre_2)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  act_3 <span class="op">=</span> activation_fn(pre_3)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  w_act_11 <span class="op">=</span> act_1 <span class="op">*</span> phi_11</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  w_act_12 <span class="op">=</span> act_2 <span class="op">*</span> phi_12</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  w_act_13 <span class="op">=</span> act_3 <span class="op">*</span> phi_13</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  w_act_21 <span class="op">=</span> act_1 <span class="op">*</span> phi_21</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  w_act_22 <span class="op">=</span> act_2 <span class="op">*</span> phi_22</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  w_act_23 <span class="op">=</span> act_3 <span class="op">*</span> phi_23</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  y1 <span class="op">=</span> phi_10 <span class="op">+</span> w_act_11 <span class="op">+</span> w_act_12 <span class="op">+</span> w_act_13</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  y2 <span class="op">=</span> phi_20 <span class="op">+</span> w_act_21 <span class="op">+</span> w_act_22 <span class="op">+</span> w_act_23</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y1,y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c6a03f58" class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the neural network</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="op">-</span><span class="fl">4.0</span> <span class="op">;</span>  theta_11 <span class="op">=</span> <span class="fl">0.9</span><span class="op">;</span> theta_12 <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span>  <span class="fl">5.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="op">-</span><span class="fl">0.9</span> <span class="op">;</span> theta_22 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span>  <span class="op">-</span><span class="dv">7</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span> theta_32 <span class="op">=</span> <span class="fl">0.9</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>phi_10 <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span> phi_11 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_12 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> phi_13 <span class="op">=</span> <span class="fl">1.5</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>phi_20 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_21 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span><span class="op">;</span> phi_22 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_23 <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># x2 = np.arange(0.0, 10.0, 0.1)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># x1,x2 = np.meshgrid(x1,x2)  # https://www.geeksforgeeks.org/numpy-meshgrid-function/</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># We run the neural network for each of these input values</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>y1, y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23 <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    shallow_1_2_3(x1, ReLU, phi_10,phi_11,phi_12,phi_13, phi_20,phi_21,phi_22,phi_23, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plot_neural_2_inputs_2_outputs(x1,x2, y1, y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_multivariate_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_multivariate_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
 </section>
-<section id="multivariate-inputs" class="level3">
-<h3 class="anchored" data-anchor-id="multivariate-inputs">Multivariate inputs</h3>
-<p><img src="assets/Chap03/ShallowNetTwoInputs.svg" style="filter: invert(1);" width="100%"></p>
-<p>Visualization of neural network with 2D multivariate input x = [x1, x2]T and scalar output y.</p>
+<section id="multiple-inputs" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-inputs">Multiple inputs</h3>
+<p><br></p>
+<p>To cope with multivariate inputs <span class="math inline">\(x\)</span>, we extend the linear relations between the input and the hidden units. So a network with two inputs <span class="math inline">\(x = [x_1,x_2]^T\)</span> and a scalar output <span class="math inline">\(y\)</span> might have three hidden units defined by:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:snn_multiple3}
 h_{1} &amp;=&amp; \mbox{a}[\theta_{10} + \theta_{11}x_1+ \theta_{12}x_2] \nonumber \\
 h_{2} &amp;=&amp; \mbox{a}[\theta_{20} + \theta_{21}x_1+\theta_{22}x_2] \nonumber \\
 h_{3} &amp;=&amp; \mbox{a}[\theta_{30} + \theta_{31}x_1+\theta_{32}x_2],
 \end{eqnarray}\]</span></p>
+<p>where there is now one slope parameter for each input. The hidden units are combined to form the output in the usual way:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:snn_multiple4}
 y = \phi_{0}+\phi_{1}h_{1}+\phi_{2}h_{2}+\phi_{3}h_{3}.
 \end{eqnarray}\]</span></p>
+<p>The figure below illustrates the processing of this network. Each hidden unit receives a linear combination of the two inputs, which forms an oriented plane in the 3D input/output space.</p>
+<p>The activation function clips the negative values of these planes to zero. The clipped planes are then recombined in a second linear function to create a continuous piecewise linear surface consisting of convex polygonal regions.</p>
+<p>Each region corresponds to a different activation pattern.</p>
+<p>For example, in the central triangular region, the first and third hidden units are active, and the second is inactive.</p>
+<p>When there are more than two inputs to the model, it becomes diﬀicult to visualize.</p>
+<p>However, the interpretation is similar. The output will be a continuous piecewise linear function of the input, where the linear regions are now convex polytopes in the multi- dimensional input space</p>
+<p><img src="assets/Chap03/ShallowNetTwoInputs.svg" style="filter: invert(1);" width="75%"></p>
+<p>Visualization of neural network with 2D multivariate input x = [x1, x2]T and scalar output y.</p>
 <p><img src="assets/Chap03/ShallowBuildUp2D.svg" style="filter: invert(1);" width="100%"></p>
 <p>Visualization of how a shallow neural network builds up a piecewise linear approximation in 2D. Processing in network with two inputs x = [x1, x2]T , three hidden units h1, h2, h3, and one output y. a–c) The input to each hidden unit is a linear function of the two inputs, which corresponds to an oriented plane. Brightness indicates function output. For example, in panel (a), the brightness represents θ10 + θ11x1 + θ12x2. Thin lines are contours. d–f) Each plane is clipped by the ReLU activation function (cyan lines are equivalent to “joints” in figures 3.3d– f). g-i) The clipped planes are then weighted, and j) summed together with an offset that determines the overall height of the surface. The result is a continuous surface made up of convex piecewise linear polygonal regions. (Interactive figure)</p>
-<div id="f58133f0" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports plotting library</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f58133f0" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports plotting library</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'dark_background'</span>)  <span class="co"># Use dark background for plots</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6d4b90ba" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the Rectified Linear Unit (ReLU) function</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ReLU(preactivation):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> preactivation.clip(<span class="fl">0.0</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6d4b90ba" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the Rectified Linear Unit (ReLU) function</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ReLU(preactivation):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> preactivation.clip(<span class="fl">0.0</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="3f1e5856" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to draw 2D function -- read it so you know what is going on, but you don't have to change it</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_2D_function(ax, x1_mesh, x2_mesh, y):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> ax.contourf(x1_mesh, x2_mesh, y, levels<span class="op">=</span><span class="dv">256</span> ,cmap <span class="op">=</span> <span class="st">'hot'</span>, vmin<span class="op">=-</span><span class="dv">10</span>,vmax<span class="op">=</span><span class="fl">10.0</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'x1'</span>)<span class="op">;</span>ax.set_ylabel(<span class="st">'x2'</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="fl">1.0</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ax.contour(x1_mesh, x2_mesh, y, levels, cmap<span class="op">=</span><span class="st">'winter'</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,10],[0,10] and output [-10,10]</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural_2_inputs(x1,x2, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">0</span>], x1,x2,pre_1)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">1</span>], x1,x2,pre_2)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">2</span>], x1,x2,pre_3)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">2</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">0</span>], x1,x2,act_1)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">1</span>], x1,x2,act_2)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">2</span>], x1,x2,act_3)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">2</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">0</span>], x1,x2,w_act_1)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">1</span>], x1,x2,w_act_2)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">2</span>], x1,x2,w_act_3)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax,x1,x2,y)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">'Network output, $y$'</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="fl">1.0</span>)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="2c0ad385" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to draw 2D function -- read it so you know what is going on, but you don't have to change it</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_2D_function(ax, x1_mesh, x2_mesh, y):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> ax.contourf(x1_mesh, x2_mesh, y, levels<span class="op">=</span><span class="dv">256</span> ,cmap <span class="op">=</span> <span class="st">'hot'</span>, vmin<span class="op">=-</span><span class="dv">10</span>,vmax<span class="op">=</span><span class="fl">10.0</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'x1'</span>)<span class="op">;</span>ax.set_ylabel(<span class="st">'x2'</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="fl">1.0</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ax.contour(x1_mesh, x2_mesh, y, levels, cmap<span class="op">=</span><span class="st">'winter'</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,10],[0,10] and output [-10,10]</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural_2_inputs(x1,x2, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3):</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">0</span>], x1,x2,pre_1)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">1</span>], x1,x2,pre_2)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">2</span>], x1,x2,pre_3)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">2</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">0</span>], x1,x2,act_1)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">1</span>], x1,x2,act_2)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">2</span>], x1,x2,act_3)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">2</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">0</span>], x1,x2,w_act_1)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">1</span>], x1,x2,w_act_2)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">2</span>], x1,x2,w_act_3)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax,x1,x2,y)</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">'Network output, $y$'</span>)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="fl">1.0</span>)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="e7ecbcbd" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a shallow neural network with, two input, one output, and three hidden units</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shallow_2_1_3(x1,x2, activation_fn, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11,<span class="op">\</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  theta_12, theta_20, theta_21, theta_22, theta_30, theta_31, theta_32):</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Replace the lines below to compute the three initial linear functions</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (figure 3.8a-c) from the theta parameters.  These are the preactivations</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  pre_1 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  pre_2 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  pre_3 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pass these through the ReLU function to compute the activations as in</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># figure 3.8 d-f</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  act_1 <span class="op">=</span> activation_fn(pre_1)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  act_2 <span class="op">=</span> activation_fn(pre_2)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  act_3 <span class="op">=</span> activation_fn(pre_3)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Replace the code below to weight the activations using phi1, phi2 and phi3</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># To create the equivalent of figure 3.8 g-i</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  w_act_1 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  w_act_2 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  w_act_3 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Replace the code below to combing the weighted activations and add</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># phi_0 to create the output as in figure 3.8j</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return everything we have calculated</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="c6cc197f" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the neural network</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="op">-</span><span class="fl">4.0</span> <span class="op">;</span>  theta_11 <span class="op">=</span> <span class="fl">0.9</span><span class="op">;</span> theta_12 <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span>  <span class="fl">5.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="op">-</span><span class="fl">0.9</span> <span class="op">;</span> theta_22 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span>  <span class="op">-</span><span class="dv">7</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span> theta_32 <span class="op">=</span> <span class="fl">0.9</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>phi_0 <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span> phi_1 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_2 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> phi_3 <span class="op">=</span> <span class="fl">1.5</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.1</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.1</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>x1,x2 <span class="op">=</span> np.meshgrid(x1,x2)  <span class="co"># https://www.geeksforgeeks.org/numpy-meshgrid-function/</span></span>
+<div id="3f1e5856" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to draw 2D function -- read it so you know what is going on, but you don't have to change it</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_2D_function(ax, x1_mesh, x2_mesh, y):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> ax.contourf(x1_mesh, x2_mesh, y, levels<span class="op">=</span><span class="dv">256</span> ,cmap <span class="op">=</span> <span class="st">'hot'</span>, vmin<span class="op">=-</span><span class="dv">10</span>,vmax<span class="op">=</span><span class="fl">10.0</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'x1'</span>)<span class="op">;</span>ax.set_ylabel(<span class="st">'x2'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="fl">1.0</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    ax.contour(x1_mesh, x2_mesh, y, levels, cmap<span class="op">=</span><span class="st">'winter'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,10],[0,10] and output [-10,10]</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural_2_inputs(x1,x2, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3):</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># We run the neural network for each of these input values</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3 <span class="op">=</span> <span class="op">\</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    shallow_2_1_3(x1,x2, ReLU, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_12, theta_20, theta_21, theta_22, theta_30, theta_31, theta_32)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plot_neural_2_inputs(x1,x2, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="snn_multivariate_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
-</figure>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">0</span>], x1,x2,pre_1)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">1</span>], x1,x2,pre_2)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">2</span>], x1,x2,pre_3)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">2</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">0</span>], x1,x2,act_1)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">'Activation'</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">1</span>], x1,x2,act_2)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">'Activation'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">2</span>], x1,x2,act_3)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">2</span>].set_title(<span class="st">'Activation'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">0</span>], x1,x2,w_act_1)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">1</span>], x1,x2,w_act_2)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">2</span>], x1,x2,w_act_3)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax,x1,x2,y)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">'Network output, $y$'</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="fl">1.0</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="2c0ad385" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Code to draw 2D function -- read it so you know what is going on, but you don't have to change it</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_2D_function(ax, x1_mesh, x2_mesh, y):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> ax.contourf(x1_mesh, x2_mesh, y, levels<span class="op">=</span><span class="dv">256</span> ,cmap <span class="op">=</span> <span class="st">'hot'</span>, vmin<span class="op">=-</span><span class="dv">10</span>,vmax<span class="op">=</span><span class="fl">10.0</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'x1'</span>)<span class="op">;</span>ax.set_ylabel(<span class="st">'x2'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="fl">1.0</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    ax.contour(x1_mesh, x2_mesh, y, levels, cmap<span class="op">=</span><span class="st">'winter'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,10],[0,10] and output [-10,10]</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural_2_inputs(x1,x2, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3):</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">0</span>], x1,x2,pre_1)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">1</span>], x1,x2,pre_2)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">2</span>], x1,x2,pre_3)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">2</span>].set_title(<span class="st">'Preactivation'</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">0</span>], x1,x2,act_1)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">'Activation'</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">1</span>], x1,x2,act_2)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">'Activation'</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">2</span>], x1,x2,act_3)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">2</span>].set_title(<span class="st">'Activation'</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">0</span>], x1,x2,w_act_1)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">1</span>], x1,x2,w_act_2)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">2</span>], x1,x2,w_act_3)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act'</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax,x1,x2,y)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">'Network output, $y$'</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="fl">1.0</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="snn_multivariate_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="8b703d65" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,10],[0,10] and output [-10,10]</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_neural_2_inputs_2_outputs(x1,x2, y1, y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23):</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot intermediate plots if flag set</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots(<span class="dv">4</span>,<span class="dv">3</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  fig.set_size_inches(<span class="fl">8.5</span>, <span class="fl">8.5</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout(pad<span class="op">=</span><span class="fl">3.0</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">0</span>], x1,x2,pre_1)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">1</span>], x1,x2,pre_2)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">0</span>,<span class="dv">2</span>], x1,x2,pre_3)<span class="op">;</span> ax[<span class="dv">0</span>,<span class="dv">2</span>].set_title(<span class="st">'Preactivation'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">0</span>], x1,x2,act_1)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">1</span>], x1,x2,act_2)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">1</span>,<span class="dv">2</span>], x1,x2,act_3)<span class="op">;</span> ax[<span class="dv">1</span>,<span class="dv">2</span>].set_title(<span class="st">'Activation'</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">0</span>], x1,x2,w_act_11)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act 1'</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">1</span>], x1,x2,w_act_12)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act 1'</span>)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">2</span>,<span class="dv">2</span>], x1,x2,w_act_13)<span class="op">;</span> ax[<span class="dv">2</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act 1'</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">3</span>,<span class="dv">0</span>], x1,x2,w_act_21)<span class="op">;</span> ax[<span class="dv">3</span>,<span class="dv">0</span>].set_title(<span class="st">'Weighted Act 2'</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">3</span>,<span class="dv">1</span>], x1,x2,w_act_22)<span class="op">;</span> ax[<span class="dv">3</span>,<span class="dv">1</span>].set_title(<span class="st">'Weighted Act 2'</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax[<span class="dv">3</span>,<span class="dv">2</span>], x1,x2,w_act_23)<span class="op">;</span> ax[<span class="dv">3</span>,<span class="dv">2</span>].set_title(<span class="st">'Weighted Act 2'</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax,x1,x2,y1)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">'Network output, $y$'</span>)</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="fl">1.0</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  draw_2D_function(ax,x1,x2,y2)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">'Network output, $y$'</span>)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  ax.set_aspect(<span class="fl">1.0</span>)</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="19538f89" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a shallow neural network with, two inputs, two outputs, and three hidden units</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shallow_2_2_3(x1,x2, activation_fn, phi_10,phi_11,phi_12,phi_13, phi_20,phi_21,phi_22,phi_23, theta_10, theta_11,<span class="op">\</span></span>
+<div id="e7ecbcbd" class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a shallow neural network with, two input, one output, and three hidden units</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shallow_2_1_3(x1,x2, activation_fn, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11,<span class="op">\</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                  theta_12, theta_20, theta_21, theta_22, theta_30, theta_31, theta_32):</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- write this function -- replace the dummy code below</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  pre_1 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  pre_2 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  pre_3 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  act_1 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  act_2 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  act_3 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  w_act_11 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  w_act_12 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  w_act_13 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  w_act_21 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  w_act_22 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  w_act_23 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  y1 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  y2 <span class="op">=</span> np.zeros_like(x1)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return everything we have calculated</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y1,y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  pre_1 <span class="op">=</span> theta_10 <span class="op">+</span> theta_11 <span class="op">*</span> x1 <span class="op">+</span> theta_12 <span class="op">*</span> x2</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  pre_2 <span class="op">=</span> theta_20 <span class="op">+</span> theta_21 <span class="op">*</span> x1 <span class="op">+</span> theta_22 <span class="op">*</span> x2</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  pre_3 <span class="op">=</span> theta_30 <span class="op">+</span> theta_31 <span class="op">*</span> x1 <span class="op">+</span> theta_32 <span class="op">*</span> x2</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  act_1 <span class="op">=</span> activation_fn(pre_1)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  act_2 <span class="op">=</span> activation_fn(pre_2)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  act_3 <span class="op">=</span> activation_fn(pre_3)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  w_act_1 <span class="op">=</span> phi_1 <span class="op">*</span> act_1</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  w_act_2 <span class="op">=</span> phi_2 <span class="op">*</span> act_2</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  w_act_3 <span class="op">=</span> phi_3 <span class="op">*</span> act_3</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> phi_0 <span class="op">+</span> w_act_1 <span class="op">+</span> w_act_2 <span class="op">+</span> w_act_3</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b342bf6b" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the neural network</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="op">-</span><span class="fl">4.0</span> <span class="op">;</span>  theta_11 <span class="op">=</span> <span class="fl">0.9</span><span class="op">;</span> theta_12 <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span>  <span class="fl">5.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="op">-</span><span class="fl">0.9</span> <span class="op">;</span> theta_22 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span>  <span class="op">-</span><span class="dv">7</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span> theta_32 <span class="op">=</span> <span class="fl">0.9</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>phi_10 <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span> phi_11 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_12 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> phi_13 <span class="op">=</span> <span class="fl">1.5</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>phi_20 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_21 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span><span class="op">;</span> phi_22 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_23 <span class="op">=</span> <span class="fl">0.8</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.1</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.1</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>x1,x2 <span class="op">=</span> np.meshgrid(x1,x2)  <span class="co"># https://www.geeksforgeeks.org/numpy-meshgrid-function/</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># We run the neural network for each of these input values</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>y1, y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23 <span class="op">=</span> <span class="op">\</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    shallow_2_2_3(x1,x2, ReLU, phi_10,phi_11,phi_12,phi_13, phi_20,phi_21,phi_22,phi_23, theta_10, theta_11, theta_12, theta_20, theta_21, theta_22, theta_30, theta_31, theta_32)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plot_neural_2_inputs_2_outputs(x1,x2, y1, y2, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_11, w_act_12, w_act_13, w_act_21, w_act_22, w_act_23)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="c6cc197f" class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the neural network</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="op">-</span><span class="fl">4.0</span> <span class="op">;</span>  theta_11 <span class="op">=</span> <span class="fl">0.9</span><span class="op">;</span> theta_12 <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span>  <span class="fl">5.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="op">-</span><span class="fl">0.9</span> <span class="op">;</span> theta_22 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span>  <span class="op">-</span><span class="dv">7</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.5</span><span class="op">;</span> theta_32 <span class="op">=</span> <span class="fl">0.9</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>phi_0 <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span> phi_1 <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span><span class="op">;</span> phi_2 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> phi_3 <span class="op">=</span> <span class="fl">1.5</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.1</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">10.0</span>, <span class="fl">0.1</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>x1,x2 <span class="op">=</span> np.meshgrid(x1,x2)  <span class="co"># https://www.geeksforgeeks.org/numpy-meshgrid-function/</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># We run the neural network for each of these input values</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3 <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    shallow_2_1_3(x1,x2, ReLU, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_12, theta_20, theta_21, theta_22, theta_30, theta_31, theta_32)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plot_neural_2_inputs(x1,x2, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -508,13 +624,6 @@ y = \phi_{0}+\phi_{1}h_{1}+\phi_{2}h_{2}+\phi_{3}h_{3}.
 <div>
 <figure class="figure">
 <p><img src="snn_multivariate_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="snn_multivariate_files/figure-html/cell-10-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>

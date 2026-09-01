@@ -51,7 +51,11 @@ website:
         #   contents:
         # - linearregression.md
         - linearregression.ipynb
-        - text: "Shallow Neural Networks"
+        - section: snn.ipynb
+          contents:
+          - snn_multivariate.ipynb
+          - snn_general.ipynb
+          - snn_activations.ipynb
         - text: "Deep Neural Networks"
         - text: "Loss Functions"
         - text: "Gradient Descent"
@@ -61,11 +65,6 @@ website:
         - text: "Transformers"
         - text: "Large Language Models"
         - text: "Diffusion Models"
-        # - section: snn.ipynb
-        #   contents:
-        #   - snn_multivariate.ipynb
-        #   - snn_general.ipynb
-        #   - snn_activations.ipynb
         # - section: dnn.ipynb 
         #   contents:
         #   - dnn_clipping.ipynb

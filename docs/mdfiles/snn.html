@@ -194,11 +194,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#neural-network-example" id="toc-neural-network-example" class="nav-link active" data-scroll-target="#neural-network-example">Neural Network Example</a>
-  <ul class="collapse">
-  <li><a href="#neural-network-intuition" id="toc-neural-network-intuition" class="nav-link" data-scroll-target="#neural-network-intuition">Neural Network intuition</a></li>
+  <li><a href="#neural-network-intuition" id="toc-neural-network-intuition" class="nav-link active" data-scroll-target="#neural-network-intuition">Neural Network intuition</a></li>
   <li><a href="#depicting-neural-networks" id="toc-depicting-neural-networks" class="nav-link" data-scroll-target="#depicting-neural-networks">Depicting neural networks</a></li>
-  </ul></li>
   <li><a href="#universal-approximation-theorem" id="toc-universal-approximation-theorem" class="nav-link" data-scroll-target="#universal-approximation-theorem">Universal Approximation theorem</a></li>
   <li><a href="#multivariate-input-and-output" id="toc-multivariate-input-and-output" class="nav-link" data-scroll-target="#multivariate-input-and-output">Multivariate input and output</a>
   <ul class="collapse">
@@ -244,8 +241,8 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/16tA4OMIaZcd1K1m4KHBcf5CYnqiCW85l62AnuUBzmfs/edit">Slides</a></p>
 </div>
 </div>
-<section id="neural-network-example" class="level2">
-<h2 class="anchored" data-anchor-id="neural-network-example">Neural Network Example</h2>
+<p>Shallow neural networks are functions <span class="math inline">\(\boldsymbol{y = f_\phi[x]}\)</span> with parameters <span class="math inline">\(\boldsymbol{\phi}\)</span> that map multivariate inputs <span class="math inline">\(x\)</span> to multivariate outputs <span class="math inline">\(y\)</span>.</p>
+<p>We defer a full definition until section 3.4 and introduce the main ideas using an example network <span class="math inline">\(f[x, \phi]\)</span> that maps a scalar input <span class="math inline">\(x\)</span> to a scalar output <span class="math inline">\(y\)</span> and has ten parameters <span class="math inline">\(\phi = \{\phi_0, \phi_1, \phi_2, \phi_3, \theta_{10}, \theta_{11}, \theta_{20}, \theta_{21}, \theta_{30}, \theta_{31}\}\)</span>:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:snn_simple_eq}
 y &amp;=&amp; \mbox{f}[x,\boldsymbol\phi]\nonumber \\
 &amp;=&amp;\phi_{0}+\phi_{1}\mbox{a}[\theta_{10} + \theta_{11}x]+\phi_{2}\mbox{a}[\theta_{20} + \theta_{21}x]+\phi_{3}\mbox{a}[\theta_{30} + \theta_{31}x].
@@ -274,7 +271,6 @@ y = \phi_{0}+\phi_{1}h_{1}+\phi_{2}h_{2}+\phi_{3}h_{3}.
 <h3 class="anchored" data-anchor-id="depicting-neural-networks">Depicting neural networks</h3>
 <p><img src="assets/Chap03/ShallowNet.svg" style="filter: invert(1);" width="100%"></p>
 <p>Depicting neural networks. a) The input x is on the left, the hidden units h1, h2, and h3 in the center, and the output y on the right. Computation flows from left to right. The input is used to compute the hidden units, which are combined to create the output. Each of the ten arrows represents a parameter (intercepts in orange and slopes in black). Each parameter multiplies its source and adds the result to its target. For example, we multiply the parameter ϕ1 by source h1 and add it to y. We introduce additional nodes containing ones (orange circles) to incorporate the offsets into this scheme, so we multiply ϕ0 by one (with no effect) and add it to y. ReLU functions are applied at the hidden units. b) More typically, the intercepts, ReLU functions, and parameter names are omitted; this simpler depiction represents the same network.</p>
-</section>
 </section>
 <section id="universal-approximation-theorem" class="level2">
 <h2 class="anchored" data-anchor-id="universal-approximation-theorem">Universal Approximation theorem</h2>
