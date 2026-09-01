@@ -285,7 +285,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Activations</span></a>
+ <span class="menu-text">Activations Functions</span></a>
   </div>
 </li>
       </ul>
@@ -327,7 +327,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#universal-approximation-theorem" id="toc-universal-approximation-theorem" class="nav-link active" data-scroll-target="#universal-approximation-theorem">Universal Approximation theorem</a></li>
+  <li><a href="#model-capacity-cost-and-input-dimensions" id="toc-model-capacity-cost-and-input-dimensions" class="nav-link active" data-scroll-target="#model-capacity-cost-and-input-dimensions">Model capacity, cost and input dimensions</a></li>
+  <li><a href="#universal-approximation-theorem" id="toc-universal-approximation-theorem" class="nav-link" data-scroll-target="#universal-approximation-theorem">Universal Approximation theorem</a></li>
   </ul>
 </nav>
     </div>
@@ -362,80 +363,86 @@ h_{d} = \mbox{a}\left[\theta_{d0} + \sum_{i=1}^{D_{i}}\theta_{di}x_i\right],
 <p><span class="math display">\[\begin{eqnarray}\label{eq:snn_general_2}
 y_j = \phi_{j0}+\sum_{d=1}^{D}\phi_{jd}h_{d},
 \end{eqnarray}\]</span></p>
+<section id="model-capacity-cost-and-input-dimensions" class="level3">
+<h3 class="anchored" data-anchor-id="model-capacity-cost-and-input-dimensions">Model capacity, cost and input dimensions</h3>
+<p>Note that mumber of regions measures model expressivity/capacity. That is, how many distinct linear pieces the piecewise-linear function can have. Or in other words, how complicated a function the network can represent.</p>
+<p>Number of parameters on the other hand is the proxy for model cost. It includes memory to store the model, compute to train it, and (roughly) how much data you need to fit it without overfitting.</p>
+<p>Input dimension <span class="math inline">\(D_i\)</span> is a property of the problem at hand and not something you choose.</p>
+<p>Normally you’d expect these to move together: more capacity costs more parameters.</p>
+<p>The interesting result is that they don’t move together at the same rate — and the gap between them grows explosively with <span class="math inline">\(D_i\)</span>.</p>
+<p>The surprising decoupling is that number of parameters is linear in <span class="math inline">\(D\)</span> and <span class="math inline">\(D_i\)</span> i.e.&nbsp;parameter count grows like <span class="math inline">\(D \cdot D_i\)</span>. But number of regions _{j=0}^{D_i}$ grows combinatorially in <span class="math inline">\(D\)</span>, with the degree of that polynomial set by <span class="math inline">\(D_i\)</span>. The example below shows that with <span class="math inline">\(D=500\)</span> hidden units and <span class="math inline">\(D_i=100\)</span>, the network has only 51,001 parameters but can create more than <span class="math inline">\(10^{107}\)</span> regions.</p>
+<p>That’s not a subtle difference. This is saying that the number of regions ends up being more than the number of atoms in the universe, from a network that’s very small by modern standards. A linear increase in parameters (by increasing <span class="math inline">\(D_i\)</span>) produces a combinatorial explosion in regions. That’s the interesting part: the same parameter budget buys you vastly more expressive power as the input dimension grows.</p>
+<hr>
 <p>Note that as the input dimensions grow, the number of linear regions increases rapidly (figure 3.9). To get a feeling for how rapidly, consider that each hidden unit defines a hyperplane that delineates the part of space where this unit is active from the part where it is not (cyan lines in 3.8d–f). If we had the same number of hidden units as input dimensions Di, we could align each hyperplane with one of the coordinate axes (figure 3.10). For two input dimensions, this would divide the space into four quadrants. For three dimensions, this would create eight octants, and for Di dimensions, this would create 2Di orthants. Shallow neural networks usually have more hidden units than input dimensions, so they typically create more than 2Di linear regions.</p>
-<p><img src="assets/Chap03/ShallowRegions.svg" style="filter: invert(1);" width="100%"></p>
-<p>Linear regions vs.&nbsp;hidden units. a) Maximum possible regions as a function of the number of hidden units for five different input dimensions Di = {1, 5, 10, 50, 100}. The number of regions increases rapidly in high dimensions; with D = 500 units and input size Di = 100, there can be greater than 10107 regions (solid circle). b) The same data are plotted as a function of the number of parameters. The solid circle represents the same model as in panel (a) with D = 500 hidden units. This network has 51, 001 parameters and would be considered very small by modern standards.</p>
 <p><img src="assets/Chap03/ShallowHyperplanes.svg" style="filter: invert(1);" width="100%"></p>
 <p>Figure 3.10 Number of linear regions vs.&nbsp;input dimensions. a) With a single input dimension, a model with one hidden unit creates one joint, which divides the axis into two linear regions. b) With two input dimensions, a model with two hidden units can divide the input space using two lines (here aligned with axes) to create four regions. c) With three input dimensions, a model with three hidden units can divide the input space using three planes (again aligned with axes) to create eight regions. Continuing this argument, it follows that a model with Di input dimensions and Di hidden units can divide the input space with Di hyperplanes to create 2Di linear regions.</p>
+<p><img src="assets/Chap03/ShallowRegions.svg" style="filter: invert(1);" width="100%"></p>
+<p>Linear regions vs.&nbsp;hidden units. a) Maximum possible regions as a function of the number of hidden units for five different input dimensions Di = {1, 5, 10, 50, 100}. The number of regions increases rapidly in high dimensions; with D = 500 units and input size Di = 100, there can be greater than 10107 regions (solid circle). b) The same data are plotted as a function of the number of parameters. The solid circle represents the same model as in panel (a) with D = 500 hidden units. This network has 51, 001 parameters and would be considered very small by modern standards.</p>
 <p><img src="assets/Chap03/ShallowNetThreeInputsTwoOutputs.svg" style="filter: invert(1);" width="50%"></p>
 <p>Visualization of neural network with three inputs and two outputs. This network has twenty parameters. There are fifteen slopes (indicated by arrows) and five offsets (not shown).</p>
-<div id="9887dabd" class="cell" data-execution_count="1">
+<div id="9887dabd" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports plotting library</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'dark_background'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> number_regions(Di, D):</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  N <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,Di<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> N <span class="op">+</span> math.comb(D,j)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> N</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a9022d7c" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> number_regions(Di, D):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- implement Zaslavsky's formula</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># You can use math.comb() https://www.w3schools.com/python/ref_math_comb.asp</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this code</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  N <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> N</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="b407bd48" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of regions for 2D input (Di=2) and 3 hidden units (D=3) as in figure 3.8j</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> number_regions(<span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Di=2, D=3, Number of regions = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">, True value = 7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b407bd48" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> number_regions(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Di=2, D=3, Number of regions = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> number_regions(<span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Di=10, D=50, Number of regions = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Di=2, D=3, Number of regions = 1, True value = 7</code></pre>
+<pre><code>Di=2, D=3, Number of regions = 7
+Di=10, D=50, Number of regions = 13432735556</code></pre>
 </div>
 </div>
-<div id="8479e56f" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of regions for 10D input (Di=10) and 50 hidden units (D=50)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> number_regions(<span class="dv">10</span>, <span class="dv">50</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Di=10, D=50, Number of regions = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">, True value = 13432735556"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bf76da28" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Depending on how you implemented it, the calculation may fail when $D_i \gt D$ (not to worry...)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  N <span class="op">=</span> number_regions(<span class="dv">10</span>, <span class="dv">8</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Di=10, D=8, Number of regions = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> error:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"An exception occurred:"</span>, error)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Di=10, D=50, Number of regions = 1, True value = 13432735556</code></pre>
+<pre><code>Di=10, D=8, Number of regions = 256</code></pre>
 </div>
 </div>
-<div id="bf76da28" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Depending on how you implemented it, the calculation may fail when $D_i \gt D$ (not to worry...)</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  N <span class="op">=</span> number_regions(<span class="dv">10</span>, <span class="dv">8</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Di=10, D=8, Number of regions = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">, True value = 256"</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> error:</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"An exception occurred:"</span>, error)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Di=10, D=8, Number of regions = 1, True value = 256</code></pre>
-</div>
-</div>
-<div id="9b869937" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's plot the graph from figure 3.9a</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">50</span>,<span class="dv">100</span>])</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>regions <span class="op">=</span> np.zeros((dims.shape[<span class="dv">0</span>], <span class="dv">1000</span>))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c_dim <span class="kw">in</span> <span class="bu">range</span>(dims.shape[<span class="dv">0</span>]):</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    D_i <span class="op">=</span> dims[c_dim]</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (<span class="ss">f"Counting regions for </span><span class="sc">{</span>D_i<span class="sc">}</span><span class="ss"> input dimensions"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> D <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        regions[c_dim, D] <span class="op">=</span> number_regions(np.<span class="bu">min</span>([D_i,D]), D)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">0</span>,:],<span class="st">'k-'</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">1</span>,:],<span class="st">'b-'</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">2</span>,:],<span class="st">'m-'</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">3</span>,:],<span class="st">'c-'</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">4</span>,:],<span class="st">'y-'</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">'$D_i$=1'</span>, <span class="st">'$D_i$=5'</span>, <span class="st">'$D_i$=10'</span>, <span class="st">'$D_i$=50'</span>, <span class="st">'$D_i$=100'</span>])</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of hidden units, D"</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of regions, N"</span>)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">0</span>,<span class="dv">1000</span>])</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">1e1</span>,<span class="fl">1e150</span>])</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9b869937" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's plot the graph from figure 3.9a</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">50</span>,<span class="dv">100</span>])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>regions <span class="op">=</span> np.zeros((dims.shape[<span class="dv">0</span>], <span class="dv">1000</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c_dim <span class="kw">in</span> <span class="bu">range</span>(dims.shape[<span class="dv">0</span>]):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    D_i <span class="op">=</span> dims[c_dim]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (<span class="ss">f"Counting regions for </span><span class="sc">{</span>D_i<span class="sc">}</span><span class="ss"> input dimensions"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> D <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        regions[c_dim, D] <span class="op">=</span> number_regions(np.<span class="bu">min</span>([D_i,D]), D)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">0</span>,:],<span class="st">'k-'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">1</span>,:],<span class="st">'b-'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">2</span>,:],<span class="st">'m-'</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">3</span>,:],<span class="st">'c-'</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>ax.semilogy(regions[<span class="dv">4</span>,:],<span class="st">'y-'</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">'$D_i$=1'</span>, <span class="st">'$D_i$=5'</span>, <span class="st">'$D_i$=10'</span>, <span class="st">'$D_i$=50'</span>, <span class="st">'$D_i$=100'</span>])</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of hidden units, D"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of regions, N"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">0</span>,<span class="dv">1000</span>])</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">1e1</span>,<span class="fl">1e150</span>])</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Counting regions for 1 input dimensions
 Counting regions for 5 input dimensions
@@ -446,57 +453,55 @@ Counting regions for 100 input dimensions</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="snn_general_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="snn_general_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="eab807b4" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's compute and plot the number of regions as a function of the number of parameters as in figure 3.9b</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First let's write a function that computes the number of parameters as a function of the input dimension and number of hidden units (assuming just one output)</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> number_parameters(D_i, D):</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- replace this code with the proper calculation</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  N <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> N <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="eab807b4" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's compute and plot the number of regions as a function of the number of parameters as in figure 3.9b</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First let's write a function that computes the number of parameters as a function of the input dimension and number of hidden units (assuming just one output)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> number_parameters(D_i, D):</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  N <span class="op">=</span> ((D_i <span class="op">*</span> D) <span class="op">+</span> D) <span class="op">+</span> D <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> N <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e5b38439" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's test the code</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> number_parameters(<span class="dv">10</span>, <span class="dv">8</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Di=10, D=8, Number of parameters = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">, True value = 97"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e5b38439" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's test the code</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> number_parameters(<span class="dv">10</span>, <span class="dv">8</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Di=10, D=8, Number of parameters = </span><span class="sc">{</span><span class="bu">int</span>(N)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Di=10, D=8, Number of parameters = 1, True value = 97</code></pre>
+<pre><code>Di=10, D=8, Number of parameters = 97</code></pre>
 </div>
 </div>
-<div id="df493b31" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's plot the graph from figure 3.9b (takes ~1min)</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">50</span>,<span class="dv">100</span>])</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>regions <span class="op">=</span> np.zeros((dims.shape[<span class="dv">0</span>], <span class="dv">200</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> np.zeros((dims.shape[<span class="dv">0</span>], <span class="dv">200</span>))</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll compute the five lines separately this time to make it faster</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c_dim <span class="kw">in</span> <span class="bu">range</span>(dims.shape[<span class="dv">0</span>]):</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    D_i <span class="op">=</span> dims[c_dim]</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (<span class="ss">f"Counting regions for </span><span class="sc">{</span>D_i<span class="sc">}</span><span class="ss"> input dimensions"</span>)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c_hidden <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">200</span>):</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Iterate over different ranges of number hidden variables for different input sizes</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        D <span class="op">=</span> <span class="bu">int</span>(c_hidden <span class="op">*</span> <span class="dv">500</span> <span class="op">/</span> D_i)</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        params[c_dim, c_hidden] <span class="op">=</span>  number_parameters(D_i, D)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        regions[c_dim, c_hidden] <span class="op">=</span> number_regions(np.<span class="bu">min</span>([D_i,D]), D)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">0</span>,:], regions[<span class="dv">0</span>,:],<span class="st">'k-'</span>)</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">1</span>,:], regions[<span class="dv">1</span>,:],<span class="st">'b-'</span>)</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">2</span>,:], regions[<span class="dv">2</span>,:],<span class="st">'m-'</span>)</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">3</span>,:], regions[<span class="dv">3</span>,:],<span class="st">'c-'</span>)</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">4</span>,:], regions[<span class="dv">4</span>,:],<span class="st">'y-'</span>)</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">'$D_i$=1'</span>, <span class="st">'$D_i$=5'</span>, <span class="st">'$D_i$=10'</span>, <span class="st">'$D_i$=50'</span>, <span class="st">'$D_i$=100'</span>])</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of parameters, D"</span>)</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of regions, N"</span>)</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">0</span>,<span class="dv">100000</span>])</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">1e1</span>,<span class="fl">1e150</span>])</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="df493b31" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's plot the graph from figure 3.9b (takes ~1min)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">50</span>,<span class="dv">100</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>regions <span class="op">=</span> np.zeros((dims.shape[<span class="dv">0</span>], <span class="dv">200</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> np.zeros((dims.shape[<span class="dv">0</span>], <span class="dv">200</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll compute the five lines separately this time to make it faster</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c_dim <span class="kw">in</span> <span class="bu">range</span>(dims.shape[<span class="dv">0</span>]):</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    D_i <span class="op">=</span> dims[c_dim]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (<span class="ss">f"Counting regions for </span><span class="sc">{</span>D_i<span class="sc">}</span><span class="ss"> input dimensions"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c_hidden <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">200</span>):</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Iterate over different ranges of number hidden variables for different input sizes</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        D <span class="op">=</span> <span class="bu">int</span>(c_hidden <span class="op">*</span> <span class="dv">500</span> <span class="op">/</span> D_i)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        params[c_dim, c_hidden] <span class="op">=</span>  number_parameters(D_i, D)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        regions[c_dim, c_hidden] <span class="op">=</span> number_regions(np.<span class="bu">min</span>([D_i,D]), D)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">0</span>,:], regions[<span class="dv">0</span>,:],<span class="st">'k-'</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">1</span>,:], regions[<span class="dv">1</span>,:],<span class="st">'b-'</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">2</span>,:], regions[<span class="dv">2</span>,:],<span class="st">'m-'</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">3</span>,:], regions[<span class="dv">3</span>,:],<span class="st">'c-'</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>ax.semilogy(params[<span class="dv">4</span>,:], regions[<span class="dv">4</span>,:],<span class="st">'y-'</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">'$D_i$=1'</span>, <span class="st">'$D_i$=5'</span>, <span class="st">'$D_i$=10'</span>, <span class="st">'$D_i$=50'</span>, <span class="st">'$D_i$=100'</span>])</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of parameters, D"</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of regions, N"</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">0</span>,<span class="dv">100000</span>])</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">1e1</span>,<span class="fl">1e150</span>])</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Counting regions for 1 input dimensions
 Counting regions for 5 input dimensions
@@ -507,13 +512,27 @@ Counting regions for 100 input dimensions</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="snn_general_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="snn_general_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<section id="why-this-matters-practically" class="level4">
+<h4 class="anchored" data-anchor-id="why-this-matters-practically">Why this matters practically</h4>
+<p>It explains why neural nets don’t suffer the classical curse of dimensionality the way grid-based or nearest-neighbor methods do. A method that tries to cover <span class="math inline">\(D_i\)</span>-dimensional space with a fixed grid needs exponentially many cells as <span class="math inline">\(D_i\)</span> grows — you pay for the exponential blowup in parameters. A shallow network gets the exponential blowup in regions for free, just by virtue of how hyperplanes intersect in high dimensions.</p>
+<p>It’s a warning about capacity vs.&nbsp;generalization. Region count is an upper bound on expressivity, not a promise of good behavior — a network with <span class="math inline">\(10^{107}\)</span> potential regions has enormous capacity to overfit if you don’t have enough data or regularization. This tension (huge theoretical capacity vs.&nbsp;models that still generalize) is one of the open puzzles in deep learning theory that this result sets up.</p>
+<p>It previews why depth matters even more than width. This chapter only analyzes shallow networks. The same style of region-counting analysis (done later for deep networks) shows that stacking layers multiplies this effect further — depth grows regions even faster than adding width does at fixed parameter cost. So this shallow-network result is the simplest case of a much bigger idea: neural networks’ efficiency comes from how their pieces compose combinatorially, not just from raw parameter count.</p>
+</section>
+</section>
 <section id="universal-approximation-theorem" class="level2">
 <h2 class="anchored" data-anchor-id="universal-approximation-theorem">Universal Approximation theorem</h2>
+<p>The Universal Approximation Theorem is one of the foundational ideas behind neural networks. In broad terms, it states that a neural network with at least one sufficiently wide hidden layer can approximate any continuous function on a bounded domain, provided it uses a suitable nonlinear activation function.</p>
+<p>Imagine an unknown process that turns inputs into outputs: pixels into an object label, economic indicators into a forecast, or sensor readings into a control signal. If that process can be represented by a continuous function, the theorem tells us that a neural network can, in principle, reproduce it as accurately as we wish—assuming the network has enough hidden units and the right parameters.</p>
+<p>What makes this result interesting is its extraordinary generality. Neural networks do not need a separate mathematical architecture for every possible relationship. The same basic building blocks—weighted sums followed by nonlinear transformations—can represent an immense variety of functions. This helps explain why neural networks can be applied across fields as different as computer vision, language processing, medicine, robotics, and scientific modeling.</p>
+<p>The theorem also highlights why nonlinearity is essential. A network composed only of linear operations remains a linear function regardless of how many layers it has. Nonlinear activation functions allow simple computational units to combine into intricate curves, boundaries, and patterns.</p>
+<p>However, the theorem is an existence result, not a guarantee of practical success. It says that suitable parameters exist, but it does not tell us how to find them, how much data we need, how large the network must be, or whether the model will perform well on unseen examples. A network capable of representing a function may still be difficult to train. It may also memorize its training data instead of learning the underlying pattern.</p>
+<p>For this reason, the theorem is best understood as establishing the expressive potential of neural networks—not their automatic intelligence. It assures us that representation is possible, while leaving optimization, efficiency, generalization, and interpretability as the central practical challenges.</p>
+<p>That distinction is precisely why the Universal Approximation Theorem remains so compelling. It offers both an ambitious promise and an important warning: neural networks can represent remarkably complex relationships, but possibility alone does not make learning easy.</p>
 <p><img src="assets/Chap03/ShallowApproximate.svg" style="filter: invert(1);" width="100%"></p>
 <p>Approximation of a 1D function (dashed line) by a piecewise linear model. a–c) As the number of regions increases, the model becomes closer and closer to the continuous function. A neural network with a scalar input creates one extra linear region per hidden unit. This idea generalizes to functions in Di dimensions. The universal approximation theorem proves that, with enough hidden units, there exists a shallow neural network that can describe any given continuous function defined on a compact subset of RDi to arbitrary precision.</p>
 <p><span class="math display">\[\begin{eqnarray}

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Activations</title>
+<title>Activations Functions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -223,7 +223,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./snn.html">Shallow Neural Networks</a></li><li class="breadcrumb-item"><a href="./snn_activations.html">Activations</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./snn.html">Shallow Neural Networks</a></li><li class="breadcrumb-item"><a href="./snn_activations.html">Activations Functions</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -273,7 +273,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multivariate Networks</span></a>
+ <span class="menu-text">Multiple inputs / outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -285,7 +285,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./snn_activations.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Activations</span></a>
+ <span class="menu-text">Activations Functions</span></a>
   </div>
 </li>
       </ul>
@@ -330,15 +330,16 @@ window.Quarto = {
   <li><a href="#sigmoid-activation-function" id="toc-sigmoid-activation-function" class="nav-link active" data-scroll-target="#sigmoid-activation-function">Sigmoid activation function</a></li>
   <li><a href="#heaviside-function" id="toc-heaviside-function" class="nav-link" data-scroll-target="#heaviside-function">Heaviside function</a></li>
   <li><a href="#linear-activation-functions" id="toc-linear-activation-functions" class="nav-link" data-scroll-target="#linear-activation-functions">Linear Activation functions</a></li>
+  <li><a href="#derivatives-of-activation-functions" id="toc-derivatives-of-activation-functions" class="nav-link" data-scroll-target="#derivatives-of-activation-functions">Derivatives of Activation Functions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./snn.html">Shallow Neural Networks</a></li><li class="breadcrumb-item"><a href="./snn_activations.html">Activations</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./snn.html">Shallow Neural Networks</a></li><li class="breadcrumb-item"><a href="./snn_activations.html">Activations Functions</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Activations</h1>
+<h1 class="title">Activations Functions</h1>
 </div>
 
 
@@ -355,6 +356,8 @@ window.Quarto = {
 </header>
 
 
+<p>Activation functions are what make a neural network more than a fancy linear regression. Recall that a shallow network first combines the input into several linear pre-activations, then passes each one through an activation function <span class="math inline">\(a[\bullet]\)</span> before recombining the results into the output. Without that nonlinear step, composing linear functions of linear functions is still just a linear function – no matter how many hidden units or layers you stack on, the whole network could be collapsed back down to a single linear map (see the Linear Activation Functions section below). It’s specifically the <em>nonlinearity</em> introduced by <span class="math inline">\(a[\bullet]\)</span> that lets the network bend, kink, or curve its output enough to approximate genuinely complicated functions.</p>
+<p>There isn’t one “correct” choice of activation function – different functions trade off smoothness, computational cost, and (as we’ll see once we get to fitting models) how well gradient information flows through them during training. The rest of this page walks through several common choices – ReLU, the sigmoid, the heaviside step function, and a deliberately-broken linear activation – alongside a gallery of other activations used in modern practice.</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:snn_harswish}
 \mbox{HardSwish}[z] = \begin{cases} 0 &amp; \quad z &lt;-3 \\ z(z+3)/6 &amp; \quad -3\leq z\leq 3 \\ z &amp;\quad z&gt;3 \end{cases}.
 \end{eqnarray}\]</span></p>
@@ -372,7 +375,9 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports plotting library</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'dark_background'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="7308fd22" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the shallow neural network.  We'll assume input in is range [0,1] and output [-1,1]</span></span>
@@ -412,7 +417,7 @@ window.Quarto = {
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>      ax.plot(x_data[i], y_data[i],)</span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="49fe137b" class="cell" data-execution_count="4">
+<div id="49fe137b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a shallow neural network with, one input, one output, and three hidden units</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shallow_1_1_3(x, activation_fn, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  pre_1 <span class="op">=</span> theta_10 <span class="op">+</span> theta_11 <span class="op">*</span> x</span>
@@ -433,13 +438,13 @@ window.Quarto = {
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return everything we have calculated</span></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e28b0fd4" class="cell" data-execution_count="5">
+<div id="e28b0fd4" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the Rectified Linear Unit (ReLU) function</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ReLU(preactivation):</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> preactivation.clip(<span class="fl">0.0</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6b81ad29" class="cell" data-execution_count="6">
+<div id="6b81ad29" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now lets define some parameters and run the neural network</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="fl">0.3</span> <span class="op">;</span> theta_11 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="fl">2.0</span></span>
@@ -474,17 +479,16 @@ window.Quarto = {
 <p>The ReLU isn’t the only kind of activation function. For a long time, people used sigmoid functions. A logistic sigmoid function is defined by the equation</p>
 <p><span class="math display">\[ f[z] = \frac{1}{1 + \text{exp}[-10z]} \]</span></p>
 <p>(Note that the factor of 10 is not standard – but it allow us to plot on the same axes as the ReLU examples)</p>
-<div id="0f53c935" class="cell">
+<div id="0f53c935" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the sigmoid function</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sigmoid(preactivation):</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> write code to implement the sigmoid function and compute the activation at the</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hidden unit from the preactivation.  Use the np.exp() function.</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> np.zeros_like(preactivation)<span class="op">;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span><span class="dv">10</span><span class="op">*</span>preactivation))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d046aadb" class="cell">
+<div id="d046aadb" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make an array of inputs</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sig_z <span class="op">=</span> sigmoid(z)</span>
@@ -495,8 +499,15 @@ window.Quarto = {
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])<span class="op">;</span>ax.set_ylim([<span class="dv">0</span>,<span class="dv">1</span>])</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'z'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'sig[z]'</span>)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
-<div id="b551df1f" class="cell">
+</div>
+</div>
+<div id="b551df1f" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="fl">0.3</span> <span class="op">;</span> theta_11 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="fl">2.0</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.65</span></span>
@@ -510,6 +521,20 @@ window.Quarto = {
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    shallow_1_1_3(x, sigmoid, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31)</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plot_neural(x, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3, plot_all<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>You probably notice that this gives nice smooth curves. So why don’t we use this? Aha… it’s not obvious right now, but we will get to it when we learn to fit models.</p>
 </section>
@@ -523,18 +548,16 @@ H(x)=
 1, &amp; z \geq 0.
 \end{cases}
 \]</span></p>
-<div id="3655bba2" class="cell">
+<div id="3655bba2" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the heaviside function</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> heaviside(preactivation):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> write code to implement the heaviside function and compute the activation at the</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hidden unit from the preactivation.  Depending on your implementation you may need to</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># convert a Boolean array to an array of ones and zeros.  To do this, use .astype(int)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> np.zeros_like(preactivation)<span class="op">;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  activation <span class="op">=</span> (preactivation <span class="op">&gt;=</span> <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9e3be52a" class="cell">
+<div id="9e3be52a" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make an array of inputs</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>heav_z <span class="op">=</span> heaviside(z)</span>
@@ -545,8 +568,15 @@ H(x)=
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlim([<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>])<span class="op">;</span>ax.set_ylim([<span class="op">-</span><span class="dv">2</span>,<span class="dv">2</span>])</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'z'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'heaviside[z]'</span>)</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
-<div id="6faa16d8" class="cell">
+</div>
+</div>
+<div id="6faa16d8" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>theta_10 <span class="op">=</span>  <span class="fl">0.3</span> <span class="op">;</span> theta_11 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>theta_20 <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span>  <span class="op">;</span> theta_21 <span class="op">=</span> <span class="fl">2.0</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>theta_30 <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>  <span class="op">;</span> theta_31 <span class="op">=</span> <span class="fl">0.65</span></span>
@@ -560,6 +590,20 @@ H(x)=
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    shallow_1_1_3(x, heaviside, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31)</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plot_neural(x, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3, plot_all<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>This can approximate any function, but the output is discontinuous, and there are also reasons not to use it that we will discover when we learn more about model fitting.</p>
 </section>
@@ -567,7 +611,7 @@ H(x)=
 <h2 class="anchored" data-anchor-id="linear-activation-functions">Linear Activation functions</h2>
 <p>Neural networks don’t work if the activation function is linear. For example, consider what would happen if the activation function was:</p>
 <p><span class="math display">\[ lin[z] = a + bz \]</span></p>
-<div id="78c27a83" class="cell">
+<div id="78c27a83" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the linear activation function</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lin(preactivation):</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span><span class="dv">0</span></span>
@@ -577,7 +621,7 @@ H(x)=
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> activation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="efc5308b" class="cell">
+<div id="efc5308b" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. The linear activation function above just returns the input: (0+1*z) = z</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Before running the code Make a prediction about what the ten panels of the drawing will look like</span></span>
@@ -599,7 +643,94 @@ H(x)=
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    shallow_1_1_3(x, lin, phi_0,phi_1,phi_2,phi_3, theta_10, theta_11, theta_20, theta_21, theta_30, theta_31)</span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># And then plot it</span></span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plot_neural(x, y, pre_1, pre_2, pre_3, act_1, act_2, act_3, w_act_1, w_act_2, w_act_3, plot_all<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="snn_activations_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="derivatives-of-activation-functions" class="level2">
+<h2 class="anchored" data-anchor-id="derivatives-of-activation-functions">Derivatives of Activation Functions</h2>
+<p>Everything above focused on what each activation function <em>outputs</em>. But when we get to fitting models, what will actually matter is each function’s <em>derivative</em> – gradient-based learning adjusts every parameter <span class="math inline">\(\theta_{\bullet}\)</span> by asking how the loss changes as <span class="math inline">\(\theta_{\bullet}\)</span> changes, and that question runs straight through <span class="math inline">\(a'[\bullet]\)</span> via the chain rule. A hidden unit with a well-behaved derivative gives the optimizer a clear signal about which direction to move; a hidden unit whose derivative vanishes gives it nothing to work with, no matter how good the function’s output looks.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{ReLU}'[z] &amp;= \begin{cases} 0, &amp; z &lt; 0, \\ 1, &amp; z &gt; 0 \end{cases}
+&amp;&amp;\text{(undefined exactly at } z=0\text{; we take it to be 0 below)} \\[6pt]
+f'[z] &amp;= 10\, f[z]\bigl(1-f[z]\bigr)
+&amp;&amp;\text{for the (scaled) sigmoid } f[z] = \dfrac{1}{1+e^{-10z}} \\[6pt]
+H'[z] &amp;= 0 \quad \text{for all } z \neq 0
+&amp;&amp;\text{(a Dirac delta at } z=0 \text{ in the formal sense)} \\[6pt]
+\text{lin}'[z] &amp;= b
+&amp;&amp;\text{for } \text{lin}[z] = a + bz
+\end{aligned}
+\]</span></p>
+<div id="f3821b0c" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derivative of ReLU: 0 for z&lt;0, 1 for z&gt;0 (undefined exactly at z=0; we set it to 0)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ReLU_derivative(preactivation):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  derivative <span class="op">=</span> (preactivation <span class="op">&gt;</span> <span class="dv">0</span>).astype(<span class="bu">float</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> derivative</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Derivative of the (scaled) sigmoid: f'(z) = 10 * f(z) * (1 - f(z))</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sigmoid_derivative(preactivation):</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  f <span class="op">=</span> sigmoid(preactivation)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  derivative <span class="op">=</span> <span class="dv">10</span> <span class="op">*</span> f <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> f)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> derivative</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Derivative of the heaviside step: 0 everywhere except at z=0, where it is</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># formally undefined (a Dirac delta in the limit). We plot it as 0 everywhere,</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># since that is exactly what a gradient-based optimizer would see.</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> heaviside_derivative(preactivation):</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  derivative <span class="op">=</span> np.zeros_like(preactivation)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> derivative</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Derivative of the linear activation a + bz is just the constant b</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lin_derivative(preactivation, b<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  derivative <span class="op">=</span> np.full_like(preactivation, b)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> derivative</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1be9e89a" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare each activation function (top row) with its derivative (bottom row)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.01</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">0</span>].plot(z, ReLU(z), <span class="st">'r-'</span>)<span class="op">;</span>      axs[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">'ReLU'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">1</span>].plot(z, sigmoid(z), <span class="st">'r-'</span>)<span class="op">;</span>   axs[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">'Sigmoid'</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">2</span>].plot(z, heaviside(z), <span class="st">'r-'</span>)<span class="op">;</span> axs[<span class="dv">0</span>,<span class="dv">2</span>].set_title(<span class="st">'Heaviside'</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">3</span>].plot(z, lin(z), <span class="st">'r-'</span>)<span class="op">;</span>       axs[<span class="dv">0</span>,<span class="dv">3</span>].set_title(<span class="st">'Linear'</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">0</span>].set_ylabel(<span class="st">'$a[z]$'</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">0</span>].plot(z, ReLU_derivative(z), <span class="st">'c-'</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">1</span>].plot(z, sigmoid_derivative(z), <span class="st">'c-'</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">2</span>].plot(z, heaviside_derivative(z), <span class="st">'c-'</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">3</span>].plot(z, lin_derivative(z), <span class="st">'c-'</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">0</span>].set_ylabel(<span class="st">"$a'[z]$"</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axs.flat:</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  ax.set_xlabel(<span class="st">'$z$'</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  ax.set_xlim([<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice the pattern in the bottom row:</p>
+<ul>
+<li><strong>ReLU’s</strong> derivative is a clean step – exactly 0 on one side of the joint and exactly 1 on the other. This is cheap to compute, but a unit that gets pushed permanently into the <span class="math inline">\(z&lt;0\)</span> region receives a derivative of 0 forever and stops learning entirely. This is the well-known “dying ReLU” problem.</li>
+<li><strong>Sigmoid’s</strong> derivative is smooth everywhere, but it shrinks to 0 as <span class="math inline">\(|z|\)</span> grows large – the function <em>saturates</em>. This saturation is exactly the reason foreshadowed earlier for why we don’t just use the nice, smooth sigmoid: stack a few saturating layers together and the gradient reaching the earliest layers can vanish almost completely.</li>
+<li><strong>Heaviside’s</strong> derivative is 0 almost everywhere. Even though the heaviside function can represent sharp, discontinuous decision boundaries, a gradient-based optimizer looking at <span class="math inline">\(H'[z]\)</span> gets no information whatsoever about which direction to adjust <span class="math inline">\(\theta\)</span> – this, not just the discontinuous output, is the real reason it’s never used as a hidden-unit activation in practice.</li>
+<li><strong>Linear’s</strong> derivative is a constant, independent of <span class="math inline">\(z\)</span>. Combined with the fact that composing linear functions is still linear, this is exactly why a network built entirely of linear activations can never do more than linear regression, no matter how many hidden units or layers you add.</li>
+</ul>
+<p>The activations in the gallery figure above (tanh, Leaky ReLU, GELU, Swish, ELU, …) were all designed, in one way or another, to dodge one of these two failure modes – staying non-zero almost everywhere (unlike heaviside) while avoiding the sigmoid’s saturation and the plain ReLU’s “dead zone.”</p>
 
 
 </section>
