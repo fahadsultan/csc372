@@ -200,6 +200,21 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="./CSC_372_Project_Part_1.html">
+ <span class="dropdown-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project2.html">
+ <span class="dropdown-text">PyTorch: A Modern Deep Learning Library</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
 <span class="menu-text">Moodle Page</span></a>
@@ -652,8 +667,8 @@ h'_{3} &amp;=&amp; \mbox{a}[\psi_{30} + \psi_{31}h_{1}+ \psi_{32}h_{2}+ \psi_{33
 \end{eqnarray}\]</span></p>
 <p>where <span class="math inline">\(\psi_{10} = θ'_{10} + θ'_{11}\phi_0, \psi_{11} = θ′_{11}\phi_1,\psi_{12} = θ'_{11}\phi_2\)</span> and so on. The result is a network with two hidden layers, each containing three hidden units and one input and one output.</p>
 <p><img src="assets/Chap04/DeepTwoLayer.svg" style="filter: invert(1);" width="100%"></p>
-<p>It follows that a network with two layers can represent the family of functions created by passing the output of one single-layer network into another.</p>
-<p>In fact, it represents a broader family because in equation 4.6, the nine slope parameters <span class="math inline">\(\psi_{11},\psi_{21},...,\psi_{33}\)</span> can take arbitrary values, whereas, in equation 4.5, these parameters are constrained to be the outer product <span class="math inline">\([\theta'_{11},\theta'_{21},\theta'_{31}]^T\)</span> [<span class="math inline">\(\phi_1,\phi_2,\phi_3\)</span>].</p>
+<p>It follows that <span style="color: #a183de;">a network with two layers can represent the family of functions created by passing the output of one single-layer network into another</span>.</p>
+<p>In fact, it represents a broader family because in equation above, the nine slope parameters <span class="math inline">\(\psi_{11},\psi_{21},...,\psi_{33}\)</span> can take arbitrary values, whereas, in equation for concatenated networks, these parameters are constrained to be the outer product <span class="math inline">\([\theta'_{11},\theta'_{21},\theta'_{31}]^T\)</span> [<span class="math inline">\(\phi_1,\phi_2,\phi_3\)</span>].</p>
 <!-- ## Take away conclusion
 
 With very few parameters, we can make A LOT of linear regions, but they depend on one another in complex ways that quickly become too difficult to understand intuitively. -->

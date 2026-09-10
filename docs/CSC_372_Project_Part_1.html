@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>csc_372_project_part_1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./logo.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-syllabus" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Syllabus</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-syllabus">    
+        <li>
+    <a class="dropdown-item" href="./syllabus/about.html">
+ <span class="dropdown-text">Course Description and Goals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/grading.html">
+ <span class="dropdown-text">Grading</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/academic_success.html">
+ <span class="dropdown-text">Center for Academic Success</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/textbook.html">
+ <span class="dropdown-text">Textbooks &amp; Other Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/integrity.html">
+ <span class="dropdown-text">Academic Integrity</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/mental_health.html">
+ <span class="dropdown-text">Mental Health Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/accomodations.html">
+ <span class="dropdown-text">Accomodations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/title_9.html">
+ <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="./CSC_372_Project_Part_1.html">
+ <span class="dropdown-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project2.html">
+ <span class="dropdown-text">What is PyTorch?</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
+<span class="menu-text">Moodle Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syllabus/appointment.html"> 
+<span class="menu-text">Office Hours</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://calendly.com/ssultan-dpq/"> 
+<span class="menu-text">Set an Appointment</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./CSC_372_Project_Part_1.html"><strong>Byte Pair Encoding (BPE)</strong></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./CSC_372_Project_Part_1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Project2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What is PyTorch?</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#byte-pair-encoding-bpe" id="toc-byte-pair-encoding-bpe" class="nav-link active" data-scroll-target="#byte-pair-encoding-bpe"><strong>Byte Pair Encoding (BPE)</strong></a>
+  <ul class="collapse">
+  <li><a href="#count-pairs" id="toc-count-pairs" class="nav-link" data-scroll-target="#count-pairs"><strong>1. Count Pairs</strong></a></li>
+  <li><a href="#merge" id="toc-merge" class="nav-link" data-scroll-target="#merge"><strong>2. Merge</strong></a></li>
+  <li><a href="#iterative-merging" id="toc-iterative-merging" class="nav-link" data-scroll-target="#iterative-merging"><strong>3. Iterative Merging</strong></a></li>
+  <li><a href="#decoding" id="toc-decoding" class="nav-link" data-scroll-target="#decoding"><strong>4. Decoding</strong></a></li>
+  <li><a href="#encoding" id="toc-encoding" class="nav-link" data-scroll-target="#encoding"><strong>5. Encoding</strong></a></li>
+  <li><a href="#regex-pattern-splitting" id="toc-regex-pattern-splitting" class="nav-link" data-scroll-target="#regex-pattern-splitting"><strong>6. Regex Pattern Splitting</strong></a></li>
+  <li><a href="#special-tokens" id="toc-special-tokens" class="nav-link" data-scroll-target="#special-tokens"><strong>7. Special tokens</strong></a></li>
+  <li><a href="#tokenizer-class" id="toc-tokenizer-class" class="nav-link" data-scroll-target="#tokenizer-class"><strong>8.</strong> Tokenizer class</a></li>
+  <li><a href="#inspecting-gpt-2-and-gpt-4-tokenizers" id="toc-inspecting-gpt-2-and-gpt-4-tokenizers" class="nav-link" data-scroll-target="#inspecting-gpt-2-and-gpt-4-tokenizers"><strong>Inspecting GPT-2 and GPT-4 Tokenizers</strong></a></li>
+  <li><a href="#summary-architecture-comparison" id="toc-summary-architecture-comparison" class="nav-link" data-scroll-target="#summary-architecture-comparison">Summary: Architecture Comparison</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+<center>
+<h2 class="anchored">
+</h2>
+</center>
+<center>
+<h2 class="anchored">
+<b>Fall 2026</b><br> <b>CSC-372 Project Part 1<br> Building our own GPT Tokenizer <br>
+</b></h2><b>
+</b><p><b></b></p>
+<!-- Tokenization of internet-scale raw text -->
+<img src="https://miro.medium.com/v2/1*fT2PXQNcHFKgdsKh8oWa5Q.png" width="80%" style="border: 10px solid black;">
+</center>
+<!-- <img src="https://www.ibm.com/content/adobe-cms/us/en/think/topics/tokenization/jcr:content/root/table_of_contents/body-article-8/image_1365729646.coreimg.png/1763390188552/tokenization-for-nlp.png" style="border: 10px solid black;"> -->
+<p>Tokenization is the process of converting text into small units called <strong>tokens</strong>, which an LLM can then represent numerically and process.</p>
+<p>A token might be: - A whole word: apple - Part of a word: token + ization - Punctuation: ? - Sometimes whitespace or special control symbols</p>
+<p>For example:</p>
+<pre><code>"Tokenization is useful."
+→ ["Token", "ization", " is", " useful", "."]
+→ [2942, 2065, 374, 5505, 13]</code></pre>
+<p>The exact split and numbers depend on a specific model’s tokenizer.</p>
+<p>You can explore tokenization of multiple modern LLMs at the following website: <a href="https://tiktokenizer.vercel.app">https://tiktokenizer.vercel.app</a></p>
+<p>The model can be selected from the dropdown in the top-right corner. Try copy pasting the following example string and select <code>GPT-2</code> from the dropdown:</p>
+<pre><code>Tokenization is at the heart of much weirdness of LLMs. Do not brush it off.
+
+127 + 677 = 804
+1275 + 6773 = 8041
+
+Egg.
+I have an Egg.
+egg.
+EGG.
+
+تربیتی اعداد و شمار کی نسبتاً کمی کی وجہ سے اردو اور دیگر بین الاقوامی زبانیں اکثر انگریزی کے مقابلے بہت زیادہ ٹوکنز میں بٹ جاتی ہیں۔
+
+for i in range(1, 101):
+    if i % 3 == 0 and i % 5 == 0:
+        print("FizzBuzz")
+    elif i % 3 == 0:
+        print("Fizz")
+    elif i % 5 == 0:
+        print("Buzz")
+    else:
+        print(i)</code></pre>
+<p>Some things to note for GPT-2 tokenization are:</p>
+<ul>
+<li><p><strong>Tokens are arbitrary text chunks</strong>: A token can represent an entire word, part of a word, punctuation, whitespace, or several characters. For example, <code>Tokenization</code> is divided into two tokens by the GPT-2 tokenizer.</p></li>
+<li><p><strong>Spaces are often attached to words</strong>: A token might represent ” the” (including the leading space) rather than just “the”. Consequently, the same word can receive different tokens depending on where it appears.</p></li>
+<li><p><strong>Numbers are divided inconsistently</strong>: One number might be represented by a single token while another similar number is split into two or more. This makes arithmetic harder because the model does not consistently see individual digits or complete numbers.</p></li>
+<li><p><strong>Position and capitalization change tokenization</strong>: Note this with <code>egg</code>: at the beginning of a string it may use two tokens, while <code>egg</code> following a space may be one token. <code>egg</code>, <code>Egg</code>, and other capitalization patterns can all have different token IDs.</p></li>
+<li><p><strong>The model must learn that different tokens can mean the same thing</strong>: Humans immediately recognize those versions of <code>egg</code> as the same concept. The model must infer that relationship from training examples because the tokenizer presents them as different symbols.</p></li>
+<li><p><strong>English is generally tokenized more efficiently than many other languages</strong>: Because tokenizer training data contains disproportionately more English, English expressions tend to form larger, reusable chunks. Urdu and other languages may be fragmented into many more tokens for the same meaning.</p></li>
+<li><p><strong>Inefficient tokenization consumes the context window</strong>: If equivalent Urdu text requires more tokens than English, less actual content fits into the model’s fixed token budget. Non-English text can be thought of as “stretched out” from the Transformer’s perspective.</p></li>
+<li><p><strong>GPT-2 handled Python indentation inefficiently</strong>: In his Python example, individual spaces in indentation become separate tokens. Those spaces consume context capacity and help explain some of GPT-2’s weakness with Python.</p></li>
+<li><p><strong>GPT-4’s tokenizer is denser</strong>: Switching the example from GPT-2’s tokenizer to GPT-4’s <code>cl100k_base</code> reduces the demonstration text from approximately 300 to 185 tokens. Its larger vocabulary can encode more text in fewer tokens. However, <strong>a larger vocabulary involves a tradeoff</strong>: More vocabulary entries can compress text more effectively, but they also enlarge the model’s input embedding table and next-token output layer. There is therefore a practical “sweet spot,” not an unlimited benefit from adding tokens.</p></li>
+<li><p><strong>Tokenizer design can materially improve model capabilities</strong>: GPT-4’s tokenizer groups runs of whitespace more efficiently, letting more Python code fit within its context. Therefore, improvements in coding performance can come partly from better tokenization—not solely from a better neural-network architecture.</p></li>
+</ul>
+<p>The overarching point is that an <strong>LLM experiences text through the tokenizer’s divisions</strong>. Those divisions affect what relationships are easy to learn, how much information fits in context, and why models behave strangely with spelling, arithmetic, code, and non-English languages.</p>
+<p><img src="https://prompt.16x.engineer/nextImageExportOptimizer/wrong-answer.4536ac48-opt-1920.WEBP" align="right" width="50%" style="border: 1px black;"></p>
+<p>Get tokenization wrong and everything downstream gets affected. Tokenization is in fact at the heart of much weirdness of LLMs. So do not brush it off.</p>
+<ul>
+<li>Why can’t LLM spell words? <strong>Tokenization</strong>.</li>
+<li>Why can’t LLM do super simple string processing tasks like reversing a string? <strong>Tokenization</strong>.</li>
+<li>Why is LLM worse at non-English languages (e.g.&nbsp;Japanese)? <strong>Tokenization</strong>.</li>
+<li>Why is LLM bad at simple arithmetic? <strong>Tokenization</strong>.</li>
+<li>Why did GPT-2 have more than necessary trouble coding in Python? <strong>Tokenization</strong>.</li>
+<li>Why did my LLM abruptly halt when it sees the string “&lt;|endoftext|&gt;”? <strong>Tokenization</strong>.</li>
+<li>What is this weird warning I get about a “trailing whitespace”? <strong>Tokenization</strong>.</li>
+<li>Why the LLM break if I ask it about “SolidGoldMagikarp”? <strong>Tokenization</strong>.</li>
+<li>Why should I prefer to use YAML over JSON with LLMs? <strong>Tokenization</strong>.</li>
+<li>Why is LLM not actually end-to-end language modeling? <strong>Tokenization</strong>.</li>
+<li>What is the real root of suffering? <strong>Tokenization</strong>.</li>
+</ul>
+<br>
+<hr>
+<p><br></p>
+<p><strong>Brief overview to how LLMs are created</strong></p>
+<p>The general process of creating an LLM includes pretraining and fine-tuning. The “pre” in “pretraining” refers to the initial phase where a model like an LLM is trained on a large, diverse dataset to develop a broad understanding of language. This pretrained model then serves as a foundational resource that can be further refined through fine-tuning, a process where the model is specifically trained on a narrower dataset that is more specific to particular tasks or domains. This two-stage training approach consisting of pretraining and fine-tuning is depicted below:</p>
+<p><br></p>
+<p><img src="https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9781633437166/files/Images/1-3.png"></p>
+<p><br><br></p>
+<p>This first training stage of an LLM is also known as <strong>pretraining</strong>, creating an initial pretrained LLM, often called a <strong>base or foundation model</strong>.</p>
+<p>Foundation models are built on large corpora of text, sometimes referred to as raw text. Here, “raw” refers to the fact that this data is just regular text i.e.&nbsp;<span class="math inline">\(D = \{x_i\}_{i=1}^I\)</span> without any labeling information <span class="math inline">\(y_i\)</span>.</p>
+<p>A typical example of such a model is the GPT-3 model (the precursor of the original model offered in ChatGPT). This model is capable of text completion—that is, finishing a half-written sentence provided by a user. It also has limited few-shot capabilities, which means it can learn to perform new tasks based on only a few examples instead of needing extensive training data.</p>
+<p>Table below summarizes the dataset used for pretraining GPT-3, which served as the base model for the first version of ChatGPT:</p>
+<p><br></p>
+<center>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Dataset name</th>
+<th style="text-align: center;">Dataset description</th>
+<th style="text-align: center;">Number of tokens</th>
+<th style="text-align: center;">Proportion in training data</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><a href="https://commoncrawl.org/">CommonCrawl (raw)</a> / <a href="https://huggingface.co/spaces/HuggingFaceFW/blogpost-fineweb-v1">FineWeb (cleaned)</a></td>
+<td style="text-align: center;">Web crawl data</td>
+<td style="text-align: center;">410 billion</td>
+<td style="text-align: center;">60%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WebText2</td>
+<td style="text-align: center;">Web crawl data</td>
+<td style="text-align: center;">19 billion</td>
+<td style="text-align: center;">22%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Books1</td>
+<td style="text-align: center;">Internet-based book corpus</td>
+<td style="text-align: center;">12 billion</td>
+<td style="text-align: center;">8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Books2</td>
+<td style="text-align: center;">Internet-based book corpus</td>
+<td style="text-align: center;">55 billion</td>
+<td style="text-align: center;">8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Wikipedia</td>
+<td style="text-align: center;">High-quality text</td>
+<td style="text-align: center;">3 billion</td>
+<td style="text-align: center;">3%</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><br></p>
+<p><em>Proportion = sampling weight during training, not corpus size fraction.</em></p>
+<p><br></p>
+<p>A few properties of this raw text matter enormously for how we process it:</p>
+<ul>
+<li><strong>It’s unfathomably large.</strong> Pretraining corpora for frontier models run into trillions of tokens. Whatever pipeline you build to turn text into model input has to be simple and fast enough to scale to that volume — this is precisely the “big data” angle of this project (see Part 4).</li>
+<li><strong>It’s multilingual and multi-script.</strong> A web crawl contains English, Urdu, Mandarin, emoji, mathematical notation, and more, often mixed in the same document.</li>
+<li><strong>It’s inconsistently encoded and dirty.</strong> HTML fragments, broken encodings, unusual whitespace, and mixed scripts all show up in real crawled data.</li>
+<li><strong>The model itself only understands numbers.</strong> Whatever text arrives, it eventually has to become a fixed-size vocabulary of integer ids that a neural network’s embedding layer can look up.</li>
+</ul>
+<p>The tokenizer is the component that absorbs all of this messiness and produces a clean, bounded, numeric interface for the model. Getting it right (or wrong) has outsized downstream effects — it’s often the <em>most</em> under-appreciated part of an LLM’s pipeline.</p>
+<br>
+<hr>
+<p><br></p>
+<p><strong>Unicode, UTF-8 and their usage in Tokenization</strong></p>
+<p><strong>Unicode</strong> is a single, universal standard that assigns every <u>character</u> in (almost) every writing system in the world a unique number, called a <strong>code point</strong> — e.g.&nbsp;the letter “A” is <code>U+0041</code>, the Urdu letter “ب” is <code>U+0628</code>, and the emoji “🚀” is <code>U+1F680</code>.</p>
+<p><code>U+</code> simply indicates that this number belongs to Unicode code-point system and it is followed by the code point itself in hexadecimal.</p>
+<p>Before Unicode, different encodings (ASCII, Latin-1, Shift-JIS, etc.) assigned different numbers to characters, so text produced under one encoding could turn to garbage when read under another. Unicode’s goal is to have one namespace big enough (over 1.1 million possible code points) to represent every character anyone might want to write.</p>
+<p>Because raw internet text contains many languages, scripts, symbols, and emoji, Unicode gives us a common standard by assigning each character a unique code point.</p>
+<div id="cell-3" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(<span class="bu">ord</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>txt <span class="op">=</span> <span class="st">"안녕하세요 👋 (hello in Korean!)"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>[<span class="bu">ord</span>(char) <span class="cf">for</span> char <span class="kw">in</span> txt]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Unicode itself only defines <em>which number means which character</em> — it doesn’t say how those numbers are stored as bytes on disk or transmitted over a network. Using Unicode code points directly as an LLM’s basic vocabulary would require a large and evolving set of more than 100,000 possible characters.</p>
+<p>An <strong>encoding</strong> like <strong>UTF-8</strong> solves this problem by encoding every Unicode character as a sequence drawn from only 256 possible byte values. A byte-level tokenizer can therefore represent any Unicode text using a small, fixed foundation.</p>
+<p>UTF-8 represents each Unicode code point as a sequence of <strong>1 to 4 bytes</strong>: - Code points 0–127 (basic ASCII: English letters, digits, punctuation) → 1 byte - Many other alphabets (Latin accents, Greek, Cyrillic, Arabic, Urdu, Hebrew) → 2 bytes - Most of the common CJK (Chinese/Japanese/Korean) range → 3 bytes - Emoji and some rarer scripts → 4 bytes</p>
+<p>Therefore most modern tokenizers operate on the <strong>UTF-8 byte representation</strong> of the text, the base vocabulary is always exactly <strong>256</strong> possible values (0-255), regardless of what languages, emoji, or scripts appear in the data. Since UTF-8 can represent <em>any</em> valid Unicode text as a byte sequence, a byte-level tokenizer can represent any text in any language without ever hitting an unknown/OOV token.</p>
+<p>BPE then learns <strong>merges on top of these 256 base bytes</strong>, building up a vocabulary of common multi-byte sequences (which, for common languages, end up looking a lot like whole characters, common subwords, or even common whole words) up to whatever <code>vocab_size</code> you choose.</p>
+<p>This is exactly the trick behind GPT-2’s tokenizer, and it’s why you’ll implement <code>get_stats</code>/<code>merge</code> operating on lists of <strong>byte values</strong>, not characters, in Part 1 below.</p>
+<div id="cell-6" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>txt <span class="op">=</span> <span class="st">"안녕하세요 👋 (hello in Korean!)"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>btes <span class="op">=</span> <span class="bu">list</span>(txt.encode(<span class="st">"utf-8"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-7" class="cell" data-outputid="abeea8c1-47bc-4203-931a-b90c992b6ee9">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'char'</span><span class="sc">:&lt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'unicode'</span><span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'utf-8 bytes'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> char <span class="kw">in</span> txt:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">repr</span>(char)<span class="sc">:&lt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">ord</span>(char)<span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">str</span>(<span class="bu">list</span>(char.encode(<span class="st">'utf-8'</span>)))<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>char     unicode    utf-8 bytes
+----------------------------------------
+'안'      50504      [236, 149, 136]
+'녕'      45397      [235, 133, 149]
+'하'      54616      [237, 149, 152]
+'세'      49464      [236, 132, 184]
+'요'      50836      [236, 154, 148]
+' '      32         [32]
+'👋'      128075     [240, 159, 145, 139]
+' '      32         [32]
+'('      40         [40]
+'h'      104        [104]
+'e'      101        [101]
+'l'      108        [108]
+'l'      108        [108]
+'o'      111        [111]
+' '      32         [32]
+'i'      105        [105]
+'n'      110        [110]
+' '      32         [32]
+'K'      75         [75]
+'o'      111        [111]
+'r'      114        [114]
+'e'      101        [101]
+'a'      97         [97]
+'n'      110        [110]
+'!'      33         [33]
+')'      41         [41]</code></pre>
+</div>
+</div>
+<p>A longer example with more realistic byte statistics.</p>
+<div id="cell-9" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># text from https://www.reedbeta.com/blog/programmers-intro-to-unicode/</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Ｕｎｉｃｏｄｅ! 🅤🅝🅘🅒🅞🅓🅔‽ 🇺‌🇳‌🇮‌🇨‌🇴‌🇩‌🇪! 😄 The very name strikes fear and awe into the hearts of programmers worldwide. </span><span class="ch">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">  We all know we ought to “support Unicode” in our software (whatever that means—like using wchar_t for all the strings, right?). </span><span class="ch">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">  But Unicode can be abstruse, and diving into the thousand-page Unicode Standard plus its dozens of supplementary annexes, reports, </span><span class="ch">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">  and notes can be more than a little intimidating. I don’t blame programmers for still finding the whole thing mysterious, </span><span class="ch">\</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">  even 30 years after Unicode’s inception."</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> text.encode(<span class="st">"utf-8"</span>) <span class="co"># raw bytes</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">int</span>, tokens)) <span class="co"># convert to a list of integers in range 0..255 for convenience</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'---'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"length:"</span>, <span class="bu">len</span>(text))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'---'</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"length:"</span>, <span class="bu">len</span>(tokens))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Unicode gives every character a standardized code point, and UTF-8 converts those code points into bytes. This gives us a universal way to represent text from different languages, writing systems, and symbol sets using only 256 possible byte values.</p>
+<p>In principle, we could give these UTF-8 bytes directly to an LLM. That would guarantee that the model could represent any valid text. However, it would also be inefficient: common words and phrases would be broken into long sequences of individual bytes, consuming more of the model’s limited context window and requiring more computational steps.</p>
+<p>This creates a tradeoff. We want the universal coverage of bytes, but we also want the efficiency of representing common patterns as larger units. Tokenization provides that intermediate layer. A tokenizer groups the underlying bytes into reusable chunks called tokens and assigns each token an integer ID that the model can process.</p>
+<section id="byte-pair-encoding-bpe" class="level2">
+<h2 class="anchored" data-anchor-id="byte-pair-encoding-bpe"><strong>Byte Pair Encoding (BPE)</strong></h2>
+<p>The next question is how the tokenizer decides which byte sequences should become tokens. One widely used method is Byte Pair Encoding, or BPE. BPE starts with individual bytes and repeatedly finds frequently occurring adjacent pairs. It merges those pairs into new tokens, gradually building a vocabulary in which common text patterns receive compact representations while uncommon text can still fall back to its original bytes.</p>
+<section id="count-pairs" class="level3">
+<h3 class="anchored" data-anchor-id="count-pairs"><strong>1. Count Pairs</strong></h3>
+<p>Count consecutive byte pairs in UTF-8 encoded text sequences</p>
+<p>Given a list of integer token ids, return a dict counting how many times each adjacent pair (ids[i], ids[i+1]) occurs.</p>
+<p>Example:</p>
+<p><code>get_stats([1, 2, 3, 1, 2])</code></p>
+<p>returns<br> <code>{(1, 2): 2,</code><br> <code>(2, 3):  1,</code><br> <code>(3, 1):  1}</code></p>
+<p>If <code>counts</code> is provided, accumulate into it instead of a fresh dict (useful when counting stats across multiple chunks, e.g.&nbsp;after regex pre-splitting). For example:</p>
+<p><code>counts = get_stats([1, 2, 3, 1, 2])</code></p>
+<p><code>get_stats([1, 2, 3, 1, 2], counts)</code></p>
+<p>returns</p>
+<p><code>{(1, 2): 4,</code><br> <code>(2, 3): 2,</code><br> <code>(3, 1): 2}</code></p>
+<div id="cell-13" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_stats(ids: <span class="bu">list</span>, counts: <span class="bu">dict</span> <span class="op">=</span> <span class="va">None</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: implement</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">NotImplementedError</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-14" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> get_stats(tokens)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Two ways to print most frequent pair:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print(stats)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># print(sorted(((v,k) for k,v in stats.items()), reverse=True))</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>top_pair <span class="op">=</span> <span class="bu">max</span>(stats, key<span class="op">=</span>stats.get)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>top_pair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="merge" class="level3">
+<h3 class="anchored" data-anchor-id="merge"><strong>2. Merge</strong></h3>
+<p>Replace every occurrence of <code>pair</code> (a tuple of two adjacent ids) in <code>ids</code> with the single id <code>new_id</code>. Return the new list.</p>
+<div id="cell-16" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge(ids: <span class="bu">list</span>, pair: <span class="bu">tuple</span>, new_id: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Example:</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">        merge([1, 2, 3, 1, 2], (1, 2), 99) -&gt; [99, 3, 99]</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: implement</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">NotImplementedError</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-17" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(merge([<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">1</span>], (<span class="dv">6</span>, <span class="dv">7</span>), <span class="dv">99</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>tokens2 <span class="op">=</span> merge(tokens, top_pair, <span class="dv">256</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens2)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"length:"</span>, <span class="bu">len</span>(tokens2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="iterative-merging" class="level3">
+<h3 class="anchored" data-anchor-id="iterative-merging"><strong>3. Iterative Merging</strong></h3>
+<p>Once we can count adjacent pairs (<code>get_stats</code>) and replace them (<code>merge</code>), Byte Pair Encoding (BPE) “trains” by repeating these steps in a greedy loop:</p>
+<ol type="1">
+<li><p><strong>Count frequencies</strong>: Scan the current sequence of token IDs and count how often every adjacent pair <span class="math inline">\((A, B)\)</span> appears.</p></li>
+<li><p><strong>Find the top pair</strong>: Select the pair with the highest frequency count.</p></li>
+<li><p><strong>Mint a new token ID</strong>: Assign the most frequent pair the next available integer ID (starting at 256, right after the single-byte range 0–255).</p></li>
+<li><p><strong>Replace and repeat</strong>: Replace all occurrences of that pair throughout the text with the new ID, record the merge rule, and repeat the process until the target vocabulary size (vocab_size) is reached or no pairs remain.</p></li>
+</ol>
+<div id="cell-19" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># making the training text longer to have more representative token statistics</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># text from https://www.reedbeta.com/blog/programmers-intro-to-unicode/</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"""A Programmer’s Introduction to Unicode March 3, 2017 · Coding · 22 Comments  Ｕｎｉｃｏｄｅ! 🅤🅝🅘🅒🅞🅓🅔‽ 🇺</span><span class="ch">\u200c</span><span class="st">🇳</span><span class="ch">\u200c</span><span class="st">🇮</span><span class="ch">\u200c</span><span class="st">🇨</span><span class="ch">\u200c</span><span class="st">🇴</span><span class="ch">\u200c</span><span class="st">🇩</span><span class="ch">\u200c</span><span class="st">🇪! 😄 The very name strikes fear and awe into the hearts of programmers worldwide. We all know we ought to “support Unicode” in our software (whatever that means—like using wchar_t for all the strings, right?). But Unicode can be abstruse, and diving into the thousand-page Unicode Standard plus its dozens of supplementary annexes, reports, and notes can be more than a little intimidating. I don’t blame programmers for still finding the whole thing mysterious, even 30 years after Unicode’s inception.  A few months ago, I got interested in Unicode and decided to spend some time learning more about it in detail. In this article, I’ll give an introduction to it from a programmer’s point of view.  I’m going to focus on the character set and what’s involved in working with strings and files of Unicode text. However, in this article I’m not going to talk about fonts, text layout/shaping/rendering, or localization in detail—those are separate issues, beyond my scope (and knowledge) here.  Diversity and Inherent Complexity The Unicode Codespace Codespace Allocation Scripts Usage Frequency Encodings UTF-8 UTF-16 Combining Marks Canonical Equivalence Normalization Forms Grapheme Clusters And More… Diversity and Inherent Complexity As soon as you start to study Unicode, it becomes clear that it represents a large jump in complexity over character sets like ASCII that you may be more familiar with. It’s not just that Unicode contains a much larger number of characters, although that’s part of it. Unicode also has a great deal of internal structure, features, and special cases, making it much more than what one might expect a mere “character set” to be. We’ll see some of that later in this article.  When confronting all this complexity, especially as an engineer, it’s hard not to find oneself asking, “Why do we need all this? Is this really necessary? Couldn’t it be simplified?”  However, Unicode aims to faithfully represent the entire world’s writing systems. The Unicode Consortium’s stated goal is “enabling people around the world to use computers in any language”. And as you might imagine, the diversity of written languages is immense! To date, Unicode supports 135 different scripts, covering some 1100 languages, and there’s still a long tail of over 100 unsupported scripts, both modern and historical, which people are still working to add.  Given this enormous diversity, it’s inevitable that representing it is a complicated project. Unicode embraces that diversity, and accepts the complexity inherent in its mission to include all human writing systems. It doesn’t make a lot of trade-offs in the name of simplification, and it makes exceptions to its own rules where necessary to further its mission.  Moreover, Unicode is committed not just to supporting texts in any single language, but also to letting multiple languages coexist within one text—which introduces even more complexity.  Most programming languages have libraries available to handle the gory low-level details of text manipulation, but as a programmer, you’ll still need to know about certain Unicode features in order to know when and how to apply them. It may take some time to wrap your head around it all, but don’t be discouraged—think about the billions of people for whom your software will be more accessible through supporting text in their language. Embrace the complexity!  The Unicode Codespace Let’s start with some general orientation. The basic elements of Unicode—its “characters”, although that term isn’t quite right—are called code points. Code points are identified by number, customarily written in hexadecimal with the prefix “U+”, such as U+0041 “A” latin capital letter a or U+03B8 “θ” greek small letter theta. Each code point also has a short name, and quite a few other properties, specified in the Unicode Character Database.  The set of all possible code points is called the codespace. The Unicode codespace consists of 1,114,112 code points. However, only 128,237 of them—about 12</span><span class="sc">% o</span><span class="st">f the codespace—are actually assigned, to date. There’s plenty of room for growth! Unicode also reserves an additional 137,468 code points as “private use” areas, which have no standardized meaning and are available for individual applications to define for their own purposes.  Codespace Allocation To get a feel for how the codespace is laid out, it’s helpful to visualize it. Below is a map of the entire codespace, with one pixel per code point. It’s arranged in tiles for visual coherence; each small square is 16×16 = 256 code points, and each large square is a “plane” of 65,536 code points. There are 17 planes altogether.  Map of the Unicode codespace (click to zoom)  White represents unassigned space. Blue is assigned code points, green is private-use areas, and the small red area is surrogates (more about those later). As you can see, the assigned code points are distributed somewhat sparsely, but concentrated in the first three planes.  Plane 0 is also known as the “Basic Multilingual Plane”, or BMP. The BMP contains essentially all the characters needed for modern text in any script, including Latin, Cyrillic, Greek, Han (Chinese), Japanese, Korean, Arabic, Hebrew, Devanagari (Indian), and many more.  (In the past, the codespace was just the BMP and no more—Unicode was originally conceived as a straightforward 16-bit encoding, with only 65,536 code points. It was expanded to its current size in 1996. However, the vast majority of code points in modern text belong to the BMP.)  Plane 1 contains historical scripts, such as Sumerian cuneiform and Egyptian hieroglyphs, as well as emoji and various other symbols. Plane 2 contains a large block of less-common and historical Han characters. The remaining planes are empty, except for a small number of rarely-used formatting characters in Plane 14; planes 15–16 are reserved entirely for private use.  Scripts Let’s zoom in on the first three planes, since that’s where the action is:  Map of scripts in Unicode planes 0–2 (click to zoom)  This map color-codes the 135 different scripts in Unicode. You can see how Han () and Korean () take up most of the range of the BMP (the left large square). By contrast, all of the European, Middle Eastern, and South Asian scripts fit into the first row of the BMP in this diagram.  Many areas of the codespace are adapted or copied from earlier encodings. For example, the first 128 code points of Unicode are just a copy of ASCII. This has clear benefits for compatibility—it’s easy to losslessly convert texts from smaller encodings into Unicode (and the other direction too, as long as no characters outside the smaller encoding are used).  Usage Frequency One more interesting way to visualize the codespace is to look at the distribution of usage—in other words, how often each code point is actually used in real-world texts. Below is a heat map of planes 0–2 based on a large sample of text from Wikipedia and Twitter (all languages). Frequency increases from black (never seen) through red and yellow to white.  Heat map of code point usage frequency in Unicode planes 0–2 (click to zoom)  You can see that the vast majority of this text sample lies in the BMP, with only scattered usage of code points from planes 1–2. The biggest exception is emoji, which show up here as the several bright squares in the bottom row of plane 1.  Encodings We’ve seen that Unicode code points are abstractly identified by their index in the codespace, ranging from U+0000 to U+10FFFF. But how do code points get represented as bytes, in memory or in a file?  The most convenient, computer-friendliest (and programmer-friendliest) thing to do would be to just store the code point index as a 32-bit integer. This works, but it consumes 4 bytes per code point, which is sort of a lot. Using 32-bit ints for Unicode will cost you a bunch of extra storage, memory, and performance in bandwidth-bound scenarios, if you work with a lot of text.  Consequently, there are several more-compact encodings for Unicode. The 32-bit integer encoding is officially called UTF-32 (UTF = “Unicode Transformation Format”), but it’s rarely used for storage. At most, it comes up sometimes as a temporary internal representation, for examining or operating on the code points in a string.  Much more commonly, you’ll see Unicode text encoded as either UTF-8 or UTF-16. These are both variable-length encodings, made up of 8-bit or 16-bit units, respectively. In these schemes, code points with smaller index values take up fewer bytes, which saves a lot of memory for typical texts. The trade-off is that processing UTF-8/16 texts is more programmatically involved, and likely slower.  UTF-8 In UTF-8, each code point is stored using 1 to 4 bytes, based on its index value.  UTF-8 uses a system of binary prefixes, in which the high bits of each byte mark whether it’s a single byte, the beginning of a multi-byte sequence, or a continuation byte; the remaining bits, concatenated, give the code point index. This table shows how it works:  UTF-8 (binary)</span><span class="ch">\t</span><span class="st">Code point (binary)</span><span class="ch">\t</span><span class="st">Range 0xxxxxxx</span><span class="ch">\t</span><span class="st">xxxxxxx</span><span class="ch">\t</span><span class="st">U+0000–U+007F 110xxxxx 10yyyyyy</span><span class="ch">\t</span><span class="st">xxxxxyyyyyy</span><span class="ch">\t</span><span class="st">U+0080–U+07FF 1110xxxx 10yyyyyy 10zzzzzz</span><span class="ch">\t</span><span class="st">xxxxyyyyyyzzzzzz</span><span class="ch">\t</span><span class="st">U+0800–U+FFFF 11110xxx 10yyyyyy 10zzzzzz 10wwwwww</span><span class="ch">\t</span><span class="st">xxxyyyyyyzzzzzzwwwwww</span><span class="ch">\t</span><span class="st">U+10000–U+10FFFF A handy property of UTF-8 is that code points below 128 (ASCII characters) are encoded as single bytes, and all non-ASCII code points are encoded using sequences of bytes 128–255. This has a couple of nice consequences. First, any strings or files out there that are already in ASCII can also be interpreted as UTF-8 without any conversion. Second, lots of widely-used string programming idioms—such as null termination, or delimiters (newlines, tabs, commas, slashes, etc.)—will just work on UTF-8 strings. ASCII bytes never occur inside the encoding of non-ASCII code points, so searching byte-wise for a null terminator or a delimiter will do the right thing.  Thanks to this convenience, it’s relatively simple to extend legacy ASCII programs and APIs to handle UTF-8 strings. UTF-8 is very widely used in the Unix/Linux and Web worlds, and many programmers argue UTF-8 should be the default encoding everywhere.  However, UTF-8 isn’t a drop-in replacement for ASCII strings in all respects. For instance, code that iterates over the “characters” in a string will need to decode UTF-8 and iterate over code points (or maybe grapheme clusters—more about those later), not bytes. When you measure the “length” of a string, you’ll need to think about whether you want the length in bytes, the length in code points, the width of the text when rendered, or something else.  UTF-16 The other encoding that you’re likely to encounter is UTF-16. It uses 16-bit words, with each code point stored as either 1 or 2 words.  Like UTF-8, we can express the UTF-16 encoding rules in the form of binary prefixes:  UTF-16 (binary)</span><span class="ch">\t</span><span class="st">Code point (binary)</span><span class="ch">\t</span><span class="st">Range xxxxxxxxxxxxxxxx</span><span class="ch">\t</span><span class="st">xxxxxxxxxxxxxxxx</span><span class="ch">\t</span><span class="st">U+0000–U+FFFF 110110xxxxxxxxxx 110111yyyyyyyyyy</span><span class="ch">\t</span><span class="st">xxxxxxxxxxyyyyyyyyyy + 0x10000</span><span class="ch">\t</span><span class="st">U+10000–U+10FFFF A more common way that people talk about UTF-16 encoding, though, is in terms of code points called “surrogates”. All the code points in the range U+D800–U+DFFF—or in other words, the code points that match the binary prefixes 110110 and 110111 in the table above—are reserved specifically for UTF-16 encoding, and don’t represent any valid characters on their own. They’re only meant to occur in the 2-word encoding pattern above, which is called a “surrogate pair”. Surrogate code points are illegal in any other context! They’re not allowed in UTF-8 or UTF-32 at all.  Historically, UTF-16 is a descendant of the original, pre-1996 versions of Unicode, in which there were only 65,536 code points. The original intention was that there would be no different “encodings”; Unicode was supposed to be a straightforward 16-bit character set. Later, the codespace was expanded to make room for a long tail of less-common (but still important) Han characters, which the Unicode designers didn’t originally plan for. Surrogates were then introduced, as—to put it bluntly—a kludge, allowing 16-bit encodings to access the new code points.  Today, Javascript uses UTF-16 as its standard string representation: if you ask for the length of a string, or iterate over it, etc., the result will be in UTF-16 words, with any code points outside the BMP expressed as surrogate pairs. UTF-16 is also used by the Microsoft Win32 APIs; though Win32 supports either 8-bit or 16-bit strings, the 8-bit version unaccountably still doesn’t support UTF-8—only legacy code-page encodings, like ANSI. This leaves UTF-16 as the only way to get proper Unicode support in Windows. (Update: in Win10 version 1903, they finally added UTF-8 support to the 8-bit APIs! 😊)  By the way, UTF-16’s words can be stored either little-endian or big-endian. Unicode has no opinion on that issue, though it does encourage the convention of putting U+FEFF zero width no-break space at the top of a UTF-16 file as a byte-order mark, to disambiguate the endianness. (If the file doesn’t match the system’s endianness, the BOM will be decoded as U+FFFE, which isn’t a valid code point.)  Combining Marks In the story so far, we’ve been focusing on code points. But in Unicode, a “character” can be more complicated than just an individual code point!  Unicode includes a system for dynamically composing characters, by combining multiple code points together. This is used in various ways to gain flexibility without causing a huge combinatorial explosion in the number of code points.  In European languages, for example, this shows up in the application of diacritics to letters. Unicode supports a wide range of diacritics, including acute and grave accents, umlauts, cedillas, and many more. All these diacritics can be applied to any letter of any alphabet—and in fact, multiple diacritics can be used on a single letter.  If Unicode tried to assign a distinct code point to every possible combination of letter and diacritics, things would rapidly get out of hand. Instead, the dynamic composition system enables you to construct the character you want, by starting with a base code point (the letter) and appending additional code points, called “combining marks”, to specify the diacritics. When a text renderer sees a sequence like this in a string, it automatically stacks the diacritics over or under the base letter to create a composed character.  For example, the accented character “Á” can be expressed as a string of two code points: U+0041 “A” latin capital letter a plus U+0301 “◌́” combining acute accent. This string automatically gets rendered as a single character: “Á”.  Now, Unicode does also include many “precomposed” code points, each representing a letter with some combination of diacritics already applied, such as U+00C1 “Á” latin capital letter a with acute or U+1EC7 “ệ” latin small letter e with circumflex and dot below. I suspect these are mostly inherited from older encodings that were assimilated into Unicode, and kept around for compatibility. In practice, there are precomposed code points for most of the common letter-with-diacritic combinations in European-script languages, so they don’t use dynamic composition that much in typical text.  Still, the system of combining marks does allow for an arbitrary number of diacritics to be stacked on any base character. The reductio-ad-absurdum of this is Zalgo text, which works by ͖͟ͅr͞aṋ̫̠̖͈̗d͖̻̹óm̪͙͕̗̝ļ͇̰͓̳̫ý͓̥̟͍ ̕s̫t̫̱͕̗̰̼̘͜a̼̩͖͇̠͈̣͝c̙͍k̖̱̹͍͘i̢n̨̺̝͇͇̟͙ģ̫̮͎̻̟ͅ ̕n̼̺͈͞u̮͙m̺̭̟̗͞e̞͓̰̤͓̫r̵o̖ṷs҉̪͍̭̬̝̤ ̮͉̝̞̗̟͠d̴̟̜̱͕͚i͇̫̼̯̭̜͡ḁ͙̻̼c̲̲̹r̨̠̹̣̰̦i̱t̤̻̤͍͙̘̕i̵̜̭̤̱͎c̵s ͘o̱̲͈̙͖͇̲͢n͘ ̜͈e̬̲̠̩ac͕̺̠͉h̷̪ ̺̣͖̱ḻ̫̬̝̹ḙ̙̺͙̭͓̲t̞̞͇̲͉͍t̷͔̪͉̲̻̠͙e̦̻͈͉͇r͇̭̭̬͖,̖́ ̜͙͓̣̭s̘̘͈o̱̰̤̲ͅ ̛̬̜̙t̼̦͕̱̹͕̥h̳̲͈͝ͅa̦t̻̲ ̻̟̭̦̖t̛̰̩h̠͕̳̝̫͕e͈̤̘͖̞͘y҉̝͙ ̷͉͔̰̠o̞̰v͈͈̳̘͜er̶f̰͈͔ḻ͕̘̫̺̲o̲̭͙͠ͅw̱̳̺ ͜t̸h͇̭͕̳͍e̖̯̟̠ ͍̞̜͔̩̪͜ļ͎̪̲͚i̝̲̹̙̩̹n̨̦̩̖ḙ̼̲̼͢ͅ ̬͝s̼͚̘̞͝p͙̘̻a̙c҉͉̜̤͈̯̖i̥͡n̦̠̱͟g̸̗̻̦̭̮̟ͅ ̳̪̠͖̳̯̕a̫͜n͝d͡ ̣̦̙ͅc̪̗r̴͙̮̦̹̳e͇͚̞͔̹̫͟a̙̺̙ț͔͎̘̹ͅe̥̩͍ a͖̪̜̮͙̹n̢͉̝ ͇͉͓̦̼́a̳͖̪̤̱p̖͔͔̟͇͎͠p̱͍̺ę̲͎͈̰̲̤̫a̯͜r̨̮̫̣̘a̩̯͖n̹̦̰͎̣̞̞c̨̦̱͔͎͍͖e̬͓͘ ̤̰̩͙̤̬͙o̵̼̻̬̻͇̮̪f̴ ̡̙̭͓͖̪̤“̸͙̠̼c̳̗͜o͏̼͙͔̮r̞̫̺̞̥̬ru̺̻̯͉̭̻̯p̰̥͓̣̫̙̤͢t̳͍̳̖ͅi̶͈̝͙̼̙̹o̡͔n̙̺̹̖̩͝ͅ”̨̗͖͚̩.̯͓  A few other places where dynamic character composition shows up in Unicode:  Vowel-pointing notation in Arabic and Hebrew. In these languages, words are normally spelled with some of their vowels left out. They then have diacritic notation to indicate the vowels (used in dictionaries, language-teaching materials, children’s books, and such). These diacritics are expressed with combining marks.  A Hebrew example, with niqqud:</span><span class="ch">\t</span><span class="st">אֶת דַלְתִּי הֵזִיז הֵנִיעַ, קֶטֶב לִשְׁכַּתִּי יָשׁוֹד Normal writing (no niqqud):</span><span class="ch">\t</span><span class="st">את דלתי הזיז הניע, קטב לשכתי ישוד Devanagari, the script used to write Hindi, Sanskrit, and many other South Asian languages, expresses certain vowels as combining marks attached to consonant letters. For example, “ह” + “</span><span class="ch">\u200b</span><span class="st">ि” = “हि” (“h” + “i” = “hi”). Korean characters stand for syllables, but they are composed of letters called jamo that stand for the vowels and consonants in the syllable. While there are code points for precomposed Korean syllables, it’s also possible to dynamically compose them by concatenating their jamo. For example, “ᄒ” + “ᅡ” + “ᆫ” = “한” (“h” + “a” + “n” = “han”). Canonical Equivalence In Unicode, precomposed characters exist alongside the dynamic composition system. A consequence of this is that there are multiple ways to express “the same” string—different sequences of code points that result in the same user-perceived characters. For example, as we saw earlier, we can express the character “Á” either as the single code point U+00C1, or as the string of two code points U+0041 U+0301.  Another source of ambiguity is the ordering of multiple diacritics in a single character. Diacritic order matters visually when two diacritics apply to the same side of the base character, e.g. both above: “ǡ” (dot, then macron) is different from “ā̇” (macron, then dot). However, when diacritics apply to different sides of the character, e.g. one above and one below, then the order doesn’t affect rendering. Moreover, a character with multiple diacritics might have one of the diacritics precomposed and others expressed as combining marks.  For example, the Vietnamese letter “ệ” can be expressed in five different ways:  Fully precomposed: U+1EC7 “ệ” Partially precomposed: U+1EB9 “ẹ” + U+0302 “◌̂” Partially precomposed: U+00EA “ê” + U+0323 “◌̣” Fully decomposed: U+0065 “e” + U+0323 “◌̣” + U+0302 “◌̂” Fully decomposed: U+0065 “e” + U+0302 “◌̂” + U+0323 “◌̣” Unicode refers to set of strings like this as “canonically equivalent”. Canonically equivalent strings are supposed to be treated as identical for purposes of searching, sorting, rendering, text selection, and so on. This has implications for how you implement operations on text. For example, if an app has a “find in file” operation and the user searches for “ệ”, it should, by default, find occurrences of any of the five versions of “ệ” above!  Normalization Forms To address the problem of “how to handle canonically equivalent strings”, Unicode defines several normalization forms: ways of converting strings into a canonical form so that they can be compared code-point-by-code-point (or byte-by-byte).  The “NFD” normalization form fully decomposes every character down to its component base and combining marks, taking apart any precomposed code points in the string. It also sorts the combining marks in each character according to their rendered position, so e.g. diacritics that go below the character come before the ones that go above the character. (It doesn’t reorder diacritics in the same rendered position, since their order matters visually, as previously mentioned.)  The “NFC” form, conversely, puts things back together into precomposed code points as much as possible. If an unusual combination of diacritics is called for, there may not be any precomposed code point for it, in which case NFC still precomposes what it can and leaves any remaining combining marks in place (again ordered by rendered position, as in NFD).  There are also forms called NFKD and NFKC. The “K” here refers to compatibility decompositions, which cover characters that are “similar” in some sense but not visually identical. However, I’m not going to cover that here.  Grapheme Clusters As we’ve seen, Unicode contains various cases where a thing that a user thinks of as a single “character” might actually be made up of multiple code points under the hood. Unicode formalizes this using the notion of a grapheme cluster: a string of one or more code points that constitute a single “user-perceived character”.  UAX #29 defines the rules for what, precisely, qualifies as a grapheme cluster. It’s approximately “a base code point followed by any number of combining marks”, but the actual definition is a bit more complicated; it accounts for things like Korean jamo, and emoji ZWJ sequences.  The main thing grapheme clusters are used for is text editing: they’re often the most sensible unit for cursor placement and text selection boundaries. Using grapheme clusters for these purposes ensures that you can’t accidentally chop off some diacritics when you copy-and-paste text, that left/right arrow keys always move the cursor by one visible character, and so on.  Another place where grapheme clusters are useful is in enforcing a string length limit—say, on a database field. While the true, underlying limit might be something like the byte length of the string in UTF-8, you wouldn’t want to enforce that by just truncating bytes. At a minimum, you’d want to “round down” to the nearest code point boundary; but even better, round down to the nearest grapheme cluster boundary. Otherwise, you might be corrupting the last character by cutting off a diacritic, or interrupting a jamo sequence or ZWJ sequence.  And More… There’s much more that could be said about Unicode from a programmer’s perspective! I haven’t gotten into such fun topics as case mapping, collation, compatibility decompositions and confusables, Unicode-aware regexes, or bidirectional text. Nor have I said anything yet about implementation issues—how to efficiently store and look-up data about the sparsely-assigned code points, or how to optimize UTF-8 decoding, string comparison, or NFC normalization. Perhaps I’ll return to some of those things in future posts.  Unicode is a fascinating and complex system. It has a many-to-one mapping between bytes and code points, and on top of that a many-to-one (or, under some circumstances, many-to-many) mapping between code points and “characters”. It has oddball special cases in every corner. But no one ever claimed that representing all written languages was going to be easy, and it’s clear that we’re never going back to the bad old days of a patchwork of incompatible encodings.  Further reading:  The Unicode Standard UTF-8 Everywhere Manifesto Dark corners of Unicode by Eevee ICU (International Components for Unicode)—C/C++/Java libraries implementing many Unicode algorithms and related things Python 3 Unicode Howto Google Noto Fonts—set of fonts intended to cover all assigned code points"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-20" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> text.encode(<span class="st">"utf-8"</span>) <span class="co"># raw bytes</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">int</span>, tokens)) <span class="co"># convert to a list of integers in range 0..255 for convenience</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-21" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>vocab_size <span class="op">=</span> <span class="dv">276</span> <span class="co"># the desired final vocabulary size</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>num_merges <span class="op">=</span> vocab_size <span class="op">-</span> <span class="dv">256</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ids <span class="op">=</span> <span class="bu">list</span>(tokens) <span class="co"># copy so we don't destroy the original list</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>merges <span class="op">=</span> {}</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert your iterative merging code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-22" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"tokens length:"</span>, <span class="bu">len</span>(tokens))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ids length:"</span>, <span class="bu">len</span>(ids))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"compression ratio: </span><span class="sc">{</span><span class="bu">len</span>(tokens) <span class="op">/</span> <span class="bu">len</span>(ids)<span class="sc">:.2f}</span><span class="ss">X"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="decoding" class="level3">
+<h3 class="anchored" data-anchor-id="decoding"><strong>4. Decoding</strong></h3>
+<p>Given a sequence of integers in the range [0, vocab_size], what is the text?</p>
+<div id="cell-24" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""This maps each integer from 0 to 255 to a single byte:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">vocab[65]   # b"A"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">vocab[97]   # b"a"</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">vocab[128]  # b"</span><span class="ch">\x80</span><span class="co">"</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> {idx: <span class="bu">bytes</span>([idx]) <span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">256</span>)}</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">Add tokens made by merging existing tokens</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">for example,</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">if</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">merges = {(104, 105): 256}</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">then</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">vocab[256] = b"h" + b"i"  # b"hi"</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co">Token ID 256 now represents two bytes.</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co">The loop assumes each token’s components already exist in vocab.</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p0, p1), idx <span class="kw">in</span> merges.items():</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    vocab[idx] <span class="op">=</span> vocab[p0] <span class="op">+</span> vocab[p1]</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> decode(ids):</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">"""</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co">  This looks up each token’s bytes and joins them with no separator. For example:</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="co">  decode([104, 105])  # "hi"</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="co">  decode([256])      # "hi", using the example merge above</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="co">  """</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>  tokens <span class="op">=</span> <span class="st">b""</span>.join(vocab[idx] <span class="cf">for</span> idx <span class="kw">in</span> ids)</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">#interprets the combined bytes as UTF-8 text. Invalid byte sequences are replaced with �.</span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>  text <span class="op">=</span> tokens.decode(<span class="st">"utf-8"</span>, errors<span class="op">=</span><span class="st">"replace"</span>)</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> text</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(decode([<span class="dv">128</span>]))</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a><span class="co">"""The key distinction: a token ID is not a Unicode character number.</span></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a><span class="co">Here, token ID 128 represents the raw byte 0x80, which is invalid UTF-8 on its own.</span></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="co">decode([128])       # "�"</span></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="co">decode([194, 128])  # "</span><span class="ch">\x80</span><span class="co">" — valid UTF-8 for a nonprinting control character</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="encoding" class="level3">
+<h3 class="anchored" data-anchor-id="encoding"><strong>5. Encoding</strong></h3>
+<p>The other way around: Given a string, what are the tokens?</p>
+<div id="cell-26" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encode(text):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># given a string, return list of integers (the tokens)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">raise</span> <span class="pp">NotImplementedError</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(encode(<span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-27" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(decode(encode(<span class="st">"hello world"</span>)))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>text2 <span class="op">=</span> decode(encode(text))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(text2 <span class="op">==</span> text)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>valtext <span class="op">=</span> <span class="st">"Many common characters, including numerals, punctuation, and other symbols, are unified within the standard and are not treated as specific to any given writing system. Unicode encodes thousands of emoji, with the continued development thereof conducted by the Consortium as a part of the standard.[4] Moreover, the widespread adoption of Unicode was in large part responsible for the initial popularization of emoji outside of Japan. Unicode is ultimately capable of encoding more than 1.1 million characters."</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>valtext2 <span class="op">=</span> decode(encode(valtext))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(valtext2 <span class="op">==</span> valtext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="regex-pattern-splitting" class="level3">
+<h3 class="anchored" data-anchor-id="regex-pattern-splitting"><strong>6. Regex Pattern Splitting</strong></h3>
+<p>Regular Expressions (Regex) are a mini-language for defining search patterns in text. Instead of searching for an exact word like “cat”, regex lets you search for broad categories—such as “any number”, “a sequence of letters”, or “three digits followed by punctuation”.</p>
+<p><code>re.compile(pattern)</code> translates your regex pattern string into a reusable, compiled regex object. Compiling the pattern once avoids re-parsing the regex syntax on every search. In tokenizers where text is split millions of times, compiling first provides a noticeable speed boost.</p>
+<p><code>re.findall(pattern, text)</code> scans the target text from left to right and extracts all non-overlapping substrings that match the pattern, returning them as a Python list of strings.</p>
+<p>Models like GPT-2 and GPT-4 prevent certain character classes from merging across category boundaries (e.g., punctuation, numbers, contractions, whitespace) using regex patterns prior to applying BPE merges.</p>
+<p>After splitting the text, you process each chunk independently and then concatenate the resulting token IDs into a single list.</p>
+<table>
+<tbody><tr>
+<td>
+<p><br></p>
+<p><em>If you are curious following are key regex symbols Used in the tokenizer</em></p>
+<p><br></p>
+<ul>
+<li><p><code>|</code> (OR operator): Matches either the pattern on the left or the pattern on the right (e.g., <code>'s|'t|'ve</code>).</p></li>
+<li><p><code>\p{L}</code> (Letters): Matches any Unicode letter in any language (English, Korean, Arabic, etc.). The 3rd-party <code>regex</code> library supports this, whereas standard <code>re</code> does not.</p></li>
+<li><p><code>\p{N}</code> (Numbers): Matches any Unicode digit or numeric character.</p></li>
+<li><p><code>+</code> (One or more): Matches 1 or more consecutive characters of the preceding rule (e.g., <code>\p{L}+</code> matches whole words like <code>"world"</code>).</p></li>
+<li><p><code>?</code> (Zero or one): Makes the preceding character optional (e.g., <code>?\p{L}+</code> means “an optional leading space followed by one or more letters”, capturing <code>" world"</code> as a single chunk).</p></li>
+<li><p><code>[^...]</code> (Negated set): Matches anything except what is inside the brackets. [^\s\p{L}\p{N}]+ means “match one or more characters that are NOT whitespace, letters, or numbers” (i.e., punctuation symbols like <code>!!!?</code>).</p>
+</li></ul></td><td>
+</td></tr>
+</tbody></table>
+
+<div id="cell-29" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> regex <span class="im">as</span> re</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>gpt2pat <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"""'s|'t|'re|'ve|'m|'ll|'d| ?\p</span><span class="sc">{L}</span><span class="vs">+| ?\p</span><span class="sc">{N}</span><span class="vs">+| ?[^\s\p</span><span class="sc">{L}</span><span class="vs">\p</span><span class="sc">{N}</span><span class="vs">]+|\s+(?!\S)|\s+"""</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(gpt2pat, <span class="st">"Hello've world123 how's are you!!!?"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-30" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="st">for i in range(1, 101):</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="st">    if i % 3 == 0 and i % 5 == 0:</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">        print("FizzBuzz")</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">    elif i % 3 == 0:</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">        print("Fizz")</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">    elif i % 5 == 0:</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="st">        print("Buzz")</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="st">    else:</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="st">        print(i)</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(gpt2pat, example))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<br>
+<hr>
+<p><br></p>
+</section>
+<section id="special-tokens" class="level3">
+<h3 class="anchored" data-anchor-id="special-tokens"><strong>7. Special tokens</strong></h3>
+<p>Special tokens are control symbols that tell the model structure and context—most famously <code>&lt;|endoftext|&gt;</code>, which marks where a training document ends and a new one begins.</p>
+<p><code>&lt;|endoftext|&gt;</code> is the only special token in use for the GPT-2 base model.</p>
+<p>Unlike regular words or punctuation, special tokens must never be chopped up or merged with other text.</p>
+<p>If you pass <code>&lt;|endoftext|&gt;</code> into standard BPE, the regex pattern will chop it up into punctuation and words: <code>['&lt;|', 'endoftext', '|&gt;']</code>.</p>
+<p>The BPE encoder will break those into bytes and look up individual subword merges.</p>
+<p>It ends up encoded as several token IDs instead of a single reserved control token.</p>
+<p>Furthermore, if <code>&lt;|endoftext|&gt;</code> sits right next to another word (e.g., <code>&lt;|endoftext|&gt;Hello</code>), standard BPE might try to merge &gt; and H together into a new pair.</p>
+<p>To prevent this, tokenizers treat special tokens as atomic entities outside normal BPE.</p>
+<p>In your BPETokenizer, handling special tokens involves three steps:</p>
+<ol type="1">
+<li>Registration</li>
+</ol>
+<p>You map the special token string to an ID outside the normal byte/merge range:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tokenizer.register_special_tokens({<span class="st">"&lt;|endoftext|&gt;"</span>: <span class="dv">50256</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><strong>Encoding (<code>encode</code>)</strong></li>
+</ol>
+<p>Before applying regex pre-splitting and BPE merges, you slice the raw text by the special token so it remains completely untouched:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pattern matching the special token, e.g. "(&lt;\|endoftext\|&gt;)"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>specials_pattern <span class="op">=</span> <span class="st">"("</span> <span class="op">+</span> <span class="st">"|"</span>.join(re.escape(s) <span class="cf">for</span> s <span class="kw">in</span> <span class="va">self</span>.special_tokens) <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> []</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># re.split keeps the delimiter if wrapped in parentheses ()</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> part <span class="kw">in</span> re.split(specials_pattern, text):</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> part <span class="kw">in</span> <span class="va">self</span>.special_tokens:</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Directly insert the single special ID without touching BPE</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        tokens.append(<span class="va">self</span>.special_tokens[part])</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> part:</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Run normal regex splitting + BPE on regular text chunks</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        tokens.extend(<span class="va">self</span>._encode_ordinary(part))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><strong>Decoding (<code>decode</code>)</strong></li>
+</ol>
+<p>When decoding a list of IDs back to text:</p>
+<ul>
+<li><p>Check if an ID belongs to <code>self.vocab</code> (decode to bytes).</p></li>
+<li><p>If not, check an inverted special token map (<code>{50256: "&lt;|endoftext|&gt;"}</code>) and append the string directly as UTF-8 bytes.</p></li>
+</ul>
+<div id="cell-32" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>special_tokens <span class="op">=</span> {<span class="st">'&lt;|endoftext|&gt;'</span>}</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Update your implementation of encode and decode code here that account for `special_tokens`</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<br>
+<hr>
+<p><br></p>
+</section>
+<section id="tokenizer-class" class="level3">
+<h3 class="anchored" data-anchor-id="tokenizer-class"><strong>8.</strong> Tokenizer class</h3>
+<p>At this point you have everything you need to build your own GPT-4 tokenizer.</p>
+<p>Write the <code>BPETokenizer</code> class, with the following four core functions:</p>
+<ul>
+<li><code>def train(self, text, vocab_size, verbose=False)</code></li>
+<li><code>def encode(self, text)</code></li>
+<li><code>def decode(self, ids)</code></li>
+<li><code>def register_special_tokens(self, tokens)</code></li>
+</ul>
+<p>Train your tokenizer on <a href="https://raw.githubusercontent.com/karpathy/minbpe/refs/heads/master/tests/taylorswift.txt">taylorswift.txt</a> and inspect the merged tokens. Do they look reasonable?</p>
+<p>Use the regex pattern below to split the text exactly as GPT-4 would.</p>
+<p>Process the parts separately as before, then concatenate the results.</p>
+<p>You should see that you will now have no tokens that go across categories (numbers, letters, punctuation, more than one whitespace).</p>
+<p>Use the GPT-4 pattern:</p>
+<div id="cell-34" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>GPT4_SPLIT_PATTERN <span class="op">=</span> <span class="vs">r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p</span><span class="sc">{L}</span><span class="vs">\p</span><span class="sc">{N}</span><span class="vs">]?+\p</span><span class="sc">{L}</span><span class="vs">+|\p</span><span class="sc">{N}</span><span class="vs">{1,3}| ?[^\s\p</span><span class="sc">{L}</span><span class="vs">\p</span><span class="sc">{N}</span><span class="vs">]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-35" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">Starter code. Fill in every function marked </span><span class="al">TODO</span><span class="co">.</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">Do not change function signatures -- the autograder depends on them.</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> regex <span class="im">as</span> re  <span class="co"># pip install regex  (supports \p{L} unicode classes; stdlib `re` does not)</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GPT-2 style pre-tokenization pattern (from the GPT-2 paper / tiktoken).</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Splits text into chunks BEFORE BPE is applied, so merges never cross</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># these boundaries (e.g. a word merging into following punctuation).</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>GPT2_SPLIT_PATTERN <span class="op">=</span> <span class="vs">r"""'s|'t|'re|'ve|'m|'ll|'d| ?\p</span><span class="sc">{L}</span><span class="vs">+| ?\p</span><span class="sc">{N}</span><span class="vs">+| ?[^\s\p</span><span class="sc">{L}</span><span class="vs">\p</span><span class="sc">{N}</span><span class="vs">]+|\s+(?!\S)|\s+"""</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>GPT4_SPLIT_PATTERN <span class="op">=</span> <span class="vs">r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p</span><span class="sc">{L}</span><span class="vs">\p</span><span class="sc">{N}</span><span class="vs">]?+\p</span><span class="sc">{L}</span><span class="vs">+|\p</span><span class="sc">{N}</span><span class="vs">{1,3}| ?[^\s\p</span><span class="sc">{L}</span><span class="vs">\p</span><span class="sc">{N}</span><span class="vs">]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+"""</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>SPECIAL_TOKEN <span class="op">=</span> <span class="st">"&lt;|endoftext|&gt;"</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BPETokenizer:</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A minimal byte-level BPE tokenizer"""</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># merges: maps (id1, id2) -&gt; new_id, in the order they were learned</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.merges <span class="op">=</span> {}</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># vocab: maps id -&gt; bytes object (for decoding)</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.vocab <span class="op">=</span> {idx: <span class="bu">bytes</span>([idx]) <span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">256</span>)}</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.special_tokens <span class="op">=</span> {}</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> train(<span class="va">self</span>, text: <span class="bu">str</span>, vocab_size: <span class="bu">int</span>, verbose: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="co">        Train the tokenizer on `text` until the vocabulary reaches `vocab_size`.</span></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co">        Steps:</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="co">          1. Pre-split `text` using GPT2_SPLIT_PATTERN (re.findall).</span></span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a><span class="co">          2. Convert each chunk to a list of its UTF-8 byte values.</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a><span class="co">          3. Repeatedly: count pair stats across ALL chunks, find the most</span></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a><span class="co">             frequent pair, assign it the next available id, and merge it</span></span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a><span class="co">             within every chunk. Record the merge in self.merges and the</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="co">             new vocab entry in self.vocab.</span></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a><span class="co">          4. Stop when len(self.vocab) == vocab_size (or no pairs remain).</span></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a><span class="co">        vocab_size must be &gt;= 256 (the raw byte values).</span></span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: implement</span></span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span></span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> encode(<span class="va">self</span>, text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a><span class="co">        Encode `text` into a list of token ids using the learned merges.</span></span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a><span class="co">        Must handle the special token `&lt;|endoftext|&gt;` atomically (i.e. it</span></span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a><span class="co">        should never be split or merged into, and should map to its own</span></span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a><span class="co">        reserved id).</span></span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: implement</span></span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span></span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> decode(<span class="va">self</span>, ids: <span class="bu">list</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a><span class="co">        Decode a list of token ids back into a string.</span></span>
+<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a><span class="co">        Must satisfy: decode(encode(x)) == x for all valid input strings x.</span></span>
+<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: implement</span></span>
+<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span></span>
+<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> register_special_tokens(<span class="va">self</span>, tokens: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Register special tokens, e.g. {'&lt;|endoftext|&gt;': 256+vocab_size}."""</span></span>
+<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.special_tokens <span class="op">=</span> tokens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-36" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>wget https:<span class="op">//</span>raw.githubusercontent.com<span class="op">/</span>karpathy<span class="op">/</span>minbpe<span class="op">/</span>refs<span class="op">/</span>heads<span class="op">/</span>master<span class="op">/</span>tests<span class="op">/</span>taylorswift.txt</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> <span class="st">''</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'taylorswift.txt'</span>) <span class="im">as</span> f:</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  content <span class="op">=</span> f.read()</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> BPETokenizer()</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>tokenizer.train(content, vocab_size<span class="op">=</span><span class="dv">512</span>, verbose<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-37" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>my_tokens <span class="op">=</span> tokenizer.encode(<span class="st">"안녕하세요 👋 (hello in Korean!)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-38" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(my_tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="inspecting-gpt-2-and-gpt-4-tokenizers" class="level3">
+<h3 class="anchored" data-anchor-id="inspecting-gpt-2-and-gpt-4-tokenizers"><strong>Inspecting GPT-2 and GPT-4 Tokenizers</strong></h3>
+<p><em>(In case you are wondering. GPT-3 just used GPT-2’s Tokenizer)</em></p>
+<p><strong>The <code>tiktoken</code> Library</strong></p>
+<p><a href="https://github.com/openai/tiktoken"><code>tiktoken</code></a> is an open-source, high-performance Byte Pair Encoding (BPE) tokenizer library engineered in Rust with Python bindings by OpenAI.</p>
+<p>Unlike earlier pure-Python tokenization scripts that struggled with scaling to massive pretraining corpora, tiktoken processes text significantly faster—often orders of magnitude faster than standard tokenizers—through multithreading and efficient regex compilation.</p>
+<p>It serves as the official inference tokenizer for contemporary OpenAI models, including GPT-3.5 and GPT-4 (<code>cl100k_base</code>), abstracting low-level byte-merging operations, greedy priority loops, and explicit control over special tokens such as <code>&lt;|endoftext|&gt;</code> through high-level encode and decode routines.</p>
+<div id="cell-40" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tiktoken</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>GPT-2: Explicit Vocab and Merges</strong></p>
+<p>In the original GPT-2 implementation (referenced in OpenAI’s encoder.py), the vocabulary and merge rules are stored as two separate, human-readable files. The encoder.json file defines the model’s vocabulary of 50,257 tokens, mapping Unicode string representations directly to integer token IDs. Complementing this is vocab.bpe, which lists 50,000 ordered text merge rules sequentially. Before merging, GPT-2 maps each raw byte (0–255) to a visible Unicode character using a reversible lookup table. BPE merges are subsequently executed over these character representations, joining individual units into larger subwords and words (such as merging ‘Ġt’ and ‘he’ into ‘Ġthe’) strictly following the hierarchical order learned during training.</p>
+<div id="cell-42" class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tiktoken</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># GPT-2 (does not merge spaces)</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> tiktoken.get_encoding(<span class="st">"gpt2"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enc.encode(<span class="st">"    hello world!!!"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-43" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enc.decode(enc.encode(<span class="st">"    hello world!!!"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Reference the GPT-2 <a href="https://github.com/openai/gpt-2/blob/master/src/encoder.py">encoder.py</a> Download the vocab.bpe and encoder.json files.</p>
+<div id="cell-45" class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>wget https:<span class="op">//</span>openaipublic.blob.core.windows.net<span class="op">/</span>gpt<span class="op">-</span><span class="dv">2</span><span class="op">/</span>models<span class="op">/</span><span class="dv">1558</span><span class="er">M</span><span class="op">/</span>vocab.bpe</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>wget https:<span class="op">//</span>openaipublic.blob.core.windows.net<span class="op">/</span>gpt<span class="op">-</span><span class="dv">2</span><span class="op">/</span>models<span class="op">/</span><span class="dv">1558</span><span class="er">M</span><span class="op">/</span>encoder.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-46" class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, json</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'encoder.json'</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    vocab <span class="op">=</span> json.load(f) <span class="co"># &lt;--- ~equivalent to our "vocab"</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'vocab.bpe'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    bpe_data <span class="op">=</span> f.read()</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>bpe_merges <span class="op">=</span> [<span class="bu">tuple</span>(merge_str.split()) <span class="cf">for</span> merge_str <span class="kw">in</span> bpe_data.split(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]]</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ^---- ~equivalent to our "merges"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-47" class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(vocab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>GPT-4: Unified <code>_mergeable_ranks</code></strong></p>
+<p>Rather than maintaining decoupled text files or character maps, the GPT-4 tokenizer (<code>cl100k_base</code>) consolidates both vocabulary and merge recipes into a single, compact data structure: <code>_mergeable_ranks</code>. This table maps raw byte sequences directly to integer ranks across an expanded vocabulary of 100,256 tokens. The byte string keys define the vocabulary elements, while the integer values dictate the merge priority—tokens with lower ranks represent earlier BPE merges that take precedence during encoding. Operating natively on UTF-8 bytes alongside a modernized regex pattern that clusters multi-digit numbers and whitespace blocks efficiently, GPT-4 avoids the intermediate Unicode re-mapping steps of GPT-2 while packing more information into fewer tokens.</p>
+<div id="cell-49" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tiktoken</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> tiktoken.get_encoding(<span class="st">"cl100k_base"</span>) <span class="co"># GPT-4 tokenizer</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enc.encode(<span class="st">"안녕하세요 👋 (hello in Korean!)"</span>))</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enc.decode(enc.encode(<span class="st">"안녕하세요 👋 (hello in Korean!)"</span>)) <span class="op">==</span> <span class="st">"안녕하세요 👋 (hello in Korean!)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-50" class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GPT-2 (does not merge spaces)</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> tiktoken.get_encoding(<span class="st">"gpt2"</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enc.encode(<span class="st">"    hello world!!!"</span>))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># GPT-4 (merges spaces)</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> tiktoken.get_encoding(<span class="st">"cl100k_base"</span>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enc.encode(<span class="st">"    hello world!!!"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can easily recover what we call <code>vocab</code> here, and what they call and store under <code>enc._mergeable_ranks</code>.</p>
+<p>Basically, under some conditions it is enough to only store the parent nodes (and their rank) and get rid of the precise details of which children merged up to any parent.</p>
+<div id="cell-52" class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tiktoken</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>enc_gpt4 <span class="op">=</span> tiktoken.get_encoding(<span class="st">"cl100k_base"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Mergeable ranks serves as both vocab and merge priority</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"GPT-4 Mergeable Tokens: </span><span class="sc">{</span><span class="bu">len</span>(enc_gpt4._mergeable_ranks)<span class="sc">}</span><span class="ss">"</span>) <span class="co"># 100,256</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>sample_tokens <span class="op">=</span> <span class="bu">list</span>(enc_gpt4._mergeable_ranks.items())[<span class="dv">256</span>:<span class="dv">270</span>]</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> token_bytes, rank <span class="kw">in</span> sample_tokens:</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Rank </span><span class="sc">{</span>rank<span class="sc">:6d}</span><span class="ss"> -&gt; </span><span class="sc">{</span>token_bytes<span class="sc">!r}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-53" class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>gpt4_vocab <span class="op">=</span> {rank: token_bytes <span class="cf">for</span> token_bytes, rank <span class="kw">in</span> enc_gpt4._mergeable_ranks.items()}</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total vocabulary entries: </span><span class="sc">{</span><span class="bu">len</span>(gpt4_vocab)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show a few recognizable subword and word tokens</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>sample_ids <span class="op">=</span> [<span class="dv">256</span>, <span class="dv">257</span>, <span class="dv">15339</span>, <span class="dv">1917</span>, <span class="dv">9906</span>]</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> sample_ids:</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Token ID </span><span class="sc">{</span>idx<span class="sc">:6d}</span><span class="ss"> -&gt; </span><span class="sc">{</span>gpt4_vocab[idx]<span class="sc">!r}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="summary-architecture-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="summary-architecture-comparison">Summary: Architecture Comparison</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Your <code>BPETokenizer</code></th>
+<th style="text-align: left;">GPT-2 (<code>r50k_base</code>)</th>
+<th style="text-align: left;">GPT-4 (<code>cl100k_base</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Vocab Size</strong></td>
+<td style="text-align: left;">Custom (e.g., 512)</td>
+<td style="text-align: left;">50,257</td>
+<td style="text-align: left;">100,256</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Pre-split Regex</strong></td>
+<td style="text-align: left;"><code>GPT4_SPLIT_PATTERN</code></td>
+<td style="text-align: left;">Character-level split regex</td>
+<td style="text-align: left;">Modernized Unicode category regex</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Merge Storage</strong></td>
+<td style="text-align: left;">In-memory <code>self.merges</code></td>
+<td style="text-align: left;">Text file (<code>vocab.bpe</code>)</td>
+<td style="text-align: left;">Priority rank lookup (<code>_mergeable_ranks</code>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Byte Representation</strong></td>
+<td style="text-align: left;">Native UTF-8 bytes</td>
+<td style="text-align: left;">Byte-to-Unicode remapping</td>
+<td style="text-align: left;">Byte-shuffled UTF-8 bytes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Special Tokens</strong></td>
+<td style="text-align: left;">Handled via regex partition</td>
+<td style="text-align: left;"><code>&lt;\|endoftext\|&gt;</code></td>
+<td style="text-align: left;"><code>&lt;\|endoftext\|&gt;</code>, FIM tokens, etc.</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

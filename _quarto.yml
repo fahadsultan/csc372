@@ -14,6 +14,7 @@ website:
       # - text: "Calendar"
       #   href: calendar.qmd
       - sidebar:syllabus
+      - sidebar:project
       # - text: "Project"
       #   href: project/project.qmd
       # - text: "Datasets"
@@ -39,6 +40,13 @@ website:
         - syllabus/accomodations.md
         - syllabus/title_9.md
         - syllabus/aipolicy.qmd
+    - id: project
+      title: "Project"
+      background: light
+      collapse-level: 1
+      contents:
+        - CSC_372_Project_Part_1.ipynb
+        - Project2.ipynb
     - id: content
       background: "#2d2d2d"
       style: "floating"
@@ -56,7 +64,10 @@ website:
           - snn_multivariate.ipynb
           - snn_general.ipynb
           - snn_activations.ipynb
-        - text: "Deep Neural Networks"
+        - section: dnn.ipynb 
+          contents:
+          - dnn_clipping.ipynb
+          - dnn_deep.ipynb
         - text: "Loss Functions"
         - text: "Gradient Descent"
         - text: "Back Propagation"
@@ -65,10 +76,6 @@ website:
         - text: "Transformers"
         - text: "Large Language Models"
         - text: "Diffusion Models"
-        # - section: dnn.ipynb 
-        #   contents:
-        #   - dnn_clipping.ipynb
-        #   - dnn_deep.ipynb
         # - section: loss.ipynb
         #   contents:
         #   - loss_regression.ipynb

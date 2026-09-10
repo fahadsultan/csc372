@@ -200,6 +200,21 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="./CSC_372_Project_Part_1.html">
+ <span class="dropdown-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project2.html">
+ <span class="dropdown-text">PyTorch: A Modern Deep Learning Library</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
 <span class="menu-text">Moodle Page</span></a>
@@ -534,11 +549,11 @@ y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\t
 <!-- ### Hyperparameters -->
 <p><br><br></p>
 <p>We can extend the deep network construction to more than two hidden layers; modern networks might have more than a hundred layers with thousands of hidden units at each layer.</p>
-<p>The number of hidden units in each layer is referred to as the <u>width</u> of the network, and the number of hidden layers as the <u>depth</u>.</p>
-<p>The total number of hidden units is a measure of the <u>network’s capacity</u>.</p>
-<p>We denote the number of layers as <span class="math inline">\(K\)</span> and the number of hidden units in each layer as <span class="math inline">\(D_1, D_2, \ldots, D_K\)</span>. These are examples of hyperparameters. They are quantities chosen before we learn the model parameters (i.e., the slope and intercept terms). For fixed hyperparameters (e.g., <span class="math inline">\(K = 2\)</span> layers with <span class="math inline">\(D_k = 3\)</span> hidden units in each), the model describes a family of functions, and the parameters determine the particular function. Hence, when we also consider the hyperparameters, we can think of neural networks as representing a family of families of functions relating input to output.</p>
-<p><img src="assets/Chap04/DeepKLayer.svg" style="filter: invert(1);" width="100%"></p>
-<p>Matrix notation for network with Di = 3-dimensional input x, Do = 2- dimensional output y, and K = 3 hidden layers h1, h2, and h3 of dimensions <span class="math inline">\(D_1\)</span> = 4, <span class="math inline">\(D_2\)</span> = 2, and <span class="math inline">\(D_3\)</span> = 3 respectively. The weights are stored in matrices <span class="math inline">\(\Omega_k\)</span> that multiply the activations from the preceding layer to create the pre-activations at the subsequent layer. For example, the weight matrix <span class="math inline">\(\Omega_1\)</span> that computes the pre-activations at <span class="math inline">\(h_2\)</span> from the activations at <span class="math inline">\(h_1\)</span> has dimension 2×4. It is applied to the four hidden units in layer one and creates the inputs to the two hidden units at layer two. The biases are stored in vectors <span class="math inline">\(\beta_k\)</span> and have the dimension of the layer into which they feed. For example, the bias vector <span class="math inline">\(\beta_2\)</span> is length three because layer <span class="math inline">\(h_3\)</span> contains three hidden units.</p>
+<p>The number of hidden units in each layer is referred to as the <span style="color: #a183de;"><u>width</u></span> of the network, and the number of hidden layers as the <span style="color: #a183de;"><u>depth</u>. </span></p>
+<p>The total number of hidden units is a measure of the <span style="color: #a183de;"><u>network’s capacity</u>.</span></p>
+<p>We denote the number of layers as <span class="math inline">\(K\)</span> and the number of hidden units in each layer as <span class="math inline">\(D_1, D_2, \ldots, D_K\)</span>.</p>
+<p>These are examples of <span style="color: #a183de;"><u>hyperparameters</u>.</span> They are quantities chosen before we learn the model parameters (i.e., the slope and intercept terms).</p>
+<p>For fixed hyperparameters (e.g., <span class="math inline">\(K = 2\)</span> layers with <span class="math inline">\(D_k = 3\)</span> hidden units in each), the model describes a family of functions, and the parameters determine the particular function. Hence, when we also consider the hyperparameters, we can think of neural networks as representing a family of families of functions relating input to output.</p>
 <!-- ### Matrix Notation  -->
 <p><br><br></p>
 <p>We have seen that a deep neural network consists of linear transformations alternating with activation functions. We could equivalently describe equations 4.7–4.9 in matrix notation as:</p>
@@ -566,6 +581,8 @@ y' &amp;=&amp; \phi'_{0}+\phi'_{1}\mbox{a}\left[\psi_{10} + \psi_{11}\mbox{a}[\t
   y' &amp;=&amp; \phi'_{0} + \boldsymbol\phi' \mathbf{h}',
 \end{eqnarray}\]</span></p>
 <p>where, in each case, the function a[•] applies the activation function separately to every element of its vector input.</p>
+<p><img src="assets/Chap04/DeepKLayer.svg" style="filter: invert(1);" width="100%"></p>
+<p>Matrix notation for network with Di = 3-dimensional input x, Do = 2- dimensional output y, and K = 3 hidden layers h1, h2, and h3 of dimensions <span class="math inline">\(D_1\)</span> = 4, <span class="math inline">\(D_2\)</span> = 2, and <span class="math inline">\(D_3\)</span> = 3 respectively. The weights are stored in matrices <span class="math inline">\(\Omega_k\)</span> that multiply the activations from the preceding layer to create the pre-activations at the subsequent layer. For example, the weight matrix <span class="math inline">\(\Omega_1\)</span> that computes the pre-activations at <span class="math inline">\(h_2\)</span> from the activations at <span class="math inline">\(h_1\)</span> has dimension 2×4. It is applied to the four hidden units in layer one and creates the inputs to the two hidden units at layer two. The biases are stored in vectors <span class="math inline">\(\beta_k\)</span> and have the dimension of the layer into which they feed. For example, the bias vector <span class="math inline">\(\beta_2\)</span> is length three because layer <span class="math inline">\(h_3\)</span> contains three hidden units.</p>
 <p><br><br></p>
 <p>This notation becomes cumbersome for networks with many layers. Hence, from now on, we will describe the vector of hidden units at layer k as hk , the vector of biases (intercepts) that contribute to hidden layer k+ 1 as βk , and the weights (slopes) that are applied to the kth layer and contribute to the (k+1)th layer as Ωk . A general deep network y= f[x,ϕ] with K layers can now be written as:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:dnn_la1}
