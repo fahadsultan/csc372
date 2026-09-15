@@ -136,7 +136,7 @@ window.Quarto = {
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -154,7 +154,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -200,6 +200,21 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="./CSC_372_Project_Part_1.html">
+ <span class="dropdown-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project2.html">
+ <span class="dropdown-text">PyTorch: A Modern Deep Learning Library</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
 <span class="menu-text">Moodle Page</span></a>
@@ -218,10 +233,155 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./loss.html">Loss Functions</a></li><li class="breadcrumb-item"><a href="./loss_classification.html">Example 2: binary classification</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple inputs / outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;Deep neural networks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./loss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loss Functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Gradient Descent</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Back Propagation</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Performance</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Regularization</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Transformers</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Large Language Models</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">Diffusion Models</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -240,32 +400,39 @@ window.Quarto = {
 
 <section id="example-2-binary-classification" class="level2">
 <h2 class="anchored" data-anchor-id="example-2-binary-classification">Example 2: binary classification</h2>
-<p><img src="assets/Chap05/LossHeteroscedastic.svg" style="filter: invert(1);" width="100%"></p>
-<p>Homoscedastic vs.&nbsp;heteroscedastic regression. a) A shallow neural network for homoscedastic regression predicts just the mean μ of the output distribution from the input x. b) The result is that while the mean (blue line) is a piecewise linear function of the input x, the variance is constant everywhere (arrows and gray region show ±2 standard deviations). c) A shallow neural network for heteroscedastic regression also predicts the variance σ2 (or, more precisely, computes its square root, which we then square). d) The standard deviation now also becomes a piecewise linear function of the input x.</p>
+<p>In binary classification, the goal is to assign the data <span class="math inline">\(x\)</span> to one of two discrete classes <span class="math inline">\(y \in {0,1}\)</span>. In this context, we refer to y as a label. Examples of binary classification include</p>
+<ol type="i">
+<li><p>predicting whether a restaurant review is positive (<span class="math inline">\(y = 1\)</span>) or negative (<span class="math inline">\(y = 0\)</span>) from text data <span class="math inline">\(x\)</span> and</p></li>
+<li><p>predicting whether a tumor is present (<span class="math inline">\(y = 1\)</span>) or absent (<span class="math inline">\(y = 0\)</span>) from an MRI scan <span class="math inline">\(x\)</span>.</p></li>
+</ol>
 <p><img src="assets/Chap05/LossBern.svg" style="filter: invert(1);" align="right" width="40%"></p>
 <p>Bernoulli distribution. The Bernoulli distribution is defined on the domain z ∈ {0, 1} and has a single parameter λ that denotes the probability of observing z = 1. It follows that the probability of observing z = 0 is 1 − λ.</p>
 <p><br><br></p>
 <p><img src="assets/Chap05/LossLogisticSigmoid.svg" style="filter: invert(1);" align="right" width="40%"></p>
 <p>Logistic sigmoid function. This function maps the real line z ∈ R to numbers between zero and one, so sig[z] ∈ [0, 1]. An input of 0 is mapped to 0.5. Negative inputs are mapped to numbers below 0.5, and positive inputs to numbers above 0.5.</p>
+<p>Once again, we follow the recipe from section 5.2 to construct the loss function. First, we choose a probability distribution over the output space <span class="math inline">\(y\in{0,1}\)</span>. A suitable choice is the Bernoulli distribution, which is defined on the domain <span class="math inline">\({0,1}\)</span>. This has a single parameter <span class="math inline">\(\lambda \in [0,1]\)</span> that represents the probability that ytakes the value one (figure 5.6):</p>
 <p><span class="math display">\[\begin{eqnarray}
   Pr(y|\lambda) = \begin{cases} 1-\lambda &amp; \quad y =0 \\ \lambda &amp; \quad y= 1\end{cases},
 \end{eqnarray}\]</span></p>
+<p>which can equivalently be written as:</p>
 <p><span class="math display">\[\begin{eqnarray}
   Pr(y|\lambda) = (1-\lambda)^{1-y}\cdot \lambda^{y}.
 \end{eqnarray}\]</span></p>
+<p>Second, we set the machine learning model <span class="math inline">\(f[x,\phi]\)</span> to predict the single distribution parameter <span class="math inline">\(\lambda\)</span>. However, λcan only take values in the range <span class="math inline">\([0,1]\)</span>, and we cannot guarantee that the network output will lie in this range. Consequently, we pass the network output through a function that maps the real numbers <span class="math inline">\(\mathbb{R}\)</span> to <span class="math inline">\([0,1]\)</span>. A suitable function is the logistic sigmoid (figure 5.7):</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:logistic_sigmoid}
   \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
 \end{eqnarray}\]</span></p>
+<p>Hence, we predict the distribution parameter as λ= sig[f[x,ϕ]]. The likelihood is now:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:loss_binary}
   Pr(y|\mathbf{x}) = (1-\mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]])^{1-y}\cdot \mbox{sig}[\mbox{f}[\mathbf{x},\boldsymbol\phi]]^y.
 \end{eqnarray}\]</span></p>
+<p>This is depicted in figure 5.8 for a shallow neural network model. The loss function is the negative log-likelihood of the training set:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:loss_binary_cross_entropy}
 L[\boldsymbol\phi] = \sum_{i=1}^{I}-(1-y_{i})\log\Bigl[1-\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr] - y_{i}\log\Bigl[\mbox{sig}[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]]\Bigr].
 \end{eqnarray}\]</span></p>
+<p>For reasons to be explained in section 5.7, this is known as the binary cross-entropy loss. The transformed model output <span class="math inline">\(sig[f[x,\phi]]\)</span> predicts the parameter λ of the Bernoulli distribution. This represents the probability that y = 1, and it follows that <span class="math inline">\(1−\lambda\)</span> represents the probability that y= 0. When we perform inference, we may want a point estimate of <span class="math inline">\(y\)</span>, so we set <span class="math inline">\(y= 1\)</span> if <span class="math inline">\(\lambda&gt;0.5\)</span> and <span class="math inline">\(y= 0\)</span> otherwise.</p>
 <p><img src="assets/Chap05/LossBinaryClassification.svg" style="filter: invert(1);" width="100%"></p>
 <p>Binary classification model. a) The network output is a piecewise linear function that can take arbitrary real values. b) This is transformed by the logistic sigmoid function, which compresses these values to the range [0, 1]. c) The transformed output predicts the probability λ that y = 1 (solid line). The probability that y = 0 is hence 1 − λ (dashed line). For any fixed x (vertical slice), we retrieve the two values of a Bernoulli distribution similar to that in figure 5.6. The loss function favors model parameters that produce large values of λ at positions xi that are associated with positive examples yi = 1 and small values of λ at positions associated with negative examples yi = 0.</p>
-<p><img src="assets/Chap05/LossCategorical.svg" style="filter: invert(1);" align="right" width="40%"></p>
-<p>Categorical distribution. The categorical distribution assigns probabilities to K&gt;2 categories, with associated probabilities λ1, λ2, . . . , λK. Here, there are five categories, so K = 5. To ensure that this is a valid probability distribution, each parameter λk must lie in the range [0, 1], and all K parameters must sum to one.</p>
 <div id="dadb6e27" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports math library</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>

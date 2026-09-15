@@ -68,7 +68,11 @@ website:
           contents:
           - dnn_clipping.ipynb
           - dnn_deep.ipynb
-        - text: "Loss Functions"
+        - section: loss.ipynb
+          contents:
+          - loss_regression.ipynb
+          - loss_classification.ipynb
+          - loss_multiclass.ipynb
         - text: "Gradient Descent"
         - text: "Back Propagation"
         - text: "Performance"
@@ -76,11 +80,6 @@ website:
         - text: "Transformers"
         - text: "Large Language Models"
         - text: "Diffusion Models"
-        # - section: loss.ipynb
-        #   contents:
-        #   - loss_regression.ipynb
-        #   - loss_classification.ipynb
-        #   - loss_multiclass.ipynb
         # - section: gradientdescent.ipynb
         #   contents:
         #   - gradientdescent_sgd.ipynb

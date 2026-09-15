@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Loss Functions</title>
+<title>tmp</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,40 +69,11 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -120,7 +91,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -199,301 +170,38 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./loss.html">Loss Functions</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear Regression</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./snn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shallow Neural Networks</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple inputs / outputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">General case</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Activations Functions</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Deep Neural Networks</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">General Formulation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shallow vs.&nbsp;Deep neural networks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./loss.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Loss Functions</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 1: univariate regression</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 2: binary classification</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 3: multiclass classification</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">Gradient Descent</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">Back Propagation</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">Performance</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">Regularization</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">Transformers</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">Large Language Models</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">Diffusion Models</span>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#maximum-likelihood" id="toc-maximum-likelihood" class="nav-link active" data-scroll-target="#maximum-likelihood">Maximum likelihood</a>
-  <ul class="collapse">
-  <li><a href="#computing-a-distribution-over-outputs" id="toc-computing-a-distribution-over-outputs" class="nav-link" data-scroll-target="#computing-a-distribution-over-outputs">Computing a distribution over outputs</a></li>
-  <li><a href="#maximum-likelihood-criterion" id="toc-maximum-likelihood-criterion" class="nav-link" data-scroll-target="#maximum-likelihood-criterion">Maximum likelihood criterion</a></li>
-  <li><a href="#maximizing-log-likelihood" id="toc-maximizing-log-likelihood" class="nav-link" data-scroll-target="#maximizing-log-likelihood">Maximizing log-likelihood</a></li>
-  <li><a href="#minimizing-negative-log-likelihood" id="toc-minimizing-negative-log-likelihood" class="nav-link" data-scroll-target="#minimizing-negative-log-likelihood">Minimizing negative log-likelihood</a></li>
-  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
-  </ul></li>
-  <li><a href="#recipe-for-constructing-loss-functions" id="toc-recipe-for-constructing-loss-functions" class="nav-link" data-scroll-target="#recipe-for-constructing-loss-functions">Recipe for constructing loss functions</a></li>
+  <li><a href="#word2vec-embeddings-and-representation-learning" id="toc-word2vec-embeddings-and-representation-learning" class="nav-link active" data-scroll-target="#word2vec-embeddings-and-representation-learning">Word2Vec, Embeddings and Representation Learning</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Loss Functions</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Slides
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><a href="https://docs.google.com/presentation/d/1PJicP4dPwdDExcHPgTmzYyyfxGkWMxiidqPf03xPtIw/edit?slide=id.g32bda8ab1fc_2_75#slide=id.g32bda8ab1fc_2_75">Slides</a></p>
-</div>
-</div>
-<!-- When we train these models, we seek the parameters that produce the best possible mapping from input to output for the task we are considering. Here we define what is meant by the “best possible” mapping.
-
-That definition requires a training dataset $\{x_i,y_i\}$ of input/output pairs. A loss
-function or cost function $L[\phi]$ returns a single number that describes the mismatch
-between the model predictions $f[x_i,\phi]$ and their corresponding ground-truth outputs $y_i$.
-
-During training, we seek parameter values $\phi$ that minimize the loss and hence map the
-training inputs to the outputs as closely as possible. 
-
-We saw one example of a loss function: the least squares loss function, for univariate regression problems for which the target is a real number $y\in\mathbb{R}$. It computes the sum of the squares
-of the deviations between the model predictions $f[x_i,\phi]$ and the true values $y_i$.
-
-Here we provide a framework that both justifies the choice of the least squares criterion for real-valued outputs and allows us to build loss functions for other prediction types. 
-
-We consider binary classification, where the prediction $y \in \{0,1\}$ is one of two
-categories, multiclass classification, where the prediction $y \in \{1,2,...,K\}$ is one of K
-categories, and more complex cases. In the following two chapters, we address model
-training, where the goal is to find the parameter values that minimize these loss functions. -->
-<section id="maximum-likelihood" class="level2">
-<h2 class="anchored" data-anchor-id="maximum-likelihood">Maximum likelihood</h2>
-<p>Consider a model <span class="math inline">\(f[x,\phi]\)</span> with parameters <span class="math inline">\(\phi\)</span> that computes an output from input <span class="math inline">\(x\)</span>. <font color="violet">Until now, we have implied that the model directly computes a prediction y. We now shift perspective and consider the model as computing a conditional probability distribution <span class="math inline">\(Pr(y|x)\)</span> over possible outputs <span class="math inline">\(y\)</span> given input <span class="math inline">\(x\)</span></font>.</p>
-<p>The loss encourages each training output <span class="math inline">\(y_i\)</span> to have a high probability under the distribution <span class="math inline">\(Pr(y_i|x_i)\)</span> computed from the corresponding input <span class="math inline">\(x_i\)</span>.</p>
-<p><img src="assets/Chap05/LossDataTypes.svg" style="filter: invert(1);" width="100%"></p>
-<p>Predicting distributions over outputs.</p>
-<ol type="a">
-<li><p>Regression task, where the goal is to predict a real-valued output y from the input <span class="math inline">\(x\)</span> based on training data <span class="math inline">\({x_i, y_i}\)</span> (blue points). For each input value <span class="math inline">\(x\)</span>, the machine learning model predicts a distribution <span class="math inline">\(Pr(y|x)\)</span> over the output <span class="math inline">\(y \in \mathbb{R}\)</span> (red curves show distributions for <span class="math inline">\(x=2.0\)</span> and <span class="math inline">\(x=7.0\)</span>). <font color="violet">Minimizing the loss function corresponds to maximizing the probability of the training outputs <span class="math inline">\(y_i\)</span> under the distribution predicted from the corresponding inputs <span class="math inline">\(x_i\)</span></font>.</p></li>
-<li><p>To predict discrete classes <span class="math inline">\(y \in {1, 2, 3, 4}\)</span> in a classification task, we use a discrete probability distribution, so the model predicts a different histogram over the four possible values of <span class="math inline">\(y_i\)</span> for each value of <span class="math inline">\(x_i\)</span>.</p></li>
-<li><p>To predict counts <span class="math inline">\(y \in \{0, 1, 2, . . .\}\)</span> and</p></li>
-<li><p>direction <span class="math inline">\(y \in (−\pi, \pi]\)</span>, we use distributions defined over positive integers and circular domains, respectively.</p></li>
-</ol>
-<section id="computing-a-distribution-over-outputs" class="level3">
-<h3 class="anchored" data-anchor-id="computing-a-distribution-over-outputs">Computing a distribution over outputs</h3>
-<p>This shift in perspective raises the question of exactly how a model <span class="math inline">\(f[x,\phi]\)</span> can be adapted to compute a probability distribution. The solution is simple. First, we choose a parametric distribution <span class="math inline">\(Pr(y|θ)\)</span> defined on the output domain y. Then we use the network to compute one or more of the parameters <span class="math inline">\(θ\)</span> of this distribution.</p>
-<p>For example, suppose the prediction domain is the set of real numbers, so <span class="math inline">\(y \in R\)</span>. Here, we might choose the univariate normal distribution, which is defined on <span class="math inline">\(R\)</span>. This distribution is defined by the mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>, so <span class="math inline">\(\theta= \{\mu,\sigma^2\}\)</span>. The machine learning model might predict the mean <span class="math inline">\(\mu\)</span>, and the variance <span class="math inline">\(\sigma^2\)</span> could be treated as an unknown constant.</p>
-</section>
-<section id="maximum-likelihood-criterion" class="level3">
-<h3 class="anchored" data-anchor-id="maximum-likelihood-criterion">Maximum likelihood criterion</h3>
-<p>The model now computes different distribution parameters <span class="math inline">\(\theta_i = f[x_i,\phi]\)</span> for each training input xi. Each observed training output yi should have high probability under its corresponding distribution Pr(yi|θi). Hence, we choose the model parameters <span class="math inline">\(\phi\)</span> so that they maximize the combined probability across all I training examples:</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_max_like1}
-  \hat{\boldsymbol\phi} &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i})\right]\nonumber\\
-  &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\boldsymbol\theta_{i})\right] \nonumber \\ &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right].
-\end{eqnarray}\]</span></p>
-<p>The combined probability term is the likelihood of the parameters, and hence equation 5.1 is known as the maximum likelihood criterion.1 Here we are implicitly making two assumptions. First, we assume that the form of the probability distribution over the outputs yi is the same for each data point. Second, we assume that the conditional distributions Pr(yi|xi) of the output given the input are independent, so the total likelihood of the training data decomposes as:</p>
-<p><span class="math display">\[\begin{eqnarray}
-  Pr(\mathbf{y}_{1},\mathbf{y}_{2},\ldots, \mathbf{y}_{I}|\mathbf{x}_{1},\mathbf{x}_{2},\ldots,\mathbf{x}_{I}) = \prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mathbf{x}_{i}).
-\end{eqnarray}\]</span></p>
-</section>
-<section id="maximizing-log-likelihood" class="level3">
-<h3 class="anchored" data-anchor-id="maximizing-log-likelihood">Maximizing log-likelihood</h3>
-<p>The maximum likelihood criterion (equation 5.1) is not very practical. Each term Pr(yi|f[xi,ϕ]) can be small, so the product of many of these terms can be tiny. It may be diﬀicult to represent this quantity with finite precision arithmetic. Fortunately, we can equivalently maximize the logarithm of the likelihood:</p>
-<p><img src="assets/Chap05/LossLog.svg" style="filter: invert(1);" width="100%"></p>
-<p>The log transform. a) The log function is monotonically increasing. If z &gt;z ′, then log[z]&gt;log[z ′]. It follows that the maximum of any function g[z] will be at the same position as the maximum of log[g[z]]. b) A function g[z]. c) The logarithm of this function log[g[z]]. All positions on g[z] with a positive slope retain a positive slope after the log transform, and those with a negative slope retain a negative slope. The position of the maximum remains the same.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:loss_max_like2}
-  \hat{\boldsymbol\phi} &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right] \nonumber \\
-  &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\log\left[\prod_{i=1}^{I} Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\right]\right]\nonumber \\
-  &amp;=&amp; \mathop{\rm argmax}_{\boldsymbol\phi}\left[\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
-\end{eqnarray}\]</span></p>
-<p>This log-likelihood criterion is equivalent because the logarithm is a monotonically in- creasing function: if z&gt;z′, then log[z] &gt;log[z′] and vice versa (figure 5.2). It follows that when we change the model parameters ϕto improve the log-likelihood criterion, we also improve the original maximum likelihood criterion. It also follows that the overall maxima of the two criteria must be in the same place, so the best model parametersˆ ϕ are the same in both cases. However, the log-likelihood criterion has the practical ad- vantage of using a sum of terms, not a product, so representing it with finite precision isn’t problematic.</p>
-</section>
-<section id="minimizing-negative-log-likelihood" class="level3">
-<h3 class="anchored" data-anchor-id="minimizing-negative-log-likelihood">Minimizing negative log-likelihood</h3>
-<p>Finally, we note that, by convention, model fitting problems are framed in terms of minimizing a loss. To convert the maximum log-likelihood criterion to a minimization problem, we multiply by minus one, which gives us the negative log-likelihood criterion:</p>
-<p><span class="math display">\[\begin{eqnarray}
-\hat{\boldsymbol\phi}
-&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right]\nonumber \\
-&amp;=&amp; \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr],
-\end{eqnarray}\]</span></p>
-<p>which is what forms the final loss function L[ϕ].</p>
-</section>
-<section id="inference" class="level3">
-<h3 class="anchored" data-anchor-id="inference">Inference</h3>
-<p>The network no longer directly predicts the outputs y but instead determines a proba- bility distribution over y. When we perform inference, we often want a point estimate rather than a distribution, so we return the maximum of the distribution:</p>
-<p><span class="math display">\[\begin{eqnarray}
-  \hat{\mathbf{y}} = \mathop{\rm argmax}_{\mathbf{y}}\Bigl[Pr(\mathbf{y}|\mbox{\bf f}[\mathbf{x},\hat{\boldsymbol\phi}])\Bigr].
-\end{eqnarray}\]</span></p>
-<p>It is usually possible to find an expression for this in terms of the distribution parame- ters θ predicted by the model. For example, in the univariate normal distribution, the maximum occurs at the mean µ.</p>
-</section>
-</section>
-<section id="recipe-for-constructing-loss-functions" class="level2">
-<h2 class="anchored" data-anchor-id="recipe-for-constructing-loss-functions">Recipe for constructing loss functions</h2>
-<p>The recipe for constructing loss functions for training data {xi,yi}using the maximum likelihood approach is hence:</p>
-<ol type="1">
-<li><p>Choose a suitable probability distribution Pr(y|θ) defined over the domain of the predictions y with distribution parameters θ.</p></li>
-<li><p>Set the machine learning model f[x,ϕ] to predict one or more of these parameters, so θ= f[x,ϕ] and Pr(y|θ) = Pr(y|f[x,ϕ]).</p></li>
-<li><p>To train the model, find the network parametersˆ ϕ that minimize the negative log-likelihood loss function over the training dataset pairs {xi,yi}:</p></li>
-</ol>
-<p><span class="math display">\[\begin{eqnarray}
-  \hat{\boldsymbol\phi} = \mathop{\rm argmin}_{\boldsymbol\phi}\Bigl[L[\boldsymbol\phi]\Bigr] = \mathop{\rm argmin}_{\boldsymbol\phi}\left[-\sum_{i=1}^{I} \log\Bigl[Pr(\mathbf{y}_{i}|\mbox{\bf f}[\mathbf{x}_{i},\boldsymbol\phi])\Bigr]\right].
-  \end{eqnarray}\]</span></p>
-<ol start="4" type="1">
-<li>To perform inference for a new test example x, return either the full distribution <span class="math inline">\(Pr(y|f[x,ϕ])\)</span> or the value where this distribution is maximized.</li>
-</ol>
-<p>We devote most of the rest of this chapter to constructing loss functions for common prediction types using this recipe.</p>
+<section id="word2vec-embeddings-and-representation-learning" class="level1">
+<h1>Word2Vec, Embeddings and Representation Learning</h1>
+<p>Embeddings represent data such as words, images, or other inputs, as vectors in a continuous space. Their usefulness comes from the relationships those vectors capture: a good representation makes patterns relevant to a task easier for a model to recognize.</p>
+<p>But where do those representations come from? <font color="violet"><strong>A central idea in neural networks is that useful representations can emerge as a byproduct of training a model to make predictions.</strong></font> We specify what the model should predict and how to measure its errors. As it learns to make better predictions, it also learns how to represent its inputs.</p>
+<p>Word2Vec provides a concrete example. In its skip-gram formulation, the model uses a word to predict words that appear nearby in text. The training examples come directly from the text itself: words that occur together provide evidence about the contexts in which each word is used. No one needs to explicitly label “cat” and “dog” as similar. Instead, because these words often appear in similar contexts, learning to predict those contexts can produce vectors that capture their relationship.</p>
+<p>The process begins with randomly initialized word vectors. At first, these vectors contain no learned information about how the words are used. During training, the model looks up the vectors, uses them to make predictions, and measures the resulting error. Backpropagation then adjusts the vectors, along with any other trainable parameters, to reduce that error. Repeated across many examples, these updates turn an initially arbitrary table of numbers into a useful representation of patterns in language.</p>
+<p><font color="violet"><strong>This is representation learning: the model learns how to represent the data through the process of learning what to predict.</strong></font> The vectors are useful because they help solve the training task. <font color="violet">Once learned, they can also be reused for other tasks, such as classification, clustering, or similarity search.</font> This is why word embeddings are often described as “pretrained”: they are learned from one task and then reused for others. In fact, pretrained embeddings are publicly shared by big companies and research groups, so that others can benefit from the representations learned from large corpora. Some popular pretrained embeddings include GloVe, fastText, and BERT.</p>
+<p>The same principle extends beyond word embeddings. A neural network trained to classify images can learn internal representations of visual patterns that support classification. In this case, an image’s representation is computed by the network rather than retrieved from a table. In both cases, the prediction objective provides the signal that shapes the representation.</p>
+<p>It is important, however, to be precise about what these representations capture. Training does not necessarily move everything humans consider “similar” closer together, or everything “dissimilar” farther apart. <font color="violet"><strong>The relationships that emerge depend on the training data and the prediction task.</strong></font> For example, “hot” and “cold” may have similar word vectors because they occur in similar contexts, even though their meanings are opposite. The learned space reflects patterns useful for prediction, rather than a universal definition of meaning.</p>
+<p>Individual dimensions usually do not have straightforward labels such as “animal,” “temperature,” or “size.” Information is typically distributed across many dimensions. Relationships among vectors can nevertheless reveal meaningful structure, even when individual coordinates are difficult to interpret.</p>
+<p>Embeddings have something in common with dimensionality reduction techniques such as PCA and t-SNE: all can represent data in a space that exposes useful structure. The distinction is the objective used to construct that space. PCA seeks directions that preserve variance, while t-SNE seeks to preserve local neighborhood relationships for visualization. In the examples discussed here, neural representations are shaped by a prediction objective. They need not be lower-dimensional than the original input, and compactness alone is not what makes them useful.</p>
+<p>The central lesson is that <font color="violet"><strong>learning to predict can also mean learning to represent</strong></font>. By optimizing a network for a prediction task, we can obtain internal representations that capture useful regularities in the data—even though we never explicitly specified what those representations should look like.</p>
 
 
 </section>
