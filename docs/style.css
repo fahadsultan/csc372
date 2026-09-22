@@ -57,3 +57,10 @@ code {
     border-radius: 5px; 
     border: 1px solid #BCBEC0;
 }
+
+mark {
+    background-color: #582C83;
+    color: #fff;
+    border-radius: 5px; 
+    font-weight: bold;
+}
