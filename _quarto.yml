@@ -48,6 +48,7 @@ website:
         - CSC_372_Project_Part_1.ipynb
         - Project2.ipynb
         - Project3.ipynb
+        - Project_Part_4.ipynb
     - id: content
       background: "#2d2d2d"
       style: "floating"
@@ -79,7 +80,7 @@ website:
           - gradientdescent_sgd.ipynb
           - gradientdescent_momentum.ipynb
           - gradientdescent_adam.ipynb
-          - gradientdescent_linesearch.ipynb
+          # - gradientdescent_linesearch.ipynb
         - text: "Back Propagation"
         - text: "Performance"
         - text: "Regularization"
