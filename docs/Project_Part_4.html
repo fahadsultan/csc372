@@ -309,9 +309,7 @@ window.Quarto = {
   <li><a href="#zero_grad" id="toc-zero_grad" class="nav-link" data-scroll-target="#zero_grad">5. <code>zero_grad()</code></a></li>
   </ul></li>
   <li><a href="#softmax" id="toc-softmax" class="nav-link" data-scroll-target="#softmax">Softmax</a></li>
-  <li><a href="#softmax-1" id="toc-softmax-1" class="nav-link" data-scroll-target="#softmax-1">Softmax</a></li>
   <li><a href="#cross-entropy-loss" id="toc-cross-entropy-loss" class="nav-link" data-scroll-target="#cross-entropy-loss">Cross Entropy Loss</a></li>
-  <li><a href="#cross-entropy-loss-1" id="toc-cross-entropy-loss-1" class="nav-link" data-scroll-target="#cross-entropy-loss-1">Cross Entropy Loss</a></li>
   <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a></li>
   <li><a href="#inference-next-token-prediction" id="toc-inference-next-token-prediction" class="nav-link" data-scroll-target="#inference-next-token-prediction">Inference / Next Token Prediction</a></li>
   </ul></li>
@@ -582,23 +580,26 @@ After playing with the car, Kitty and Spot felt thirsty. They found a small pond
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>h2 <span class="op">=</span> torch.relu(h1 <span class="op">@</span> <span class="va">self</span>.Omega1 <span class="op">+</span> <span class="va">self</span>.Beta1)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> h2 <span class="op">@</span> <span class="va">self</span>.Omega2 <span class="op">+</span> <span class="va">self</span>.Beta2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Return the logits with shape <code>(batch_size, output_size)</code>. Do not apply an activation function to the output layer.</p>
+<p><span class="math display">\[ h_1 = a[\beta_{0} + \Omega_{0} E[x]] \]</span> <span class="math display">\[ h_k = a[\beta_{k-1} + \Omega_{k-1} h_{k-1}] \]</span> <span class="math display">\[ y = \beta_k + \Omega_k h_k \]</span></p>
 <p><br></p>
 </section>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">3. <strong><code>parameters()</code></strong></h3>
-<p>Assign the embedding layer and all parameter tensors to instance attributes. Use the inherited <code>self.parameters()</code> method to access them; a custom <code>parameters()</code> method is unnecessary.</p>
+<p>Return all the omega, beta parameters as well as embedding layer parameters as one list.</p>
 <p><br></p>
 </section>
 <section id="step" class="level3">
 <h3 class="anchored" data-anchor-id="step">4. <code>step()</code></h3>
 <p><strong>Implement a manual gradient descent step.</strong></p>
 <p>Add a <code>step()</code> method. Inside a <code>torch.no_grad()</code> block, iterate through <code>self.parameters()</code>. For each parameter with a non-<code>None</code> gradient, subtract the learning rate multiplied by its gradient.</p>
+<p><span class="math display">\[
+   \theta \leftarrow \theta - \eta \nabla_\theta L(\theta)
+   \]</span></p>
 <p><br></p>
 </section>
 <section id="zero_grad" class="level3">
 <h3 class="anchored" data-anchor-id="zero_grad">5. <code>zero_grad()</code></h3>
-<p><strong>Clear gradients between training iterations.</strong></p>
-<p>Use the inherited <code>model.zero_grad(set_to_none=True)</code> method before each forward pass. This prevents gradients from accumulating across training iterations.</p>
+<p><strong>Clear gradients between training iterations.</strong> Set the gradient <code>.grad</code> of all parameters to <code>None</code>.</p>
 <div id="cell-11" class="cell" data-outputid="b5d26b24-f95f-43bd-ce69-ea9b8b776327">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MLP(torch.nn.Module):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_size, hidden_size, output_size):</span>
@@ -629,18 +630,7 @@ After playing with the car, Kitty and Spot felt thirsty. They found a small pond
 <p><span class="math display">\[ \log p_j = z_j - \log\left(\sum_{k=1}^{C} e^{z_k}\right) \]</span></p>
 <p>Here we implement a numerically stable <code>log_softmax(logits)</code> function that returns log-probabilities for each example across its classes. Use the identity <span class="math display">\[\log p_j = z_j - m - \log\sum_k e^{z_k-m}\]</span></p>
 <p>where <span class="math inline">\(m=\max_k z_k\)</span> is computed separately for each example. Subtracting the maximum before exponentiating prevents overflow, while computing log-probabilities directly avoids taking the logarithm of probabilities that may have rounded to zero through underflow.</p>
-</section>
-<section id="softmax-1" class="level2">
-<h2 class="anchored" data-anchor-id="softmax-1">Softmax</h2>
-<p>Softmax is a function that converts a vector of raw scores (logits) into probabilities. For instance, given a matrix of shape <span class="math inline">\(N \times C\)</span>, where <span class="math inline">\(N\)</span> is the number of examples and <span class="math inline">\(C\)</span> is the number of classes, the softmax function is applied row-wise to produce a matrix where each row sums to 1.</p>
-<p><span class="math display">\[ p_j = \operatorname{softmax}(z)_j
-= \frac{e^{z_j}}{\sum_{k=1}^{C} e^{z_k}} \]</span></p>
-<p>Here, <span class="math inline">\(p_j\)</span> represents the probability assigned to class <span class="math inline">\(j\)</span> for a given example, and <span class="math inline">\(z_j\)</span> is the corresponding raw score (logit).</p>
-<p>Take log of the softmax probabilities to obtain the log-probabilities, we get:</p>
-<p><span class="math display">\[ \log p_j = z_j - \log\left(\sum_{k=1}^{C} e^{z_k}\right) \]</span></p>
-<p>Here we implement a numerically stable <code>log_softmax(logits)</code> function that returns log-probabilities for each example across its classes. Use the identity <span class="math display">\[\log p_j = z_j - m - \log\sum_k e^{z_k-m}\]</span></p>
-<p>where <span class="math inline">\(m=\max_k z_k\)</span> is computed separately for each example. Subtracting the maximum before exponentiating prevents overflow, while computing log-probabilities directly avoids taking the logarithm of probabilities that may have rounded to zero through underflow.</p>
-<div id="cell-14" class="cell">
+<div id="cell-13" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_softmax(logits):</span>
@@ -662,7 +652,7 @@ After playing with the car, Kitty and Spot felt thirsty. They found a small pond
 <p>The log-probability of the correct class in each row is selected and then the negative mean of these values is returned.</p>
 <p><span class="math display">\[ \mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log p_{i,y_i} \]</span></p>
 <p>Here, <span class="math inline">\(N\)</span> is the batch size, <span class="math inline">\(y_i\)</span> is the correct class for example <span class="math inline">\(i\)</span>, and <span class="math inline">\(\log p_{i,y_i}\)</span> is its selected value from log_probs.</p>
-<div id="cell-16" class="cell">
+<div id="cell-15" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cross_entropy_from_log_probs(log_probs, targets):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    correct_log_probs <span class="op">=</span> log_probs[</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        torch.arange(<span class="bu">len</span>(targets), device<span class="op">=</span>log_probs.device),</span>
@@ -670,37 +660,6 @@ After playing with the car, Kitty and Spot felt thirsty. They found a small pond
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>correct_log_probs.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-17" class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_softmax(logits):</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Shift logits so the largest value in each row is zero</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    shifted <span class="op">=</span> logits <span class="op">-</span> logits.<span class="bu">max</span>(dim<span class="op">=</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>).values</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute log-probabilities directly</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    log_normalizer <span class="op">=</span> torch.log(</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        torch.exp(shifted).<span class="bu">sum</span>(dim<span class="op">=</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> shifted <span class="op">-</span> log_normalizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="cross-entropy-loss-1" class="level2">
-<h2 class="anchored" data-anchor-id="cross-entropy-loss-1">Cross Entropy Loss</h2>
-<p>Here we also implement <code>cross_entropy_from_log_probs(log_probs, targets)</code> to compute the average cross-entropy loss for a batch.</p>
-<p>The input log_probs contains the predicted log-probabilities for each class, and targets contains the correct class index for each example.</p>
-<p>The log-probability of the correct class in each row is selected and then the negative mean of these values is returned.</p>
-<p><span class="math display">\[ \mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log p_{i,y_i} \]</span></p>
-<p>Here, <span class="math inline">\(N\)</span> is the batch size, <span class="math inline">\(y_i\)</span> is the correct class for example <span class="math inline">\(i\)</span>, and <span class="math inline">\(\log p_{i,y_i}\)</span> is its selected value from log_probs.</p>
-<div id="cell-19" class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cross_entropy_from_log_probs(log_probs, targets):</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    correct_log_probs <span class="op">=</span> log_probs[</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        torch.arange(<span class="bu">len</span>(targets), device<span class="op">=</span>log_probs.device),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        targets</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>correct_log_probs.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="training" class="level2">
@@ -712,20 +671,20 @@ After playing with the car, Kitty and Spot felt thirsty. They found a small pond
 <p><strong>You are not allowed to use built-in loss functions or optimizers</strong>, including <code>torch.nn.CrossEntropyLoss</code>, <code>torch.nn.functional.cross_entropy</code>, or any optimizer from <code>torch.optim</code>, such as Adam or SGD.</p>
 <p>Implement the loss calculation yourself and update the model parameters through your own <code>mlp.step()</code> method using gradient descent.</p>
 <p>You may use PyTorch automatic differentiation by calling <code>loss_value.backward()</code> to compute gradients. Record each batch’s loss using <code>.item()</code> and print the epoch number and mean batch loss at the end of each epoch.</p>
-<div id="cell-21" class="cell" data-outputid="a6dbea7c-0cc9-4dc0-fd10-4dc71bf0abad">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>mlp <span class="op">=</span> <span class="pp">NotImplementedError</span>()</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    losses <span class="op">=</span> []</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x_i, y_i <span class="kw">in</span> tqdm(dataloader):</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>()</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Epoch: </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss: </span><span class="sc">{</span>np<span class="sc">.</span>mean(losses)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-17" class="cell" data-outputid="a6dbea7c-0cc9-4dc0-fd10-4dc71bf0abad">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>mlp <span class="op">=</span> <span class="pp">NotImplementedError</span>()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    losses <span class="op">=</span> []</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x_i, y_i <span class="kw">in</span> tqdm(dataloader):</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>()</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Epoch: </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss: </span><span class="sc">{</span>np<span class="sc">.</span>mean(losses)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="inference-next-token-prediction" class="level2">
@@ -736,30 +695,30 @@ After playing with the car, Kitty and Spot felt thirsty. They found a small pond
 <p>On each of the 10 iterations, the model predicts logits for the next token, and <code>torch.argmax</code> selects the token with the highest score.</p>
 <p>The selected token is decoded and printed immediately, then appended to the input after removing its oldest token, keeping the context window the same length.</p>
 <p>This process lets each prediction become part of the context for the next prediction. The final <code>print()</code> adds a newline.</p>
-<div id="cell-23" class="cell" data-outputid="ada5abff-58a9-4c9e-9c3f-cfb29fd4193f">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>x_i, y_i <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(dataloader))</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>x_i <span class="op">=</span> x_i[<span class="dv">0</span>:<span class="dv">1</span>].to(device)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>mlp.<span class="bu">eval</span>()</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the full initial prompt once</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(enc.decode(x_i[<span class="dv">0</span>].tolist()), end<span class="op">=</span><span class="st">"==&gt;"</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):  <span class="co"># Generate 10 tokens</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        logits <span class="op">=</span> mlp(x_i)</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        pred_token_tensor <span class="op">=</span> torch.argmax(logits, dim<span class="op">=-</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>).to(torch.uint16)</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        pred_token_id <span class="op">=</span> pred_token_tensor.item()</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Stream only the newly generated token</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(enc.decode([pred_token_id]), end<span class="op">=</span><span class="st">""</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Slide the window</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        x_i <span class="op">=</span> torch.cat((x_i[:, <span class="dv">1</span>:], pred_token_tensor), dim<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()  <span class="co"># Add final newline</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-19" class="cell" data-outputid="ada5abff-58a9-4c9e-9c3f-cfb29fd4193f">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>x_i, y_i <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(dataloader))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>x_i <span class="op">=</span> x_i[<span class="dv">0</span>:<span class="dv">1</span>].to(device)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>mlp.<span class="bu">eval</span>()</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the full initial prompt once</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(enc.decode(x_i[<span class="dv">0</span>].tolist()), end<span class="op">=</span><span class="st">"==&gt;"</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):  <span class="co"># Generate 10 tokens</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        logits <span class="op">=</span> mlp(x_i)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        pred_token_tensor <span class="op">=</span> torch.argmax(logits, dim<span class="op">=-</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>).to(torch.uint16)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        pred_token_id <span class="op">=</span> pred_token_tensor.item()</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Stream only the newly generated token</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(enc.decode([pred_token_id]), end<span class="op">=</span><span class="st">""</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Slide the window</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        x_i <span class="op">=</span> torch.cat((x_i[:, <span class="dv">1</span>:], pred_token_tensor), dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()  <span class="co"># Add final newline</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
