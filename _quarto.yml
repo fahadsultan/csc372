@@ -81,40 +81,40 @@ website:
           - gradientdescent_momentum.ipynb
           - gradientdescent_adam.ipynb
           # - gradientdescent_linesearch.ipynb
-        - text: "Back Propagation"
-        - text: "Performance"
-        - text: "Regularization"
-        - text: "Transformers"
-        - text: "Large Language Models"
-        - text: "Diffusion Models"
-        # - section: backprop.ipynb
-        #   contents: 
-        #   - backprop_algo.ipynb
-        #   - backprop_init.ipynb
-        #   - backprop_code.ipynb
-        # - section: performance.ipynb
-        #   contents: 
-        #   - performance_biasvariance.ipynb
-        #   - performance_doubledescent.ipynb
-        #   - performance_highdimensions.ipynb
-        # - section: transformers.ipynb
-        #   contents:
-        #   - transformers_multi.ipynb
-        #   - transformers_nlp.ipynb
-        #   - transformers_others.ipynb
-        #   - transformers_decoding.ipynb
-        # - section: llms.ipynb
-        #   contents: 
-        #   - llms_pretraining.ipynb
-        #   - llms_finetuning.ipynb
-        #   - llms_rlhf.ipynb
-        # - unsupervised.md
-        # - section: diffusion.ipynb
-        #   contents: 
-        #   - diffusion_encoder.ipynb 
-        #   - diffusion_decoder.ipynb
-        #   - diffusion_reparameterization.ipynb
-        #   - diffusion_family.ipynb
+        # - text: "Back Propagation"
+        # - text: "Performance"
+        # - text: "Regularization"
+        # - text: "Transformers"
+        # - text: "Large Language Models"
+        # - text: "Diffusion Models"
+        - section: backprop.ipynb
+          contents: 
+          - backprop_algo.ipynb
+          - backprop_init.ipynb
+          - backprop_code.ipynb
+        - section: performance.ipynb
+          contents: 
+          - performance_biasvariance.ipynb
+          - performance_doubledescent.ipynb
+          - performance_highdimensions.ipynb
+        - section: transformers.ipynb
+          contents:
+          - transformers_multi.ipynb
+          - transformers_nlp.ipynb
+          - transformers_others.ipynb
+          - transformers_decoding.ipynb
+        - section: llms.ipynb
+          contents: 
+          - llms_pretraining.ipynb
+          - llms_finetuning.ipynb
+          - llms_rlhf.ipynb
+        - unsupervised.md
+        - section: diffusion.ipynb
+          contents: 
+          - diffusion_encoder.ipynb 
+          - diffusion_decoder.ipynb
+          - diffusion_reparameterization.ipynb
+          - diffusion_family.ipynb
 
 format:
   html:

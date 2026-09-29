@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>project_part_4-solutions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./logo.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-syllabus" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Syllabus</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-syllabus">    
+        <li>
+    <a class="dropdown-item" href="./syllabus/about.html">
+ <span class="dropdown-text">Course Description and Goals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/grading.html">
+ <span class="dropdown-text">Grading</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/academic_success.html">
+ <span class="dropdown-text">Center for Academic Success</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/textbook.html">
+ <span class="dropdown-text">Textbooks &amp; Other Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/integrity.html">
+ <span class="dropdown-text">Academic Integrity</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/mental_health.html">
+ <span class="dropdown-text">Mental Health Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/accomodations.html">
+ <span class="dropdown-text">Accomodations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/title_9.html">
+ <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="./CSC_372_Project_Part_1.html">
+ <span class="dropdown-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project2.html">
+ <span class="dropdown-text">PyTorch: A Modern Deep Learning Library</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project3.html">
+ <span class="dropdown-text">Word2Vec, Embeddings and Representation Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_Part_4.html">
+ <span class="dropdown-text">Gradient Descent</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
+<span class="menu-text">Moodle Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syllabus/appointment.html"> 
+<span class="menu-text">Office Hours</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://calendly.com/ssultan-dpq/"> 
+<span class="menu-text">Set an Appointment</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link active" data-scroll-target="#gradient-descent">Gradient Descent</a>
+  <ul class="collapse">
+  <li><a href="#tiny-stories-dataset" id="toc-tiny-stories-dataset" class="nav-link" data-scroll-target="#tiny-stories-dataset">Tiny Stories Dataset</a></li>
+  <li><a href="#data-loader-and-dataset" id="toc-data-loader-and-dataset" class="nav-link" data-scroll-target="#data-loader-and-dataset">Data Loader and DataSet</a></li>
+  <li><a href="#softmax" id="toc-softmax" class="nav-link" data-scroll-target="#softmax">Softmax</a></li>
+  <li><a href="#cross-entropy-loss" id="toc-cross-entropy-loss" class="nav-link" data-scroll-target="#cross-entropy-loss">Cross Entropy Loss</a></li>
+  <li><a href="#multi-layer-perceptron-mlp-model" id="toc-multi-layer-perceptron-mlp-model" class="nav-link" data-scroll-target="#multi-layer-perceptron-mlp-model">Multi-Layer Perceptron (MLP) Model</a>
+  <ul class="collapse">
+  <li><a href="#init__" id="toc-init__" class="nav-link" data-scroll-target="#init__">1. <strong><code>__init__()</code></strong></a></li>
+  <li><a href="#forward" id="toc-forward" class="nav-link" data-scroll-target="#forward">2. <strong><code>forward()</code></strong></a></li>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">3. <strong><code>parameters()</code></strong></a></li>
+  <li><a href="#step" id="toc-step" class="nav-link" data-scroll-target="#step">4. <code>step()</code></a></li>
+  <li><a href="#zero_grad" id="toc-zero_grad" class="nav-link" data-scroll-target="#zero_grad">5. <code>zero_grad()</code></a></li>
+  </ul></li>
+  <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a></li>
+  <li><a href="#inference-next-token-prediction" id="toc-inference-next-token-prediction" class="nav-link" data-scroll-target="#inference-next-token-prediction">Inference / Next Token Prediction</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+<center>
+<h1>
+</h1>
+<h1>
+<b>Fall 2026<br> CSC-372 Project Part 4<br>
+</b></h1><b>
+</b>
+</center>
+<br>
+<hr>
+<p><br></p>
+<center>
+<section id="gradient-descent" class="level1">
+<h1>Gradient Descent</h1>
+</section></center>
+<br>
+<hr>
+<p><br></p>
+<section id="tiny-stories-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="tiny-stories-dataset">Tiny Stories Dataset</h3>
+<p>The <a href="https://huggingface.co/datasets/roneneldan/TinyStories">TinyStories dataset</a>, introduced by Ronen Eldan and Yuanzhi Li (Microsoft Research) in their seminal 2023 paper <a href="https://arxiv.org/abs/2305.07759">“TinyStories: How Small Can Language Models Be and Still Speak Coherent English?”</a>, is a synthetic corpus designed to probe the lower bounds of language model capacity.</p>
+<br>
+<center>
+<img src="https://media.licdn.com/dms/image/v2/D5612AQHJs2hp-OZs3w/article-cover_image-shrink_720_1280/B56Zw7a0tcH0AI-/0/1770523421750?e=2147483647&amp;v=beta&amp;t=NfF7mBud-Fz-atlnT0_z0zSVVkDlDnSkwx4rr1iMcYo" width="70%">
+</center>
+<p><br></p>
+<p>The dataset comprises approximately 2.1 million short stories (hundreds of words each), synthetically generated using GPT-3.5 and GPT-4. The generation process enforces strict constraints:</p>
+<ul>
+<li><p><strong>Vocabulary Restriction</strong>: Stories are restricted to words commonly understood by 3- to 4-year-old children (a working vocabulary of roughly 3,000-4,000 basic terms).</p></li>
+<li><p><strong>Controlled Prompting</strong>: Prompts systematically sample combinations of random words, target moral themes, structural twists, or specific narrative features to ensure syntactic variety while keeping concepts foundational.</p></li>
+<li><p><strong>Coherence Over Breadth</strong>: Because the domain discards real-world factual trivia, complex technical jargon, and convoluted sentence structures, the learning objective focuses squarely on narrative flow, pronoun resolution, simple physical reasoning, and grammar.</p></li>
+</ul>
+<p>Prior to TinyStories, the prevailing consensus in natural language processing held that emergent linguistic capabilities such as producing grammatically sound, semantically consistent narrative text—required massive parameter scales (often tens or hundreds of billions) trained on vast web scrapes like Common Crawl. TinyStories challenged this paradigm by isolating semantic and syntactic coherence from encyclopedic world knowledge.</p>
+<p>TinyStories shifted how researchers evaluate small language models (SLMs) and model interpretability in several ways:</p>
+<ol type="1">
+<li><p><strong>Sub-100M Parameter Viability</strong>: The authors demonstrated that models with fewer than 10 million parameters—and even single-layer or small transformer networks—can produce coherent, multi-paragraph stories with near-flawless grammar and logical progression when trained on this data.</p></li>
+<li><p><strong>Accessible Benchmarking &amp; Education</strong>: Full pre-training runs on TinyStories can be completed in hours on consumer-grade GPUs or modest compute setups, lowering the compute barrier for rapid prototyping, loss-curve experimentation, and classroom demonstration.</p></li>
+<li><p><strong>Mechanistic Interpretability</strong>: Because the models trained on TinyStories are tiny (e.g., 1M to 33M parameters) yet generate meaningful text, they serve as ideal “model organisms” for dissecting attention heads, circuit formation, and hidden-layer representations without the intractable complexity of LLMs.</p></li>
+<li><p><strong>Data Quality vs.&nbsp;Data Scale</strong>: The dataset provided early empirical evidence for the “textbooks are all you need” philosophy—showing that high-quality, synthetic, curriculum-like data can dramatically substitute for sheer raw parameter volume.</p></li>
+</ol>
+<p>A representative story in the dataset follows a simple, archetypal narrative arc:</p>
+<blockquote class="blockquote">
+<p><em>“Once upon a time, there was a little boy named Tim. Tim had a bright yellow ball. One day, Tim took his ball to the park. He threw the ball high into the air, but the ball landed in a tall tree. Tim was sad. A big dog named Sam walked over and saw Tim crying. Sam barked and jumped, bumping the tree trunk. The yellow ball fell down to the grass. Tim hugged Sam and smiled.”</em></p>
+</blockquote>
+<p>In short, TinyStories demonstrates that fluency, grammar, and elementary reasoning are not exclusive properties of giant models, establishing an efficient sandbox for training, evaluating, and interpreting compact language architectures.</p>
+<br>
+<hr>
+<p><br></p>
+<p>The repository <a href="https://huggingface.co/datasets/justjuu/tinystories-gpt2-shards"><code>justjuu/tinystories-gpt2-shards</code></a> on Hugging Face provides a pre-tokenized, sharded version of the TinyStories dataset specifically formatted for training GPT-2 architectures.</p>
+<p>While the original dataset consists of raw synthetic text files, training language models efficiently at scale requires converting text into token ID arrays and chunking them into fixed context-window sequences. By pre-encoding the stories using the standard GPT-2 byte-pair encoding (BPE) tokenizer and packaging them into manageable shards (often stored as memory-mapped binary files or Arrow tables), this repo eliminates the repetitive CPU overhead and memory bottlenecks typically involved in preprocessing raw text prior to training.</p>
+<p>Because the data is already tokenized and structured into continuous sequence blocks, it serves as a lightweight, plug-and-play resource for rapid model experimentation. Researchers, educators, and developers building nanoGPT-style architectures, running mechanistic interpretability probes, or benchmarking custom small language models can stream or load these shards directly into PyTorch DataLoaders with zero setup time. It dramatically accelerates the pipeline from raw script to active training loop, making it especially convenient for consumer-hardware runs where pre-training cycles need to be fast, reproducible, and computationally lean.</p>
+<p>Here, to make our lives even easier, we are only going to use only the validation part of the dataset.</p>
+<p>The following code cell downloads the validation split of the tiny stories dataset pre-tokenized using GPT-2 tokenizer:</p>
+<div id="cell-2" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tiktoken</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> hf_hub_download</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>repo <span class="op">=</span> <span class="st">"justjuu/tinystories-gpt2-shards"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the smaller validation split first.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> hf_hub_download(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>repo,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    filename<span class="op">=</span><span class="st">"validation.bin"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span><span class="st">"dataset"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>np.memmap</code> creates a memory-mapped array, allowing you to read or write portions of a large file directly on disk without loading the entire file into RAM.</p>
+<div id="cell-4" class="cell" data-outputid="3504a1d1-46d8-4fac-ad30-10f8550f74aa" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The file is a continuous stream of little-endian uint16 token IDs.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> np.memmap(path, dtype<span class="op">=</span><span class="st">"&lt;u2"</span>, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(tokens)<span class="sc">:,}</span><span class="ss"> tokens"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First 20 IDs:"</span>, tokens[:<span class="dv">20</span>].tolist())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"54ffabaa2ea34627a133a4fb8f4b4756","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0d59337405ef42d8949e1f3f6837b86b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4,765,918 tokens
+First 20 IDs: [32565, 13, 15899, 2497, 262, 22441, 1097, 290, 531, 11, 366, 22017, 11, 21168, 11, 534, 1097, 318, 523, 6016]</code></pre>
+</div>
+</div>
+<p>The following cell code decodes the first story using the <code>tiktoken</code> GPT-2 tokenizer</p>
+<div id="cell-7" class="cell" data-outputid="d2e20bba-925c-4f49-83b6-666605ac24eb">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 50256 is the special End of Text (&lt;|endoftext|&gt;) token ID in GPT-2.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In datasets like TinyStories, this token marks the boundary between individual stories.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># np.flatnonzero(...) returns the indices of all True values.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>end <span class="op">=</span> np.flatnonzero(tokens <span class="op">==</span> <span class="dv">50256</span>)[<span class="dv">0</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> tiktoken.get_encoding(<span class="st">"gpt2"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>story <span class="op">=</span> enc.decode(tokens[:end].astype(<span class="bu">int</span>).tolist())</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(story)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4,765,918 tokens
+First 20 IDs: [32565, 13, 15899, 2497, 262, 22441, 1097, 290, 531, 11, 366, 22017, 11, 21168, 11, 534, 1097, 318, 523, 6016]
+Spot. Spot saw the shiny car and said, "Wow, Kitty, your car is so bright and clean!" Kitty smiled and replied, "Thank you, Spot. I polish it every day."
+
+After playing with the car, Kitty and Spot felt thirsty. They found a small pond with clear water. They drank the water and felt very happy. They played together all day and became best friends.</code></pre>
+</div>
+</div>
+<div id="cell-8" class="cell" data-outputid="806867b5-f723-49a5-c9df-786ddc4859b6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>enc.n_vocab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>50257</code></pre>
+</div>
+</div>
+</section>
+<section id="data-loader-and-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="data-loader-and-dataset">Data Loader and DataSet</h2>
+<p><u>Note that is <em>almost</em> identical to the DataLoader from Project Part 2.</u></p>
+<p>Implement <code>GPTDatasetV1</code> to split the token sequence into input windows of 10 tokens, advancing by 4 tokens each time.</p>
+<p>Pair each window with the single token immediately following it as the target, and store both as PyTorch tensors. Note that in project part 2, both <span class="math inline">\(x_i\)</span> and <span class="math inline">\(y_i\)</span> were of the same length, whereas here <span class="math inline">\(y_i\)</span> is a single token. That is the target sequence is now of length 1 instead of matching the input window length. That is the only change.</p>
+<p>Implement <code>__len__</code> to return the number of examples and <code>__getitem__</code> to retrieve an input–target pair.</p>
+<p>Create a <code>DataLoader</code> with a batch size of 50, shuffling enabled, <code>drop_last=True</code> to discard incomplete batches, and <code>num_workers=0</code>.</p>
+<p>Select CUDA if available; otherwise, use the CPU.</p>
+<div id="cell-10" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GPTDatasetV1(Dataset):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, token_ids, context_length, stride):</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.input_ids <span class="op">=</span> []</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.target_ids <span class="op">=</span> []</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(token_ids) <span class="op">-</span> context_length, stride):</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>          input_chunk <span class="op">=</span> token_ids[i:i <span class="op">+</span> context_length]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>          target <span class="op">=</span> token_ids[i <span class="op">+</span> context_length]</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.input_ids.append(torch.tensor(input_chunk))</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.target_ids.append(torch.tensor(target))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.input_ids)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.input_ids[idx], <span class="va">self</span>.target_ids[idx]</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>batch_size  <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>context_window  <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>stride      <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>shuffle     <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>drop_last   <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>num_workers <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> GPTDatasetV1(tokens, context_window, stride)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        dataset,</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>        batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        shuffle<span class="op">=</span>shuffle,</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        drop_last<span class="op">=</span>drop_last,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        num_workers<span class="op">=</span>num_workers</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="softmax" class="level2">
+<h2 class="anchored" data-anchor-id="softmax">Softmax</h2>
+<p>Softmax is a function that converts a vector of raw scores (logits) into probabilities. For instance, given a matrix of shape <span class="math inline">\(N \times C\)</span>, where <span class="math inline">\(N\)</span> is the number of examples and <span class="math inline">\(C\)</span> is the number of classes, the softmax function is applied row-wise to produce a matrix where each row sums to 1.</p>
+<p><span class="math display">\[ p_j = \operatorname{softmax}(z)_j
+= \frac{e^{z_j}}{\sum_{k=1}^{C} e^{z_k}} \]</span></p>
+<p>Here, <span class="math inline">\(p_j\)</span> represents the probability assigned to class <span class="math inline">\(j\)</span> for a given example, and <span class="math inline">\(z_j\)</span> is the corresponding raw score (logit).</p>
+<p>Take log of the softmax probabilities to obtain the log-probabilities, we get:</p>
+<p><span class="math display">\[ \log p_j = z_j - \log\left(\sum_{k=1}^{C} e^{z_k}\right) \]</span></p>
+<p>Here we implement a numerically stable <code>log_softmax(logits)</code> function that returns log-probabilities for each example across its classes. Use the identity <span class="math display">\[\log p_j = z_j - m - \log\sum_k e^{z_k-m}\]</span></p>
+<p>where <span class="math inline">\(m=\max_k z_k\)</span> is computed separately for each example. Subtracting the maximum before exponentiating prevents overflow, while computing log-probabilities directly avoids taking the logarithm of probabilities that may have rounded to zero through underflow.</p>
+<div id="cell-12" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_softmax(logits):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Shift logits so the largest value in each row is zero</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    shifted <span class="op">=</span> logits <span class="op">-</span> logits.<span class="bu">max</span>(dim<span class="op">=</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>).values</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute log-probabilities directly</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    log_normalizer <span class="op">=</span> torch.log(</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        torch.exp(shifted).<span class="bu">sum</span>(dim<span class="op">=</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> shifted <span class="op">-</span> log_normalizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cross-entropy-loss" class="level2">
+<h2 class="anchored" data-anchor-id="cross-entropy-loss">Cross Entropy Loss</h2>
+<p>Here we also implement <code>cross_entropy_from_log_probs(log_probs, targets)</code> to compute the average cross-entropy loss for a batch.</p>
+<p>The input log_probs contains the predicted log-probabilities for each class, and targets contains the correct class index for each example.</p>
+<p>The log-probability of the correct class in each row is selected and then the negative mean of these values is returned.</p>
+<p><span class="math display">\[ \mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log p_{i,y_i} \]</span></p>
+<p>Here, <span class="math inline">\(N\)</span> is the batch size, <span class="math inline">\(y_i\)</span> is the correct class for example <span class="math inline">\(i\)</span>, and <span class="math inline">\(\log p_{i,y_i}\)</span> is its selected value from log_probs.</p>
+<div id="cell-14" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cross_entropy_from_log_probs(log_probs, targets):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    correct_log_probs <span class="op">=</span> log_probs[</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        torch.arange(<span class="bu">len</span>(targets), device<span class="op">=</span>log_probs.device),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        targets</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>correct_log_probs.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="multi-layer-perceptron-mlp-model" class="level2">
+<h2 class="anchored" data-anchor-id="multi-layer-perceptron-mlp-model">Multi-Layer Perceptron (MLP) Model</h2>
+<p>Implement a PyTorch multilayer perceptron (MLP) that predicts the next token from a fixed window of preceding tokens. Use a token embedding layer, two hidden layers with ReLU activation, and an output layer that produces logits.</p>
+<p>Create a class named <code>MLP</code> that inherits from <code>torch.nn.Module</code>.</p>
+<p><br></p>
+<section id="init__" class="level3">
+<h3 class="anchored" data-anchor-id="init__">1. <strong><code>__init__()</code></strong></h3>
+<p>Its constructor should accept</p>
+<ul>
+<li><code>input_size</code> <span class="math inline">\(D_i\)</span>: number of tokens in the context window</li>
+<li><code>hidden_size</code> <span class="math inline">\(D\)</span>:</li>
+<li><code>output_size</code> <span class="math inline">\(D_o\)</span>: the vocabulary size of the tokenizer used</li>
+</ul>
+<p>and call <code>super().__init__()</code>.</p>
+<p><br></p>
+<section id="hyperparameters" class="level4">
+<h4 class="anchored" data-anchor-id="hyperparameters">1.1. Hyperparameters</h4>
+<p>Set the learning rate to <code>5e-4</code> and the embedding dimension to <code>128</code>.</p>
+<p><br></p>
+</section>
+<section id="create-the-embedding-layer" class="level4">
+<h4 class="anchored" data-anchor-id="create-the-embedding-layer">1.2. Create the embedding layer</h4>
+<p>Use <code>torch.nn.Embedding</code> to assign each vocabulary token a trainable vector of length <code>128</code>.</p>
+<p>Each input batch should contain integer token IDs with shape <code>(batch_size, input_size)</code>. The embedding layer should produce a tensor with shape <code>(batch_size, input_size, 128)</code>.</p>
+<p><br></p>
+</section>
+<section id="initialize-the-weights-and-biases." class="level4">
+<h4 class="anchored" data-anchor-id="initialize-the-weights-and-biases.">1.2. Initialize the weights and biases.</h4>
+<p>Set <code>in_dim0 = input_size * embedding_dim</code>.</p>
+<p>Define the following trainable tensors using <code>torch.nn.Parameter</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Shape</th>
+<th>Initialization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Omega0</code></td>
+<td><code>(in_dim0, hidden_size)</code></td>
+<td>Standard normal values multiplied by <code>sqrt(2 / in_dim0)</code></td>
+</tr>
+<tr class="even">
+<td><code>Beta0</code></td>
+<td><code>(hidden_size,)</code></td>
+<td>Zeros</td>
+</tr>
+<tr class="odd">
+<td><code>Omega1</code></td>
+<td><code>(hidden_size, hidden_size)</code></td>
+<td>Standard normal values multiplied by <code>sqrt(2 / hidden_size)</code></td>
+</tr>
+<tr class="even">
+<td><code>Beta1</code></td>
+<td><code>(hidden_size,)</code></td>
+<td>Zeros</td>
+</tr>
+<tr class="odd">
+<td><code>Omega2</code></td>
+<td><code>(hidden_size, output_size)</code></td>
+<td>Standard normal values multiplied by <code>sqrt(2 / hidden_size)</code></td>
+</tr>
+<tr class="even">
+<td><code>Beta2</code></td>
+<td><code>(output_size,)</code></td>
+<td>Zeros</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>For <code>Omega1</code>, use <code>hidden_size</code> in the initialization scale because that is the number of inputs to this layer.</p>
+<p><br></p>
+</section>
+</section>
+<section id="forward" class="level3">
+<h3 class="anchored" data-anchor-id="forward">2. <strong><code>forward()</code></strong></h3>
+<p><strong>Implement the forward pass.</strong></p>
+<p>Convert the input token IDs to integer type using <code>x.long()</code> and retrieve their embeddings. Flatten the embeddings starting at dimension <code>1</code>, preserving the batch dimension.</p>
+<p>Compute the two hidden layers and the output:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>h1 <span class="op">=</span> torch.relu(x <span class="op">@</span> <span class="va">self</span>.Omega0 <span class="op">+</span> <span class="va">self</span>.Beta0)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>h2 <span class="op">=</span> torch.relu(h1 <span class="op">@</span> <span class="va">self</span>.Omega1 <span class="op">+</span> <span class="va">self</span>.Beta1)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> h2 <span class="op">@</span> <span class="va">self</span>.Omega2 <span class="op">+</span> <span class="va">self</span>.Beta2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Return the logits with shape <code>(batch_size, output_size)</code>. Do not apply an activation function to the output layer.</p>
+<p><br></p>
+</section>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">3. <strong><code>parameters()</code></strong></h3>
+<p>Assign the embedding layer and all parameter tensors to instance attributes. Use the inherited <code>self.parameters()</code> method to access them; a custom <code>parameters()</code> method is unnecessary.</p>
+<p><br></p>
+</section>
+<section id="step" class="level3">
+<h3 class="anchored" data-anchor-id="step">4. <code>step()</code></h3>
+<p><strong>Implement a manual gradient descent step.</strong></p>
+<p>Add a <code>step()</code> method. Inside a <code>torch.no_grad()</code> block, iterate through <code>self.parameters()</code>. For each parameter with a non-<code>None</code> gradient, subtract the learning rate multiplied by its gradient.</p>
+<p><br></p>
+</section>
+<section id="zero_grad" class="level3">
+<h3 class="anchored" data-anchor-id="zero_grad">5. <code>zero_grad()</code></h3>
+<p><strong>Clear gradients between training iterations.</strong></p>
+<p>Use the inherited <code>model.zero_grad(set_to_none=True)</code> method before each forward pass. This prevents gradients from accumulating across training iterations.</p>
+<div id="cell-16" class="cell" data-outputid="b5d26b24-f95f-43bd-ce69-ea9b8b776327" data-execution_count="183">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MLP(torch.nn.Module):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_size, hidden_size, output_size):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.learning_rate <span class="op">=</span> <span class="fl">5e-4</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.embedding_dim <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        in_dim0 <span class="op">=</span> context_window <span class="op">*</span> <span class="va">self</span>.embedding_dim</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Emb <span class="op">=</span> torch.nn.Embedding(enc.n_vocab, <span class="va">self</span>.embedding_dim)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega0 <span class="op">=</span> torch.nn.Parameter(torch.randn(in_dim0, hidden_size) <span class="op">*</span> math.sqrt(<span class="fl">2.0</span> <span class="op">/</span> in_dim0), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Beta0  <span class="op">=</span> torch.nn.Parameter(torch.zeros(hidden_size), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega1 <span class="op">=</span> torch.nn.Parameter(torch.randn(hidden_size, hidden_size) <span class="op">*</span> math.sqrt(<span class="fl">2.0</span> <span class="op">/</span> in_dim0), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Beta1  <span class="op">=</span> torch.nn.Parameter(torch.zeros(hidden_size), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega2 <span class="op">=</span> torch.nn.Parameter(torch.randn(hidden_size, output_size)<span class="op">*</span> math.sqrt(<span class="fl">2.0</span> <span class="op">/</span> hidden_size), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Beta2  <span class="op">=</span> torch.nn.Parameter(torch.zeros(output_size), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        x_emb <span class="op">=</span> <span class="va">self</span>.Emb(x.<span class="bu">long</span>())</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># x = torch.mean(x_emb, dim=1)</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x_emb.flatten(start_dim<span class="op">=</span><span class="dv">1</span>) <span class="co"># [batch, 1280]</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        pre1 <span class="op">=</span> torch.matmul(x, <span class="va">self</span>.Omega0) <span class="op">+</span> <span class="va">self</span>.Beta0</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        h1 <span class="op">=</span> torch.relu(pre1)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>        pre2 <span class="op">=</span> torch.matmul(h1, <span class="va">self</span>.Omega1) <span class="op">+</span> <span class="va">self</span>.Beta1</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>        h2 <span class="op">=</span> torch.relu(pre2)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> torch.matmul(h2, <span class="va">self</span>.Omega2) <span class="op">+</span> <span class="va">self</span>.Beta2</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> parameters(<span class="va">self</span>):</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> [<span class="va">self</span>.Emb.weight, <span class="va">self</span>.Omega0, <span class="va">self</span>.Omega1, <span class="va">self</span>.Omega2, <span class="va">self</span>.Beta0, <span class="va">self</span>.Beta1, <span class="va">self</span>.Beta2]</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> parameter <span class="kw">in</span> <span class="va">self</span>.parameters():</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>                parameter <span class="op">-=</span> <span class="va">self</span>.learning_rate <span class="op">*</span> parameter.grad</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> zero_grad(<span class="va">self</span>):</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> parameter <span class="kw">in</span> <span class="va">self</span>.parameters():</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>            parameter.grad <span class="op">=</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 23829/23829 [00:52&lt;00:00, 450.18it/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch: 0 Loss: 7.918576875521997</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 23829/23829 [00:52&lt;00:00, 449.66it/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch: 1 Loss: 6.386803681153357</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 23829/23829 [00:52&lt;00:00, 451.56it/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch: 2 Loss: 5.940987399033741</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 23829/23829 [00:53&lt;00:00, 447.19it/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch: 3 Loss: 5.67228349326035</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 23829/23829 [00:53&lt;00:00, 447.95it/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch: 4 Loss: 5.474272068940897</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="training" class="level2">
+<h2 class="anchored" data-anchor-id="training">Training</h2>
+<p>Instantiate your <code>MLP</code> using <code>context_window</code> as the input size, <code>256</code> hidden units per hidden layer, and <code>enc.n_vocab</code> as the output size, then move the model to the selected device.</p>
+<p>Train the model for atleast five epochs, using <code>tqdm</code> to display progress through the dataloader.</p>
+<p>For each batch, move the inputs and targets to the device, clear previous gradients using <code>mlp.zero_grad()</code>, and run the forward pass to obtain output logits.</p>
+<p>Compute the loss using your own numerically stable cross-entropy implementation, with targets converted to integer class indices using <code>.long()</code>.</p>
+<p><strong>You are not allowed to use built-in loss functions or optimizers</strong>, including <code>torch.nn.CrossEntropyLoss</code>, <code>torch.nn.functional.cross_entropy</code>, or any optimizer from <code>torch.optim</code>, such as Adam or SGD.</p>
+<p>Implement the loss calculation yourself and update the model parameters through your own <code>mlp.step()</code> method using gradient descent.</p>
+<p>You may use PyTorch automatic differentiation by calling <code>loss_value.backward()</code> to compute gradients. Record each batch’s loss using <code>.item()</code> and print the epoch number and mean batch loss at the end of each epoch.</p>
+<div id="cell-18" class="cell" data-outputid="a6dbea7c-0cc9-4dc0-fd10-4dc71bf0abad">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mlp <span class="op">=</span> <span class="pp">NotImplementedError</span>()</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    losses <span class="op">=</span> []</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x_i, y_i <span class="kw">in</span> tqdm(dataloader):</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>()</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Epoch: </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> Loss: </span><span class="sc">{</span>np<span class="sc">.</span>mean(losses)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="inference-next-token-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="inference-next-token-prediction">Inference / Next Token Prediction</h2>
+<p>This code generates text one token at a time using the trained MLP.</p>
+<p>It takes the first input sequence from a batch, moves it to the selected device, and prints the decoded sequence as the initial prompt.</p>
+<p>Calling <code>mlp.eval()</code> enables evaluation mode, while <code>torch.no_grad()</code> disables gradient tracking during generation.</p>
+<p>On each of the 10 iterations, the model predicts logits for the next token, and <code>torch.argmax</code> selects the token with the highest score.</p>
+<p>The selected token is decoded and printed immediately, then appended to the input after removing its oldest token, keeping the context window the same length.</p>
+<p>This process lets each prediction become part of the context for the next prediction. The final <code>print()</code> adds a newline.</p>
+<div id="cell-20" class="cell" data-outputid="ada5abff-58a9-4c9e-9c3f-cfb29fd4193f">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>x_i, y_i <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(dataloader))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>x_i <span class="op">=</span> x_i[<span class="dv">0</span>:<span class="dv">1</span>].to(device)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>mlp.<span class="bu">eval</span>()</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the full initial prompt once</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(enc.decode(x_i[<span class="dv">0</span>].tolist()), end<span class="op">=</span><span class="st">"==&gt;"</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):  <span class="co"># Generate 10 tokens</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        logits <span class="op">=</span> mlp(x_i)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        pred_token_tensor <span class="op">=</span> torch.argmax(logits, dim<span class="op">=-</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>).to(torch.uint16)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        pred_token_id <span class="op">=</span> pred_token_tensor.item()</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Stream only the newly generated token</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(enc.decode([pred_token_id]), end<span class="op">=</span><span class="st">""</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Slide the window</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>        x_i <span class="op">=</span> torch.cat((x_i[:, <span class="dv">1</span>:], pred_token_tensor), dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()  <span class="co"># Add final newline</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> saw what happened. She put her hand on his==&gt; and said, "I, he was a big</code></pre>
+</div>
+</div>
+
+
+</section>
+
+
+</main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"02a9c2a76a664832b6f21c228ba87df3":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"07684dbef0464745bccdaf8f25f134e4":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_159693dabe544cd388a06d3c15c627ad","placeholder":"​","style":"IPY_MODEL_2fb82b2697624205921c72a0b37e4915","value":" 9.23MB,  866kB/s  "}},"0d59337405ef42d8949e1f3f6837b86b":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_3cc912a782a54afea458067876c8c9ef","IPY_MODEL_4bccad83ccb84de583407a7d84753059","IPY_MODEL_07684dbef0464745bccdaf8f25f134e4"],"layout":"IPY_MODEL_f54bffb63f8747178513eaedcc2ce516"}},"159693dabe544cd388a06d3c15c627ad":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"29c9ba7dd40a41be97e41098f3b8ecdb":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_9419bf5b53aa4e28837ad10e712be066","placeholder":"​","style":"IPY_MODEL_02a9c2a76a664832b6f21c228ba87df3","value":" 9.53MB / 9.53MB,  902kB/s  "}},"2fb82b2697624205921c72a0b37e4915":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"3cc912a782a54afea458067876c8c9ef":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_8b350e9d09664b89b55d36215cf90eec","placeholder":"​","style":"IPY_MODEL_46675d3d5f644fa0b949fe95a1ede7ff","value":"validation.bin: downloading bytes: "}},"3ff5f4bf230a4274acf817834a9964e2":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_cad413afcff2445fa68088cac1ab1700","max":9531836,"min":0,"orientation":"horizontal","style":"IPY_MODEL_fd7a8823e2d74dc6b027e8f4516e7f8b","value":9531836}},"46675d3d5f644fa0b949fe95a1ede7ff":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"4bccad83ccb84de583407a7d84753059":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_8fbad06d434149518e3925a7137344da","max":9531836,"min":0,"orientation":"horizontal","style":"IPY_MODEL_9bd69e71def04476945fc5382fa478dd","value":9231564}},"54ffabaa2ea34627a133a4fb8f4b4756":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_dfc79950247d46b3adc21b35c0f39097","IPY_MODEL_3ff5f4bf230a4274acf817834a9964e2","IPY_MODEL_29c9ba7dd40a41be97e41098f3b8ecdb"],"layout":"IPY_MODEL_919cdb5468a0423b9e0dbcb171f3c8c0"}},"69430fc596ff423bb0343095c394c6ef":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"8b350e9d09664b89b55d36215cf90eec":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"8fbad06d434149518e3925a7137344da":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"919cdb5468a0423b9e0dbcb171f3c8c0":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9419bf5b53aa4e28837ad10e712be066":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9bd69e71def04476945fc5382fa478dd":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"cad413afcff2445fa68088cac1ab1700":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"dfc79950247d46b3adc21b35c0f39097":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_ff8cb2c935f247cabb6ce24b8fb5f325","placeholder":"​","style":"IPY_MODEL_69430fc596ff423bb0343095c394c6ef","value":"validation.bin: reconstructing file: 100%"}},"f54bffb63f8747178513eaedcc2ce516":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"fd7a8823e2d74dc6b027e8f4516e7f8b":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"ff8cb2c935f247cabb6ce24b8fb5f325":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}}},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
