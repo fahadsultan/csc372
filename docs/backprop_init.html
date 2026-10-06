@@ -406,7 +406,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation algorithm</span></a>
+ <span class="menu-text">Backprop for NN</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -418,7 +418,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backprop Code</span></a>
+ <span class="menu-text">Algorithmic differentiation</span></a>
   </div>
 </li>
       </ul>
@@ -569,7 +569,7 @@ window.Quarto = {
   <ul>
   <li><a href="#initialization-for-forward-pass" id="toc-initialization-for-forward-pass" class="nav-link active" data-scroll-target="#initialization-for-forward-pass">Initialization for forward pass</a></li>
   <li><a href="#initialization-for-backward-pass" id="toc-initialization-for-backward-pass" class="nav-link" data-scroll-target="#initialization-for-backward-pass">Initialization for backward pass</a></li>
-  <li><a href="#example-training-code" id="toc-example-training-code" class="nav-link" data-scroll-target="#example-training-code">Example training code</a></li>
+  <li><a href="#initialization-for-both-forward-and-backward-pass" id="toc-initialization-for-both-forward-and-backward-pass" class="nav-link" data-scroll-target="#initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</a></li>
   </ul>
 </nav>
     </div>
@@ -595,22 +595,40 @@ window.Quarto = {
 </header>
 
 
+<p>The backpropagation algorithm computes the derivatives that are used by stochastic gradient descent and Adam to train the model.</p>
+<p>We now address how to initialize the parameters before we start training.</p>
+<p>To see why this is crucial, consider that during the forward pass, each set of pre-activations <span class="math inline">\(\mathbf{f}_k\)</span> is computed as:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \mathbf{f}_{k} &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\nonumber\\
 &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\textbf{a}[\mathbf{f}_{k-1}],
 \end{eqnarray}\]</span></p>
+<p>where a[•] applies the ReLU functions and matrices <span class="math inline">\(\Omega_k\)</span> and vectors <span class="math inline">\(\boldsymbol\beta_k\)</span> are the weights and biases, respectively.</p>
+<p>Imagine that we initialize all the biases to zero and the elements of <span class="math inline">\(\Omega_k\)</span> according to a normal distribution with mean zero and variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>Consider two scenarios:</p>
+<ul>
+<li><p>If the variance <span class="math inline">\(\sigma^2\)</span> is very small (e.g., <span class="math inline">\(10^{-5}\)</span>), then each element of <span class="math inline">\(\beta_k + \Omega_k \mathbf{h}_k\)</span> will be a weighted sum of <span class="math inline">\(\mathbf{h}_k\)</span> where the weights are very small; the result will likely have a smaller magnitude than the input. In addition, the ReLU function clips values less than zero, so the range of <span class="math inline">\(\mathbf{h}_k\)</span> will be half that of <span class="math inline">\(\mathbf{f}_{k-1}\)</span>. Consequently, the magnitudes of the pre-activations at the hidden layers will get smaller and smaller as we progress through the network.</p></li>
+<li><p>If the variance <span class="math inline">\(\sigma^2\)</span> is very large (e.g., <span class="math inline">\(10^5\)</span>), then each element of <span class="math inline">\(\beta_k + \Omega_k \mathbf{h}_k\)</span> will be a weighted sum of <span class="math inline">\(\mathbf{h}_k\)</span> where the weights are very large; the result is likely to have a much larger magnitude than the input. The ReLU function halves the range of the inputs, but if <span class="math inline">\(\sigma^2\)</span> is large enough, the magnitudes of the pre-activations will still get larger as we progress through the network.</p></li>
+</ul>
+<p>In these two situations, the values at the pre-activations can become so small or so large that they cannot be represented with finite precision floating point arithmetic.</p>
+<p>Even if the forward pass is tractable, the same logic applies to the backward pass.</p>
+<p>Each gradient update (equation 7.25) consists of multiplying by $ ^T $. If the values of <span class="math inline">\(\Omega\)</span> are not initialized sensibly, then the gradient magnitudes may decrease or increase un- controllably during the backward pass. These cases are known as the vanishing gradient problem and the exploding gradient problem, respectively. In the former case, updates to the model become vanishingly small. In the latter case, they become unstable.</p>
 <section id="initialization-for-forward-pass" class="level3">
 <h3 class="anchored" data-anchor-id="initialization-for-forward-pass">Initialization for forward pass</h3>
+<p>We now present a mathematical version of the same argument. Consider the computation between adjacent pre-activations f and f ′ with dimensions Dh and Dh′ , respectively:</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{h} &amp;=&amp; \mbox{\bf a}[\mathbf{f}],\nonumber \\
   \mathbf{f}' &amp;=&amp; \boldsymbol\beta +\boldsymbol\Omega\mathbf{h}
 \end{eqnarray}\]</span></p>
+<p>where <span class="math inline">\(h\)</span> represents the activations, <span class="math inline">\(\Omega\)</span> and <span class="math inline">\(\beta\)</span> represent the weights and biases, and a[•] is the activation function.</p>
+<p>Assume the pre-activations <span class="math inline">\(f_j\)</span> in the input layer <span class="math inline">\(f\)</span> have variance <span class="math inline">\(\sigma^2_f\)</span>. Consider initializing the biases <span class="math inline">\(\beta_i\)</span> to zero and the weights <span class="math inline">\(\Omega_{ij}\)</span> as normally distributed with mean zero and variance <span class="math inline">\(\sigma^2_\Omega\)</span>. Now we derive expressions for the mean and variance of the pre-activations <span class="math inline">\(f ′\)</span> in the subsequent layer.</p>
+<p>The expectation (mean) <span class="math inline">\(\mathbb{E}[f'_{i}]\)</span> of the intermediate values <span class="math inline">\(f'_{i}\)</span> is:</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbb{E}[f'_{i}] &amp;=&amp; \mathbb{E}\left[\beta_{i} + \sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right]\nonumber \\
   &amp;=&amp; \mathbb{E}\left[\beta_{i}\right] +\sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}h_{j}\right] \nonumber\\
   &amp;=&amp; \mathbb{E}\left[\beta_{i}\right] +\sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}\right]\mathbb{E}\left[h_{j}\right] \nonumber\\
   &amp;=&amp; 0 + \sum_{j=1}^{D_h} 0\cdot\mathbb{E}\left[h_{j}\right] = 0,
 \end{eqnarray}\]</span></p>
+<p>where <span class="math inline">\(D_h\)</span> is the dimensionality of the input layer <span class="math inline">\(h\)</span>. We have used the rules for manipu- lating expectations, and we have assumed that the distributions over the hidden units <span class="math inline">\(h_j\)</span> and the network weights <span class="math inline">\(\Omega_{ij}\)</span> are independent between the second and third lines. Using this result, we see that the variance <span class="math inline">\(\sigma^2_{f ′}\)</span> of the pre-activations <span class="math inline">\(f′_{i}\)</span> is</p>
 <p><span class="math display">\[\begin{eqnarray}
   \sigma^{2}_{f'_i} &amp;=&amp; \mathbb{E}[f_{i}^{\prime 2}]-\mathbb{E}[f'_{i}]^{2} \nonumber \\
   &amp;=&amp; \mathbb{E}\left[\left(\beta_{i}+\sum_{j=1}^{D_h}\Omega_{ij}h_{j}\right)^2\right]-0\nonumber\\
@@ -618,80 +636,112 @@ window.Quarto = {
   &amp;=&amp; \sum_{j=1}^{D_h}\mathbb{E}\left[\Omega_{ij}^2\right]\mathbb{E}\left[h_{j}^2\right]\nonumber \\
   &amp;=&amp;\sum_{j=1}^{D_h} \sigma_\Omega^2 \mathbb{E}\left[h_{j}^2\right] = \sigma_\Omega^2 \sum_{j=1}^{D_h} \mathbb{E}\left[h_{j}^2\right],
 \end{eqnarray}\]</span></p>
+<p>where we have used the variance identity <span class="math inline">\(\sigma^2 = \mathbb{E}[(z-\mathbb{E}[z])^2] = \mathbb{E}[z^2]-\mathbb{E}[z]^2\)</span>. We have assumed once more that the distributions of the weights <span class="math inline">\(\Omega_{ij}\)</span> and the hidden units <span class="math inline">\(h_j\)</span> are independent between lines three and four.</p>
+<p>Assuming that the distribution of pre-activations <span class="math inline">\(f_j\)</span> at the previous layer is symmetric about zero, half of these pre-activations will be clipped by the ReLU function, and the second moment <span class="math inline">\(\mathbb{E}[h_j^2]\)</span> will be half the variance <span class="math inline">\(\sigma^2_{f}\)</span> of <span class="math inline">\(f_j\)</span> (see problem 7.14):</p>
 <p><span class="math display">\[\begin{eqnarray}
 \sigma^{2}_{f'_{i}} = \sigma_\Omega^2 \sum_{j=1}^{D_h} \frac{\sigma_{f}^2}{2} = \frac{1}{2}D_{h} \sigma_\Omega^2 \sigma_{f}^2.
 \end{eqnarray}\]</span></p>
+<hr>
 <p><img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%"></p>
-<p>Weight initialization. Consider a deep network with 50 hidden layers and Dh = 100 hidden units per layer. The network has a 100-dimensional input x initialized from a standard normal distribution, a single fixed target y = 0, and a least squares loss function. The bias vectors βk are initialized to zero, and the weight matrices Ωk are initialized with a normal distribution with mean zero and five different variances σ2Ω ∈ {0.001, 0.01, 0.02, 0.1, 1.0}. a) Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (σ2Ω = 2/Dh = 0.02), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale). b) The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the exploding gradient and vanishing gradient problems, respectively.</p>
+<p>Weight initialization. Consider a deep network with 50 hidden layers and <span class="math inline">\(D_h = 100\)</span> hidden units per layer. The network has a 100-dimensional input <span class="math inline">\(x\)</span> initialized from a standard normal distribution, a single fixed target y = 0, and the bias vectors <span class="math inline">\(\beta_k\)</span> are initialized to zero, and the weight matrices <span class="math inline">\(\Omega_k\)</span> are initialized with a normal distribution with mean zero and five different variances <span class="math inline">\(\sigma^2_\Omega\)</span> <span class="math inline">\(\in \{0.001, 0.01, 0.02, 0.1, 1.0\}\)</span>. a) Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (<span class="math inline">\(\sigma^2_\Omega
+= 2/_h = 0.02\)</span>), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale). b) The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the <mark>exploding gradient</mark> and <mark>vanishing gradient problems</mark>, respectively.</p>
+<hr>
+<p>This, in turn, implies that if we want the variance <span class="math inline">\(\sigma^2_{f'}\)</span> of the subsequent pre-activations <span class="math inline">\(f'\)</span> to be the same as the variance <span class="math inline">\(\sigma^2_{f}\)</span> of the original pre-activations <span class="math inline">\(f\)</span> during the forward pass, we should set:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_forward}
 \sigma_\Omega^2 = \frac{2}{D_h},
 \end{eqnarray}\]</span></p>
+<p>where <span class="math inline">\(D_h\)</span> is the dimension of the original layer to which the weights were applied. This is known as <mark>He initialization</mark>.</p>
 </section>
 <section id="initialization-for-backward-pass" class="level3">
 <h3 class="anchored" data-anchor-id="initialization-for-backward-pass">Initialization for backward pass</h3>
+<p>A similar argument establishes how the variance of the gradients ∂l/∂fk changes during the backward pass. During the backward pass, we multiply by the transpose ΩT of the weight matrix (equation 7.25), so the equivalent expression becomes:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_back}
 \sigma_\Omega^2 = \frac{2}{D_{h'}},
 \end{eqnarray}\]</span></p>
-<p>### Initialization for both forward and backward pass</p>
+<p>where Dh′ is the dimension of the layer that the weights feed into.</p>
+</section>
+<section id="initialization-for-both-forward-and-backward-pass" class="level3">
+<h3 class="anchored" data-anchor-id="initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</h3>
+<p>If the weight matrix Ω is not square (i.e., there are different numbers of hidden units in the two adjacent layers, so Dh and Dh′ differ), then it is not possible to choose the variance to satisfy both equations 7.32 and 7.33 simultaneously. One possible compromise is to use the mean (Dh + Dh′ )/2 as a proxy for the number of terms, which gives:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \sigma_\Omega^2 = \frac{4}{D_{h}+D_{h'}}.
 \end{eqnarray}\]</span></p>
-</section>
-<section id="example-training-code" class="level2">
-<h2 class="anchored" data-anchor-id="example-training-code">Example training code</h2>
-<p><img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%"></p>
-<p>Computational graph for problem 7.12 and problem 7.13. Adapted from Domke (2010).</p>
-<p><span class="math display">\[\begin{eqnarray}
-y &amp;=&amp; \phi_{0}+\phi_{1}\mbox{a}\Bigl[\psi_{01} + \psi_{11}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{21}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr]\nonumber \\
-&amp;&amp;\hspace{0.55cm}+\phi_{2}\mbox{a}\Bigl[\psi_{02} + \psi_{12}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
+<p>Figure 7.7 shows empirically that both the variance of the hidden units in the forward pass and the variance of the gradients in the backward pass remain stable when the parameters are initialized appropriately.</p>
+<!-- ## Example training code 
+
+
+
+<img src="assets/Chap07/Train2CompGraph.svg" style="filter: invert(1);" width="100%">
+
+Computational graph for problem 7.12 and problem 7.13. Adapted
+from Domke (2010).
+
+
+
+\begin{eqnarray}
+ y &=& \phi_{0}+\phi_{1}\mbox{a}\Bigl[\psi_{01} + \psi_{11}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{21}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr]\nonumber \\
+ &&\hspace{0.55cm}+\phi_{2}\mbox{a}\Bigl[\psi_{02} + \psi_{12}\mbox{a}[\theta_{01} + \theta_{11}x] + \psi_{22}\mbox{a}[\theta_{02} + \theta_{12}x]\Bigr], 
+ \end{eqnarray}
+
+\begin{eqnarray}
   \ell_i = (y_i-\mbox{f}[\mathbf{x}_i,\boldsymbol\phi])^2.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\ell_{i} = -(1-y_{i})\log\Bigl[1-\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr] - y_{i}\log\Bigl[\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_logistic}
-\mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\frac{\partial \mathbf{z}}{\partial \mathbf{h}} = \boldsymbol\Omega^{T},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{Heaviside}[z] = \begin{cases} 0 &amp; \quad z &lt;0 \\ 1 &amp; \quad z\geq 0\end{cases},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\mbox{rect}[z] = \begin{cases} 0 &amp; \quad z &lt; 0 \\ 1 &amp; \quad 0 \leq z\leq 1 \\ 0 &amp; \quad z &gt; 1\end{cases}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \ell_{i} = -(1-y_{i})\log\Bigl[1-\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr] - y_{i}\log\Bigl[\mbox{sig}\bigl[\mbox{f}[\mathbf{x}_i,\boldsymbol\phi]\bigr]\Bigr],
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:train2_logistic}
+ \mbox{sig}[z] = \frac{1}{1+\exp[-z]}.
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \frac{\partial \mathbf{z}}{\partial \mathbf{h}} = \boldsymbol\Omega^{T},
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \mbox{Heaviside}[z] = \begin{cases} 0 & \quad z <0 \\ 1 & \quad z\geq 0\end{cases},
+ \end{eqnarray}
+
+\begin{eqnarray}
+ \mbox{rect}[z] = \begin{cases} 0 & \quad z < 0 \\ 1 & \quad 0 \leq z\leq 1 \\ 0 & \quad z > 1\end{cases}.
+ \end{eqnarray}
+
+\begin{eqnarray}
      \frac{\partial \ell}{\partial \boldsymbol\Omega} = \frac{\partial \ell}{\partial \mathbf{f}}\mathbf{h}^{T}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_prob_leaky_relu}
-\mbox{a}[z] = \mbox{ReLU}[z] = \begin{cases} \alpha \cdot z &amp; \quad z &lt;0 \\ z &amp; \quad z\geq 0\end{cases},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:prob_comp_graph}\index{reverse-mode differentiation}\index{differentiation!reverse mode}\index{backpropagation!on acyclic graph}
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:train2_prob_leaky_relu}
+ \mbox{a}[z] = \mbox{ReLU}[z] = \begin{cases} \alpha \cdot z & \quad z <0 \\ z & \quad z\geq 0\end{cases},
+ \end{eqnarray}
+
+\begin{eqnarray}\label{eq:prob_comp_graph}\index{reverse-mode differentiation}\index{differentiation!reverse mode}\index{backpropagation!on acyclic graph}
   y = \exp\left[\exp[x]+\exp[x]^2\right]+ \sin[\exp[x]+\exp[x]^2].
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-f_{1} &amp;=&amp; \exp[x]\nonumber \\
-f_{2} &amp;=&amp; f_{1}^2\nonumber \\
-f_{3} &amp;=&amp; f_{1}+f_{2}\nonumber \\
-f_{4} &amp;=&amp; \exp[f_{3}]\nonumber \\
-f_{5} &amp;=&amp; \sin[f_{3}]\nonumber \\
-y &amp;=&amp; f_{4}+f_{5}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
+ \end{eqnarray}
+
+\begin{eqnarray}
+ f_{1} &=& \exp[x]\nonumber \\
+ f_{2} &=& f_{1}^2\nonumber \\
+ f_{3} &=& f_{1}+f_{2}\nonumber \\
+ f_{4} &=& \exp[f_{3}]\nonumber \\
+ f_{5} &=& \sin[f_{3}]\nonumber \\
+ y &=& f_{4}+f_{5}.
+ \end{eqnarray}
+
+\begin{eqnarray}
   \frac{\partial y}{\partial f_{5}}, \frac{\partial y}{\partial f_{4}}, \frac{\partial y}{\partial f_{3}},
   \frac{\partial y}{\partial f_{2}}, \frac{\partial y}{\partial f_{1}} \mbox{ and } \frac{\partial y}{\partial x},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
+ \end{eqnarray}
+
+\begin{eqnarray}
   \frac{\partial f_{1}}{\partial x}, \frac{\partial f_{2}}{\partial x}, \frac{\partial f_{3}}{\partial x}, \frac{\partial f_4}{\partial x},
   \frac{\partial f_{5}}{\partial x}, \mbox{ and } \frac{\partial y}{\partial x},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-b = \mbox{ReLU}[a] = \begin{cases} 0 &amp; \quad a &lt;0 \\ a&amp; \quad a\geq 0\end{cases},
-\end{eqnarray}\]</span></p>
-<div id="a4d40829" class="cell">
+ \end{eqnarray}
+
+\begin{eqnarray}
+ b = \mbox{ReLU}[a] = \begin{cases} 0 & \quad a <0 \\ a& \quad a\geq 0\end{cases},
+ \end{eqnarray} -->
+<div id="a4d40829" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -787,7 +837,7 @@ b = \mbox{ReLU}[a] = \begin{cases} 0 &amp; \quad a &lt;0 \\ a&amp; \quad a\geq 0
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Now experiment with sigma_sq_omega to try to stop the variance of the forward computation exploding</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cf2a6da5" class="cell">
+<div id="cf2a6da5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> least_squares_loss(net_output, y):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.<span class="bu">sum</span>((net_output<span class="op">-</span>y) <span class="op">*</span> (net_output<span class="op">-</span>y))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -795,7 +845,7 @@ b = \mbox{ReLU}[a] = \begin{cases} 0 &amp; \quad a &lt;0 \\ a&amp; \quad a\geq 0
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>(net_output <span class="op">-</span>y)<span class="op">;</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a150b1ae" class="cell">
+<div id="a150b1ae" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll need the indicator function</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> indicator_function(x):</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  x_in <span class="op">=</span> np.array(x)</span>

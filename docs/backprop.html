@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -406,7 +372,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation algorithm</span></a>
+ <span class="menu-text">Backprop for NN</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -418,7 +384,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backprop Code</span></a>
+ <span class="menu-text">Algorithmic differentiation</span></a>
   </div>
 </li>
       </ul>
@@ -567,14 +533,13 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#problem-definitions" id="toc-problem-definitions" class="nav-link active" data-scroll-target="#problem-definitions">Problem definitions</a></li>
-  <li><a href="#computing-derivatives" id="toc-computing-derivatives" class="nav-link" data-scroll-target="#computing-derivatives">Computing derivatives</a></li>
-  <li><a href="#toy-example" id="toc-toy-example" class="nav-link" data-scroll-target="#toy-example">Toy example</a></li>
-  <li><a href="#backpropagation-algorithm" id="toc-backpropagation-algorithm" class="nav-link" data-scroll-target="#backpropagation-algorithm">Backpropagation algorithm</a>
+  <li><a href="#forward-pass" id="toc-forward-pass" class="nav-link active" data-scroll-target="#forward-pass">Forward Pass</a></li>
+  <li><a href="#backwardpass" id="toc-backwardpass" class="nav-link" data-scroll-target="#backwardpass">BackwardPass</a></li>
+  <li><a href="#scalars-example" id="toc-scalars-example" class="nav-link" data-scroll-target="#scalars-example">Scalars example</a>
   <ul class="collapse">
-  <li><a href="#backpropagation-algorithm-summary" id="toc-backpropagation-algorithm-summary" class="nav-link" data-scroll-target="#backpropagation-algorithm-summary">Backpropagation algorithm summary</a></li>
-  <li><a href="#algorithmic-differentiation" id="toc-algorithmic-differentiation" class="nav-link" data-scroll-target="#algorithmic-differentiation">Algorithmic differentiation</a></li>
-  <li><a href="#extension-to-arbitrary-computational-graphs" id="toc-extension-to-arbitrary-computational-graphs" class="nav-link" data-scroll-target="#extension-to-arbitrary-computational-graphs">Extension to arbitrary computational graphs</a></li>
+  <li><a href="#forward-pass-1" id="toc-forward-pass-1" class="nav-link" data-scroll-target="#forward-pass-1">Forward pass</a></li>
+  <li><a href="#backward-pass-1" id="toc-backward-pass-1" class="nav-link" data-scroll-target="#backward-pass-1">Backward pass #1</a></li>
+  <li><a href="#backward-pass-2" id="toc-backward-pass-2" class="nav-link" data-scroll-target="#backward-pass-2">Backward pass #2</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -614,50 +579,150 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/18J7G3N0W3XRP6AX0RHrYfOgiPV_2NHDUMjjXkqI_knc/edit?slide=id.g33a6271ded3_0_0#slide=id.g33a6271ded3_0_0">Slides</a></p>
 </div>
 </div>
-<section id="problem-definitions" class="level2">
-<h2 class="anchored" data-anchor-id="problem-definitions">Problem definitions</h2>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
-  \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}] \nonumber\\
-  \mathbf{h}_{3} &amp;=&amp; \mathbf{a}[\boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}] \nonumber\\
-  \mbox{\bf f}[\mathbf{x},\boldsymbol\phi] &amp;=&amp; \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  L[\boldsymbol\phi]= \sum_{i=1}^{I} \ell_{i}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_sgd}
+<p>When it comes to training models and finding the best parameters, there are <mark>two big challenges</mark> specific to neural networks:</p>
+<ol type="1">
+<li><p>Since the largest models at the time of writing have <span class="math inline">\(∼10^{12}\)</span> parameters, we need a way to <mark>calculate the gradients <span class="math inline">\(\frac{\partial L}{\partial \phi}\)</span> eﬀiciently</mark>.</p>
+<p>This is challenging not only because of the sheer number of parameters but also because the gradient needs to be computed for every parameter at every iteration of the training algorithm.</p></li>
+<li><p><mark>Initializing the parameters</mark> for neural networks can be very tricky. If it is not done carefully, the <mark>initial losses and their gradients can be extremely large or small.</mark></p></li>
+</ol>
+<!-- ## Problem definitions 
+
+Consider a network $f[x,\phi]$ with multivariate input $\mathbf{x}$, parameters $\phi$, and three hidden
+layers $\mathbf{h}_1,\mathbf{h}_2$, and $\mathbf{h}_3$:
+
+\begin{eqnarray}
+  \mathbf{h}_{1} &=& \mathbf{a}[\boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}]\nonumber \\
+  \mathbf{h}_{2} &=& \mathbf{a}[\boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}] \nonumber\\
+  \mathbf{h}_{3} &=& \mathbf{a}[\boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}] \nonumber\\
+  \mbox{\bf f}[\mathbf{x},\boldsymbol\phi] &=& \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3},
+ \end{eqnarray}
+
+The model parameters $\phi= \{\boldsymbol\beta_0,\boldsymbol\Omega_0,\boldsymbol\beta_1,\boldsymbol\Omega_1,\boldsymbol\beta_2,\boldsymbol\Omega_2,\boldsymbol\beta_3,\boldsymbol\Omega_3\}$ consist of the bias
+vectors $\boldsymbol\beta_k$ and weight matrices $\boldsymbol\Omega_k$ between every layer.
+
+We also have individual loss terms $\ell_i$, which return the negative log-likelihood of the ground truth label $y_i$ given the model prediction $f[\mathbf{x}_i,\phi]$ for training input $\mathbf{x}_i$. 
+
+For example, this might be the least squares loss $\ell_i = (f[\mathbf{x}_i,\phi]-y_i)^2$. The total loss is the
+sum of these terms over the training data:
+
+\begin{eqnarray}
+  L[\boldsymbol\phi]= \sum_{i=1}^{I} \ell_{i}[\boldsymbol\phi].
+ \end{eqnarray}
+
+The most commonly used optimization algorithm for training neural networks is stochastic gradient descent (SGD), which updates the parameters as:
+
+
+\begin{eqnarray}\label{eq:train2_sgd}
   \boldsymbol\phi_{t+1}\longleftarrow\boldsymbol\phi_{t} - \alpha \sum_{i\in\mathcal{B}_{t}}\frac{\partial \ell_{i}[\boldsymbol\phi_{t}]}{\partial \boldsymbol\phi},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
+ \end{eqnarray}
+
+where $\alpha$ is the learning rate, and $\mathcal{B}_{t}$ contains the batch indices at iteration $t$. 
+
+To compute
+this update, we need to calculate the derivatives:
+
+\begin{eqnarray}
   \frac{\partial \ell_{i}}{\partial\boldsymbol\beta_{k}} \quad\quad \mbox{and} \quad\quad \frac{\partial \ell_{i}}{\partial\boldsymbol\Omega_{k}},
-\end{eqnarray}\]</span></p>
-</section>
-<section id="computing-derivatives" class="level2">
-<h2 class="anchored" data-anchor-id="computing-derivatives">Computing derivatives</h2>
+ \end{eqnarray}
+
+for the parameters {$\boldsymbol\beta_k$ ,$\boldsymbol\Omega_k$ } at every layer $k \in\{0,1,...,K\}$ and for each index $i$ in the batch. 
+
+The first part of this chapter describes the backpropagation algorithm, which
+computes these derivatives eﬀiciently. 
+
+In the second part of the chapter, we consider how to initialize the network parameters
+before we commence training. We describe methods to choose the initial weights $\boldsymbol\Omega_k$ and
+biases $\boldsymbol\beta_k$ so that training is stable -->
+<!-- ## Computing derivatives -->
+<p>As we saw previously, the derivatives of the loss <span class="math inline">\(\frac{\partial \ell_{i}}{\partial\boldsymbol\beta_{k}}\)</span> and <span class="math inline">\(\frac{\partial \ell_{i}}{\partial\boldsymbol\Omega_{k}}\)</span> tell us how the loss changes when we make a small change to the parameters. Optimization algorithms exploit this information to manipulate the parameters so that the loss becomes smaller.</p>
+<p><mark>The backpropagation algorithm computes these derivatives <span class="math inline">\(\frac{\partial \ell_{i}}{\partial\boldsymbol\beta_{k}}\)</span> and <span class="math inline">\(\frac{\partial \ell_{i}}{\partial\boldsymbol\Omega_{k}}\)</span></mark> in an efficient manner in two main phases: 1) Forward Pass and 2) Backward Pass.</p>
+<!-- The mathematical details are somewhat involved, so we first make two observations that provide some intuition. -->
+<section id="forward-pass" class="level2">
+<h2 class="anchored" data-anchor-id="forward-pass">Forward Pass</h2>
+<p>During the forward pass, the network processes the input data and computes the activations of all hidden units layer by layer, from the input layer until the output is obtained.</p>
+<p>The activations at each layer are saved to be used during the second phase of backpropagation to compute the gradients efficiently.</p>
 <p><img src="assets/Chap07/Train2BPIntuitions.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation forward pass. The goal is to compute the derivatives of the loss ℓ with respect to each of the weights (arrows) and biases (not shown). In other words, we want to know how a small change to each parameter will affect the loss. Each weight multiplies the hidden unit at its source and contributes the result to the hidden unit at its destination. Consequently, the effects of any small change to the weight will be scaled by the activation of the source hidden unit. For example, the blue weight is applied to the second hidden unit at layer 1; if the activation of this unit doubles, then the effect of a small change to the blue weight will double too. Hence, to compute the derivatives of the weights, we need to calculate and store the activations at the hidden layers. This is known as the forward pass since it involves running the network equations sequentially.</p>
-<p><img src="assets/Chap07/Train2BPIntuitions2.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation backward pass. a) To compute how a change to a weight feeding into layer h3 (blue arrow) changes the loss, we need to know how the hidden unit in h3 changes the model output f and how f changes the loss (orange arrows). b) To compute how a small change to a weight feeding into h2 (blue arrow) changes the loss, we need to know (i) how the hidden unit in h2 changes h3, (ii) how h3 changes f , and (iii) how f changes the loss (orange arrows). c) Similarly, to compute how a small change to a weight feeding into h1 (blue arrow) changes the loss, we need to know how h1 changes h2 and how these changes propagate through to the loss (orange arrows). The backward pass first computes derivatives at the end of the network and then works backward to exploit the inherent redundancy of these computations.</p>
+<p>Note that the effects of any small change to the weight will be scaled by the activation of the source hidden unit. For example, the brown weight is applied to the second hidden unit at layer 1; if the activation of this unit doubles, then the effect of a small change to the brown weight will double too. Hence, to compute the derivatives of the weights, we need to calculate and store the activations at the hidden layers. This is known as the forward pass since it involves running the network equations sequentially.</p>
 </section>
-<section id="toy-example" class="level2">
-<h2 class="anchored" data-anchor-id="toy-example">Toy example</h2>
+<section id="backwardpass" class="level2">
+<h2 class="anchored" data-anchor-id="backwardpass">BackwardPass</h2>
+<p>During the backward pass, the network uses the stored activations from the forward pass to compute the gradients of the loss with respect to each parameter efficiently. This is done by propagating the error from the output layer back through the network to the input layer, hence the name “backpropagation.”</p>
+<p><img src="assets/Chap07/Train2BPIntuitions2.svg" style="filter: invert(1);" width="100%"></p>
+<p>Panel a (top): To compute how a change to a weight feeding into layer <span class="math inline">\(h_3\)</span> (brown arrow) changes the loss, we need to know how the hidden unit in <span class="math inline">\(h_3\)</span> changes the model output <span class="math inline">\(f\)</span> and how <span class="math inline">\(f\)</span> changes the loss (blue arrows).</p>
+<p>Panel b (center): To compute how a small change to a weight feeding into <span class="math inline">\(h_2\)</span> (brown arrow) changes the loss, we need to know (i) how the hidden unit in <span class="math inline">\(h_2\)</span> changes <span class="math inline">\(h_3\)</span>, (ii) how <span class="math inline">\(h_3\)</span> changes <span class="math inline">\(f\)</span>, and (iii) how <span class="math inline">\(f\)</span> changes the loss (blue arrows).</p>
+<p>Panel c (bottom): Similarly, to compute how a small change to a weight feeding into <span class="math inline">\(h_1\)</span> (brown arrow) changes the loss, we need to know how <span class="math inline">\(h_1\)</span> changes <span class="math inline">\(h_2\)</span> and how these changes propagate through to the loss (blue arrows). The backward pass first computes derivatives at the end of the network and then works backward to exploit the inherent redundancy of these computations.</p>
+<!-- **Observation 1**: Each weight (element of $\boldsymbol\Omega_k$) multiplies the activation at a source hidden
+unit and adds the result to a destination hidden unit in the next layer. 
+
+It follows that the effect of any small change to the weight is amplified or attenuated by the activation at
+the source hidden unit. 
+
+Hence, we run the network for each data example in the batch and store the activations of all the hidden units. 
+
+This is known as the forward pass. The stored activations will subsequently be used to compute the gradients.
+
+**Observation 2**: A small change in a bias or weight causes a ripple effect of changes through the subsequent network. 
+
+The change modifies the value of its destination hidden unit. This, in turn, changes the values of the hidden units in the subsequent layer, which will change the hidden units in the layer after that, and so on, until a change is made to
+the model output and, finally, the loss.
+
+Hence, to know how changing a parameter modifies the loss, we also need to know how changes to every subsequent hidden layer will, in turn, modify their successor. These same quantities are required when considering other parameters in the same or earlier layers. It follows that we can calculate them once and reuse them. For example, consider
+computing the effect of a small change in weights that feed into hidden layers h3, h2,
+and h1, respectively:
+
+* To calculate how a small change in a weight or bias feeding into hidden layer h3
+modifies the loss, we need to know (i) how a change in layer h3 changes the model
+output f , and (ii) how a change in this output changes the loss ℓ (figure 7.2a).
+
+• To calculate how a small change in a weight or bias feeding into hidden layer h2
+modifies the loss, we need to know (i) how a change in layer h2 affects h3, (ii) how h3
+changes the model output, and (iii) how this output changes the loss (figure 7.2b).
+
+• To calculate how a small change in a weight or bias feeding into hidden layer h1
+modifies the loss, we need to know (i) how a change in layer h1 affects layer h2,
+(ii) how a change in layer h2 affects layer h3, (iii) how layer h3 changes the model
+output, and (iv) how the model output changes the loss (figure 7.2c).
+
+As we move backward through the network, we see that most of the terms we need
+were already calculated in the previous step, so we do not need to re-compute them.
+Proceeding backward through the network in this way to compute the derivatives is
+known as the backward pass. -->
+<!-- The ideas behind backpropagation are relatively easy to understand. However, the
+derivation requires matrix calculus because the bias and weight terms are vectors and
+matrices, respectively. To help grasp the underlying mechanics, the following section
+derives backpropagation for a simpler toy model with scalar parameters. We then apply
+the same approach to a deep neural network in section 7.4. -->
+</section>
+<section id="scalars-example" class="level2">
+<h2 class="anchored" data-anchor-id="scalars-example">Scalars example</h2>
+<p>Consider a model <span class="math inline">\(f[x,\boldsymbol\phi]\)</span> with eight scalar parameters <span class="math inline">\(\boldsymbol\phi= \{\beta_0,\omega_0,\beta_1,\omega_1,\beta_2,\omega_2,\beta_3,\omega_3\}\)</span> that consists of a composition of the functions sin[•],exp[•], and cos[•]:</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mbox{f}[x,\boldsymbol\phi] = \beta_3+\omega_3\cdot\cos\Bigl[\beta_2+\omega_2\cdot\exp\bigl[\beta_1+\omega_1\cdot\sin[\beta_0+\omega_0\cdot x]\bigr]\Bigr],
 \end{eqnarray}\]</span></p>
+<p>and a least squares loss function <span class="math inline">\(L[\boldsymbol\phi] = \sum_i \ell_i[\boldsymbol\phi]\)</span> with individual terms:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \ell_i = (\mbox{f}[x_i,\boldsymbol\phi]-y_i)^2,
 \end{eqnarray}\]</span></p>
+<p>where, as usual, <span class="math inline">\(x_i\)</span> is the <span class="math inline">\(i^{th}\)</span> training input, and <span class="math inline">\(y_i\)</span> is the <span class="math inline">\(i^{th}\)</span> training output.</p>
+<p>You can think of this as a simple neural network with one input, one output, one hidden unit at each layer, and different activation functions sin[•],exp[•], and cos[•] between each layer.</p>
+<p>We aim to compute the derivatives:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial \beta_{0}}, \quad \frac{\partial \ell_i}{\partial \omega_0}, \quad \frac{\partial \ell_i}{\partial \beta_{1}}, \quad \frac{\partial \ell_i}{\partial \omega_1}, \quad
 \frac{\partial \ell_i}{\partial \beta_{2}}, \quad \frac{\partial \ell_i}{\partial \omega_{2}}, \quad \frac{\partial \ell_i}{\partial \beta_{3}}, \quad\mbox{and} \quad \frac{\partial \ell_i}{\partial \omega_{3}}.
 \end{eqnarray}\]</span></p>
+<p>Of course, we could find expressions for these derivatives by hand and compute them directly.</p>
+<p>However, some of these expressions are quite complex. For example:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_complicated_deriv}
 \frac{\partial \ell_i}{\partial \omega_{0}} &amp;=&amp; -2 \left( \beta_3+\omega_3\cdot\cos\Bigl[\beta_2+\omega_2\cdot\exp\bigl[\beta_1+\omega_1\cdot\sin[\beta_0+\omega_0\cdot x_i]\bigr]\Bigr]-y_i\right)\nonumber \\
 &amp;&amp;\hspace{0.5cm}\cdot \omega_1\omega_2\omega_3\cdot x_i\cdot\cos[\beta_0+\omega_0 \cdot x_i]\cdot\exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\nonumber\\
 &amp;&amp; \hspace{1cm}\cdot \sin\biggl[\beta_2+\omega_2\cdot \exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\biggr].
 \end{eqnarray}\]</span></p>
-<p><img src="assets/Chap07/Train2BP1.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation forward pass. We compute and store each of the intermediate variables in turn until we finally calculate the loss.</p>
+<p>Such expressions are awkward to derive and code without mistakes and do not exploit the inherent redundancy; notice that the three exponential terms are the same.</p>
+<p>The backpropagation algorithm is an eﬀicient method for computing all of these derivatives at once.</p>
+<p>It consists of (i) a forward pass, in which we compute and store a series of intermediate values and the network output, and (ii) a backward pass, in which we calculate the derivatives of each parameter, starting at the end of the network, and reusing previous calculations as we move toward the start.</p>
+<section id="forward-pass-1" class="level3">
+<h3 class="anchored" data-anchor-id="forward-pass-1">Forward pass</h3>
+<p>We treat the computation of the loss as a series of calculations:</p>
 <p><span class="math display">\[\begin{eqnarray}
 f_{0} &amp;=&amp; \beta_{0} + \omega_{0}\cdot x_i\nonumber\\
 h_{1} &amp;=&amp; \sin[f_{0}]\nonumber\\
@@ -668,18 +733,29 @@ h_{3} &amp;=&amp; \cos[f_{2}]\nonumber\\
 f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 \ell_{i} &amp;=&amp; (f_{3}-y_{i})^2.
 \end{eqnarray}\]</span></p>
+<p><img src="assets/Chap07/Train2BP1.svg" style="filter: invert(1);" width="100%"></p>
+<p>We compute and store the values of the intermediate variables <span class="math inline">\(f_k\)</span> and <span class="math inline">\(h_k\)</span> (figure above).</p>
+</section>
+<section id="backward-pass-1" class="level3">
+<h3 class="anchored" data-anchor-id="backward-pass-1">Backward pass #1</h3>
+<p>In the first backward pass, we work backward from the end of the function computing the derivatives <span class="math inline">\(\frac{\partial \ell_i}{\partial f_k}\)</span> and <span class="math inline">\(\frac{\partial \ell_i}{\partial h_k}\)</span> of the loss with respect to the intermediate quantities. Each derivative is computed from the previous one by multiplying by terms of the form <span class="math inline">\(\frac{\partial f_k}{\partial h_k}\)</span> or <span class="math inline">\(\frac{\partial h_k}{\partial f_{k-1}}\)</span>.</p>
+<p><br></p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial f_{3}}, \quad \frac{\partial \ell_i}{\partial h_3}, \quad \frac{\partial \ell_i}{\partial f_2}, \quad
 \frac{\partial \ell_i}{\partial h_2}, \quad \frac{\partial \ell_i}{\partial f_1}, \quad \frac{\partial \ell_i}{\partial h_1}, \quad\mbox{and} \quad \frac{\partial \ell_i}{\partial f_0}.
 \end{eqnarray}\]</span></p>
+<p><br></p>
+<p>The first of these derivatives is straightforward:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial f_{3}} = 2(f_3-y_i).
 \end{eqnarray}\]</span></p>
+<p>The next derivative can be calculated using the chain rule:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial h_{3}} =\frac{\partial f_{3}}{\partial h_{3}} \frac{\partial \ell_i}{\partial f_{3}} .
 \end{eqnarray}\]</span></p>
+<p>The left-hand side asks how <span class="math inline">\(\ell_i\)</span> changes when <span class="math inline">\(h_3\)</span> changes. The right-hand side says we can decompose this into (i) how <span class="math inline">\(f_3\)</span> changes when <span class="math inline">\(h_3\)</span> changes and (ii) how <span class="math inline">\(\ell_i\)</span> changes when <span class="math inline">\(f_3\)</span> changes.</p>
+<p>In the original equations, <span class="math inline">\(h_3\)</span> changes <span class="math inline">\(f_3\)</span>, which changes <span class="math inline">\(\ell_i\)</span>, and the derivatives represent the effects of this chain. Notice that we already computed the second of these derivatives, and the other is the derivative of <span class="math inline">\(\beta_3 + \omega_3\cdot h_3\)</span> with respect to <span class="math inline">\(h_3\)</span>, which is <span class="math inline">\(\omega_3\)</span>. We continue in this way, computing the derivatives of the output with respect to these intermediate quantities (figure below):</p>
 <p><img src="assets/Chap07/Train2BP2.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation backward pass #1. We work backward from the end of the function computing the derivatives ∂ℓi/∂fk and ∂ℓi/∂hk of the loss with respect to the intermediate quantities. Each derivative is computed from the previous one by multiplying by terms of the form ∂fk/∂hk or ∂hk/∂fk−1.</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial f_{2}} &amp;=&amp; \frac{\partial h_{3}}{\partial f_{2}}\left(
 \frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right)
@@ -689,6 +765,11 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 \frac{\partial \ell_i}{\partial h_{1}} &amp;=&amp; \frac{\partial f_{1}}{\partial h_{1}}\left(\frac{\partial h_{2}}{\partial f_{1}} \frac{\partial f_{2}}{\partial h_{2}}\frac{\partial h_{3}}{\partial f_{2}}\frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right)\nonumber \\
 \frac{\partial \ell_i}{\partial f_{0}} &amp;=&amp; \frac{\partial h_{1}}{\partial f_{0}}\left(\frac{\partial f_{1}}{\partial h_{1}}\frac{\partial h_{2}}{\partial f_{1}} \frac{\partial f_{2}}{\partial h_{2}}\frac{\partial h_{3}}{\partial f_{2}}\frac{\partial f_{3}}{\partial h_{3}}\frac{\partial \ell_i}{\partial f_{3}} \right).\label{eq:train2_simple_chain}
 \end{eqnarray}\]</span></p>
+<p>In each case, we have already computed the quantities in the brackets in the previous step, and the last term has a simple expression. In other words, we can reuse the previously computed derivatives if we calculate them in reverse order.</p>
+</section>
+<section id="backward-pass-2" class="level3">
+<h3 class="anchored" data-anchor-id="backward-pass-2">Backward pass #2</h3>
+<p>Finally, we consider how the loss <span class="math inline">\(\ell_i\)</span> changes when we change the parameters <span class="math inline">\(\{\beta_k\}\)</span> and <span class="math inline">\(\{\omega_k\}\)</span>. Once more, we apply the chain rule (figure 7.5):</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial \ell_i}{\partial \beta_{k}} &amp;=&amp; \frac{\partial f_{k}}{\partial \beta_{k}}\frac{\partial \ell_i}{\partial f_{k}}\nonumber \\
 \frac{\partial \ell_i}{\partial \omega_{k}} &amp;=&amp; \frac{\partial f_{k}}{\partial \omega_{k}}\frac{\partial \ell_i}{\partial f_{k}}.
@@ -697,176 +778,114 @@ f_{3} &amp;=&amp; \beta_{3} + \omega_{3}\cdot h_{3}\nonumber\\
 \frac{\partial f_{k}}{\partial \beta_{k}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{k}}{\partial \omega_{k}} &amp;=&amp; h_{k}.
 \end{eqnarray}\]</span></p>
 <p><img src="assets/Chap07/Train2BP3.svg" style="filter: invert(1);" width="100%"></p>
-<p>Backpropagation backward pass #2. Finally, we compute the derivatives ∂ℓi/∂βk and ∂ℓi/∂ωk. Each derivative is computed by multiplying the term ∂ℓi/∂fk by ∂fk/∂βk or ∂fk/∂ωk as appropriate.</p>
+<p>Backpropagation backward pass #2. Finally, we compute the derivatives <span class="math inline">\(\frac{\partial \ell_i}{\partial \beta_k}\)</span> and <span class="math inline">\(\frac{\partial \ell_i}{\partial \omega_k}\)</span>. Each derivative is computed by multiplying the term <span class="math inline">\(\frac{\partial \ell_i}{\partial f_k}\)</span> by <span class="math inline">\(\frac{\partial f_k}{\partial \beta_k}\)</span> or <span class="math inline">\(\frac{\partial f_k}{\partial \omega_k}\)</span> as appropriate.</p>
 <p><span class="math display">\[\begin{eqnarray}
 \frac{\partial f_{0}}{\partial \beta_{0}} = 1 \quad\quad\mbox{and}\quad \quad \frac{\partial f_{0}}{\partial \omega_{0}} &amp;=&amp; x_{i}.
 \end{eqnarray}\]</span></p>
-</section>
-<section id="backpropagation-algorithm" class="level2">
-<h2 class="anchored" data-anchor-id="backpropagation-algorithm">Backpropagation algorithm</h2>
-<p><strong>Forward Pass</strong></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{f}_{0} &amp;=&amp; \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
-  \mathbf{h}_{1} &amp;=&amp; \mathbf{a}[\mathbf{f}_{0}]\nonumber \\
-  \mathbf{f}_{1} &amp;=&amp; \boldsymbol\beta_{1} +\boldsymbol\Omega_{1}\mathbf{h}_{1}\nonumber \\
-  \mathbf{h}_{2} &amp;=&amp; \mathbf{a}[\mathbf{f}_{1}]\nonumber \\
-  \mathbf{f}_{2} &amp;=&amp; \boldsymbol\beta_{2} +\boldsymbol\Omega_{2}\mathbf{h}_{2}\nonumber \\
-  \mathbf{h}_{3} &amp;=&amp; \mathbf{a}[\mathbf{f}_{2}]\nonumber \\
-  \mathbf{f}_{3}&amp;=&amp; \boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\nonumber \\
-  \ell_{i} &amp;=&amp; \mbox{l}[\mathbf{f}_{3},y_{i}],
+<p>Backpropagation is both simpler and more eﬀicient than computing the derivatives in- dividually, as in equation below</p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_complicated_deriv2}
+\frac{\partial \ell_i}{\partial \omega_{0}} &amp;=&amp; -2 \left( \beta_3+\omega_3\cdot\cos\Bigl[\beta_2+\omega_2\cdot\exp\bigl[\beta_1+\omega_1\cdot\sin[\beta_0+\omega_0\cdot x_i]\bigr]\Bigr]-y_i\right)\nonumber \\
+&amp;&amp;\hspace{0.5cm}\cdot \omega_1\omega_2\omega_3\cdot x_i\cdot\cos[\beta_0+\omega_0 \cdot x_i]\cdot\exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\nonumber\\
+&amp;&amp; \hspace{1cm}\cdot \sin\biggl[\beta_2+\omega_2\cdot \exp\Bigl[\beta_1 + \omega_1 \cdot \sin[\beta_0+\omega_0\cdot x_i]\Bigr]\biggr].
 \end{eqnarray}\]</span></p>
-<center>
-<img src="assets/Chap07/Train2ReLUDeriv.svg" style="filter: invert(1);" align="right" width="50%">
-</center>
-<p>Derivative of rectified linear unit. The rectified linear unit (orange curve) returns zero when the input is less than zero and returns the input otherwise. Its derivative (cyan curve) returns zero when the input is less than zero (since the slope here is zero) and one when the input is greater than zero (since the slope here is one).</p>
-<p><strong>Backward Pass # 1</strong></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_backward1}
-\frac{\partial \ell_{i}}{\partial \mathbf{f}_{2}}=\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}.
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_backward2}
-\frac{\partial \ell_{i}}{\partial \mathbf{f}_{1}}&amp;=&amp; \frac{\partial \mathbf{h}_{2}}{\partial \mathbf{f}_{1}}\frac{\partial \mathbf{f}_{2}}{\partial \mathbf{h}_{2}}
-\left(\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}\right)  \\
-\frac{\partial \ell_{i}}{\partial \mathbf{f}_{0}}&amp;=&amp;\frac{\partial \mathbf{h}_{1}}{\partial \mathbf{f}_{0}}\frac{\partial \mathbf{f}_{1}}{\partial \mathbf{h}_{1}}\left(\frac{\partial \mathbf{h}_{2}}{\partial \mathbf{f}_{1}}\frac{\partial \mathbf{f}_{2}}{\partial \mathbf{h}_{2}}
-\frac{\partial \mathbf{h}_{3}}{\partial \mathbf{f}_{2}}\frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} \frac{\partial \ell_{i}}{\partial \mathbf{f}_3}\right).\label{eq:train2_backward2a}
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \frac{\partial \mathbf{f}_3}{\partial \mathbf{h}_{3}} = \frac{\partial}{\partial \mathbf{h}_{3}}\left(\boldsymbol\beta_{3} +\boldsymbol\Omega_{3}\mathbf{h}_{3}\right) = \boldsymbol\Omega_{3}^{T}.
-  \end{eqnarray}\]</span></p>
-<p><strong>Backward Pass # 2</strong></p>
-<p><span class="math display">\[\begin{eqnarray}
-\frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &amp;=&amp; \frac{\partial \mathbf{f}_{k}}{\partial \boldsymbol\beta_k} \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber\\
-&amp;=&amp; \frac{\partial}{\partial \boldsymbol\beta_k}\left(\boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\right) \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber \\
-&amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_k} &amp;=&amp; \frac{\partial \mathbf{f}_{k}}{\partial \boldsymbol\Omega_k} \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber\\
-&amp;=&amp; \frac{\partial}{\partial \boldsymbol\Omega_k}\left(\boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}\right) \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}} \nonumber \\
-&amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}}\mathbf{h}_k^{T}.
-\end{eqnarray}\]</span></p>
-<section id="backpropagation-algorithm-summary" class="level3">
-<h3 class="anchored" data-anchor-id="backpropagation-algorithm-summary">Backpropagation algorithm summary</h3>
-<p><strong>Forward Pass</strong></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{f}_{0} &amp;=&amp; \boldsymbol\beta_{0} +\boldsymbol\Omega_{0}\mathbf{x}_i\nonumber \\
-  \mathbf{h}_{k} &amp;=&amp; \mathbf{a}[\mathbf{f}_{k-1}]\hspace{2.76cm} k\in\{1,2,\ldots, K\}\nonumber \\
-  \mathbf{f}_{k} &amp;=&amp; \boldsymbol\beta_{k} +\boldsymbol\Omega_{k}\mathbf{h}_{k}.\hspace{2cm} k\in\{1,2,\ldots, K\}
-\end{eqnarray}\]</span></p>
-<p><strong>Backward Pass</strong></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:train2_bp_backward_summary}
-\frac{\partial \ell_{i}}{\partial \boldsymbol\beta_k} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_k} \hspace{4.1cm} k\in\{K,K-1,\ldots, 1\}\nonumber\\
-\frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_k} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_k}\mathbf{h}_{k}^{T}\hspace{3.65cm} k\in\{K,K-1,\ldots, 1\}\nonumber\\
-\frac{\partial \ell_{i}}{\partial \mathbf{f}_{k-1}} &amp;=&amp; \mathbb{I}[\mathbf{f}_{k-1}&gt;0]\odot \left(\boldsymbol\Omega_{k}^{T}\frac{\partial \ell_{i}}{\partial \mathbf{f}_{k}}\right),\hspace{0.82cm} k\in\{K,K-1,\ldots, 1\}
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-\frac{\partial \ell_{i}}{\partial \boldsymbol\beta_0} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_0} \nonumber\\
-\frac{\partial \ell_{i}}{\partial \boldsymbol\Omega_0} &amp;=&amp; \frac{\partial \ell_{i}}{\partial \mathbf{f}_0}\mathbf{x}_{i}^{T}.
-\end{eqnarray}\]</span></p>
-</section>
-<section id="algorithmic-differentiation" class="level3">
-<h3 class="anchored" data-anchor-id="algorithmic-differentiation">Algorithmic differentiation</h3>
-</section>
-<section id="extension-to-arbitrary-computational-graphs" class="level3">
-<h3 class="anchored" data-anchor-id="extension-to-arbitrary-computational-graphs">Extension to arbitrary computational graphs</h3>
-<div id="def7ce82" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import library</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fn(x, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> beta3<span class="op">+</span>omega3 <span class="op">*</span> np.cos(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1 <span class="op">+</span> omega1 <span class="op">*</span> np.sin(beta0 <span class="op">+</span> omega0 <span class="op">*</span> x)))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loss(x, y, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3):</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  diff <span class="op">=</span> fn(x, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3) <span class="op">-</span> y</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> diff <span class="op">*</span> diff</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>beta0 <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span> beta1 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> beta2 <span class="op">=</span> <span class="op">-</span><span class="fl">3.0</span><span class="op">;</span> beta3 <span class="op">=</span> <span class="fl">0.4</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>omega0 <span class="op">=</span> <span class="fl">0.1</span><span class="op">;</span> omega1 <span class="op">=</span> <span class="op">-</span><span class="fl">0.4</span><span class="op">;</span> omega2 <span class="op">=</span> <span class="fl">2.0</span><span class="op">;</span> omega3 <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">2.3</span><span class="op">;</span> y <span class="op">=</span> <span class="fl">2.0</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>l_i_func <span class="op">=</span> loss(x,y,beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'l_i=</span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>l_i_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="e9222c2d" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dldbeta3_func <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (beta3 <span class="op">+</span>omega3 <span class="op">*</span> np.cos(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1<span class="op">+</span>omega1 <span class="op">*</span> np.sin(beta0<span class="op">+</span>omega0 <span class="op">*</span> x)))<span class="op">-</span>y)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dldomega0_func <span class="op">=</span> <span class="op">-</span><span class="dv">2</span> <span class="op">*</span>(beta3 <span class="op">+</span>omega3 <span class="op">*</span> np.cos(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1<span class="op">+</span>omega1 <span class="op">*</span> np.sin(beta0<span class="op">+</span>omega0 <span class="op">*</span> x)))<span class="op">-</span>y) <span class="op">*</span> <span class="op">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              omega1 <span class="op">*</span> omega2 <span class="op">*</span> omega3 <span class="op">*</span> x <span class="op">*</span> np.cos(beta0 <span class="op">+</span> omega0 <span class="op">*</span> x) <span class="op">*</span> np.exp(beta1 <span class="op">+</span>omega1 <span class="op">*</span> np.sin(beta0 <span class="op">+</span> omega0 <span class="op">*</span> x)) <span class="op">*\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              np.sin(beta2 <span class="op">+</span> omega2 <span class="op">*</span> np.exp(beta1<span class="op">+</span> omega1<span class="op">*</span> np.sin(beta0<span class="op">+</span>omega0 <span class="op">*</span> x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="f055e571" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dldomega0_fd <span class="op">=</span> (loss(x,y,beta0,beta1,beta2,beta3,omega0<span class="op">+</span><span class="fl">0.00001</span>,omega1,omega2,omega3)<span class="op">-</span>loss(x,y,beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3))<span class="op">/</span><span class="fl">0.00001</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dydomega0: Function value = </span><span class="sc">%3.3f</span><span class="st">, Finite difference value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega0_func,dldomega0_fd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="91f243ed" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> compute all the f_k and h_k terms</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the code below</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>f0 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>h1 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>h2 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>f2 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>h3 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>f3 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>l_i <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="ab958836" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check we got that right:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f0: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">1.230</span>, f0))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"h1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">0.942</span>, h1)) </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">1.623</span>, f1))</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"h2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">5.068</span>, h2))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">7.137</span>, f2))</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"h3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">0.657</span>, h3))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"f3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">2.372</span>, f3))</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"l_i original = </span><span class="sc">%3.3f</span><span class="st">, l_i from forward pass = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(l_i_func, l_i))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="e4613a55" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- Compute the derivatives of the output with respect</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to the intermediate computations h_k and f_k (i.e, run the backward pass)</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># I've done the first two for you.  You replace the code below:</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>dldf3 <span class="op">=</span> <span class="dv">2</span><span class="op">*</span> (f3 <span class="op">-</span> y)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>dldh3 <span class="op">=</span> omega3 <span class="op">*</span> dldf3</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the code below</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>dldf2 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>dldh2 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>dldf1 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>dldh1 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>dldf0 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check we got that right</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">0.745</span>, dldf3))</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldh3: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">2.234</span>, dldh3))</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="op">-</span><span class="fl">1.683</span>, dldf2))</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldh2: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="op">-</span><span class="fl">3.366</span>, dldh2))</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="op">-</span><span class="fl">17.060</span>, dldf1))</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldh1: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">6.824</span>, dldh1))</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dldf0: true value = </span><span class="sc">%3.3f</span><span class="st">, your value = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(<span class="fl">2.281</span>, dldf0))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="6f9bdd9c" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- Calculate the final derivatives with respect to the beta and omega terms</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dldbeta3 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>dldomega3 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>dldbeta2 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>dldomega2 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>dldbeta1 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>dldomega1 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>dldbeta0 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>dldomega0 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check we got them right</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta3: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta3, <span class="fl">0.745</span>))</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega3: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega3, <span class="fl">0.489</span>))</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta2: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta2, <span class="op">-</span><span class="fl">1.683</span>))</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega2: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega2, <span class="op">-</span><span class="fl">8.530</span>))</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta1: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta1, <span class="op">-</span><span class="fl">17.060</span>))</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega1: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega1, <span class="op">-</span><span class="fl">16.079</span>))</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldbeta0: Your value = </span><span class="sc">%3.3f</span><span class="st">, True value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldbeta0, <span class="fl">2.281</span>))</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'dldomega0: Your value = </span><span class="sc">%3.3f</span><span class="st">, Function value = </span><span class="sc">%3.3f</span><span class="st">, Finite difference value = </span><span class="sc">%3.3f</span><span class="st">'</span><span class="op">%</span>(dldomega0, dldomega0_func, dldomega0_fd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<!-- ```python
+
+# import library
+import numpy as np
+
+def fn(x, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3):
+  return beta3+omega3 * np.cos(beta2 + omega2 * np.exp(beta1 + omega1 * np.sin(beta0 + omega0 * x)))
+
+def loss(x, y, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3):
+  diff = fn(x, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3) - y
+  return diff * diff
+
+beta0 = 1.0; beta1 = 2.0; beta2 = -3.0; beta3 = 0.4
+omega0 = 0.1; omega1 = -0.4; omega2 = 2.0; omega3 = 3.0
+x = 2.3; y = 2.0
+l_i_func = loss(x,y,beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3)
+print('l_i=%3.3f'%l_i_func)
+
+dldbeta3_func = 2 * (beta3 +omega3 * np.cos(beta2 + omega2 * np.exp(beta1+omega1 * np.sin(beta0+omega0 * x)))-y)
+dldomega0_func = -2 *(beta3 +omega3 * np.cos(beta2 + omega2 * np.exp(beta1+omega1 * np.sin(beta0+omega0 * x)))-y) * \
+              omega1 * omega2 * omega3 * x * np.cos(beta0 + omega0 * x) * np.exp(beta1 +omega1 * np.sin(beta0 + omega0 * x)) *\
+              np.sin(beta2 + omega2 * np.exp(beta1+ omega1* np.sin(beta0+omega0 * x)))
+              
+              dldomega0_fd = (loss(x,y,beta0,beta1,beta2,beta3,omega0+0.00001,omega1,omega2,omega3)-loss(x,y,beta0,beta1,beta2,beta3,omega0,omega1,omega2,omega3))/0.00001
+
+print('dydomega0: Function value = %3.3f, Finite difference value = %3.3f'%(dldomega0_func,dldomega0_fd))
+
+f1
+
+# TODO compute all the f_k and h_k terms
+# Replace the code below
+
+f0 = beta0 + omega0 * x
+h1 = np.sin(f0)
+f1 = beta1 + omega1 * h1
+h2 = np.exp(f1)
+f2 = beta2 + omega2 * h2
+h3 = np.cos(f2)
+f3 = beta3 + omega3 * h3
+l_i = loss(x, y, beta0, beta1, beta2, beta3, omega0, omega1, omega2, omega3)
+
+
+# Let's check we got that right:
+print("f0: true value = %3.3f, your value = %3.3f"%(1.230, f0))
+print("h1: true value = %3.3f, your value = %3.3f"%(0.942, h1)) 
+print("f1: true value = %3.3f, your value = %3.3f"%(1.623, f1))
+print("h2: true value = %3.3f, your value = %3.3f"%(5.068, h2))
+print("f2: true value = %3.3f, your value = %3.3f"%(7.137, f2))
+print("h3: true value = %3.3f, your value = %3.3f"%(0.657, h3))
+print("f3: true value = %3.3f, your value = %3.3f"%(2.372, f3))
+print("l_i original = %3.3f, l_i from forward pass = %3.3f"%(l_i_func, l_i))
+
+# TODO -- Compute the derivatives of the output with respect
+# to the intermediate computations h_k and f_k (i.e, run the backward pass)
+# I've done the first two for you.  You replace the code below:
+dldf3 = 2* (f3 - y)
+dldh3 = omega3 * dldf3
+# Replace the code below
+dldf2 = dldh3 * -np.sin(f2)
+dldh2 = omega2 * dldf2
+dldf1 = dldh2 * np.exp(f1)
+dldh1 = omega1 * dldf1
+dldf0 = dldh1 * np.cos(f0)
+
+     
+
+# Let's check we got that right
+print("dldf3: true value = %3.3f, your value = %3.3f"%(0.745, dldf3))
+print("dldh3: true value = %3.3f, your value = %3.3f"%(2.234, dldh3))
+print("dldf2: true value = %3.3f, your value = %3.3f"%(-1.683, dldf2))
+print("dldh2: true value = %3.3f, your value = %3.3f"%(-3.366, dldh2))
+print("dldf1: true value = %3.3f, your value = %3.3f"%(-17.060, dldf1))
+print("dldh1: true value = %3.3f, your value = %3.3f"%(6.824, dldh1))
+print("dldf0: true value = %3.3f, your value = %3.3f"%(2.281, dldf0))
+
+# TODO -- Calculate the final derivatives with respect to the beta and omega terms
+
+dldbeta3 = dldf3
+dldomega3 = dldf3 * h3
+dldbeta2 = dldf2
+dldomega2 = dldf2 * h2
+dldbeta1 = dldf1
+dldomega1 = dldf1 * h1
+dldbeta0 = dldf0
+dldomega0 = dldf0 * x
+
+     
+
+# Let's check we got them right
+print('dldbeta3: Your value = %3.3f, True value = %3.3f'%(dldbeta3, 0.745))
+print('dldomega3: Your value = %3.3f, True value = %3.3f'%(dldomega3, 0.489))
+print('dldbeta2: Your value = %3.3f, True value = %3.3f'%(dldbeta2, -1.683))
+print('dldomega2: Your value = %3.3f, True value = %3.3f'%(dldomega2, -8.530))
+print('dldbeta1: Your value = %3.3f, True value = %3.3f'%(dldbeta1, -17.060))
+print('dldomega1: Your value = %3.3f, True value = %3.3f'%(dldomega1, -16.079))
+print('dldbeta0: Your value = %3.3f, True value = %3.3f'%(dldbeta0, 2.281))
+print('dldomega0: Your value = %3.3f, Function value = %3.3f, Finite difference value = %3.3f'%(dldomega0, dldomega0_func, dldomega0_fd))
+``` -->
 
 
 </section>
