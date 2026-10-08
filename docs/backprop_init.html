@@ -221,6 +221,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./Project_Part_4.html">
  <span class="dropdown-text">Gradient Descent</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project5.html">
+ <span class="dropdown-text"><strong>Q1</strong>. Building the <code>Value</code> Class</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -567,9 +571,9 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#initialization-for-forward-pass" id="toc-initialization-for-forward-pass" class="nav-link active" data-scroll-target="#initialization-for-forward-pass">Initialization for forward pass</a></li>
-  <li><a href="#initialization-for-backward-pass" id="toc-initialization-for-backward-pass" class="nav-link" data-scroll-target="#initialization-for-backward-pass">Initialization for backward pass</a></li>
-  <li><a href="#initialization-for-both-forward-and-backward-pass" id="toc-initialization-for-both-forward-and-backward-pass" class="nav-link" data-scroll-target="#initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</a></li>
+  <li><a href="#vanishing-gradient-problem" id="toc-vanishing-gradient-problem" class="nav-link active" data-scroll-target="#vanishing-gradient-problem">Vanishing Gradient Problem</a></li>
+  <li><a href="#exploding-gradient-problem" id="toc-exploding-gradient-problem" class="nav-link" data-scroll-target="#exploding-gradient-problem">Exploding Gradient Problem</a></li>
+  <li><a href="#he-initialization" id="toc-he-initialization" class="nav-link" data-scroll-target="#he-initialization">He Initialization</a></li>
   </ul>
 </nav>
     </div>
@@ -605,16 +609,42 @@ window.Quarto = {
 <p>where a[•] applies the ReLU functions and matrices <span class="math inline">\(\Omega_k\)</span> and vectors <span class="math inline">\(\boldsymbol\beta_k\)</span> are the weights and biases, respectively.</p>
 <p>Imagine that we initialize all the biases to zero and the elements of <span class="math inline">\(\Omega_k\)</span> according to a normal distribution with mean zero and variance <span class="math inline">\(\sigma^2\)</span>.</p>
 <p>Consider two scenarios:</p>
-<ul>
-<li><p>If the variance <span class="math inline">\(\sigma^2\)</span> is very small (e.g., <span class="math inline">\(10^{-5}\)</span>), then each element of <span class="math inline">\(\beta_k + \Omega_k \mathbf{h}_k\)</span> will be a weighted sum of <span class="math inline">\(\mathbf{h}_k\)</span> where the weights are very small; the result will likely have a smaller magnitude than the input. In addition, the ReLU function clips values less than zero, so the range of <span class="math inline">\(\mathbf{h}_k\)</span> will be half that of <span class="math inline">\(\mathbf{f}_{k-1}\)</span>. Consequently, the magnitudes of the pre-activations at the hidden layers will get smaller and smaller as we progress through the network.</p></li>
-<li><p>If the variance <span class="math inline">\(\sigma^2\)</span> is very large (e.g., <span class="math inline">\(10^5\)</span>), then each element of <span class="math inline">\(\beta_k + \Omega_k \mathbf{h}_k\)</span> will be a weighted sum of <span class="math inline">\(\mathbf{h}_k\)</span> where the weights are very large; the result is likely to have a much larger magnitude than the input. The ReLU function halves the range of the inputs, but if <span class="math inline">\(\sigma^2\)</span> is large enough, the magnitudes of the pre-activations will still get larger as we progress through the network.</p></li>
-</ul>
+<section id="vanishing-gradient-problem" class="level3">
+<h3 class="anchored" data-anchor-id="vanishing-gradient-problem">Vanishing Gradient Problem</h3>
+<p>If the variance <span class="math inline">\(\sigma^2\)</span> is very small (e.g., <span class="math inline">\(10^{-5}\)</span>), then each element of <span class="math inline">\(\beta_k + \Omega_k \mathbf{h}_k\)</span> will be a weighted sum of <span class="math inline">\(\mathbf{h}_k\)</span> where the weights are very small.</p>
+<p>The result will likely have a smaller magnitude than the input. In addition, the ReLU function clips values less than zero, so the range of <span class="math inline">\(\mathbf{h}_k\)</span> will be half that of <span class="math inline">\(\mathbf{f}_{k-1}\)</span>. Consequently, the magnitudes of the pre-activations at the hidden layers will get smaller and smaller as we progress through the network.</p>
+</section>
+<section id="exploding-gradient-problem" class="level3">
+<h3 class="anchored" data-anchor-id="exploding-gradient-problem">Exploding Gradient Problem</h3>
+<p>If the variance <span class="math inline">\(\sigma^2\)</span> is very large (e.g., <span class="math inline">\(10^5\)</span>), then each element of <span class="math inline">\(\beta_k + \Omega_k \mathbf{h}_k\)</span> will be a weighted sum of <span class="math inline">\(\mathbf{h}_k\)</span> where the weights are very large. The result is likely to have a much larger magnitude than the input.</p>
+<p>The ReLU function halves the range of the inputs, but if <span class="math inline">\(\sigma^2\)</span> is large enough, the magnitudes of the pre-activations will still get larger as we progress through the network.</p>
 <p>In these two situations, the values at the pre-activations can become so small or so large that they cannot be represented with finite precision floating point arithmetic.</p>
-<p>Even if the forward pass is tractable, the same logic applies to the backward pass.</p>
-<p>Each gradient update (equation 7.25) consists of multiplying by $ ^T $. If the values of <span class="math inline">\(\Omega\)</span> are not initialized sensibly, then the gradient magnitudes may decrease or increase un- controllably during the backward pass. These cases are known as the vanishing gradient problem and the exploding gradient problem, respectively. In the former case, updates to the model become vanishingly small. In the latter case, they become unstable.</p>
-<section id="initialization-for-forward-pass" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-for-forward-pass">Initialization for forward pass</h3>
-<p>We now present a mathematical version of the same argument. Consider the computation between adjacent pre-activations f and f ′ with dimensions Dh and Dh′ , respectively:</p>
+<p>Even if the forward pass is tractable, <mark> the same logic applies to the backward pass</mark>.</p>
+<hr>
+<p><img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%"></p>
+<p>Consider a deep network with 50 hidden layers and <span class="math inline">\(D_h = 100\)</span> hidden units per layer.</p>
+<p>The network has a 100-dimensional input <span class="math inline">\(x\)</span> initialized from a standard normal distribution, a single fixed target y = 0, and the bias vectors <span class="math inline">\(\beta_k\)</span> are initialized to zero, and the weight matrices <span class="math inline">\(\Omega_k\)</span> are initialized with a normal distribution <span class="math inline">\(\mathcal{N}(0, \sigma^2_\Omega)\)</span> with mean zero and five different variances <span class="math inline">\(\sigma^2_\Omega\)</span> <span class="math inline">\(\in \{0.001, 0.01, 0.02, 0.1, 1.0\}\)</span>.</p>
+<ol type="a">
+<li><p>Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (<span class="math inline">\(\sigma^2_\Omega
+= 2/_h = 0.02\)</span>), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale).</p></li>
+<li><p>The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the <mark>exploding gradient</mark> and <mark>vanishing gradient problems</mark>, respectively.</p></li>
+</ol>
+<hr>
+<p>In the equation,</p>
+<p><span class="math display">\[\begin{eqnarray}
+\mathbf{h}_{k} &amp;=&amp; \textbf{a}[\boldsymbol\beta_{k-1} +\boldsymbol\Omega_{k-1}\mathbf{h}_{k-1}]\nonumber\\
+\end{eqnarray}\]</span></p>
+<p><span class="math inline">\(\boldsymbol\Omega_{k-1}\mathbf{h}_{k-1}\)</span> unpack as <span class="math inline">\(\sum_{j=1}^{D_h} \Omega_{k-1,ij} h_{k-1,j}\)</span> for each element <span class="math inline">\(i\)</span> of the resulting vector.</p>
+<p>Because we are adding <span class="math inline">\(D_h\)</span> terms in the sum, the variance of each element of <span class="math inline">\(\boldsymbol\Omega_{k-1}\mathbf{h}_{k-1}\)</span> will scale with <span class="math inline">\(D_h\)</span>.</p>
+<p>In other words, variance of <span class="math inline">\(\text{variance}(\mathbf{h}_{k}) \approx D_h \text{variance}(h_{k-1})\)</span> will also scale with <span class="math inline">\(D_h\)</span> if we do not adjust the initialization of the weights.</p>
+<p>The goal is to have variance of <span class="math inline">\(\mathbf{h}_{k} \approx \mathbf{h}_{k-1}\)</span> remain relatively constant as we propagate through the layers.</p>
+<p>Roughly speaking, if <span class="math inline">\(\boldsymbol\beta_{k-1} +\boldsymbol\Omega_{k-1}\mathbf{h}_{k-1}\)</span> is symmetrically distributed around zero, ReLU kills half of the values:</p>
+</section>
+<section id="he-initialization" class="level2">
+<h2 class="anchored" data-anchor-id="he-initialization">He Initialization</h2>
+<section id="initialization-for-forward-pass" class="level4">
+<h4 class="anchored" data-anchor-id="initialization-for-forward-pass">Initialization for forward pass</h4>
+<p>We now present a mathematical version of the same argument. Consider the computation between adjacent pre-activations <span class="math inline">\(f\)</span> and <span class="math inline">\(f ′\)</span> with dimensions <span class="math inline">\(D_h\)</span> and <span class="math inline">\(D_h′\)</span>, respectively:</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{h} &amp;=&amp; \mbox{\bf a}[\mathbf{f}],\nonumber \\
   \mathbf{f}' &amp;=&amp; \boldsymbol\beta +\boldsymbol\Omega\mathbf{h}
@@ -641,27 +671,22 @@ window.Quarto = {
 <p><span class="math display">\[\begin{eqnarray}
 \sigma^{2}_{f'_{i}} = \sigma_\Omega^2 \sum_{j=1}^{D_h} \frac{\sigma_{f}^2}{2} = \frac{1}{2}D_{h} \sigma_\Omega^2 \sigma_{f}^2.
 \end{eqnarray}\]</span></p>
-<hr>
-<p><img src="assets/Chap07/Train2Exploding.svg" style="filter: invert(1);" width="100%"></p>
-<p>Weight initialization. Consider a deep network with 50 hidden layers and <span class="math inline">\(D_h = 100\)</span> hidden units per layer. The network has a 100-dimensional input <span class="math inline">\(x\)</span> initialized from a standard normal distribution, a single fixed target y = 0, and the bias vectors <span class="math inline">\(\beta_k\)</span> are initialized to zero, and the weight matrices <span class="math inline">\(\Omega_k\)</span> are initialized with a normal distribution with mean zero and five different variances <span class="math inline">\(\sigma^2_\Omega\)</span> <span class="math inline">\(\in \{0.001, 0.01, 0.02, 0.1, 1.0\}\)</span>. a) Variance of hidden unit activations computed in forward pass as a function of the network layer. For He initialization (<span class="math inline">\(\sigma^2_\Omega
-= 2/_h = 0.02\)</span>), the variance is stable. However, for larger values, it increases rapidly, and for smaller values, it decreases rapidly (note log scale). b) The variance of the gradients in the backward pass (solid lines) continues this trend; if we initialize with a value larger than 0.02, the magnitude of the gradients increases rapidly as we pass back through the network. If we initialize with a value smaller, then the magnitude decreases. These are known as the <mark>exploding gradient</mark> and <mark>vanishing gradient problems</mark>, respectively.</p>
-<hr>
 <p>This, in turn, implies that if we want the variance <span class="math inline">\(\sigma^2_{f'}\)</span> of the subsequent pre-activations <span class="math inline">\(f'\)</span> to be the same as the variance <span class="math inline">\(\sigma^2_{f}\)</span> of the original pre-activations <span class="math inline">\(f\)</span> during the forward pass, we should set:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_forward}
 \sigma_\Omega^2 = \frac{2}{D_h},
 \end{eqnarray}\]</span></p>
 <p>where <span class="math inline">\(D_h\)</span> is the dimension of the original layer to which the weights were applied. This is known as <mark>He initialization</mark>.</p>
 </section>
-<section id="initialization-for-backward-pass" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-for-backward-pass">Initialization for backward pass</h3>
+<section id="initialization-for-backward-pass" class="level4">
+<h4 class="anchored" data-anchor-id="initialization-for-backward-pass">Initialization for backward pass</h4>
 <p>A similar argument establishes how the variance of the gradients ∂l/∂fk changes during the backward pass. During the backward pass, we multiply by the transpose ΩT of the weight matrix (equation 7.25), so the equivalent expression becomes:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:train2_init_back}
 \sigma_\Omega^2 = \frac{2}{D_{h'}},
 \end{eqnarray}\]</span></p>
 <p>where Dh′ is the dimension of the layer that the weights feed into.</p>
 </section>
-<section id="initialization-for-both-forward-and-backward-pass" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</h3>
+<section id="initialization-for-both-forward-and-backward-pass" class="level4">
+<h4 class="anchored" data-anchor-id="initialization-for-both-forward-and-backward-pass">Initialization for both forward and backward pass</h4>
 <p>If the weight matrix Ω is not square (i.e., there are different numbers of hidden units in the two adjacent layers, so Dh and Dh′ differ), then it is not possible to choose the variance to satisfy both equations 7.32 and 7.33 simultaneously. One possible compromise is to use the mean (Dh + Dh′ )/2 as a proxy for the number of terms, which gives:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \sigma_\Omega^2 = \frac{4}{D_{h}+D_{h'}}.
@@ -806,7 +831,7 @@ from Domke (2010).
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> net_output, all_f, all_h</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="3c167893" class="cell">
+<div id="3c167893" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of layers</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of neurons per layer</span></span>
@@ -836,101 +861,115 @@ from Domke (2010).
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Now experiment with sigma_sq_omega to try to stop the variance of the forward computation exploding</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Layer 1, std of hidden units = 0.811
+Layer 2, std of hidden units = 1.472
+Layer 3, std of hidden units = 4.547
+Layer 4, std of hidden units = 8.896
+Layer 5, std of hidden units = 10.106</code></pre>
 </div>
-<div id="cf2a6da5" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> least_squares_loss(net_output, y):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.<span class="bu">sum</span>((net_output<span class="op">-</span>y) <span class="op">*</span> (net_output<span class="op">-</span>y))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> d_loss_d_output(net_output, y):</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>(net_output <span class="op">-</span>y)<span class="op">;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a150b1ae" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll need the indicator function</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> indicator_function(x):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  x_in <span class="op">=</span> np.array(x)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  x_in[x_in<span class="op">&gt;=</span><span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  x_in[x_in<span class="op">&lt;</span><span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x_in</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Main backward pass routine</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backward_pass(all_weights, all_biases, all_f, all_h, y):</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Retrieve number of layers</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  K <span class="op">=</span> <span class="bu">len</span>(all_weights) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We'll store the derivatives dl_dweights and dl_dbiases in lists as well</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  all_dl_dweights <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  all_dl_dbiases <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># And we'll store the derivatives of the loss with respect to the activation and preactivations in lists</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  all_dl_df <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  all_dl_dh <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Again for convenience we'll stick with the convention that all_h[0] is the net input and all_f[k] in the net output</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute derivatives of net output with respect to loss</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  all_dl_df[K] <span class="op">=</span> np.array(d_loss_d_output(all_f[K],y))</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now work backwards through the network</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">range</span>(K,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of biases at layer from all_dl_df[K]. (eq 7.13, line 1)</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    all_dl_dbiases[layer] <span class="op">=</span> np.array(all_dl_df[layer])</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of weight at layer from all_dl_df[K] and all_h[K] (eq 7.13, line 2)</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    all_dl_dweights[layer] <span class="op">=</span> np.matmul(all_dl_df[layer], all_h[layer].transpose())</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of activations from weight and derivatives of next preactivations (eq 7.13, line 3 second part)</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    all_dl_dh[layer] <span class="op">=</span> np.matmul(all_weights[layer].transpose(), all_dl_df[layer])</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of the pre-activation f with respect to activation h (eq 7.13, line 3, first part)</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> layer <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>      all_dl_df[layer<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> indicator_function(all_f[layer<span class="op">-</span><span class="dv">1</span>]) <span class="op">*</span> all_dl_dh[layer]</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> all_dl_dweights, all_dl_dbiases, all_dl_dh, all_dl_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cf2a6da5" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> least_squares_loss(net_output, y):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.<span class="bu">sum</span>((net_output<span class="op">-</span>y) <span class="op">*</span> (net_output<span class="op">-</span>y))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> d_loss_d_output(net_output, y):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>(net_output <span class="op">-</span>y)<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="98199c2e" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of layers</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of neurons per layer</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="dv">8</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Input layer</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>D_i <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Output layer</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>D_o <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set variance of initial weights to 1</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>sigma_sq_omega <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize parameters</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>all_weights, all_biases <span class="op">=</span> init_params(K,D,sigma_sq_omega)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity we'll just consider the gradients of the weights and biases between the first and last hidden layer</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>n_data <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>aggregate_dl_df <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,K):</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># These 3D arrays will store the gradients for every data point</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  aggregate_dl_df[layer] <span class="op">=</span> np.zeros((D,n_data))</span>
+<div id="a150b1ae" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll need the indicator function</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> indicator_function(x):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  x_in <span class="op">=</span> np.array(x)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  x_in[x_in<span class="op">&gt;=</span><span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  x_in[x_in<span class="op">&lt;</span><span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x_in</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Main backward pass routine</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backward_pass(all_weights, all_biases, all_f, all_h, y):</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Retrieve number of layers</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  K <span class="op">=</span> <span class="bu">len</span>(all_weights) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We'll store the derivatives dl_dweights and dl_dbiases in lists as well</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  all_dl_dweights <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  all_dl_dbiases <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># And we'll store the derivatives of the loss with respect to the activation and preactivations in lists</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  all_dl_df <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  all_dl_dh <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Again for convenience we'll stick with the convention that all_h[0] is the net input and all_f[k] in the net output</span></span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll have to compute the derivatives of the parameters for each data point separately</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c_data <span class="kw">in</span> <span class="bu">range</span>(n_data):</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  data_in <span class="op">=</span> np.random.normal(size<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> np.zeros((<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  net_output, all_f, all_h <span class="op">=</span> compute_network_output(data_in, all_weights, all_biases)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  all_dl_dweights, all_dl_dbiases, all_dl_dh, all_dl_df <span class="op">=</span> backward_pass(all_weights, all_biases, all_f, all_h, y)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,K):</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    aggregate_dl_df[layer][:,c_data] <span class="op">=</span> np.squeeze(all_dl_df[layer])</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute derivatives of net output with respect to loss</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  all_dl_df[K] <span class="op">=</span> np.array(d_loss_d_output(all_f[K],y))</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now work backwards through the network</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">range</span>(K,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of biases at layer from all_dl_df[K]. (eq 7.13, line 1)</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    all_dl_dbiases[layer] <span class="op">=</span> np.array(all_dl_df[layer])</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of weight at layer from all_dl_df[K] and all_h[K] (eq 7.13, line 2)</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    all_dl_dweights[layer] <span class="op">=</span> np.matmul(all_dl_df[layer], all_h[layer].transpose())</span>
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">reversed</span>(<span class="bu">range</span>(<span class="dv">1</span>,K)):</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Layer </span><span class="sc">%d</span><span class="st">, std of dl_dh = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(layer, np.std(aggregate_dl_df[layer].ravel())))</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># You can see that the gradients of the hidden units are increasing on average (the standard deviation is across all hidden units at the layer</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co"># and the 100 training examples</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Change this to 50 layers with 80 hidden units per layer</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Now experiment with sigma_sq_omega to try to stop the variance of the gradients exploding</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of activations from weight and derivatives of next preactivations (eq 7.13, line 3 second part)</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    all_dl_dh[layer] <span class="op">=</span> np.matmul(all_weights[layer].transpose(), all_dl_df[layer])</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the derivatives of the pre-activation f with respect to activation h (eq 7.13, line 3, first part)</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> layer <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>      all_dl_df[layer<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> indicator_function(all_f[layer<span class="op">-</span><span class="dv">1</span>]) <span class="op">*</span> all_dl_dh[layer]</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> all_dl_dweights, all_dl_dbiases, all_dl_dh, all_dl_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="98199c2e" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of layers</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of neurons per layer</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Input layer</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>D_i <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Output layer</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>D_o <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set variance of initial weights to 1</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>sigma_sq_omega <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize parameters</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>all_weights, all_biases <span class="op">=</span> init_params(K,D,sigma_sq_omega)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity we'll just consider the gradients of the weights and biases between the first and last hidden layer</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>n_data <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>aggregate_dl_df <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (K<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,K):</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># These 3D arrays will store the gradients for every data point</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  aggregate_dl_df[layer] <span class="op">=</span> np.zeros((D,n_data))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll have to compute the derivatives of the parameters for each data point separately</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c_data <span class="kw">in</span> <span class="bu">range</span>(n_data):</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  data_in <span class="op">=</span> np.random.normal(size<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> np.zeros((<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  net_output, all_f, all_h <span class="op">=</span> compute_network_output(data_in, all_weights, all_biases)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  all_dl_dweights, all_dl_dbiases, all_dl_dh, all_dl_df <span class="op">=</span> backward_pass(all_weights, all_biases, all_f, all_h, y)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,K):</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    aggregate_dl_df[layer][:,c_data] <span class="op">=</span> np.squeeze(all_dl_df[layer])</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> <span class="bu">reversed</span>(<span class="bu">range</span>(<span class="dv">1</span>,K)):</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Layer </span><span class="sc">%d</span><span class="st">, std of dl_dh = </span><span class="sc">%3.3f</span><span class="st">"</span><span class="op">%</span>(layer, np.std(aggregate_dl_df[layer].ravel())))</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># You can see that the gradients of the hidden units are increasing on average (the standard deviation is across all hidden units at the layer</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># and the 100 training examples</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Change this to 50 layers with 80 hidden units per layer</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Now experiment with sigma_sq_omega to try to stop the variance of the gradients exploding</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Layer 4, std of dl_dh = 56.472
+Layer 3, std of dl_dh = 109.132
+Layer 2, std of dl_dh = 340.657
+Layer 1, std of dl_dh = 446.654</code></pre>
+</div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

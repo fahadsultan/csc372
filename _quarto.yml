@@ -49,6 +49,7 @@ website:
         - Project2.ipynb
         - Project3.ipynb
         - Project_Part_4.ipynb
+        - Project5.ipynb
     - id: content
       background: "#2d2d2d"
       style: "floating"
