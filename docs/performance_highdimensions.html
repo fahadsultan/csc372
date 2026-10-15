@@ -69,35 +69,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -186,6 +157,14 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="./Project_Part_4.html">
  <span class="dropdown-text">Gradient Descent</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project5.html">
+ <span class="dropdown-text">Compute Graph, Autograd and Backprop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project6.html">
+ <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
   </li>  
     </ul>
   </li>
@@ -372,7 +351,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation algorithm</span></a>
+ <span class="menu-text">Backprop for NN</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -384,7 +363,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backprop Code</span></a>
+ <span class="menu-text">Algorithmic differentiation</span></a>
   </div>
 </li>
       </ul>
@@ -407,13 +386,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Double Descent</span></a>
+ <span class="menu-text">Reducing error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Selection</span></a>
   </div>
 </li>
       </ul>
@@ -553,27 +538,65 @@ window.Quarto = {
 </header>
 
 
-<p><img src="assets/Chap08/PerfSmoothness2.svg" style="filter: invert(1);" width="100%"></p>
-<p>Regularization. a–c) Each of the three fitted curves passes through the data points exactly, so the training loss for each is zero. However, we might expect the smooth curve in panel (a) to generalize much better to new data than the erratic curves in panels (b) and (c). Any factor that biases a model toward a subset of the solutions with a similar training loss is known as a regularizer. It is thought that the initialization and/or fitting of neural networks have an implicit regularizing effect. Consequently, in the over-parameterized regime, more reasonable solutions, such as that in panel (a), are encouraged.</p>
-<p><img src="assets/Chap08/PerfTypical.svg" style="filter: invert(1);" width="100%"></p>
-<p>Typical sets. a) Standard normal distribution in two dimensions. Circles are four samples from this distribution. As the distance from the center increases, the probability decreases, but the volume of space at that radius (i.e., the area between adjacent evenly spaced circles) increases. b) These factors trade off so that the histogram of distances of samples from the center has a pronounced peak. c) In higher dimensions, this effect becomes more extreme, and the probability of observing a sample close to the mean becomes vanishingly small. Although the most likely point is at the mean of the distribution, the typical samples are found in a relatively narrow shell.</p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:perf_bias_variance_final}
-\mathbb{E}_{\mathcal{D}}\Bigl[\mathbb{E}_{y}[L[x]]\Bigr] =
-\begingroup\color{red}
-  \underbrace{\color{black}\mystrut{2.0ex}\mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]}_{\mbox{variance}}
+<p>In the previous section, we discussed how test performance changes with model capacity.</p>
+<p>Unfortunately, in the classical regime, we don’t have access to either the bias (which requires knowledge of the true underlying function) or the variance (which requires multiple independently sampled datasets to estimate).</p>
+<p>In the modern regime, there is no way to tell how much capacity should be added before the test error stops improving.</p>
+<p>This raises the question of exactly how we should choose model capacity in practice.</p>
+<p><mark>For a deep network, the model capacity depends on the numbers of hidden layers and hidden units per layer as well as other aspects of architecture that we have yet to introduce.</mark></p>
+<p>Furthermore, the choice of learning algorithm and any associated parameters (learning rate, etc.) also affects the test performance.</p>
+<p>These elements are collectively termed hyperparameters.</p>
+<p>The process of finding the best hyperparameters is termed hyperparameter search or (when focused on network structure) neural architecture search.</p>
+<p><mark>Hyperparameters are typically chosen empirically</mark>; we train many models with differ- ent hyperparameters on the same training set, measure their performance, and retain the best model.</p>
+<p>However, we do not measure their performance on the test set; this would admit the possibility that these hyperparameters just happen to work well for the test set but don’t generalize to further data. Instead, we introduce a third dataset known as a <mark>validation set</mark>.</p>
+<p>For every choice of hyperparameters, we train the associated model using the training set and evaluate performance on the validation set.</p>
+<p>Finally, we select the model that worked best on the validation set and measure its performance on the test set.</p>
+<p>In principle, this should give a reasonable estimate of the true performance.</p>
+<p>The hyperparameter space is generally smaller than the parameter space but still too large to try every combination exhaustively.</p>
+<p>Unfortunately, many hyperparameters are discrete (e.g., the number of hidden layers), and others may be conditional on one another (e.g., we only need to specify the number of hidden units in the tenth hidden layer if there are ten or more layers). Hence, we cannot rely on gradient descent methods as we did for learning the model parameters.</p>
+<p>Hyperparameter optimization algorithms intelligently sample the space of hyperparameters, contingent on previous results.</p>
+<p>This procedure is computationally expensive since we must train an entire model and measure the validation performance for each combination of hyperparameters.</p>
+<!-- <img src="assets/Chap08/PerfSmoothness2.svg" style="filter: invert(1);" width="100%">
+
+Regularization. a–c) Each of the three fitted curves passes through
+the data points exactly, so the training loss for each is zero. However, we might
+expect the smooth curve in panel (a) to generalize much better to new data than
+the erratic curves in panels (b) and (c). Any factor that biases a model toward
+a subset of the solutions with a similar training loss is known as a regularizer.
+It is thought that the initialization and/or fitting of neural networks have an
+implicit regularizing effect. Consequently, in the over-parameterized regime, more
+reasonable solutions, such as that in panel (a), are encouraged. -->
+<!-- <img src="assets/Chap08/PerfTypical.svg" style="filter: invert(1);" width="100%">
+
+Typical sets. a) Standard normal distribution in two dimensions.
+Circles are four samples from this distribution. As the distance from the center
+increases, the probability decreases, but the volume of space at that radius
+(i.e., the area between adjacent evenly spaced circles) increases. b) These factors
+trade off so that the histogram of distances of samples from the center has
+a pronounced peak. c) In higher dimensions, this effect becomes more extreme,
+and the probability of observing a sample close to the mean becomes vanishingly
+small. Although the most likely point is at the mean of the distribution, the
+typical samples are found in a relatively narrow shell.
+
+
+
+\begin{eqnarray}\label{eq:perf_bias_variance_final}
+ \mathbb{E}_{\mathcal{D}}\Bigl[\mathbb{E}_{y}[L[x]]\Bigr] = 
+ \begingroup\color{red}
+  \underbrace{\color{black}\mystrut{2.0ex}\mathbb{E}_\mathcal{D}\Bigl[\bigl(\mbox{f}[x,\boldsymbol\phi[\mathcal{D}]]- \mbox{f}_{\mu}[x]\bigr)^2\Bigr]}_{\mbox{variance}} 
   \endgroup
-+
-\begingroup\color{red}
-  \underbrace{\color{black}\mystrut{2.0ex}\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2}_{\mbox{bias}}
+ +
+ \begingroup\color{red}
+  \underbrace{\color{black}\mystrut{2.0ex}\bigl(\mbox{f}_{\mu}[x]\!-\!\mu[x]\bigr)^2}_{\mbox{bias}} 
   \endgroup
-+
-\begingroup\color{red}
-  \underbrace{\color{black}\mystrut{2.0ex}\sigma^2.}_{\mbox{noise}}
+ +
+ \begingroup\color{red}
+  \underbrace{\color{black}\mystrut{2.0ex}\sigma^2.}_{\mbox{noise}} 
   \endgroup
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
+ \end{eqnarray}
+
+\begin{eqnarray}
   \mbox{Vol}[r] = \frac{r^{D}\pi^{D/2}}{\Gamma[D/2+1]},
-\end{eqnarray}\]</span></p>
+ \end{eqnarray} -->
 
 
 

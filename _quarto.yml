@@ -50,6 +50,7 @@ website:
         - Project3.ipynb
         - Project_Part_4.ipynb
         - Project5.ipynb
+        - Project6.ipynb
     - id: content
       background: "#2d2d2d"
       style: "floating"
@@ -98,6 +99,7 @@ website:
           - performance_biasvariance.ipynb
           - performance_doubledescent.ipynb
           - performance_highdimensions.ipynb
+          - validation.ipynb
         - section: transformers.ipynb
           contents:
           - transformers_multi.ipynb

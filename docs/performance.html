@@ -103,6 +103,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -191,6 +220,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./Project_Part_4.html">
  <span class="dropdown-text">Gradient Descent</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project5.html">
+ <span class="dropdown-text">Compute Graph, Autograd and Backprop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project6.html">
+ <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
   </li>  
     </ul>
   </li>
@@ -377,7 +414,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Backpropagation algorithm</span></a>
+ <span class="menu-text">Backprop for NN</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -412,7 +449,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Double Descent</span></a>
+ <span class="menu-text">Reducing error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -538,7 +575,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#training-a-simple-model" id="toc-training-a-simple-model" class="nav-link active" data-scroll-target="#training-a-simple-model">Training a simple model</a></li>
+  <li><a href="#train-validation-and-test-splits" id="toc-train-validation-and-test-splits" class="nav-link active" data-scroll-target="#train-validation-and-test-splits">Train, Validation, and Test Splits</a></li>
+  <li><a href="#loss-and-error-for-train-vs.-test-sets" id="toc-loss-and-error-for-train-vs.-test-sets" class="nav-link" data-scroll-target="#loss-and-error-for-train-vs.-test-sets">Loss and Error for Train vs.&nbsp;Test sets</a></li>
+  <li><a href="#increasing-loss-vs.-stable-error" id="toc-increasing-loss-vs.-stable-error" class="nav-link" data-scroll-target="#increasing-loss-vs.-stable-error">Increasing Loss vs.&nbsp;Stable Error</a></li>
   </ul>
 </nav>
     </div>
@@ -577,16 +616,51 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/1hRlve2y5AhwnZcYESPKUuiQHJkqkJhMCppidV3rnoLQ/edit?slide=id.g3415f9e1348_0_0#slide=id.g3415f9e1348_0_0">Slides</a></p>
 </div>
 </div>
-<section id="training-a-simple-model" class="level2">
-<h2 class="anchored" data-anchor-id="training-a-simple-model">Training a simple model</h2>
-<p><img src="assets/Chap08/PerfMNIST1D.svg" style="filter: invert(1);" width="100%"></p>
-<p>MNIST-1D. a) Templates for 10 classes y ∈ {0, . . . , 9}, based on digits 0–9. b) Training examples x are created by randomly transforming a template and c) adding noise. d) The horizontal offset of the transformed template is then sampled at 40 vertical positions. Adapted from (Greydanus, 2020)</p>
-<p><img src="assets/Chap08/PerfMNIST1DResults.svg" style="filter: invert(1);" width="100%"></p>
-<p>MNIST-1D results. a) Percent classification error as a function of the training step. The training set errors decrease to zero, but the test errors do not drop below ∼ 40%. This model doesn’t generalize well to new test data. b) Loss as a function of the training step. The training loss decreases steadily toward zero. The test loss decreases at first but subsequently increases as the model becomes increasingly confident about its (wrong) predictions.</p>
+<p>Here we consider how to measure the performance of the trained models.</p>
+<p><mark>The overarching goal is <strong>Generalization</strong>. That is, we want our trained models to perform well not just on the training data but also on unseen test data</mark>. With suﬀicient capacity (i.e., number of hidden units), a neural network model will often perform perfectly on the training data. However, this does not necessarily mean it will generalize well to new test data.</p>
+<p>We will see that the <mark>test errors have three distinct causes and that their relative contributions depend on</mark></p>
+<ol type="1">
+<li><mark>Inherent uncertainty in the task</mark></li>
+<li><mark>Amount of training data</mark></li>
+<li><mark>Choice of model</mark>
+<ul>
+<li>This raises the issue of hyperparameter search. We discuss how to select both the <mark>model hyperparameters</mark> (e.g., the number of hidden layers and the number of hidden units in each) and the <mark>learning algorithm hyperparameters</mark> (e.g., the learning rate and batch size).</li>
+</ul></li>
+</ol>
+<section id="train-validation-and-test-splits" class="level2">
+<h2 class="anchored" data-anchor-id="train-validation-and-test-splits">Train, Validation, and Test Splits</h2>
+<p>In supervised learning, it is common practice to split the available dataset into three separate sets. Note that the percentages are approximate and the exact split may vary depending on the dataset and the specific requirements of the task.</p>
+<p>Also the three sets should be mutually exclusive, meaning that no data point should appear in more than one set.</p>
 <center>
-<img src="assets/Chap08/PerfDataSet.svg" style="filter: invert(1);" width="40%" align="right">
+<img src="https://miro.medium.com/v2/1*OECM6SWmlhVzebmSuvMtBg.png" width="75%" style="filter:invert(1)">
 </center>
-<p>Regression function. Solid black line shows ground truth function. To generate I training examples {xi, yi}, the input space x ∈ [0, 1] is divided into I equal segments and one sample xi is drawn from a uniform distribution within each segment. The corresponding value yi is created by evaluating the function at xi and adding Gaussian noise (gray region shows ±2 standard deviations). The test data are generated in the same way.</p>
+<section id="training-set" class="level4">
+<h4 class="anchored" data-anchor-id="training-set">Training set</h4>
+<p>Around 60-70% of randomly selected data, used to fit the model parameters. The training set is used to learn the model parameters using gradient-based optimization methods such as stochastic gradient descent (SGD) during the training process. Think of training as studying for an exam.</p>
+</section>
+<section id="validation-set" class="level4">
+<h4 class="anchored" data-anchor-id="validation-set">Validation set</h4>
+<p>Around 10-20% of remaining data, used to tune hyperparameters and make decisions about the model architecture. The validation set is used to tune hyperparameters and make decisions about the model architecture. Compare different numbers of layers or neurons; choose when to stop training. For example, you might train several models with different configurations such as varying the number of hidden layers, the number of neurons in each layer, and learning rates. Then pick the one that performs best on the validation set.</p>
+<p>Think of validation as taking practice exams to gauge your readiness.</p>
+</section>
+<section id="test-set" class="level4">
+<h4 class="anchored" data-anchor-id="test-set">Test set</h4>
+<p>Around 20% of the data that is left after selecting the training and validation sets, used to evaluate the final model’s generalization performance. Think of testing as taking the final exam. Evaluate the final chosen model | Measure its accuracy after those choices are complete |</p>
+<!-- <img src="https://cdn.builtin.com/cdn-cgi/image/f=auto/sites/www.builtin.com/files/styles/ckeditor_optimize/public/inline-images/4_train-test-split.jpg" style="filter:invert(1)" width="100%"> -->
+<!-- 
+<img src="https://machinelearningplus.com/wp-content/uploads/2022/12/train_test_split-procedure.jpg" style="filter:invert(1)" width="100%"> -->
+</section>
+</section>
+<section id="loss-and-error-for-train-vs.-test-sets" class="level2">
+<h2 class="anchored" data-anchor-id="loss-and-error-for-train-vs.-test-sets">Loss and Error for Train vs.&nbsp;Test sets</h2>
+<p>We explore model performance using the MNIST-1D dataset (figure below).</p>
+<p><img src="assets/Chap08/PerfMNIST1D.svg" style="filter: invert(1);" width="100%"></p>
+<p>This consists of ten classes <span class="math inline">\(y \in \{0,1,...,9\}\)</span>, representing the digits 0–9.</p>
+<p>Each of the 10 digits has a 12-dimensional vector template. The template represents the typical shape of the corresponding digit in one dimension. From these 10 templates, the training examples are generated by applying random transformations and adding noise.</p>
+<p>In particular, first padding is randomly added to top and bottom of the template (panel b), and then the template is shifted horizontally by a random amount (panel c).</p>
+<p>The horizontal offset of the transformed template is then sampled at 40 vertical positions (panel d).</p>
+<p>The full training dataset <span class="math inline">\(\{x_i,y_i\}\)</span> consists of <span class="math inline">\(I= 4000\)</span> training examples, each consisting of <span class="math inline">\(D_i = 40\)</span> dimensions representing the horizontal offset at 40 positions.</p>
+<p>The ten classes are drawn uniformly during data generation, so there are∼400 examples of each class.</p>
 <div id="592d3563" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run this if you're in a Colab to install MNIST 1D repository</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>greydanus<span class="op">/</span>mnist1d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -626,122 +700,245 @@ Successfully installed mnist1d-0.0.2.post16
 Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
-<div id="72e1ea08" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch, torch.nn <span class="im">as</span> nn</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> TensorDataset, DataLoader</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.optim.lr_scheduler <span class="im">import</span> StepLR</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mnist1d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="7c1818e9" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mnist1d</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> mnist1d.data.get_dataset_args()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> mnist1d.data.get_dataset(args, path<span class="op">=</span><span class="st">'./mnist1d_data.pkl'</span>, download<span class="op">=</span><span class="va">False</span>, regenerate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The training and test input and outputs are in</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># data['x'], data['y'], data['x_test'], and data['y_test']</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Examples in training set: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(<span class="bu">len</span>(data[<span class="st">'y'</span>])))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Examples in test set: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(<span class="bu">len</span>(data[<span class="st">'y_test'</span>])))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Length of each example: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(data[<span class="st">'x'</span>].shape[<span class="op">-</span><span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Successfully loaded data from ./mnist1d_data.pkl
+Examples in training set: 4000
+Examples in test set: 4000
+Length of each example: 40</code></pre>
 </div>
+</div>
+<p>We use a network with <span class="math inline">\(D_i = 40\)</span> inputs and <span class="math inline">\(D_o = 10\)</span> outputs which are passed through a softmax function to produce class probabilities.</p>
+<p>The network has two hidden layers with <span class="math inline">\(D= 100\)</span> hidden units each. It is trained using stochastic gradient descent with batch size 100 and learning rate 0.1 for 6000 steps (150 epochs) with a multiclass cross-entropy loss.</p>
+<div id="37123d92" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch, torch.nn <span class="im">as</span> nn</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>D_i <span class="op">=</span> <span class="dv">40</span>    <span class="co"># Input dimensions</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>D_k <span class="op">=</span> <span class="dv">100</span>   <span class="co"># Hidden dimensions</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>D_o <span class="op">=</span> <span class="dv">10</span>    <span class="co"># Output dimensions</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(D_i, D_k),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(D_k, D_k),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(D_k, D_o)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Figure below shows that the training error decreases as training proceeds.</p>
+<p><mark>The training data are classified perfectly after about 4000 steps. The training loss also decreases, eventually approaching zero. However, this doesn’t imply that the classifier is perfect; the model might have memorized the training set but be unable to predict new examples. </mark></p>
+<p><mark>This phenomenon is known as <u>Overfitting</u>, where the model performs well on the training data but fails to generalize to unseen test data.</mark></p>
+<p>To estimate the true performance, we need a separate test set of input/output pairs <span class="math inline">\(\{x_i,y_i\}\)</span>.</p>
+<p>To this end, we generate 1000 more examples using the same process.</p>
+<p>Figure below also shows the errors for this test data as a function of the training step. These decrease as training proceeds, but only to around 40%.</p>
+<p>This is better than the chance error rate of 90% but far worse than for the training set; the model has not generalized well to the test data.</p>
+<p>The test loss decreases for the first 1500 training steps but then increases again.</p>
+<p>At this point, the test error rate is fairly constant; the model makes the same mistakes but with increasing confidence.</p>
+<p>This decreases the probability of the correct answers and thus increases the negative log-likelihood.</p>
+<p>This increasing confidence is a side-effect of the softmax function; the pre-softmax activations are driven to increasingly extreme values to make the probability of the training data approach one (see figure 5.10).</p>
+<p><img src="assets/Chap08/PerfMNIST1DResults.svg" style="filter: invert(1);" width="100%"></p>
+<p>MNIST-1D results.</p>
+<ol type="a">
+<li><p>Percent classification error as a function of the training step. The training set errors decrease to zero, but the test errors do not drop below ∼ 40%. This model doesn’t generalize well to new test data.</p></li>
+<li><p>Loss as a function of the training step. The training loss decreases steadily toward zero. <mark>The test loss decreases at first but subsequently increases as the model becomes increasingly confident about its (wrong) predictions</mark>.</p></li>
+</ol>
 <div id="e48714f5" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> mnist1d.data.get_dataset_args()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> mnist1d.data.get_dataset(args, path<span class="op">=</span><span class="st">'./mnist1d_data.pkl'</span>, download<span class="op">=</span><span class="va">False</span>, regenerate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The training and test input and outputs are in</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># data['x'], data['y'], data['x_test'], and data['y_test']</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Examples in training set: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(<span class="bu">len</span>(data[<span class="st">'y'</span>])))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Examples in test set: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(<span class="bu">len</span>(data[<span class="st">'y_test'</span>])))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Length of each example: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(data[<span class="st">'x'</span>].shape[<span class="op">-</span><span class="dv">1</span>]))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>D_i <span class="op">=</span> <span class="dv">40</span>    <span class="co"># Input dimensions</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>D_k <span class="op">=</span> <span class="dv">100</span>   <span class="co"># Hidden dimensions</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>D_o <span class="op">=</span> <span class="dv">10</span>    <span class="co"># Output dimensions</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">:</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a model with two hidden layers of size 100</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># And ReLU activations between them</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace this line (see Figure 7.8 of book for help):</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> torch.nn.Sequential(torch.nn.Linear(D_i, D_o))<span class="op">;</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> weights_init(layer_in):</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co">:</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialize the parameters with He initialization</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line (see figure 7.8 of book for help)</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Initializing layer"</span>)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the function you just defined</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">apply</span>(weights_init)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co"># choose cross entropy loss function (equation 5.24)</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>loss_function <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># construct SGD optimizer and initialize learning rate and momentum</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr <span class="op">=</span> <span class="fl">0.05</span>, momentum<span class="op">=</span><span class="fl">0.9</span>)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># object that decreases learning rate by half every 10 epochs</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>scheduler <span class="op">=</span> StepLR(optimizer, step_size<span class="op">=</span><span class="dv">10</span>, gamma<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>x_train <span class="op">=</span> torch.tensor(data[<span class="st">'x'</span>].astype(<span class="st">'float32'</span>))</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> torch.tensor(data[<span class="st">'y'</span>].transpose().astype(<span class="st">'int64'</span>))</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>x_test<span class="op">=</span> torch.tensor(data[<span class="st">'x_test'</span>].astype(<span class="st">'float32'</span>))</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> torch.tensor(data[<span class="st">'y_test'</span>].astype(<span class="st">'int64'</span>))</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data into a class that creates the batches</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>data_loader <span class="op">=</span> DataLoader(TensorDataset(x_train,y_train), batch_size<span class="op">=</span><span class="dv">100</span>, shuffle<span class="op">=</span><span class="va">True</span>, worker_init_fn<span class="op">=</span>np.random.seed(<span class="dv">1</span>))</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize model weights</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">apply</span>(weights_init)</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the dataset n_epoch times</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>n_epoch <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># store the loss and the % correct at each epoch</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>losses_train <span class="op">=</span> np.zeros((n_epoch))</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>errors_train <span class="op">=</span> np.zeros((n_epoch))</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>losses_test <span class="op">=</span> np.zeros((n_epoch))</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>errors_test <span class="op">=</span> np.zeros((n_epoch))</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(n_epoch):</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop over batches</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i, batch <span class="kw">in</span> <span class="bu">enumerate</span>(data_loader):</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve inputs and labels for this batch</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    x_batch, y_batch <span class="op">=</span> batch</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># zero the parameter gradients</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    optimizer.zero_grad()</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># forward pass -- calculate model output</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> model(x_batch)</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute the loss</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_function(pred, y_batch)</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># backward pass</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># SGD update</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run whole dataset to get statistics -- normally wouldn't do this</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  pred_train <span class="op">=</span> model(x_train)</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>  pred_test <span class="op">=</span> model(x_test)</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  _, predicted_train_class <span class="op">=</span> torch.<span class="bu">max</span>(pred_train.data, <span class="dv">1</span>)</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>  _, predicted_test_class <span class="op">=</span> torch.<span class="bu">max</span>(pred_test.data, <span class="dv">1</span>)</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>  errors_train[epoch] <span class="op">=</span> <span class="dv">100</span> <span class="op">-</span> <span class="dv">100</span> <span class="op">*</span> (predicted_train_class <span class="op">==</span> y_train).<span class="bu">float</span>().<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(y_train)</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>  errors_test[epoch]<span class="op">=</span> <span class="dv">100</span> <span class="op">-</span> <span class="dv">100</span> <span class="op">*</span> (predicted_test_class <span class="op">==</span> y_test).<span class="bu">float</span>().<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(y_test)</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>  losses_train[epoch] <span class="op">=</span> loss_function(pred_train, y_train).item()</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>  losses_test[epoch]<span class="op">=</span> loss_function(pred_test, y_test).item()</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f'Epoch </span><span class="sc">{</span>epoch<span class="sc">:5d}</span><span class="ss">, train loss </span><span class="sc">{</span>losses_train[epoch]<span class="sc">:.6f}</span><span class="ss">, train error </span><span class="sc">{</span>errors_train[epoch]<span class="sc">:3.2f}</span><span class="ss">,  test loss </span><span class="sc">{</span>losses_test[epoch]<span class="sc">:.6f}</span><span class="ss">, test error </span><span class="sc">{</span>errors_test[epoch]<span class="sc">:3.2f}</span><span class="ss">'</span>)</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tell scheduler to consider updating learning rate</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>  scheduler.step()</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the results</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>ax.plot(errors_train,<span class="st">'r-'</span>,label<span class="op">=</span><span class="st">'train'</span>)</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>ax.plot(errors_test,<span class="st">'b-'</span>,label<span class="op">=</span><span class="st">'test'</span>)</span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>,<span class="dv">100</span>)<span class="op">;</span> ax.set_xlim(<span class="dv">0</span>,n_epoch)</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Epoch'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'Error'</span>)</span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'TrainError </span><span class="sc">%3.2f</span><span class="st">, Test Error </span><span class="sc">%3.2f</span><span class="st">'</span><span class="op">%</span>(errors_train[<span class="op">-</span><span class="dv">1</span>],errors_test[<span class="op">-</span><span class="dv">1</span>]))</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the results</span></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>ax.plot(losses_train,<span class="st">'r-'</span>,label<span class="op">=</span><span class="st">'train'</span>)</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>ax.plot(losses_test,<span class="st">'b-'</span>,label<span class="op">=</span><span class="st">'test'</span>)</span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>,n_epoch)</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Epoch'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'Loss'</span>)</span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Train loss </span><span class="sc">%3.2f</span><span class="st">, Test loss </span><span class="sc">%3.2f</span><span class="st">'</span><span class="op">%</span>(losses_train[<span class="op">-</span><span class="dv">1</span>],losses_test[<span class="op">-</span><span class="dv">1</span>]))</span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> TensorDataset, DataLoader</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.optim.lr_scheduler <span class="im">import</span> StepLR</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'dark_background'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> weights_init(layer_in):</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialize the parameters with He initialization</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">isinstance</span>(layer_in, torch.nn.Linear):</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      torch.nn.init.kaiming_normal_(layer_in.weight, nonlinearity<span class="op">=</span><span class="st">'relu'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> layer_in.bias <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>          torch.nn.init.constant_(layer_in.bias, <span class="dv">0</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Initializing layer"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> layer_in</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the function you just defined</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">apply</span>(weights_init)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># choose cross entropy loss function (equation 5.24)</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>loss_function <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># construct SGD optimizer and initialize learning rate and momentum</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>optimizer     <span class="op">=</span> torch.optim.SGD(model.parameters(), lr <span class="op">=</span> <span class="fl">0.05</span>, momentum<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># object that decreases learning rate by half every 10 epochs</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>scheduler     <span class="op">=</span> StepLR(optimizer, step_size<span class="op">=</span><span class="dv">10</span>, gamma<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>x_train       <span class="op">=</span> torch.tensor(data[<span class="st">'x'</span>].astype(<span class="st">'float32'</span>))</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>y_train       <span class="op">=</span> torch.tensor(data[<span class="st">'y'</span>].transpose().astype(<span class="st">'int64'</span>))</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>x_test        <span class="op">=</span> torch.tensor(data[<span class="st">'x_test'</span>].astype(<span class="st">'float32'</span>))</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>y_test        <span class="op">=</span> torch.tensor(data[<span class="st">'y_test'</span>].astype(<span class="st">'int64'</span>))</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data into a class that creates the batches</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>data_loader   <span class="op">=</span> DataLoader(TensorDataset(x_train,y_train), batch_size<span class="op">=</span><span class="dv">100</span>, shuffle<span class="op">=</span><span class="va">True</span>, worker_init_fn<span class="op">=</span>np.random.seed(<span class="dv">1</span>))</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize model weights</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">apply</span>(weights_init)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the dataset n_epoch times</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>n_epoch       <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># store the loss and the % correct at each epoch</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>losses_train  <span class="op">=</span> np.zeros((n_epoch))</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>errors_train  <span class="op">=</span> np.zeros((n_epoch))</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>losses_test   <span class="op">=</span> np.zeros((n_epoch))</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>errors_test   <span class="op">=</span> np.zeros((n_epoch))</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(n_epoch):</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop over batches</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i, batch <span class="kw">in</span> <span class="bu">enumerate</span>(data_loader):</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># retrieve inputs and labels for this batch</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    x_batch, y_batch <span class="op">=</span> batch</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># zero the parameter gradients</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    optimizer.zero_grad()</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># forward pass -- calculate model output</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> model(x_batch)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute the loss</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_function(pred, y_batch)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># backward pass</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># SGD update</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run whole dataset to get statistics -- normally wouldn't do this</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>  pred_train                <span class="op">=</span> model(x_train)</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>  pred_test                 <span class="op">=</span> model(x_test)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>  _, predicted_train_class  <span class="op">=</span> torch.<span class="bu">max</span>(pred_train.data, <span class="dv">1</span>)</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>  _, predicted_test_class   <span class="op">=</span> torch.<span class="bu">max</span>(pred_test.data, <span class="dv">1</span>)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>  errors_train[epoch]       <span class="op">=</span> <span class="dv">100</span> <span class="op">-</span> <span class="dv">100</span> <span class="op">*</span> (predicted_train_class <span class="op">==</span> y_train).<span class="bu">float</span>().<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(y_train)</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>  errors_test[epoch]        <span class="op">=</span> <span class="dv">100</span> <span class="op">-</span> <span class="dv">100</span> <span class="op">*</span> (predicted_test_class <span class="op">==</span> y_test).<span class="bu">float</span>().<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(y_test)</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>  losses_train[epoch]       <span class="op">=</span> loss_function(pred_train, y_train).item()</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>  losses_test[epoch]        <span class="op">=</span> loss_function(pred_test, y_test).item()</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f'Epoch </span><span class="sc">{</span>epoch<span class="sc">:5d}</span><span class="ss">, train loss </span><span class="sc">{</span>losses_train[epoch]<span class="sc">:.6f}</span><span class="ss">, train error </span><span class="sc">{</span>errors_train[epoch]<span class="sc">:3.2f}</span><span class="ss">,  test loss </span><span class="sc">{</span>losses_test[epoch]<span class="sc">:.6f}</span><span class="ss">, test error </span><span class="sc">{</span>errors_test[epoch]<span class="sc">:3.2f}</span><span class="ss">'</span>)</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tell scheduler to consider updating learning rate</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>  scheduler.step()</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the results</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>ax.plot(errors_train,<span class="st">'r-'</span>,label<span class="op">=</span><span class="st">'train'</span>)</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>ax.plot(errors_test,<span class="st">'b-'</span>,label<span class="op">=</span><span class="st">'test'</span>)</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>,<span class="dv">100</span>)<span class="op">;</span> ax.set_xlim(<span class="dv">0</span>,n_epoch)</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Epoch'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'Error'</span>)</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'TrainError </span><span class="sc">%3.2f</span><span class="st">, Test Error </span><span class="sc">%3.2f</span><span class="st">'</span><span class="op">%</span>(errors_train[<span class="op">-</span><span class="dv">1</span>],errors_test[<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the results</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>ax.plot(losses_train,<span class="st">'r-'</span>,label<span class="op">=</span><span class="st">'train'</span>)</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>ax.plot(losses_test,<span class="st">'b-'</span>,label<span class="op">=</span><span class="st">'test'</span>)</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>,n_epoch)</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Epoch'</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">'Loss'</span>)</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Train loss </span><span class="sc">%3.2f</span><span class="st">, Test loss </span><span class="sc">%3.2f</span><span class="st">'</span><span class="op">%</span>(losses_train[<span class="op">-</span><span class="dv">1</span>],losses_test[<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Successfully loaded data from ./mnist1d_data.pkl
+Examples in training set: 4000
+Examples in test set: 1000
+Length of each example: 40
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Initializing layer
+Epoch     0, train loss 1.631942, train error 64.97,  test loss 1.728119, test error 69.90
+Epoch     1, train loss 1.316437, train error 48.00,  test loss 1.465787, test error 54.40
+Epoch     2, train loss 1.134730, train error 42.17,  test loss 1.344437, test error 53.20
+Epoch     3, train loss 0.976043, train error 34.60,  test loss 1.283102, test error 51.70
+Epoch     4, train loss 0.883144, train error 32.03,  test loss 1.187499, test error 46.30
+Epoch     5, train loss 0.759807, train error 26.35,  test loss 1.137146, test error 43.80
+Epoch     6, train loss 0.698245, train error 23.93,  test loss 1.108688, test error 44.00
+Epoch     7, train loss 0.626771, train error 22.03,  test loss 1.126183, test error 42.80
+Epoch     8, train loss 0.570338, train error 19.10,  test loss 1.123737, test error 42.00
+Epoch     9, train loss 0.512352, train error 16.70,  test loss 1.111465, test error 41.10
+Epoch    10, train loss 0.409381, train error 12.20,  test loss 1.065406, test error 40.50
+Epoch    11, train loss 0.363579, train error 10.25,  test loss 1.060693, test error 39.50
+Epoch    12, train loss 0.336029, train error 9.20,  test loss 1.058398, test error 39.40
+Epoch    13, train loss 0.306218, train error 7.82,  test loss 1.089240, test error 39.20
+Epoch    14, train loss 0.279142, train error 6.88,  test loss 1.111818, test error 39.00
+Epoch    15, train loss 0.250960, train error 5.43,  test loss 1.093373, test error 38.30
+Epoch    16, train loss 0.232400, train error 5.20,  test loss 1.117872, test error 39.00
+Epoch    17, train loss 0.226077, train error 4.85,  test loss 1.176225, test error 39.10
+Epoch    18, train loss 0.199455, train error 4.15,  test loss 1.172413, test error 39.30
+Epoch    19, train loss 0.171886, train error 3.00,  test loss 1.166691, test error 38.00
+Epoch    20, train loss 0.148746, train error 2.00,  test loss 1.178492, test error 36.80
+Epoch    21, train loss 0.141197, train error 1.78,  test loss 1.185017, test error 37.30
+Epoch    22, train loss 0.133698, train error 1.62,  test loss 1.203514, test error 38.60
+Epoch    23, train loss 0.132200, train error 1.50,  test loss 1.213150, test error 37.80
+Epoch    24, train loss 0.121890, train error 1.20,  test loss 1.238157, test error 37.90
+Epoch    25, train loss 0.113802, train error 0.80,  test loss 1.232786, test error 38.00
+Epoch    26, train loss 0.109463, train error 0.68,  test loss 1.255636, test error 38.00
+Epoch    27, train loss 0.103238, train error 0.55,  test loss 1.260253, test error 38.00
+Epoch    28, train loss 0.098715, train error 0.57,  test loss 1.275169, test error 37.60
+Epoch    29, train loss 0.094078, train error 0.45,  test loss 1.283961, test error 37.70
+Epoch    30, train loss 0.088601, train error 0.30,  test loss 1.290790, test error 38.10
+Epoch    31, train loss 0.086605, train error 0.30,  test loss 1.289708, test error 37.20
+Epoch    32, train loss 0.084400, train error 0.25,  test loss 1.302295, test error 37.90
+Epoch    33, train loss 0.082512, train error 0.25,  test loss 1.306197, test error 37.60
+Epoch    34, train loss 0.080989, train error 0.22,  test loss 1.313281, test error 38.10
+Epoch    35, train loss 0.078772, train error 0.18,  test loss 1.310136, test error 37.10
+Epoch    36, train loss 0.076933, train error 0.20,  test loss 1.319014, test error 37.80
+Epoch    37, train loss 0.076030, train error 0.18,  test loss 1.330156, test error 37.30
+Epoch    38, train loss 0.073641, train error 0.15,  test loss 1.329743, test error 37.70
+Epoch    39, train loss 0.072203, train error 0.15,  test loss 1.340852, test error 37.60
+Epoch    40, train loss 0.070730, train error 0.15,  test loss 1.345814, test error 37.90
+Epoch    41, train loss 0.069930, train error 0.10,  test loss 1.347626, test error 38.30
+Epoch    42, train loss 0.069411, train error 0.12,  test loss 1.346499, test error 37.70
+Epoch    43, train loss 0.068414, train error 0.10,  test loss 1.350982, test error 37.80
+Epoch    44, train loss 0.067677, train error 0.10,  test loss 1.351785, test error 37.90
+Epoch    45, train loss 0.066888, train error 0.10,  test loss 1.356465, test error 38.00
+Epoch    46, train loss 0.066230, train error 0.07,  test loss 1.356053, test error 37.80
+Epoch    47, train loss 0.065529, train error 0.10,  test loss 1.362333, test error 38.40
+Epoch    48, train loss 0.064851, train error 0.07,  test loss 1.361882, test error 37.70
+Epoch    49, train loss 0.064264, train error 0.10,  test loss 1.364452, test error 37.70</code></pre>
 </div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="performance_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="performance_files/figure-html/cell-5-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="increasing-loss-vs.-stable-error" class="level2">
+<h2 class="anchored" data-anchor-id="increasing-loss-vs.-stable-error">Increasing Loss vs.&nbsp;Stable Error</h2>
+<p>In some cases, the test loss may continue to increase even though the test error remains stable. This phenomenon occurs because the model becomes increasingly confident about its predictions, driving the pre-softmax activations to extreme values. As a result, the cross-entropy loss increases while the classification error does not change significantly.</p>
+<p>This behavior is particularly common in over-parameterized models, where the network has enough capacity to fit the training data perfectly. While the training loss continues to decrease, the test loss may increase due to overfitting, even though the test error remains relatively stable.</p>
 
 
 </section>
