@@ -375,11 +375,11 @@ window.Quarto = {
 <p><img src="Project6.png" width="100%" style="filter: invert(1);"></p>
 <p>In Project Part 5, we built an <strong>automatic differentiation engine</strong>. We now have the most important piece of our deep learning framework: an <strong>automatic differentiation engine</strong>. The next step is to build the layers and structure that will allow us to create and train neural networks efficiently.</p>
 <p>We will start by defining a base class <code>Module</code>, which will serve as the parent class for all neural network components, including neurons, layers, and the multilayer perceptron itself. This class will provide a common interface for retrieving parameters and performing the forward pass.</p>
-<p>Our <code>Value</code> class can construct computational graphs and automatically calculate gradients using:</p>
+<p>Our <code>Scalar</code> class can construct computational graphs and automatically calculate gradients using:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>But calculating gradients is only part of building a neural network. We also need a convenient way to organize the many parameters and computations that make up a model.</p>
 <p>In this part, you will build a small neural network library on top of your autograd engine.</p>
-<p>Just as our <code>Value</code> class is a simplified counterpart of PyTorch’s <code>Tensor</code>, the classes we build in this section will be simplified counterparts of classes in PyTorch’s <code>torch.nn</code> library.</p>
+<p>Just as our <code>Scalar</code> class is a simplified counterpart of PyTorch’s <code>Tensor</code>, the classes we build in this section will be simplified counterparts of classes in PyTorch’s <code>torch.nn</code> library.</p>
 <p>By the end, you should be able to construct a multilayer perceptron using:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MLP(<span class="dv">3</span>, [<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and retrieve all of its trainable parameters using:</p>
@@ -396,7 +396,7 @@ window.Quarto = {
 <p>For now, <code>Module</code> needs to provide two important pieces of functionality.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters"><code>parameters()</code></h3>
-<p>Implement a <code>parameters()</code> method that returns a list containing all trainable <code>Value</code> objects belonging to the module.</p>
+<p>Implement a <code>parameters()</code> method that returns a list containing all trainable <code>Scalar</code> objects belonging to the module.</p>
 <p>The base <code>Module</code> itself has no parameters, so its implementation can simply return an empty list.</p>
 </section>
 <section id="zero_grad" class="level3">
@@ -450,15 +450,15 @@ z = w_1x_1+w_2x_2+\cdots+w_nx_n+b
 <li>3 weights</li>
 <li>1 bias</li>
 </ul>
-<p>Each weight and bias must be a <code>Value</code> object so that our autograd engine can calculate gradients with respect to them.</p>
+<p>Each weight and bias must be a <code>Scalar</code> object so that our autograd engine can calculate gradients with respect to them.</p>
 <p>Initialize the weights to small random values. The bias may initially be set to zero.</p>
 <p>Store the weights in a list called <code>w</code> and the bias in <code>b</code>.</p>
 <div id="cell-5" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> Neuron(<span class="dv">3</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(n.w) <span class="op">==</span> <span class="dv">3</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(w, Value) <span class="cf">for</span> w <span class="kw">in</span> n.w)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(n.b, Value)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(w, Scalar) <span class="cf">for</span> w <span class="kw">in</span> n.w)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(n.b, Scalar)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neuron initialization test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -474,39 +474,39 @@ z = w_1x_1+w_2x_2+\cdots+w_nx_n+b
 <p><span class="math display">\[
 z = \sum_{i=1}^{n} w_i x_i + b
 \]</span></p>
-<p>Because the weights, bias, and intermediate computations are <code>Value</code> objects, performing this calculation should automatically construct a computational graph.</p>
+<p>Because the weights, bias, and intermediate computations are <code>Scalar</code> objects, performing this calculation should automatically construct a computational graph.</p>
 <p>For now, return <span class="math inline">\(z\)</span> directly. We will add nonlinear activation functions separately.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> Neuron(<span class="dv">3</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">2.0</span>),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    Value(<span class="op">-</span><span class="fl">1.0</span>),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">3.0</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">2.0</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="op">-</span><span class="fl">1.0</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">3.0</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> n(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>should produce a single <code>Value</code>.</p>
+<p>should produce a single <code>Scalar</code>.</p>
 <div id="cell-7" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> Neuron(<span class="dv">3</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>n.w <span class="op">=</span> [</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">1.0</span>),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">2.0</span>),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    Value(<span class="op">-</span><span class="fl">1.0</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">1.0</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">2.0</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="op">-</span><span class="fl">1.0</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>n.b <span class="op">=</span> Value(<span class="fl">3.0</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>n.b <span class="op">=</span> Scalar(<span class="fl">3.0</span>)</span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">2.0</span>),</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    Value(<span class="op">-</span><span class="fl">1.0</span>),</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">4.0</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">2.0</span>),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="op">-</span><span class="fl">1.0</span>),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">4.0</span>)</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> n(x)</span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(out, Value)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(out, Scalar)</span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> out.data <span class="op">==</span> <span class="op">-</span><span class="fl">1.0</span></span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neuron forward pass test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -533,7 +533,7 @@ w_1,w_2,\ldots,w_n,b
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> n.parameters()</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(params) <span class="op">==</span> <span class="dv">4</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(p, Value) <span class="cf">for</span> p <span class="kw">in</span> params)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(p, Scalar) <span class="cf">for</span> p <span class="kw">in</span> params)</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neuron parameters test passed!"</span>)</span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -602,15 +602,15 @@ w_1,w_2,\ldots,w_n,b
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> Layer(<span class="dv">3</span>, <span class="dv">4</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">1.0</span>),</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">2.0</span>),</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">3.0</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">1.0</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">2.0</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">3.0</span>)</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> layer(x)</span>
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(out) <span class="op">==</span> <span class="dv">4</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(v, Value) <span class="cf">for</span> v <span class="kw">in</span> out)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(v, Scalar) <span class="cf">for</span> v <span class="kw">in</span> out)</span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Layer forward pass test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -635,7 +635,7 @@ w_1,w_2,\ldots,w_n,b
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> layer.parameters()</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(params) <span class="op">==</span> <span class="dv">16</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(p, Value) <span class="cf">for</span> p <span class="kw">in</span> params)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(p, Scalar) <span class="cf">for</span> p <span class="kw">in</span> params)</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Layer parameters test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -701,14 +701,14 @@ w_1,w_2,\ldots,w_n,b
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MLP(<span class="dv">3</span>, [<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>])</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">2.0</span>),</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">3.0</span>),</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    Value(<span class="op">-</span><span class="fl">1.0</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">2.0</span>),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">3.0</span>),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="op">-</span><span class="fl">1.0</span>)</span>
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> model(x)</span>
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(out, Value)</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(out, Scalar)</span>
 <span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MLP forward pass test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -737,7 +737,7 @@ w_1,w_2,\ldots,w_n,b
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> model.parameters()</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(params) <span class="op">==</span> <span class="dv">41</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(p, Value) <span class="cf">for</span> p <span class="kw">in</span> params)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(p, Scalar) <span class="cf">for</span> p <span class="kw">in</span> params)</span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MLP parameters test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -750,14 +750,14 @@ w_1,w_2,\ldots,w_n,b
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MLP(<span class="dv">3</span>, [<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>])</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">2.0</span>),</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    Value(<span class="fl">3.0</span>),</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    Value(<span class="op">-</span><span class="fl">1.0</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">2.0</span>),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="fl">3.0</span>),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    Scalar(<span class="op">-</span><span class="fl">1.0</span>)</span>
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> model(x)</span>
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> Value(<span class="fl">1.0</span>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> Scalar(<span class="fl">1.0</span>)</span>
 <span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> (prediction <span class="op">-</span> target) <span class="op">**</span> <span class="dv">2</span></span>
 <span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
@@ -775,7 +775,7 @@ w_1,w_2,\ldots,w_n,b
 <span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neural network + autograd test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>At this point, you have built the essential pieces of a small deep learning framework:</p>
-<pre class="text"><code>Value
+<pre class="text"><code>Scalar
   ↓
 Automatic Differentiation
   ↓
@@ -786,7 +786,7 @@ Neuron
 Layer
   ↓
 MLP</code></pre>
-<p>Your <code>Value</code> objects play the role of PyTorch tensors, while <code>Module</code>, <code>Neuron</code>, <code>Layer</code>, and <code>MLP</code> provide abstractions for organizing those values into trainable neural networks.</p>
+<p>Your <code>Scalar</code> objects play the role of PyTorch tensors, while <code>Module</code>, <code>Neuron</code>, <code>Layer</code>, and <code>MLP</code> provide abstractions for organizing those values into trainable neural networks.</p>
 <p>There is now only one major piece missing: <strong>training the network</strong>.</p>
 <p>We have parameters, predictions, a loss, and gradients. Next, we need to use those gradients to update the parameters and make the loss smaller.</p>
 </section>
@@ -794,7 +794,7 @@ MLP</code></pre>
 <section id="training-the-neural-network" class="level1">
 <h1>5. Training the Neural Network</h1>
 <p>We now have all the major components of a small deep learning framework.</p>
-<p>Our <code>Value</code> class provides automatic differentiation, and our neural network library allows us to construct models containing trainable parameters.</p>
+<p>Our <code>Scalar</code> class provides automatic differentiation, and our neural network library allows us to construct models containing trainable parameters.</p>
 <p>Now we will put everything together and actually <strong>train a neural network</strong>.</p>
 <p>The basic training process should look familiar from PyTorch:</p>
 <pre class="text"><code>Forward Pass
@@ -856,7 +856,7 @@ Repeat</code></pre>
 <p>You should receive one prediction for each training example.</p>
 <div id="cell-32" class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(ypred) <span class="op">==</span> <span class="bu">len</span>(xs)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(y, Value) <span class="cf">for</span> y <span class="kw">in</span> ypred)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(y, Scalar) <span class="cf">for</span> y <span class="kw">in</span> ypred)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Forward pass test passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -878,14 +878,14 @@ L
 \sum_{i=1}^{N}
 (\hat{y}_i-y_i)^2
 \]</span></p>
-<p>Use your <code>Value</code> operations to calculate this loss.</p>
+<p>Use your <code>Scalar</code> operations to calculate this loss.</p>
 <p>For example, you might first calculate the individual losses:</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>losses <span class="op">=</span> [(yout <span class="op">-</span> ygt) <span class="op">**</span> <span class="dv">2</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> ygt, yout <span class="kw">in</span> <span class="bu">zip</span>(ys, ypred)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and then combine them into the final loss.</p>
 <section id="checkpoint" class="level3">
 <h3 class="anchored" data-anchor-id="checkpoint">Checkpoint</h3>
-<div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(loss, Value)</span>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">isinstance</span>(loss, Scalar)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> loss.data <span class="op">&gt;=</span> <span class="dv">0</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Initial loss:"</span>, loss.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -914,7 +914,7 @@ L
 <h2 class="anchored" data-anchor-id="backward-pass">5.7. Backward Pass</h2>
 <p>Now calculate the gradient of the loss with respect to every parameter in the network:</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Because the entire forward pass was performed using <code>Value</code> objects, the loss is connected through the computational graph to every weight and bias that contributed to the predictions.</p>
+<p>Because the entire forward pass was performed using <code>Scalar</code> objects, the loss is connected through the computational graph to every weight and bias that contributed to the predictions.</p>
 <p>Inspect a few parameters:</p>
 <div id="cell-36" class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> model.parameters()[:<span class="dv">5</span>]:</span>
@@ -944,7 +944,7 @@ p-\alpha\frac{\partial L}{\partial p}
 <div class="sourceCode" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> model.parameters():</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update p.data using p.grad</span></span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Do not create new <code>Value</code> objects during the update. Modify the numerical <code>data</code> stored by each existing parameter.</p>
+<p>Do not create new <code>Scalar</code> objects during the update. Modify the numerical <code>data</code> stored by each existing parameter.</p>
 <hr>
 <p>Verify that at least one parameter changes:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>before <span class="op">=</span> [p.data <span class="cf">for</span> p <span class="kw">in</span> model.parameters()]</span>
@@ -1051,11 +1051,11 @@ Epoch  20 | Loss:  ...
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>Value</code></td>
+<td><code>Scalar</code></td>
 <td><code>Tensor</code></td>
 </tr>
 <tr class="even">
-<td><code>Value.backward()</code></td>
+<td><code>Scalar.backward()</code></td>
 <td><code>Tensor.backward()</code></td>
 </tr>
 <tr class="odd">
