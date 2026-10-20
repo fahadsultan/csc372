@@ -100,6 +100,12 @@ website:
           - performance_doubledescent.ipynb
           - performance_highdimensions.ipynb
           - validation.ipynb
+        - section: reg_Regularization.ipynb
+          contents: 
+          - reg_smoother_func.ipynb
+          - reg_multiplemodels.ipynb
+          - reg_wider_minima.ipynb
+          - reg_increase_data.ipynb
         - section: transformers.ipynb
           contents:
           - transformers_multi.ipynb
