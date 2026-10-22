@@ -229,6 +229,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./Project6.html">
  <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project7.html">
+ <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -477,25 +481,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Implicit_Regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_smoother_func.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Make function smoother</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Ensembling.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_multiplemodels.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Combine multiple models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Augmentation.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_wider_minima.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Find wider minima</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Bayesian_Approach.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_increase_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Increase Data</span></a>
   </div>
 </li>
@@ -663,8 +667,24 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/1ClhiFBnehwgFGDzL6nayEdUijLlvo1W_7KlPy5XO_AI/edit">Slides</a></p>
 </div>
 </div>
+<p>This section introduces transformers.</p>
+<p>These were initially targeted at natural language processing (NLP) problems, where <mark>the network input is a series of high-dimensional embeddings representing words or word fragments aka tokens.</mark> These tokens are computed using Byte Pair Encoding (BPE) or similar tokenization methods.</p>
+<p>Natural language datasets have a unique complication that text sequences vary in length, and unlike images, there is no easy way to resize them.</p>
 <section id="processing-text-data" class="level2">
 <h2 class="anchored" data-anchor-id="processing-text-data">Processing text data</h2>
+<p>To motivate the transformer, consider the following passage:</p>
+<blockquote class="blockquote">
+<p>The <mark>restaurant</mark> refused to serve me a ham sandwich because it only cooks vegetarian food. In the end, they just gave me two slices of bread. <mark>Their</mark> ambiance was just as good as the food and service.</p>
+</blockquote>
+<p>The goal is to design a network to process this text into a representation suitable for downstream tasks.</p>
+<p>For example, it might be used to classify the review as positive or negative or to answer questions such as “Does the restaurant serve steak?”.</p>
+<p>We can make three immediate observations:</p>
+<ol type="1">
+<li><p>First, the encoded input can be surprisingly large. In this case, each of the 37 words might be represented by an embedding vector of length 1024, so the encoded input would be of length 37 ×1024 = 37888 even for this small passage.</p>
+<p>A more realistically sized body of text might have hundreds or even thousands of words, so fully connected neural networks are impractical.</p></li>
+<li><p>Second, one of the defining characteristics of NLP problems is that each input (one or more sentences) is of a different length; hence, it’s not even obvious how to apply a fully connected network. These observations suggest that the network should share parameters across words at different input positions, similarly to how convolutional networks share parameters across different image positions.</p></li>
+<li><p>Third, language is ambiguous; it is unclear from the syntax alone that the pronoun it refers to the restaurant and not to the ham sandwich. To understand the text, the word it should somehow be connected to the word restaurant. In the parlance of transformers, the former word should pay attention to the latter. This implies that there must be connections between the words and that the strength of these connections will depend on the words themselves. Moreover, these connections need to extend across large text spans. For example, the word their in the last sentence also refers to the restaurant.</p></li>
+</ol>
 </section>
 <section id="dot-product-self-attention" class="level2">
 <h2 class="anchored" data-anchor-id="dot-product-self-attention">Dot-product self-attention</h2>

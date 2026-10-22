@@ -51,6 +51,7 @@ website:
         - Project_Part_4.ipynb
         - Project5.ipynb
         - Project6.ipynb
+        - Project7.ipynb
     - id: content
       background: "#2d2d2d"
       style: "floating"
