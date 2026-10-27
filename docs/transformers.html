@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -516,14 +482,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dot-product self-attention</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for natural language processing</span></a>
+  <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder-decoder model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -620,15 +598,11 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#processing-text-data" id="toc-processing-text-data" class="nav-link active" data-scroll-target="#processing-text-data">Processing text data</a></li>
-  <li><a href="#dot-product-self-attention" id="toc-dot-product-self-attention" class="nav-link" data-scroll-target="#dot-product-self-attention">Dot-product self-attention</a>
-  <ul class="collapse">
-  <li><a href="#computing-and-weighting-values" id="toc-computing-and-weighting-values" class="nav-link" data-scroll-target="#computing-and-weighting-values">Computing and weighting values</a></li>
-  <li><a href="#computing-attention-weights" id="toc-computing-attention-weights" class="nav-link" data-scroll-target="#computing-attention-weights">Computing attention weights</a></li>
-  <li><a href="#computing-attention-weights-1" id="toc-computing-attention-weights-1" class="nav-link" data-scroll-target="#computing-attention-weights-1">Computing attention weights</a></li>
-  <li><a href="#self-attention-summary" id="toc-self-attention-summary" class="nav-link" data-scroll-target="#self-attention-summary">Self-attention summary</a></li>
-  <li><a href="#matrix-form" id="toc-matrix-form" class="nav-link" data-scroll-target="#matrix-form">Matrix form</a></li>
-  </ul></li>
+  <li><a href="#tokenization" id="toc-tokenization" class="nav-link active" data-scroll-target="#tokenization">Tokenization</a></li>
+  <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings">Embeddings</a></li>
+  <li><a href="#positional-encoding" id="toc-positional-encoding" class="nav-link" data-scroll-target="#positional-encoding">Positional encoding</a></li>
+  <li><a href="#transformer-model" id="toc-transformer-model" class="nav-link" data-scroll-target="#transformer-model">Transformer model</a></li>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
   </ul>
 </nav>
     </div>
@@ -667,266 +641,109 @@ Slides
 <p><a href="https://docs.google.com/presentation/d/1ClhiFBnehwgFGDzL6nayEdUijLlvo1W_7KlPy5XO_AI/edit">Slides</a></p>
 </div>
 </div>
-<p>This section introduces transformers.</p>
-<p>These were initially targeted at natural language processing (NLP) problems, where <mark>the network input is a series of high-dimensional embeddings representing words or word fragments aka tokens.</mark> These tokens are computed using Byte Pair Encoding (BPE) or similar tokenization methods.</p>
-<p>Natural language datasets have a unique complication that text sequences vary in length, and unlike images, there is no easy way to resize them.</p>
-<section id="processing-text-data" class="level2">
-<h2 class="anchored" data-anchor-id="processing-text-data">Processing text data</h2>
+<p>Transformers are a type of neural network architecture designed to handle sequential data, such as text, by leveraging self-attention mechanisms to capture dependencies between tokens regardless of their distance in the sequence. They were introduced in the paper <a href="https://arxiv.org/abs/1706.03762"><mark>Attention is All You Need</mark></a> by Vaswani et al.&nbsp;in 2017.</p>
+<p>The paper had the following figure on the overall architecture of the transformer model:</p>
+<p><img src="https://arxiv.org/html/1706.03762v7/Figures/ModalNet-21.png" width="60%" align="right" style="filter:invert(1);"></p>
+<p>Note that we have have already studied the feed forward layers in the figure and are familiar with Linear and Softmax. The modules from the figure that we have not yet covered include the Multi-Head Attention, the Masked Multi-Head Attention and Add &amp; Norm layers.</p>
+<p>Transformers were initially targeted at natural language processing (NLP) problems. The model’s <mark>input is a series of high-dimensional embeddings representing words</mark> or word fragments aka tokens. These tokens are computed using Byte Pair Encoding (BPE) or similar tokenization methods.</p>
+<p>The embeddings of tokens are passed through a series of transformer layers.</p>
+<p><mark>Natural language datasets have a unique complication that text sequences vary in length, and unlike images, there is no easy way to resize them</mark>.</p>
+<p>We now consider each of these stages in turn.</p>
+<section id="tokenization" class="level2">
+<h2 class="anchored" data-anchor-id="tokenization">Tokenization</h2>
+<p>A text processing pipeline begins with a tokenizer. This splits the text into smaller constituent units (tokens) from a vocabulary of possible tokens. In the discussion above, we have implied that these tokens represent words, but there are several diﬀiculties.</p>
+<ul>
+<li><p>Inevitably, some words (e.g., names) will not be in the vocabulary.</p></li>
+<li><p>It’s unclear how to handle punctuation, but this is important. If a sentence ends in a question mark, we must encode this information.</p></li>
+<li><p>The vocabulary would need different tokens for versions of the same word with different suﬀixes (e.g., walk, walks, walked, walking), and there is no way to clarify that these variations are related.</p></li>
+</ul>
+<p>One approach would be to use letters and punctuation marks as the vocabulary, but this would mean splitting text into very small parts and requiring the subsequent network to re-learn the relations between them.</p>
+<p>In practice, a compromise between letters and full words is used, and the final vocabulary includes both common words and word fragments from which larger and less frequent words can be composed. The vocabulary is computed using a sub-word tok- enizer such as <mark>Byte Pair Encoding (BPE)</mark> (figure 12.8) that greedily merges commonly occurring sub-strings based on their frequency.</p>
+<p><img src="assets/Chap12/TransformerBPE.svg" style="filter: invert(1);" width="100%"></p>
+<p>Sub-word tokenization.</p>
+<ol type="a">
+<li><p>A passage of text from a nursery rhyme. The tokens are initially just the characters and whitespace (represented by an underscore), and their frequencies are displayed in the table.</p></li>
+<li><p>At each iteration, the sub-word tokenizer looks for the most commonly occurring adjacent pair of tokens (in this case, se) and merges them. This creates a new token and decreases the counts for the original tokens s and e. Note that the last character of the first token to be merged cannot be whitespace, which prevents merging across words.</p></li>
+<li><p>At the second iteration, the algorithm merges e and the whitespace character_.</p></li>
+<li><p>After 23 iterations, the tokens consist of a mix of letters, word fragments, and commonly occurring words.</p></li>
+<li><p>If we continue this process indefinitely, the tokens eventually represent the full words.</p></li>
+<li><p>Over time, the number of tokens increases as we add word fragments to the letters and then decreases again as we merge these fragments. In a real situation, there would be a very large number of words, and the algorithm would terminate when the vocabulary size (number of tokens) reached a predetermined value. Punctuation and capital letters would also be treated as separate input characters.</p></li>
+</ol>
+</section>
+<section id="embeddings" class="level2">
+<h2 class="anchored" data-anchor-id="embeddings">Embeddings</h2>
+<p>Each token in the vocabulary <span class="math inline">\(\mathcal{V}\)</span> is mapped to a unique word embedding, and the embeddings for the whole vocabulary are stored in a matrix <span class="math inline">\(\Omega_e \in \mathbb{R}^{D \times |\mathcal{V}|}\)</span>.</p>
+<p>To accomplish this, the <span class="math inline">\(N\)</span> input tokens are first encoded in the matrix <span class="math inline">\(T \in \mathbb{R}^{|\mathcal{V}| \times N}\)</span>, where the nth column corresponds to the nth token and is a |V|×1 one-hot vector (i.e., a vector where every entry is zero except for the entry corresponding to the token, which is set to one). The input embeddings are computed as <span class="math inline">\(X= \Omega_e T\)</span>, and <span class="math inline">\(\Omega_e\)</span> is learned like any other network parameter (figure 12.9). A typical embedding size D is 1024, and a typical total vocab- ulary size <span class="math inline">\(|\mathcal{V}|\)</span> is 30,000, so even before the main network, there are many parameters in <span class="math inline">\(\Omega_e\)</span> to learn.</p>
+<p><img src="assets/Chap12/TransformerVocabulary.svg" style="filter: invert(1);" width="100%"></p>
+<p>The input embedding matrix <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{D \times N}\)</span> contains N embeddings of length D and is created by multiplying a matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> containing the embeddings that correspond to the word or sub-word indices. The vocabulary matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> is considered a parameter of the model and is learned along with the other parameters. Note that the two embeddings for the word an in <span class="math inline">\(\mathbf{X}\)</span> are the same.</p>
+</section>
+<section id="positional-encoding" class="level2">
+<h2 class="anchored" data-anchor-id="positional-encoding">Positional encoding</h2>
+<p>Representing each input <span class="math inline">\(\mathbf{x}_n\)</span> by its content alone does not explicitly encode its position in a sequence. For language, however, order is important. The sentence</p>
+<blockquote class="blockquote">
+<p>The woman ate the raccoon.</p>
+</blockquote>
+<p>has a different meaning from</p>
+<blockquote class="blockquote">
+<p>The raccoon ate the woman.</p>
+</blockquote>
+<p>Positional encodings provide information about where inputs occur in a sequence. There are two main approaches: <strong>absolute positional encodings</strong> and <strong>relative positional encodings</strong>.</p>
+<hr>
+<p><img src="assets/Chap12/TransformerPE.svg" style="filter: invert(1);" width="60%" align="right"></p>
+<p><strong>Positional encodings.</strong> A positional encoding matrix <span class="math inline">\(\Pi\)</span> can be added to the data matrix <span class="math inline">\(\mathbf{X}\)</span> to give each input information about its position. Each column of <span class="math inline">\(\Pi\)</span> represents a different position. In this example, the encodings follow a predefined sinusoidal pattern:</p>
+<hr>
+<p><strong>Absolute positional encodings</strong></p>
+<p>Absolute positional encodings identify each input’s position in the sequence. A matrix <span class="math inline">\(\Pi\)</span> with the same dimensions as <span class="math inline">\(\mathbf{X}\)</span> is added to the input representations:</p>
+<p><span class="math display">\[
+\widetilde{\mathbf{X}} = \mathbf{X} + \Pi.
+\]</span></p>
+<p><span class="math display">\[
+\Pi_{d,n} = \begin{cases}
+\sin\left(\frac{n}{10000^{d/D}}\right) &amp; \text{if } d \text{ is even}, \\
+\cos\left(\frac{n}{10000^{(d-1)/D}}\right) &amp; \text{if } d \text{ is odd},
+\end{cases}
+\]</span></p>
+<p>where <span class="math inline">\(n\)</span> indexes positions, <span class="math inline">\(d=0,\ldots,D-1\)</span> indexes features, and <span class="math inline">\(D\)</span> is the encoding dimension. This formula can generate encodings for additional positions if needed. Alternatively, positional encodings can be learned during training.</p>
+<p>Each column of <span class="math inline">\(\Pi\)</span> provides a distinct vector for the corresponding position. Thus, the representation of a word depends on both its content and its location in the sequence.</p>
+<p>The positional vectors can be predefined, as in the sinusoidal construction above, or learned during training. They can be introduced at the network input or incorporated at multiple layers.</p>
+<p><strong>Relative positional encodings</strong></p>
+<p>Relative positional encodings describe where one input occurs in relation to another. For example, the relationship “two words before” remains the same whether the words appear near the beginning or the end of a sentence.</p>
+<p>For inputs at positions <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, their relative position can be represented by the signed offset</p>
+<p><span class="math display">\[
+r = a-b.
+\]</span></p>
+<p>The sign indicates whether position <span class="math inline">\(a\)</span> comes before or after position <span class="math inline">\(b\)</span>, and the magnitude indicates the distance between them.</p>
+<p>Although this offset can be computed from absolute positions, relative positional encodings represent it directly. One approach assigns a learned parameter or vector <span class="math inline">\(\pi_r\)</span> to each offset <span class="math inline">\(r\)</span>. The network uses this encoding when combining information from the two positions. Pairs of inputs with the same offset share the same relative positional encoding, regardless of their absolute locations.</p>
+</section>
+<section id="transformer-model" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-model">Transformer model</h2>
+<p>Finally, the embedding matrix X representing the text is passed through a series of K transformer layers, called a transformer model. There are three types of transformer models:</p>
+<ol type="1">
+<li><p><mark>Encoder</mark>: An encoder transforms the text embeddings into a representation that can support a variety of tasks.</p></li>
+<li><p><mark>Decoder</mark>: A decoder predicts the next token to continue the input text.</p></li>
+<li><p><mark>Encoder-decoder</mark>: Encoder-decoders are used in sequence-to-sequence tasks, where one text string is converted into another (e.g., machine translation).</p></li>
+</ol>
+</section>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
 <p>To motivate the transformer, consider the following passage:</p>
 <blockquote class="blockquote">
-<p>The <mark>restaurant</mark> refused to serve me a ham sandwich because it only cooks vegetarian food. In the end, they just gave me two slices of bread. <mark>Their</mark> ambiance was just as good as the food and service.</p>
+<p>The <mark>restaurant</mark> refused to serve me a ham sandwich because <mark>it</mark> only serves vegetarian food. In the end, they just gave me two slices of bread. <mark>Their</mark> ambiance was just as good as the food and service. I am never going back <mark>there</mark> again.</p>
 </blockquote>
 <p>The goal is to design a network to process this text into a representation suitable for downstream tasks.</p>
 <p>For example, it might be used to classify the review as positive or negative or to answer questions such as “Does the restaurant serve steak?”.</p>
 <p>We can make three immediate observations:</p>
 <ol type="1">
-<li><p>First, the encoded input can be surprisingly large. In this case, each of the 37 words might be represented by an embedding vector of length 1024, so the encoded input would be of length 37 ×1024 = 37888 even for this small passage.</p>
+<li><p>First, <mark>the encoded input can be surprisingly large</mark>. In this case, each of the 37 words might be represented by an embedding vector of length 1024, so the encoded input would be of length 37×1024 = <mark>37888 even for this small passage</mark>.</p>
 <p>A more realistically sized body of text might have hundreds or even thousands of words, so fully connected neural networks are impractical.</p></li>
-<li><p>Second, one of the defining characteristics of NLP problems is that each input (one or more sentences) is of a different length; hence, it’s not even obvious how to apply a fully connected network. These observations suggest that the network should share parameters across words at different input positions, similarly to how convolutional networks share parameters across different image positions.</p></li>
-<li><p>Third, language is ambiguous; it is unclear from the syntax alone that the pronoun it refers to the restaurant and not to the ham sandwich. To understand the text, the word it should somehow be connected to the word restaurant. In the parlance of transformers, the former word should pay attention to the latter. This implies that there must be connections between the words and that the strength of these connections will depend on the words themselves. Moreover, these connections need to extend across large text spans. For example, the word their in the last sentence also refers to the restaurant.</p></li>
+<li><p>Second, <mark>one of the defining characteristics of NLP problems is that each input (one or more sentences) is of a different length</mark>.</p>
+<p>It is not even obvious how to apply a fully connected network.</p>
+<p>These observations suggest that the <mark>network should share parameters across words at different input positions</mark>.</p></li>
+<li><p>Third, <mark>language is ambiguous</mark>; it is <mark>unclear that the pronoun it refers to the restaurant and not to the ham sandwich</mark>. To understand the text, the word it should somehow be connected to the word restaurant.</p>
+<p>In the parlance of transformers, <mark>the former word should pay attention to the latter</mark>. This implies that there must be <mark>connections between the words</mark> and that the strength of these connections will depend on the words themselves. Moreover, these connections need to extend across large text spans. For example, the word <i><u>their</u></i> in the last sentence also refers to the restaurant.</p></li>
 </ol>
-</section>
-<section id="dot-product-self-attention" class="level2">
-<h2 class="anchored" data-anchor-id="dot-product-self-attention">Dot-product self-attention</h2>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{{\bf f}}[\mathbf{x}] = \mbox{{\bf ReLU}}[\boldsymbol\beta +\boldsymbol\Omega\mathbf{x}],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_values}
-  \mathbf{v}_{m} = \boldsymbol\beta_{v}+\boldsymbol\Omega_{v}\mathbf{x}_{m},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_sattention1}
-  \mbox{{\bf sa}}_{n}[\mathbf{x}_{1},\ldots, \mathbf{x}_{N}] = \sum_{m=1}^{N}a[\mathbf{x}_{m}, \mathbf{x}_{n}]\mathbf{v}_{m}.
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap12/TransformerRouting.svg" style="filter: invert(1);" width="100%"></p>
-<p>Self-attention as routing. The self-attention mechanism takes N inputs x1, . . . , xN ∈ RD (here N = 3 and D = 4) and processes each separately to compute N value vectors. The nth output san[x1, . . . xN] (written as san[x•] for short) is then computed as a weighted sum of the N value vectors, where the weights are positive and sum to one. a) Output sa1[x•] is computed as a[x1, x1] = 0.1 times the first value vector, a[x2, x1] = 0.3 times the second value vector, and a[x3, x1] = 0.6 times the third value vector. b) Output sa2[x•] is computed in the same way, but this time with weights of 0.5, 0.2, and 0.3. c) The weighting for output sa3[x•] is different again. Each output can hence be thought of as a different routing of the N values.</p>
-<section id="computing-and-weighting-values" class="level3">
-<h3 class="anchored" data-anchor-id="computing-and-weighting-values">Computing and weighting values</h3>
-</section>
-<section id="computing-attention-weights" class="level3">
-<h3 class="anchored" data-anchor-id="computing-attention-weights">Computing attention weights</h3>
-<p><img src="assets/Chap12/TransformerSA1.svg" style="filter: invert(1);" width="100%"></p>
-<p>Self-attention for N =3 inputs xn, each with dimension D=4. a) Each input xm is operated on independently by the same weights Ωv (same color equals same weight) and biases βv (not shown) to form the values βv + Ωvxm. Each output is a linear combination of the values, with the attention weight a[xm, xn] defining the contribution of the mth value to the nth output. b) Matrix showing block sparsity of linear transformation Ωv between inputs and values. c) Matrix showing sparsity of attention weights relating values and outputs.</p>
-</section>
-<section id="computing-attention-weights-1" class="level3">
-<h3 class="anchored" data-anchor-id="computing-attention-weights-1">Computing attention weights</h3>
-<p><img src="assets/Chap12/TransformerSA2.svg" style="filter: invert(1);" width="100%"></p>
-<p>Computing attention weights. a) Query vectors qn = βq + Ωqxn and key vectors kn = βk + Ωkxn are computed for each input xn. b) The dot products between each query and the three keys are passed through a softmax function to form non-negative attentions that sum to one. c) These route the value vectors (figure 12.1) via the sparse matrix from figure 12.2c.</p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{q}_{n} &amp;=&amp; \boldsymbol\beta_{q}+\boldsymbol\Omega_{q}\mathbf{x}_{n}\nonumber \\
-  \mathbf{k}_{m} &amp;=&amp; \boldsymbol\beta_{k}+\boldsymbol\Omega_{k}\mathbf{x}_{m},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_sattention2}
-  a[\mathbf{x}_{m},\mathbf{x}_{n}] &amp;=&amp; \mbox{softmax}_{m}\left[\mathbf{k}_{\bullet}^{T}\mathbf{q}_{n}\right]\nonumber\\
-  &amp;=&amp; \frac{\exp\left[\mathbf{k}_{m}^{T}\mathbf{q}_{n}\right]}{\sum_{m'=1}^{N}\exp\left[\mathbf{k}_{m'}^{T}\mathbf{q}_{n} \right]},
-\end{eqnarray}\]</span></p>
-</section>
-<section id="self-attention-summary" class="level3">
-<h3 class="anchored" data-anchor-id="self-attention-summary">Self-attention summary</h3>
-<p><img src="assets/Chap12/TransformerBlockSA.svg" style="filter: invert(1);" width="100%"></p>
-<p>Self-attention in matrix form. Self-attention can be implemented efficiently if we store the N input vectors xn in the columns of the D×N matrix X. The input X is operated on separately by the query matrix Q, key matrix K, and value matrix V. The dot products are then computed using matrix multiplication, and a softmax operation is applied independently to each column of the resulting matrix to calculate the attentions. Finally, the values are post-multiplied by the attentions to create an output of the same size as the input.</p>
-</section>
-<section id="matrix-form" class="level3">
-<h3 class="anchored" data-anchor-id="matrix-form">Matrix form</h3>
-<p><span class="math display">\[\begin{eqnarray}
-\mathbf{V}[\mathbf{X}] &amp;=&amp; \boldsymbol\beta_{v}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{v}}\mathbf{X}\nonumber \\
-\mathbf{Q}[\mathbf{X}] &amp;=&amp; \boldsymbol\beta_{q}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{q}}\mathbf{X}\nonumber \\
-\mathbf{K}[\mathbf{X}] &amp;=&amp; \boldsymbol\beta_{k}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{k}}\mathbf{X},
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}[\mathbf{X}]\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}[\mathbf{X}]^{T}\mathbf{Q}[\mathbf{X}]\Bigr],
-\end{eqnarray}\]</span></p>
-<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_sa_matrix}
-  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}^{T}\mathbf{Q}\Bigr].
-\end{eqnarray}\]</span></p>
-<p><img src="assets/Chap12/TransformerPE.svg" style="filter: invert(1);" width="40%" align="right"></p>
-<p>Positional encodings. The self-attention architecture is equivariant to permutations of the inputs. To ensure that inputs at different positions are treated differently, a positional encoding matrix Π can be added to the data matrix. Each column is different, so the positions can be distinguished. Here, the position encodings use a predefined procedural sinusoidal pattern (which can be extended to larger values of N if necessary). However, in other cases, they are learned.</p>
-<div id="c31b4fa3" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The self-attention mechanism maps <span class="math inline">\(N\)</span> inputs $ ^D $and returns <span class="math inline">\(x^{\prime} \in \mathbb{R}^D\)</span> outputs .</p>
-<div id="2b1271ce" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">3</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of inputs</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of dimensions of each input</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list </span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>all_x <span class="op">=</span> []</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create elements x_n and append to list</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(N):</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  all_x.append(np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>)))</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the list</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(all_x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[array([[ 1.78862847],
-       [ 0.43650985],
-       [ 0.09649747],
-       [-1.8634927 ]]), array([[-0.2773882 ],
-       [-0.35475898],
-       [-0.08274148],
-       [-0.62700068]]), array([[-0.04381817],
-       [-0.47721803],
-       [-1.31386475],
-       [ 0.88462238]])]</code></pre>
-</div>
-</div>
-<p>We’ll also need the weights and biases for the keys, queries, and values (equations 12.2 and 12.4)</p>
-<div id="c3ab5b6e" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>omega_q <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>omega_k <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>omega_v <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>beta_q  <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>beta_k  <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>))</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>beta_v  <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now let’s compute the queries, keys, and values for each input</p>
-<div id="4c257486" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make three lists to store queries, keys, and values</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>all_queries <span class="op">=</span> []</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>all_keys    <span class="op">=</span> []</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>all_values  <span class="op">=</span> []</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For every input</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> all_x:</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- compute the keys, queries and values.</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace these three lines</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  query <span class="op">=</span> np.ones_like(x)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  key   <span class="op">=</span> np.ones_like(x)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  value <span class="op">=</span> np.ones_like(x)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  all_queries.append(query)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  all_keys.append(key)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  all_values.append(value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We’ll need a softmax function (equation 12.5) – here, it will take a list of arbitrary numbers and return a list where the elements are non-negative and sum to one</p>
-<div id="ccf0218b" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(items_in):</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Compute the elements of items_out</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  items_out <span class="op">=</span> items_in.copy()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> items_out <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now compute the self attention values:</p>
-<div id="5bae2ea5" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create emptymlist for output</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>all_x_prime <span class="op">=</span> []</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># For each output</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(N):</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create list for dot products of query N with all keys</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  all_km_qn <span class="op">=</span> []</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the dot products</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> key <span class="kw">in</span> all_keys:</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co"> -- compute the appropriate dot product</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Replace this line</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    dot_product <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store dot product</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    all_km_qn.append(dot_product)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute dot product</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  attention <span class="op">=</span> softmax(all_km_qn)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Print result (should be positive sum to one)</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Attentions for output "</span>, n)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(attention)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co">: Compute a weighted sum of all of the values according to the attention</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (equation 12.3)</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  x_prime <span class="op">=</span> np.zeros((D,<span class="dv">1</span>))</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  all_x_prime.append(x_prime)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out true values to check you have it correct</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_0_calculated:"</span>, all_x_prime[<span class="dv">0</span>].transpose())</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_0_true: [[ 0.94744244 -0.24348429 -0.91310441 -0.44522983]]"</span>)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_1_calculated:"</span>, all_x_prime[<span class="dv">1</span>].transpose())</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_1_true: [[ 1.64201168 -0.08470004  4.02764044  2.18690791]]"</span>)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_2_calculated:"</span>, all_x_prime[<span class="dv">2</span>].transpose())</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_2_true: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now let’s compute the same thing, but using matrix calculations. We’ll store the inputs in the columns of a matrix, using equations 12.6 and 12.7/8.</p>
-<p>Note: The book uses column vectors (for compatibility with the rest of the text), but in the wider literature it is more normal to store the inputs in the rows of a matrix; in this case, the computation is the same, but all the matrices are transposed and the operations proceed in the reverse order.</p>
-<div id="98cd3889" class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define softmax operation that works independently on each column</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax_cols(data_in):</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Exponentiate all of the values</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  exp_values <span class="op">=</span> np.exp(data_in) <span class="op">;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum over columns</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  denom <span class="op">=</span> np.<span class="bu">sum</span>(exp_values, axis <span class="op">=</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replicate denominator to N rows</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  denom <span class="op">=</span> np.matmul(np.ones((data_in.shape[<span class="dv">0</span>],<span class="dv">1</span>)), denom[np.newaxis,:])</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute softmax</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  softmax <span class="op">=</span> exp_values <span class="op">/</span> denom</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return the answer</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> softmax</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a> <span class="co"># Now let's compute self attention in matrix form</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k):</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- Write this function</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Compute queries, keys, and values</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. Compute dot products</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Apply softmax to calculate attentions</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Weight values by attentions</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> np.zeros_like(X)<span class="op">;</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy data into matrix</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.zeros((D, N))</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">0</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">0</span>])</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">1</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">1</span>])</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">2</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">2</span>])</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k)</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime)</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If you did this correctly, the values should be the same as above.</p>
-<p>TODO:</p>
-<p>Print out the attention matrix You will see that the values are quite extreme (one is very close to one and the others are very close to zero. Now we’ll fix this problem by using scaled dot-product attention.</p>
-<div id="f1ad5907" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's compute self attention in matrix form</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scaled_dot_product_self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k):</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- Write this function</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Compute queries, keys, and values</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. Compute dot products</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Scale the dot products as in equation 12.9</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Apply softmax to calculate attentions</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 5. Weight values by attentions</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> np.zeros_like(X)<span class="op">;</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> scaled_dot_product_self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>TODO – Investigate whether the self-attention mechanism is covariant with respect to permutation. If it is, when we permute the columns of the input matrix , the columns of the output matrix will also be permuted.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

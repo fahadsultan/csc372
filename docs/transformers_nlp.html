@@ -229,6 +229,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./Project6.html">
  <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project7.html">
+ <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -254,7 +258,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformers.html">Transformers</a></li><li class="breadcrumb-item"><a href="./transformers_nlp.html">Transformers for natural language processing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformers.html">Transformers</a></li><li class="breadcrumb-item"><a href="./transformers_nlp.html">Encoder model example: BERT</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -477,25 +481,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Implicit_Regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_smoother_func.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Make function smoother</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Ensembling.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_multiplemodels.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Combine multiple models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Augmentation.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_wider_minima.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Find wider minima</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Bayesian_Approach.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_increase_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Increase Data</span></a>
   </div>
 </li>
@@ -512,6 +516,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Extentions to dot-product self-attention</span></a>
   </div>
@@ -519,7 +529,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Transformers for natural language processing</span></a>
+ <span class="menu-text">Encoder model example: BERT</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -616,18 +626,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#transformers-for-natural-language-processing" id="toc-transformers-for-natural-language-processing" class="nav-link active" data-scroll-target="#transformers-for-natural-language-processing">Transformers for natural language processing</a>
-  <ul class="collapse">
-  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization">Tokenization</a></li>
-  <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings">Embeddings</a></li>
-  <li><a href="#transformer-model" id="toc-transformer-model" class="nav-link" data-scroll-target="#transformer-model">Transformer model</a></li>
-  </ul></li>
-  <li><a href="#encoder-model-example-bert" id="toc-encoder-model-example-bert" class="nav-link" data-scroll-target="#encoder-model-example-bert">Encoder model example: BERT</a>
+  <li><a href="#encoder-model-example-bert" id="toc-encoder-model-example-bert" class="nav-link active" data-scroll-target="#encoder-model-example-bert">Encoder model example: BERT</a>
   <ul class="collapse">
   <li><a href="#pre-training" id="toc-pre-training" class="nav-link" data-scroll-target="#pre-training">Pre-training</a></li>
   <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning">Fine-tuning</a></li>
   </ul></li>
-  <li><a href="#deocder-model-example-gpt3" id="toc-deocder-model-example-gpt3" class="nav-link" data-scroll-target="#deocder-model-example-gpt3">Deocder model example: GPT3</a>
+  <li><a href="#decoder-model-example-gpt3" id="toc-decoder-model-example-gpt3" class="nav-link" data-scroll-target="#decoder-model-example-gpt3">Decoder model example: GPT3</a>
   <ul class="collapse">
   <li><a href="#language-modeling" id="toc-language-modeling" class="nav-link" data-scroll-target="#language-modeling">Language modeling</a></li>
   <li><a href="#masked-self-attention" id="toc-masked-self-attention" class="nav-link" data-scroll-target="#masked-self-attention">Masked self-attention</a></li>
@@ -645,26 +649,13 @@ window.Quarto = {
 
 
 
-<section id="transformers-for-natural-language-processing" class="level2">
-<h2 class="anchored" data-anchor-id="transformers-for-natural-language-processing">Transformers for natural language processing</h2>
-<p><img src="assets/Chap12/TransformerBPE.svg" style="filter: invert(1);" width="100%"></p>
-<p>Sub-word tokenization. a) A passage of text from a nursery rhyme. The tokens are initially just the characters and whitespace (represented by an underscore), and their frequencies are displayed in the table. b) At each iteration, the sub-word tokenizer looks for the most commonly occurring adjacent pair of tokens (in this case, se) and merges them. This creates a new token and decreases the counts for the original tokens s and e. Note that the last character of the first token to be merged cannot be whitespace, which prevents merging across words. c) At the second iteration, the algorithm merges e and the whitespace character_. d) After 23 iterations, the tokens consist of a mix of letters, word fragments, and commonly occurring words. e) If we continue this process indefinitely, the tokens eventually represent the full words. f) Over time, the number of tokens increases as we add word fragments to the letters and then decreases again as we merge these fragments. In a real situation, there would be a very large number of words, and the algorithm would terminate when the vocabulary size (number of tokens) reached a predetermined value. Punctuation and capital letters would also be treated as separate input characters.</p>
-<section id="tokenization" class="level3">
-<h3 class="anchored" data-anchor-id="tokenization">Tokenization</h3>
-</section>
-<section id="embeddings" class="level3">
-<h3 class="anchored" data-anchor-id="embeddings">Embeddings</h3>
-</section>
-<section id="transformer-model" class="level3">
-<h3 class="anchored" data-anchor-id="transformer-model">Transformer model</h3>
-<p><img src="assets/Chap12/TransformerVocabulary.svg" style="filter: invert(1);" width="100%"></p>
-<p>The input embedding matrix X ∈ RD×N contains N embeddings of length D and is created by multiplying a matrix Ωe containing the embeddings for the entire vocabulary with a matrix containing one-hot vectors in its columns that correspond to the word or sub-word indices. The vocabulary matrix Ωe is considered a parameter of the model and is learned along with the other parameters. Note that the two embeddings for the word an in X are the same.</p>
-</section>
-</section>
 <section id="encoder-model-example-bert" class="level2">
 <h2 class="anchored" data-anchor-id="encoder-model-example-bert">Encoder model example: BERT</h2>
+<p>BERT is an encoder model that uses a vocabulary of 30,000 tokens. Input tokens are converted to 1024-dimensional word embeddings and passed through 24 transformer layers. Each contains a self-attention mechanism with 16 heads. The queries, keys, and values for each head are of dimension 64 (i.e., the matrices <span class="math inline">\(\Omega_{vh}, \Omega_{qh}, \Omega_{kh}\)</span> are 64 ×1024).</p>
+<p>The dimension of the single hidden layer in the fully connected networks is 4096. The total number of parameters is ∼340 million. When BERT was introduced, this was considered large, but it is now much smaller than state-of-the-art models. Encoder models like BERT exploit transfer learning (section 9.3.6). During pre- training, the parameters of the transformer architecture are learned using self-supervision from a large corpus of text. The goal here is for the model to learn general information about the statistics of language. In the fine-tuning stage, the resulting network is adapted to solve a particular task using a smaller body of labelled training data.</p>
 <section id="pre-training" class="level3">
 <h3 class="anchored" data-anchor-id="pre-training">Pre-training</h3>
+<p>In the pre-training stage, the network is trained using self-supervision. This allows the use of enormous amounts of data without the need for manual labels. For BERT, the self- supervision task consists of predicting missing words from sentences from a large internet corpus (figure 12.10).1 During training, the maximum input length is 512 tokens, and the batch size is 256. The system is trained for a million steps, corresponding to roughly 50 epochs of the 3.3-billion word corpus. Predicting missing words forces the transformer network to understand some syntax. For example, it might learn that the adjective red is often found before nouns like house or car but never before a verb like shout. It also allows the model to learn superficial common sense about the world. For example, after training, the model will assign a higher probability to the missing word train in the sentence The <mask> pulled into the station than it would to the word peanut. However, the degree of “understanding” this type of model can ever have is limited.</mask></p>
 <p><img src="assets/Chap12/TransformerEncoder.svg" style="filter: invert(1);" width="100%"></p>
 <p>Pre-training for BERT-like encoder. The input tokens (and a special <cls> token denoting the start of the sequence) are converted to word embeddings. Here, these are represented as rows rather than columns, so the box labeled “word embeddings” is XT . These embeddings are passed through a series of transformer layers (orange connections indicate that every token attends to every other token in these layers) to create a set of output embeddings. A small fraction of the input tokens are randomly replaced with a generic <mask> token. In pre-training, the goal is to predict the missing word from the associated output embedding. To this end, the outputs corresponding to the masked tokens are passed through softmax functions, and a multiclass classification loss (section 5.24) is applied to each. This task has the advantage that it uses both the left and right context to predict the missing word but has the disadvantage that it does not make efficient use of data; here, seven tokens need to be processed to add two terms to the loss function.</mask></cls></p>
 <p><img src="assets/Chap12/TransformerEncoderFineTune.svg" style="filter: invert(1);" width="100%"></p>
@@ -672,12 +663,22 @@ window.Quarto = {
 </section>
 <section id="fine-tuning" class="level3">
 <h3 class="anchored" data-anchor-id="fine-tuning">Fine-tuning</h3>
+<p>In the fine-tuning stage, the model parameters are adjusted to specialize the network to a particular task. An extra layer is appended onto the transformer network to convert the output vectors to the desired output format. Examples include:</p>
+<p><strong>Text classification</strong>: In BERT, a special token known as the classification or <code>&lt;cls&gt;</code> token is placed at the start of each string during pre-training. For text classification tasks like <u>sentiment analysis</u> (in which the passage is labeled as having a positive or negative emotional tone), the vector associated with the <code>&lt;cls&gt;</code> token is mapped to a single number and passed through a logistic sigmoid (figure 12.11a). This contributes to a standard binary cross-entropy loss (section 5.4).</p>
+<p><strong>Word classification</strong>: The goal of <u>named entity recognition</u> is to classify each word as an entity type (e.g., person, place, organization, or no-entity). To this end, each input embedding <span class="math inline">\(\mathbf{x}_n\)</span> is mapped to an <span class="math inline">\(E\times 1\)</span> vector where the <span class="math inline">\(E\)</span> entries correspond to the <span class="math inline">\(E\)</span> entity types. This is passed through a softmax function to create probabilities for each class, which contribute to a multiclass cross-entropy loss (figure 12.11b).</p>
+<p><strong>Text span prediction</strong>: In the SQuAD 1.1 question answering task, the question and a passage from Wikipedia containing the answer are concatenated and tokenized. BERT is then used to predict the text span in the passage that contains the answer. Each token maps to two numbers indicating how likely it is that the text span begins and ends at this location. The resulting two sets of numbers are put through two softmax functions. The likelihood of any text span being the answer can be derived by combining the probability of starting and ending at the appropriate places.</p>
 </section>
 </section>
-<section id="deocder-model-example-gpt3" class="level2">
-<h2 class="anchored" data-anchor-id="deocder-model-example-gpt3">Deocder model example: GPT3</h2>
+<section id="decoder-model-example-gpt3" class="level2">
+<h2 class="anchored" data-anchor-id="decoder-model-example-gpt3">Decoder model example: GPT3</h2>
+<p>This section presents a high-level description of GPT3, an example of a decoder model. The basic architecture is extremely similar to the encoder model and comprises a series of transformer layers that operate on learned word embeddings. However, the goal is different. The encoder aimed to build a representation of the text that could be fine- tuned to solve a variety of more specific NLP tasks. Conversely, the decoder has one purpose: to generate the next token in a sequence. It can generate a coherent text passage by feeding the extended sequence back into the model.</p>
 <section id="language-modeling" class="level3">
 <h3 class="anchored" data-anchor-id="language-modeling">Language modeling</h3>
+<p>GPT3 is an autoregressive language model. This is easiest to understand with a concrete example. Consider the sentence</p>
+<blockquote class="blockquote">
+<p>It takes great courage to let yourself appear weak.</p>
+</blockquote>
+<p>For simplicity, let’s assume that the tokens are the full words. The probability of the full sentence can be factored as:</p>
 <p><span class="math display">\[\begin{eqnarray}
   Pr(\mbox{\textcolor{red}{It takes great courage to let yourself appear weak}}) &amp;=&amp;\nonumber\\
   &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{takes}}|\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{great}}|\mbox{\textcolor{red}{It takes}})\times Pr(\mbox{\textcolor{red}{courage}}|\mbox{\textcolor{red}{It takes great}})\times\nonumber \\
@@ -686,31 +687,68 @@ window.Quarto = {
   &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{appear}}|\mbox{\textcolor{red}{It takes great courage to let yourself}})\times\nonumber\\
   &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{weak}}|\mbox{\textcolor{red}{It takes great courage to let yourself appear}}).
 \end{eqnarray}\]</span></p>
+<p>An autoregressive model predicts the conditional distributions <span class="math inline">\(Pr(t_n|t_1,...,t_{n-1})\)</span> of each token given all the prior tokens, and hence indirectly computes the joint proba- bility <span class="math inline">\(Pr(t_1,t_2,...,t_N )\)</span> of all <span class="math inline">\(N\)</span> tokens:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_autoregressive}
   Pr(t_{1},t_{2},\ldots, t_{N}) = Pr(t_{1})\prod_{n=2}^{N}Pr(t_{n}|t_{1},\ldots, t_{n-1}).
 \end{eqnarray}\]</span></p>
+<p>The autoregressive formulation demonstrates the connection between maximizing the joint probability of the tokens and the next token prediction task.</p>
 </section>
 <section id="masked-self-attention" class="level3">
 <h3 class="anchored" data-anchor-id="masked-self-attention">Masked self-attention</h3>
+<p>To train a decoder, we seek parameters that maximize the log probability of the input text under the autoregressive model (i.e., that maximize the sum of the log conditional probability terms). Ideally, we would pass in the whole sentence and compute all the log probabilities and gradients in the same forward pass rather than doing a forward pass for each token in the sentence. However, if we pass in the full sentence, the term computing log [Pr(great|It takes)] would have access to both the answer great and the right context courage to let yourself appear weak. Hence, the system can cheat rather than learn to predict the following words and won’t train properly.</p>
+<p>Fortunately, the tokens only interact in the self-attention layers in a transformer network. Hence, the problem can be resolved by ensuring that the attention to the answer and the right context is zero. This can be achieved by setting the corresponding dot products in the self-attention computation (equation 12.5) to negative infinity before they are passed through the <span class="math inline">\(\textbf{softmax[•]}\)</span> function. This is known as masked self-attention. The effect is to make the weight of all the upward-angled arrows in figure 12.1 zero.</p>
+<p>The entire decoder network operates as follows. The input text is tokenized, and the tokens are converted to embeddings. The embeddings are passed into the transformer network, but now the transformer layers use masked self-attention so that they can only attend to the current and previous tokens. Each of the output embeddings can be thought of as representing a partial sentence, and for each, the goal is to predict the next token in the sequence. Consequently, after the transformer layers, a single linear layer maps each output embedding to the size of the vocabulary, followed by a <span class="math inline">\(\textbf{softmax[•]}\)</span> function that converts these values to probabilities. During training, we aim to maximize the sum of the log probabilities of the next token in the ground truth sequence at every position using a standard multiclass cross-entropy loss (figure 12.12).</p>
 </section>
 <section id="generating-text-from-a-decoder" class="level3">
 <h3 class="anchored" data-anchor-id="generating-text-from-a-decoder">Generating text from a decoder</h3>
+<p>The autoregressive language model is the first example of a generative model discussed in this book. Since it defines a probability model over text sequences, it can be used to sample new examples of plausible text. To generate from the model, we start with an input sequence of text (which might be just the special <start> token indicating the beginning of the sequence) and feed this into the network, which then outputs the probabilities over possible subsequent tokens. We can then either pick the most likely token or sample from this probability distribution. The new extended sequence can be fed back into the decoder network to yield the probability distribution over the next token. By repeating this process, we can generate large bodies of text. The computation can be made quite eﬀicient as prior embeddings do not depend on subsequent ones due to the masked self-attention. Hence, much of the earlier computation can be recycled as we generate subsequent tokens.</start></p>
+<p>In practice, many strategies can make the output text more coherent. For example, <mark>beam search</mark> keeps track of multiple possible sentence completions to find the overall most likely sequence of words (which is not necessarily found by greedily choosing the most likely word at each step). <mark>Top-k sampling</mark> randomly draws the next word from only the top-K most likely possibilities to prevent the system from accidentally choosing from the long tail of low-probability tokens and leading to an unnecessary linguistic dead end.</p>
 <p><img src="assets/Chap12/TransformerDecoder.svg" style="filter: invert(1);" width="100%"></p>
 <p>Training GPT3-type decoder network. The tokens are mapped to word embeddings with a special <start> token at the beginning of the sequence. The embeddings are passed through a series of transformer layers that use masked self-attention. Here, each position in the sentence can only attend to its own embedding and those of tokens earlier in the sequence (orange connections). The goal at each position is to maximize the probability of the following ground truth token in the sequence. In other words, at position one, we want to maximize the probability of the token It; at position two, we want to maximize the probability of the token takes; and so on. Masked self-attention ensures the system cannot cheat by looking at subsequent inputs. The autoregressive task has the advantage of making efficient use of the data since every word contributes a term to the loss function. However, it only exploits the left context of each word.</start></p>
 </section>
 <section id="gpt3-and-few-shot-learning" class="level3">
 <h3 class="anchored" data-anchor-id="gpt3-and-few-shot-learning">GPT3 and few-shot learning</h3>
+<p>Large language models like GPT3 apply these ideas on a massive scale. In GPT3, the sequence lengths are 2048 tokens long, and the total batch size is 3.2 million tokens. There are 96 transformer layers (some of which implement a sparse version of attention), each processing a word embedding of size 12288. There are 96 heads in the self-attention layers, and the value, query, and key dimension is 128. It is trained with 300 billion tokens and contains 175 billion parameters.</p>
+<p>Here’s an example of completing text from the GPT3 model where the text provided to the model is in orange, and the generated text is in cyan:</p>
+<blockquote class="blockquote">
+<p>Understanding Deep Learning is a new textbook from MIT Press by Simon Prince that<font color="cyan">’s de- signed to offer an accessible, broad introduction to the field. Deep learning is a branch of machine learning that is concerned with algorithms that learn from data that is unstructured or unlabeled. The book is divided into four sections:</font></p><font color="cyan">
+<ol type="1">
+<li><p>Introduction to deep learning</p></li>
+<li><p>Deep learning architecture</p></li>
+<li><p>Deep learning algorithms</p></li>
+<li><p>Applications of deep learning</p></li>
+</ol>
+</font><p><font color="cyan">The first section offers an introduction to deep learning, including its history and origins. The second section covers deep learning architecture, discussing various types of neural net- works and their applications. The third section dives into deep learning algorithms, including supervised and unsupervised learning, reinforcement learning, and more. The fourth section applies deep learning to various domains, such as computer vision, natural language processing, and robotics.</font></p>
+</blockquote>
+<p>This continuation is plausible, albeit only partially accurate. One surprising property of learning models on this scale is that they can perform many tasks without fine-tuning. If we provide several examples of correct question/answer pairs and then another question, they often answer the final question correctly by completing the sequence. One example is correcting English grammar:</p>
+<blockquote class="blockquote">
+<p>Poor English input: I eated the purple berries.<br>
+Good English output: I ate the purple berries.<br>
+Poor English input: Thank you for picking me as your designer. I’d appreciate it.<br>
+Good English output: Thank you for choosing me as your designer. I appreciate it.<br>
+Poor English input: The mentioned changes have done. or I did the alteration that you requested. or I changed things you wanted and did the modifications.<br>
+Good English output: The requested changes have been made. or I made the alteration that you requested. or I changed things you wanted and made the modifications.<br>
+Poor English input: I’d be more than happy to work with you in another project.<br>
+Good English output: <font color="cyan">I’d be more than happy to work with you on another project.</font><br>
+(result from Brown et al., 2020)</p>
+</blockquote>
+<p>Here, the text containing the paired examples in orange was provided as context for GPT3, and the system then generated the correct answer in <font color="cyan">cyan</font>. This phenomenon extends to many situations, including generating code snippets based on natural language descriptions, arithmetic, translating between languages, and answering questions about text passages. Consequently, it is argued that enormous language models are <mark>few-shot learners</mark>; they can learn to do novel tasks based on just a few examples. However, performance is erratic in practice, and the extent to which it is extrapolating from learned examples rather than merely interpolating or copying verbatim is unclear.</p>
 <p><img src="assets/Chap12/TransformerEncoderDecoder.svg" style="filter: invert(1);" width="100%"></p>
 <p>Encoder-decoder architecture. Two sentences are passed to the system with the goal of translating the first into the second. a) The first sentence is passed through a standard encoder. b) The second sentence is passed through a decoder that uses masked self-attention but also attends to the output embeddings of the encoder using cross-attention (orange rectangle). The loss function is the same as for the decoder model; we want to maximize the probability of the next word in the output sequence.</p>
 </section>
 </section>
 <section id="encoder-decoder-model-example-machine-translation" class="level2">
 <h2 class="anchored" data-anchor-id="encoder-decoder-model-example-machine-translation">Encoder-decoder model example: machine translation</h2>
+<p>Translation between languages is an example of a sequence-to-sequence task. One com- mon approach uses both an encoder (to compute a good representation of the source sentence) and a decoder (to generate the sentence in the target language). This is aptly called an <mark>encoder-decoder</mark> model.</p>
+<p>Consider translating from English to French. The encoder receives the sentence in English and processes it through a series of transformer layers to create an output representation for each token. During training, the decoder receives the ground truth translation in French and passes it through a series of transformer layers that use masked self-attention and predict the following word at each position. However, the decoder layers also attend to the output of the encoder. Consequently, each French output word is conditioned on the previous output words and the source English sentence (figure 12.13).</p>
+<p>This is achieved by modifying the transformer layers in the decoder. Originally, these consisted of a masked self-attention layer followed by a neural network applied individually to each embedding (figure 12.12). A new self-attention layer is added be- tween these two components, in which the decoder embeddings attend to the encoder embeddings. This uses a version of self-attention known as <mark>encoder-decoder attention or cross-attention</mark>, where the queries are computed from the decoder embeddings and the keys and values from the encoder embeddings (figure 12.14).</p>
 <p><img src="assets/Chap12/TransformerBlockSACross.svg" style="filter: invert(1);" width="100%"></p>
 <p>Cross-attention. The flow of computation is the same as in standard self-attention, but the queries are calculated from the decoder embeddings Xdec, and the keys and values from the encoder embeddings Xenc. For translation tasks, the encoder contains information about the source language statistics, and the decoder contains information about the target language statistics.</p>
 </section>
 <section id="transformers-for-long-sequences" class="level2">
 <h2 class="anchored" data-anchor-id="transformers-for-long-sequences">Transformers for long sequences</h2>
+<p>Since each token in a transformer encoder model interacts with every other token, the computational complexity scales quadratically with the length of the sequence. For a decoder model, each token only interacts with previous tokens, so there are roughly half the number of interactions, but the complexity still scales quadratically. These relationships can be visualized as interaction matrices (figure 12.15a–b). This quadratic increase in the amount of computation ultimately limits the length of sequences that can be used. Many methods have been developed to extend the transformer to cope with longer sequences. One approach is to prune the self-attention in- teractions or, equivalently, to sparsify the interaction matrix (figures 12.15c-h). For example, this can be restricted to a convolutional structure so that each token only in- teracts with a few neighboring tokens. Across multiple layers, tokens still interact at larger distances as the receptive field expands. As for convolution in images, the kernel can vary in size and dilation rate.</p>
+<p>A pure convolutional approach requires many layers to integrate information over large distances. One way to speed up this process is to allow certain tokens (perhaps at the start of every sentence) to attend to all other tokens (encoder model) or all previous tokens (decoder model). A similar idea is to have a small number of global tokens that connect to all the other tokens and themselves. Like the <cls> token, these do not represent any word but serve to provide long-distance connections.</cls></p>
 <p><img src="assets/Chap12/TransformerLongRange.svg" style="filter: invert(1);" width="100%"></p>
 <p>Interaction matrices for self-attention. a) In an encoder, every token interacts with every other token, and computation expands quadratically with the number of tokens. b) In a decoder, each token only interacts with the previous tokens, but complexity is still quadratic. c) Complexity can be reduced by using a convolutional structure (encoder case). d) Convolutional structure for decoder case. e–f) Convolutional structure with dilation rate of two and three (decoder case). g) Another strategy is to allow selected tokens to interact with all the other tokens (encoder case) or all the previous tokens (decoder case pictured). h) Alternatively, global tokens can be introduced (left two columns and top two rows). These interact with all of the tokens as well as with each other.</p>
 <div id="ece7f980" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">

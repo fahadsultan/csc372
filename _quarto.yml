@@ -109,8 +109,10 @@ website:
           - reg_increase_data.ipynb
         - section: transformers.ipynb
           contents:
-          - transformers_multi.ipynb
-          - transformers_nlp.ipynb
+          - transformers_sa.ipynb
+          - transformers_encoder.ipynb
+          - transformers_decoder.ipynb
+          - transformers_encoderdecoder.ipynb
           - transformers_others.ipynb
           - transformers_decoding.ipynb
         - section: llms.ipynb

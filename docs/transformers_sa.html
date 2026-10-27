@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Dot-product self-attention</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./logo.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-syllabus" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Syllabus</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-syllabus">    
+        <li>
+    <a class="dropdown-item" href="./syllabus/about.html">
+ <span class="dropdown-text">Course Description and Goals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/grading.html">
+ <span class="dropdown-text">Grading</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/academic_success.html">
+ <span class="dropdown-text">Center for Academic Success</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/textbook.html">
+ <span class="dropdown-text">Textbooks &amp; Other Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/integrity.html">
+ <span class="dropdown-text">Academic Integrity</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/mental_health.html">
+ <span class="dropdown-text">Mental Health Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/accomodations.html">
+ <span class="dropdown-text">Accomodations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/title_9.html">
+ <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="./CSC_372_Project_Part_1.html">
+ <span class="dropdown-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project2.html">
+ <span class="dropdown-text">PyTorch: A Modern Deep Learning Library</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project3.html">
+ <span class="dropdown-text">Word2Vec, Embeddings and Representation Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_Part_4.html">
+ <span class="dropdown-text">Gradient Descent</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project5.html">
+ <span class="dropdown-text">Compute Graph, Autograd and Backprop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project6.html">
+ <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project7.html">
+ <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
+<span class="menu-text">Moodle Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syllabus/appointment.html"> 
+<span class="menu-text">Office Hours</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://calendly.com/ssultan-dpq/"> 
+<span class="menu-text">Set an Appointment</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformers.html">Transformers</a></li><li class="breadcrumb-item"><a href="./transformers_sa.html">Dot-product self-attention</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple inputs / outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;Deep neural networks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./loss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loss Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop for NN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Algorithmic differentiation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Performance</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducing error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Selection</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./reg_Regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regularization</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_smoother_func.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Make function smoother</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_multiplemodels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combine multiple models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_wider_minima.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Find wider minima</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_increase_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Increase Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder-decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers for images</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoding strategies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Language Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unsupervised learning</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder (forward process)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model (reverse process)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reparameterization of loss function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Families of diffusion models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#value-vectors" id="toc-value-vectors" class="nav-link active" data-scroll-target="#value-vectors">Value Vectors</a></li>
+  <li><a href="#self-attention-block" id="toc-self-attention-block" class="nav-link" data-scroll-target="#self-attention-block">Self-Attention Block</a></li>
+  <li><a href="#query-vectors-key-vectors-and-attention-weights" id="toc-query-vectors-key-vectors-and-attention-weights" class="nav-link" data-scroll-target="#query-vectors-key-vectors-and-attention-weights">Query vectors, Key vectors and Attention Weights</a></li>
+  <li><a href="#non-linearity-in-self-attention" id="toc-non-linearity-in-self-attention" class="nav-link" data-scroll-target="#non-linearity-in-self-attention">Non-linearity in self-attention</a></li>
+  <li><a href="#matrix-form" id="toc-matrix-form" class="nav-link" data-scroll-target="#matrix-form">Matrix form</a></li>
+  <li><a href="#scaled-dot-product-self-attention" id="toc-scaled-dot-product-self-attention" class="nav-link" data-scroll-target="#scaled-dot-product-self-attention">Scaled dot-product self-attention</a></li>
+  <li><a href="#multiple-heads" id="toc-multiple-heads" class="nav-link" data-scroll-target="#multiple-heads">Multiple heads</a></li>
+  <li><a href="#transformer-layers" id="toc-transformer-layers" class="nav-link" data-scroll-target="#transformer-layers">Transformer layers</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformers.html">Transformers</a></li><li class="breadcrumb-item"><a href="./transformers_sa.html">Dot-product self-attention</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Dot-product self-attention</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The previous section argued that a model for processing text will</p>
+<ol type="i">
+<li>use <mark>parameter sharing</mark> to cope with long input passages of differing lengths and</li>
+<li>contain <mark>connections between word representations</mark> that depend on the words themselves.</li>
+</ol>
+<p>The transformer acquires both properties by using <u>dot-product self-attention</u>.</p>
+<!-- A standard neural network layer $\mathbf{f[x]}$, takes a $D\times 1$ input $\mathbf{x}$ and applies a linear
+transformation followed by an activation function like a ReLU, so:
+
+\begin{eqnarray}
+  \mbox{{\bf f}}[\mathbf{x}] = \mbox{{\bf ReLU}}[\boldsymbol\beta +\boldsymbol\Omega\mathbf{x}],
+ \end{eqnarray}
+
+where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains the weights. -->
+<section id="value-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="value-vectors">Value Vectors</h3>
+<p>Value vectors in the context of self-attention are adjusted embeddings of the input tokens, capturing their information or semantics in a form that can be effectively combined with other tokens’ information (through the attention mechanism). In other words, the value vector still satisfy the property that similar input tokens have similar value vectors.</p>
+<p>First, a set of <mark>Value vectors</mark> are computed for each input:</p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_values}
+  \mathbf{v}_{m} = \boldsymbol\beta_{v}+\boldsymbol\Omega_{v}\mathbf{x}_{m},
+\end{eqnarray}\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol\beta_{v} ∈ \mathbb{R}^{D×1}\)</span> and <span class="math inline">\(\boldsymbol\Omega_{v} ∈ \mathbb{R}^{D×D}\)</span> represent biases and weights, respectively.</p>
+<p>Note that the subscript <span class="math inline">\(m\)</span> in <span class="math inline">\(\mathbf{v}_{m}\)</span> corresponds to the mth input <span class="math inline">\(\mathbf{x}_{m}\)</span> and <span class="math inline">\(m \in \{1, \ldots, N\}\)</span>. More importantly note that only the value vector <span class="math inline">\(\mathbf{v}_{m}\)</span> and input vector <span class="math inline">\(\mathbf{x}_{m}\)</span> have the subscript <span class="math inline">\(m\)</span>. Both beta and Omega do not have the subscript <span class="math inline">\(m\)</span> but have the subscripts <span class="math inline">\(v\)</span> to indicate that they are associated with the value vectors and not specific to any particular input. In other words, <mark>the same parameters <span class="math inline">\(\boldsymbol\beta_{v}\)</span> and <span class="math inline">\(\boldsymbol\Omega_{v}\)</span> are shared by all inputs.</mark></p>
+<center>
+<img src="valuevectors.jpg" style="filter: invert(1);" width="50%">
+</center>
+<p>Contrast this with a fully connected layer. In case of a fully connected layer, the weight matrix <span class="math inline">\(\Omega\)</span> would have been dense and of dimension <span class="math inline">\((N\times D) \times (N\times D)\)</span>. In self-attention, however, the weights <span class="math inline">\(\boldsymbol\Omega_{v}\)</span> are shared across all inputs, which allows the model to maintain permutation invariance and efficiently handle variable-length sequences.</p>
+<p>Therefore, the equation <span class="math inline">\(\mathbf{v}_{m} = \boldsymbol\beta_{v}+\boldsymbol\Omega_{v}\mathbf{x}_{m}\)</span> shows that the same weights <span class="math inline">\(\Omega_v ∈ \mathbb{R}^{D×D}\)</span> and biases <span class="math inline">\(\beta_v ∈ \mathbb{R}^{D}\)</span> are applied to each input <span class="math inline">\(x_• \in \mathbb{R}^{D}\)</span>.</p>
+<p>This computation scales linearly with the sequence length N, so it needs fewer parameters than a fully connected network relating all DN inputs to all DN values.</p>
+<p>In fact, the value computation can be viewed as a sparse matrix operation with shared parameters that relates these DN quantities (figure 12.2b).</p>
+</section>
+<section id="self-attention-block" class="level3">
+<h3 class="anchored" data-anchor-id="self-attention-block">Self-Attention Block</h3>
+<p><mark>A self-attention block <span class="math inline">\(\mathbf{sa}[•]\)</span> takes N inputs <span class="math inline">\(\mathbf{x}_1,...,\mathbf{x}_N\)</span>, each of dimension <span class="math inline">\(D\times 1\)</span>,<br>and returns N outputs <span class="math inline">\(\mathbf{sa}_1[\mathbf{x}_1,...,\mathbf{x}_N],...,\mathbf{sa}_N[\mathbf{x}_1,...,\mathbf{x}_N]\)</span>, each of which is also of size <span class="math inline">\(D\times 1\)</span>. </mark></p>
+<p><span class="math inline">\(D\)</span> is the embedding dimension of each token and <span class="math inline">\(N\)</span> is the number of input tokens.</p>
+<p>Then the nth output <span class="math inline">\(\mathbf{sa}_{n}[\mathbf{x}_{1},\ldots, \mathbf{x}_{N}]\)</span> is a weighted sum of all the values <span class="math inline">\(\mathbf{v}_{1},\ldots,\mathbf{v}_{N}\)</span>:</p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_sattention1}
+  \mbox{{\bf sa}}_{n}[\mathbf{x}_{1},\ldots, \mathbf{x}_{N}] = \sum_{m=1}^{N}a[\mathbf{x}_{m}, \mathbf{x}_{n}]\mathbf{v}_{m}.
+\end{eqnarray}\]</span></p>
+<p>The scalar weight a[<span class="math inline">\(\mathbf{x}_{m},\mathbf{x}_{n}\)</span>] is the attention that the nth output pays to input <span class="math inline">\(\mathbf{x}_{m}\)</span>.</p>
+<p>The <span class="math inline">\(N\)</span> weights <span class="math inline">\(a[•,\mathbf{x}_{n}]\)</span> are non-negative and sum to one.</p>
+<p>Hence, self-attention can be thought of as routing the values in different proportions to create each output (figure 12.1).</p>
+<p>The attention weights <span class="math inline">\(a[\mathbf{x}_m,\mathbf{x}_n]\)</span> combine the values from different inputs.</p>
+<p>They are also sparse since there is only one weight for each ordered pair of inputs <span class="math inline">\((\mathbf{x}_m,\mathbf{x}_n)\)</span>, regardless of the size of these inputs (figure 12.2c).</p>
+<p>It follows that the number of attention weights has a quadratic dependence on the sequence length N, but is independent of the length D of each input.</p>
+<hr>
+<p><img src="assets/Chap12/TransformerRouting.svg" style="filter: invert(1);" width="100%"></p>
+<p>Self-attention as routing. The self-attention mechanism takes N inputs <span class="math inline">\(\mathbf{x}_1, . . . , \mathbf{x}_N ∈ \mathbb{R}^{D}\)</span> (here N = 3 and D = 4) and processes each separately to compute N value vectors.</p>
+<p>The nth output <span class="math inline">\(\mathbf{sa}_{n}[\mathbf{x}_1, . . . , \mathbf{x}_N]\)</span> (written as <span class="math inline">\(\mathbf{sa}_{n}[\mathbf{x}_•]\)</span> for short) is then computed as a weighted sum of the N value vectors, where the weights are positive and sum to one.</p>
+<ol type="a">
+<li><p>Output <span class="math inline">\(\mathbf{sa}_{1}[\mathbf{x}_•]\)</span> is computed as <span class="math inline">\(a[\mathbf{x}_1, \mathbf{x}_1] =
+0.1\)</span> times the first value vector, <span class="math inline">\(a[\mathbf{x}_2, \mathbf{x}_1] = 0.3\)</span> times the second value vector, and <span class="math inline">\(a[\mathbf{x}_3, \mathbf{x}_1] = 0.6\)</span> times the third value vector.</p></li>
+<li><p>Output <span class="math inline">\(\mathbf{sa}_{2}[\mathbf{x}_•]\)</span> is computed in the same way, but this time with weights of <span class="math inline">\(0.5, 0.2\)</span>, and <span class="math inline">\(0.3\)</span>.</p></li>
+<li><p>The weighting for output <span class="math inline">\(\mathbf{sa}_{3}[\mathbf{x}_•]\)</span> is different again. Each output can hence be thought of as a different routing of the N values.</p></li>
+</ol>
+<hr>
+<p><img src="assets/Chap12/TransformerSA1.svg" style="filter: invert(1);" width="100%"></p>
+<p>Self-attention for N =3 inputs <span class="math inline">\(\mathbf{x}_n\)</span>, each with dimension D=4.</p>
+<ol type="a">
+<li><p>Each input <span class="math inline">\(\mathbf{x}_m\)</span> is operated on independently by the same weights <span class="math inline">\(\Omega_v\)</span> (same color equals same weight) and biases <span class="math inline">\(\beta_v\)</span> (not shown) to form the values <span class="math inline">\(\beta_v + \Omega_v\mathbf{x}_m\)</span>.</p>
+<p>Each output is a linear combination of the values, with the attention weight <span class="math inline">\(a[\mathbf{x}_m, \mathbf{x}_n]\)</span> defining the contribution of the <span class="math inline">\(m\)</span>th value to the <span class="math inline">\(n\)</span>th output.</p></li>
+<li><p>Matrix showing block sparsity of linear transformation <span class="math inline">\(\Omega_v\)</span> between inputs and values.</p></li>
+<li><p>Matrix showing sparsity of attention weights relating values and outputs.</p></li>
+</ol>
+<hr>
+</section>
+<section id="query-vectors-key-vectors-and-attention-weights" class="level3">
+<h3 class="anchored" data-anchor-id="query-vectors-key-vectors-and-attention-weights">Query vectors, Key vectors and Attention Weights</h3>
+<p>In the previous section, we saw that the outputs result from two chained linear transformations; the value vectors <span class="math inline">\(\beta_v + \Omega_v \mathbf{x}_m\)</span> are computed independently for each input <span class="math inline">\(\mathbf{x}_m\)</span>, and these vectors are combined linearly by the attention weights <span class="math inline">\(a[\mathbf{x}_m,\mathbf{x}_n]\)</span>.</p>
+<p>However, the overall self-attention computation is nonlinear.</p>
+<p>As we’ll see shortly, the attention weights are themselves nonlinear functions of the input.</p>
+<p>This is an example of a hypernetwork, where one network branch computes the weights of another. To compute the attention, we apply two more linear transformations to the inputs:</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{q}_{n} &amp;=&amp; \boldsymbol\beta_{q}+\boldsymbol\Omega_{q}\mathbf{x}_{n}\nonumber \\
+  \mathbf{k}_{m} &amp;=&amp; \boldsymbol\beta_{k}+\boldsymbol\Omega_{k}\mathbf{x}_{m},
+\end{eqnarray}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{q}_n\)</span> and <span class="math inline">\(\mathbf{k}_m\)</span> are termed queries and keys, respectively. Then we compute dot products between the queries and keys and pass the results through a softmax function:</p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_sattention2}
+  a[\mathbf{x}_{m},\mathbf{x}_{n}] &amp;=&amp; \mbox{softmax}_{m}\left[\mathbf{k}_{\bullet}^{T}\mathbf{q}_{n}\right]\nonumber\\
+  \\
+  &amp;=&amp; \frac{\exp\left[\mathbf{k}_{m}^{T}\mathbf{q}_{n}\right]}{\sum_{m'=1}^{N}\exp\left[\mathbf{k}_{m'}^{T}\mathbf{q}_{n} \right]},
+\end{eqnarray}\]</span></p>
+<p>so for each <span class="math inline">\(\mathbf{x}_n\)</span>, they are positive and sum to one (figure 12.3). For obvious reasons, this is known as <u>dot-product self-attention</u>.</p>
+<p>The names “queries” and “keys” were inherited from the field of information retrieval and have the following interpretation: the dot product operation returns a measure of similarity between its inputs, so the weights <span class="math inline">\(a[\mathbf{x}_\bullet,\mathbf{x}_n]\)</span> depend on the relative similarities between the nth query and all of the keys. The softmax function means that the key vectors “compete” with one another to contribute to the final result. The queries and keys must have the same dimensions. However, these can differ from the dimension of the values, which is usually the same size as the input, so the representation doesn’t change size.</p>
+<p><img src="assets/Chap12/TransformerSA2.svg" style="filter: invert(1);" width="100%"></p>
+<p>Computing attention weights. a) Query vectors qn = βq + Ωqxn and key vectors kn = βk + Ωkxn are computed for each input xn. b) The dot products between each query and the three keys are passed through a softmax function to form non-negative attentions that sum to one. c) These route the value vectors (figure 12.1) via the sparse matrix from figure 12.2c.</p>
+</section>
+<section id="non-linearity-in-self-attention" class="level3">
+<h3 class="anchored" data-anchor-id="non-linearity-in-self-attention">Non-linearity in self-attention</h3>
+<p>Self-attention does not require an explicit activation function such as ReLU to introduce non-linearity. Although the queries, keys, and values are computed using linear transformations, the attention weights depend nonlinearly on the inputs.</p>
+<p>Non-linearity enters in two places:</p>
+<ul>
+<li><strong>Dot-product scores.</strong> Each score combines a query and a key, both of which depend on <span class="math inline">\(\mathbf{X}\)</span>. Consequently, <span class="math inline">\(\mathbf{Q}\mathbf{K}^{\mathsf T}\)</span> is quadratic in the input, rather than linear.</li>
+<li><strong>Softmax weights.</strong> Softmax exponentiates the scores and normalizes them so that the weights in each row sum to one. This is a nonlinear transformation of the scores.</li>
+</ul>
+<p>Each output is a weighted sum of value vectors:</p>
+<p><span class="math display">\[
+\mathbf{y}_i=\sum_j \alpha_{ij}(\mathbf{X})\,\mathbf{v}_j.
+\]</span></p>
+<p>For fixed weights <span class="math inline">\(\alpha_{ij}\)</span>, this sum would be linear in the values. In self-attention, however, the weights themselves change with the input. Changing a word can therefore change both its value vector and how information is combined across the sequence. This dependence makes the overall mapping nonlinear.</p>
+</section>
+<section id="matrix-form" class="level3">
+<h3 class="anchored" data-anchor-id="matrix-form">Matrix form</h3>
+<p>The above computation can be written in a compact form if the N inputs <span class="math inline">\(\mathbf{x}_n\)</span> form the columns of the D×N matrix <span class="math inline">\(\mathbf{X}\)</span>. The values, queries, and keys can be computed as:</p>
+<p><span class="math display">\[\begin{eqnarray}
+\mathbf{V}[\mathbf{X}] &amp;=&amp; \boldsymbol\beta_{v}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{v}}\mathbf{X}\nonumber \\
+\mathbf{Q}[\mathbf{X}] &amp;=&amp; \boldsymbol\beta_{q}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{q}}\mathbf{X}\nonumber \\
+\mathbf{K}[\mathbf{X}] &amp;=&amp; \boldsymbol\beta_{k}\mathbf{1}^{T}+\boldsymbol\Omega_{\textit{k}}\mathbf{X},
+\end{eqnarray}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{1}\)</span> is an N ×1 vector containing ones. The self-attention computation is then:</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}[\mathbf{X}]\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}[\mathbf{X}]^{T}\mathbf{Q}[\mathbf{X}]\Bigr],
+\end{eqnarray}\]</span></p>
+<p>where the function <span class="math inline">\(\mbox{\bf Softmax}[•]\)</span> takes a matrix and performs the softmax operation independently on each of its columns (figure 12.4). In this formulation, we have explicitly included the dependence of the values, queries, and keys on the input X to emphasize that self-attention computes a kind of triple product based on the inputs. However, from now on, we will drop this dependence and just write:</p>
+<p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_sa_matrix}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\Bigl[\mathbf{K}^{T}\mathbf{Q}\Bigr].
+\end{eqnarray}\]</span></p>
+<p><img src="assets/Chap12/TransformerBlockSA.svg" style="filter: invert(1);" width="100%"></p>
+<p>Self-attention in matrix form. Self-attention can be implemented efficiently if we store the N input vectors xn in the columns of the D×N matrix X. The input X is operated on separately by the query matrix Q, key matrix K, and value matrix V. The dot products are then computed using matrix multiplication, and a softmax operation is applied independently to each column of the resulting matrix to calculate the attentions. Finally, the values are post-multiplied by the attentions to create an output of the same size as the input.</p>
+<div id="ef38f072" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The self-attention mechanism maps <span class="math inline">\(N\)</span> inputs $ ^D $and returns <span class="math inline">\(x^{\prime} \in \mathbb{R}^D\)</span> outputs .</p>
+<div id="75c930f0" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">3</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of inputs</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of dimensions of each input</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>all_x <span class="op">=</span> []</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create elements x_n and append to list</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  all_x.append(np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>)))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the list</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(all_x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[array([[ 1.78862847],
+       [ 0.43650985],
+       [ 0.09649747],
+       [-1.8634927 ]]), array([[-0.2773882 ],
+       [-0.35475898],
+       [-0.08274148],
+       [-0.62700068]]), array([[-0.04381817],
+       [-0.47721803],
+       [-1.31386475],
+       [ 0.88462238]])]</code></pre>
+</div>
+</div>
+<p>We’ll also need the weights and biases for the keys, queries, and values (equations 12.2 and 12.4)</p>
+<div id="a3f70372" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>omega_q <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>omega_k <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>omega_v <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>beta_q  <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>beta_k  <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>beta_v  <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s compute the queries, keys, and values for each input</p>
+<div id="fc14e164" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make three lists to store queries, keys, and values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>all_queries <span class="op">=</span> []</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>all_keys    <span class="op">=</span> []</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>all_values  <span class="op">=</span> []</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For every input</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> all_x:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the keys, queries and values.</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  query <span class="op">=</span> (omega_q <span class="op">@</span> x) <span class="op">+</span> beta_q</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  key   <span class="op">=</span> (omega_k <span class="op">@</span> x) <span class="op">+</span> beta_k</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  value <span class="op">=</span> (omega_v <span class="op">@</span> x) <span class="op">+</span> beta_v</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  all_queries.append(query)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  all_keys.append(key)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  all_values.append(value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll need a softmax function (equation 12.5) – here, it will take a list of arbitrary numbers and return a list where the elements are non-negative and sum to one</p>
+<div id="f8d91225" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(items_in):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the elements of items_out</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  items_out <span class="op">=</span> np.exp(items_in <span class="op">-</span> np.<span class="bu">max</span>(items_in))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  items_out <span class="op">/=</span> np.<span class="bu">sum</span>(items_out)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> items_out <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now compute the self attention values:</p>
+<div id="88c978bb" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create emptymlist for output</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>all_x_prime <span class="op">=</span> []</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># For each output</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create list for dot products of query N with all keys</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  all_km_qn <span class="op">=</span> []</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the dot products</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> key <span class="kw">in</span> all_keys:</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the appropriate dot product</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    dot_product <span class="op">=</span> all_queries[n].T <span class="op">@</span> key</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store dot product</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    all_km_qn.append(dot_product)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute dot product</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  attention <span class="op">=</span> softmax(all_km_qn)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Print result (should be positive sum to one)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Attentions for output "</span>, n)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(attention)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute a weighted sum of all of the values according to the attention</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  x_prime <span class="op">=</span> np.zeros_like(all_values[<span class="dv">0</span>])</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    x_prime <span class="op">+=</span> attention[m] <span class="op">*</span> all_values[m]</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  all_x_prime.append(x_prime)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out true values to check you have it correct</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_0_calculated:"</span>, all_x_prime[<span class="dv">0</span>].transpose())</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_0_true: [[ 0.94744244 -0.24348429 -0.91310441 -0.44522983]]"</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_1_calculated:"</span>, all_x_prime[<span class="dv">1</span>].transpose())</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_1_true: [[ 1.64201168 -0.08470004  4.02764044  2.18690791]]"</span>)</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_2_calculated:"</span>, all_x_prime[<span class="dv">2</span>].transpose())</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_2_true: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Attentions for output  0
+[[[1.24326146e-13]]
+
+ [[9.98281489e-01]]
+
+ [[1.71851130e-03]]]
+Attentions for output  1
+[[[2.79525306e-12]]
+
+ [[5.85506360e-03]]
+
+ [[9.94144936e-01]]]
+Attentions for output  2
+[[[0.00505708]]
+
+ [[0.00654776]]
+
+ [[0.98839516]]]
+x_prime_0_calculated: [[ 0.94744244 -0.24348429 -0.91310441 -0.44522983]]
+x_prime_0_true: [[ 0.94744244 -0.24348429 -0.91310441 -0.44522983]]
+x_prime_1_calculated: [[ 1.64201168 -0.08470004  4.02764044  2.18690791]]
+x_prime_1_true: [[ 1.64201168 -0.08470004  4.02764044  2.18690791]]
+x_prime_2_calculated: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]
+x_prime_2_true: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]</code></pre>
+</div>
+</div>
+<p>Now let’s compute the same thing, but using matrix calculations. We’ll store the inputs in the columns of a matrix, using equations 12.6 and 12.7/8.</p>
+<p>Note: The book uses column vectors (for compatibility with the rest of the text), but in the wider literature it is more normal to store the inputs in the rows of a matrix; in this case, the computation is the same, but all the matrices are transposed and the operations proceed in the reverse order.</p>
+<div id="ca41bc2d" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define softmax operation that works independently on each column</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax_cols(data_in):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Exponentiate all of the values</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  exp_values <span class="op">=</span> np.exp(data_in) <span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum over columns</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  denom <span class="op">=</span> np.<span class="bu">sum</span>(exp_values, axis <span class="op">=</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replicate denominator to N rows</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  denom <span class="op">=</span> np.matmul(np.ones((data_in.shape[<span class="dv">0</span>],<span class="dv">1</span>)), denom[np.newaxis,:])</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute softmax</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  softmax <span class="op">=</span> exp_values <span class="op">/</span> denom</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return the answer</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> softmax</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a> <span class="co"># Now let's compute self attention in matrix form</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k):</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Compute queries, keys, and values</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. Compute dot products</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Apply softmax to calculate attentions</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Weight values by attentions</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  all_queries <span class="op">=</span> (omega_q <span class="op">@</span> X) <span class="op">+</span> beta_q</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  all_keys    <span class="op">=</span> (omega_k <span class="op">@</span> X) <span class="op">+</span> beta_k</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  all_values  <span class="op">=</span> (omega_v <span class="op">@</span> X) <span class="op">+</span> beta_v</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> (softmax_cols(all_queries.T <span class="op">@</span> all_keys) <span class="op">@</span> all_values.T).T</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy data into matrix</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.zeros((D, N))</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">0</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">0</span>])</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">1</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">1</span>])</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">2</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">2</span>])</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 0.04934405  1.77317658 -1.94113808]
+ [-0.01271124 -0.21651166  3.45551881]
+ [-0.048059    2.26943944 -6.01580286]
+ [-0.02345359  1.26473743 -2.5239172 ]]</code></pre>
+</div>
+</div>
+<p>If you did this correctly, the values should be the same as above.</p>
+<p>TODO:</p>
+<p>Print out the attention matrix You will see that the values are quite extreme (one is very close to one and the others are very close to zero. Now we’ll fix this problem by using scaled dot-product attention.</p>
+<div id="53a2c58c" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's compute self attention in matrix form</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scaled_dot_product_self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Compute queries, keys, and values</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. Compute dot products</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Scale the dot products as in equation 12.9</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Apply softmax to calculate attentions</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 5. Weight values by attentions</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  all_queries <span class="op">=</span> (omega_q <span class="op">@</span> X) <span class="op">+</span> beta_q</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  all_keys    <span class="op">=</span> (omega_k <span class="op">@</span> X) <span class="op">+</span> beta_k</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  all_values  <span class="op">=</span> (omega_v <span class="op">@</span> X) <span class="op">+</span> beta_v</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> np.zeros_like(X)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the dot products</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  dot_products <span class="op">=</span> all_queries.T <span class="op">@</span> all_keys</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Scale the dot products</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  scale_factor <span class="op">=</span> np.sqrt(all_keys.shape[<span class="dv">0</span>])</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  scaled_dot_products <span class="op">=</span> dot_products <span class="op">/</span> scale_factor</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Apply softmax to calculate attentions</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  attentions <span class="op">=</span> softmax_cols(scaled_dot_products)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Weight values by attentions</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> (attentions <span class="op">@</span> all_values.T).T</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> scaled_dot_product_self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 0.13752296  1.48061754 -1.73675795]
+ [-0.03523951 -0.1745895   3.43612491]
+ [-0.13084049  1.99604787 -5.6596298 ]
+ [-0.06373021  1.10938021 -2.32828337]]</code></pre>
+</div>
+</div>
+</section>
+<section id="scaled-dot-product-self-attention" class="level2">
+<h2 class="anchored" data-anchor-id="scaled-dot-product-self-attention">Scaled dot-product self-attention</h2>
+<p>The dot products in the attention computation can have large magnitudes and move the arguments to the softmax function into a region where the largest value completely dominates.</p>
+<p>Small changes to the inputs to the softmax function now have little effect on the output (i.e., the gradients are very small), making the model diﬀicult to train. To prevent this, the dot products are scaled by the square root of the dimension <span class="math inline">\(D_q\)</span> of the the queries and keys (i.e., the number of rows in <span class="math inline">\(\boldsymbol\Omega_q\)</span> and <span class="math inline">\(\boldsymbol\Omega_k\)</span>, which must be the same):</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right].
+\end{eqnarray}\]</span></p>
+<p>This is known as scaled dot-product self-attention.</p>
+</section>
+<section id="multiple-heads" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-heads">Multiple heads</h2>
+<p>Multiple self-attention mechanisms are usually applied in parallel, and this is known as multi-head self-attention. Now <span class="math inline">\(H\)</span> different sets of values, keys, and queries are computed:</p>
+<p><span class="math display">\[\begin{eqnarray}
+\mathbf{V}_h &amp;=&amp; \boldsymbol\beta_{vh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{vh}}\mathbf{X}\nonumber \\
+\mathbf{Q}_h &amp;=&amp; \boldsymbol\beta_{qh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{qh}}\mathbf{X}\nonumber \\
+\mathbf{K}_h &amp;=&amp; \boldsymbol\beta_{kh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{kh}}\mathbf{X}.
+\end{eqnarray}\]</span></p>
+<p>The <span class="math inline">\(h\)</span>th self-attention mechanism or head can be written as:</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mbox{{\bf Sa}}_{h}[\mathbf{X}] =\mathbf{V}_h\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}_h^{T}\mathbf{Q}_h}{\sqrt{D}_{q}}\right],
+\end{eqnarray}\]</span></p>
+<p>where we have different parameters <span class="math inline">\(\{\boldsymbol\beta_{vh},\boldsymbol\Omega_{vh}\}\)</span>, <span class="math inline">\(\{\boldsymbol\beta_{qh},\boldsymbol\Omega_{qh}\}\)</span>, and <span class="math inline">\(\{\boldsymbol\beta_{kh},\boldsymbol\Omega_{kh}\}\)</span> for each head. Typically, if the dimension of the inputs <span class="math inline">\(\mathbf{x}_m\)</span> is <span class="math inline">\(D\)</span> and there are <span class="math inline">\(H\)</span> heads, the values, queries, and keys will all be of size <span class="math inline">\(D/H\)</span>, as this allows for an eﬀicient implementation. The outputs of these self-attention mechanisms are vertically concatenated, and another linear transform <span class="math inline">\(\boldsymbol\Omega_c\)</span> is applied to combine them (figure 12.6):</p>
+<p><img src="assets/Chap12/TransformerBlockSAMultiHead.svg" style="filter: invert(1);" width="100%"></p>
+<p>Multi-head self-attention. Self-attention occurs in parallel across multiple “heads.” Each has its own queries, keys, and values. Here two heads are depicted, in the cyan and orange boxes, respectively. The outputs are vertically concatenated, and another linear transformation Ωc is used to recombine them.</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mbox{{\bf MhSa}}[\mathbf{X}] = \boldsymbol\Omega_{c}\Bigl[\mbox{{\bf Sa}}_{1}[\mathbf{X}]^T,\mbox{{\bf Sa}}_{2}[\mathbf{X}]^T,\ldots,\mbox{{\bf Sa}}_{H}[\mathbf{X}]^T \Bigr]^T.
+\end{eqnarray}\]</span></p>
+<p>Multiple heads seem to be necessary to make self-attention work well. It has been speculated that they make the self-attention network more robust to bad initializations.</p>
+</section>
+<section id="transformer-layers" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-layers">Transformer layers</h2>
+<p>Self-attention is just one part of a larger transformer layer. This consists of a multi- head self-attention unit (which allows the word representations to interact with each other) followed by a fully connected network <span class="math inline">\(\textbf{mlp}[\mathbf{x}_\bullet]\)</span> (that operates separately on each word). Both units are residual networks (i.e., their output is added back to the original input). In addition, it is typical to add a LayerNorm operation after both the self- attention and fully connected networks. This is similar to BatchNorm but normalizes each embedding in each batch element separately using statistics calculated across its D embedding dimensions (section 11.4 and figure 11.14). The complete layer can be described by the following series of operations (figure 12.7):</p>
+<p><img src="assets/Chap12/TransformerBlock.svg" style="filter: invert(1);" width="100%"></p>
+<p>Transformer layer. The input consists of a D × N matrix containing the D-dimensional word embeddings for each of the N input tokens. The output is a matrix of the same size. The transformer layer consists of a series of operations. First, there is a multi-head attention block, allowing the word embeddings to interact with one another. This forms the processing of a residual block, so the inputs are added back to the output. Second, a LayerNorm operation is applied separately to each embedding. Third, there is a second residual layer where the same fully connected neural network is applied separately to each of the N word representations (columns). Finally, LayerNorm is applied again.</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{X} &amp;\leftarrow&amp; \mathbf{X} + \mbox{\bf{MhSa}}[\mathbf{X}] \nonumber \\
+  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}] \hspace{3cm}\nonumber\\
+  \mathbf{x}_{n} &amp;\leftarrow&amp; \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
+  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}],
+\end{eqnarray}\]</span></p>
+<p>where the column vectors xn are separately taken from the full data matrix X. In a real network, the data passes through a series of these transformer layers.</p>
+<p>The multihead self-attention mechanism maps <span class="math inline">\(N\)</span> inputs <span class="math inline">\(\mathbf{x_n} \in \mathbb{R}^D\)</span> and returns N outputs <span class="math inline">\(\mathbf{x^{\prime}} \in \mathbb{R}^D\)</span> .</p>
+<div id="0044d7db" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">3</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of inputs</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of dimensions of each input</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,N))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print X</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 1.789  0.437  0.096 -1.863 -0.277 -0.355]
+ [-0.083 -0.627 -0.044 -0.477 -1.314  0.885]
+ [ 0.881  1.71   0.05  -0.405 -0.545 -1.546]
+ [ 0.982 -1.101 -1.185 -0.206  1.486  0.237]
+ [-1.024 -0.713  0.625 -0.161 -0.769 -0.23 ]
+ [ 0.745  1.976 -1.244 -0.626 -0.804 -2.419]
+ [-0.924 -1.024  1.124 -0.132 -1.623  0.647]
+ [-0.356 -1.743 -0.597 -0.589 -0.874  0.03 ]]</code></pre>
+</div>
+</div>
+<p>We’ll use two heads. We’ll need the weights and biases for the keys, queries, and values (equations 12.2 and 12.4). We’ll use two heads, and (as in the figure), we’ll make the queries keys and values of size D/H</p>
+<div id="e6d9060f" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of heads</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># QDV dimension</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>H_D <span class="op">=</span> <span class="bu">int</span>(D<span class="op">/</span>H)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters for the first head</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>omega_q1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>omega_k1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>omega_v1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>beta_q1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>beta_k1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>beta_v1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters for the second head</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>omega_q2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>omega_k2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>omega_v2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>beta_q2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>beta_k2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>beta_v2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>omega_c <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s compute the multiscale self-attention</p>
+<div id="d12fa347" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define softmax operation that works independently on each column</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax_cols(data_in):</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Exponentiate all of the values</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  exp_values <span class="op">=</span> np.exp(data_in) <span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum over columns</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  denom <span class="op">=</span> np.<span class="bu">sum</span>(exp_values, axis <span class="op">=</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute softmax (numpy broadcasts denominator to all rows automatically)</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  softmax <span class="op">=</span> exp_values <span class="op">/</span> denom</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return the answer</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> softmax</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's compute self attention in matrix form</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> multihead_scaled_self_attention(X,omega_v1, omega_q1, omega_k1, beta_v1, beta_q1, beta_k1, omega_v2, omega_q2, omega_k2, beta_v2, beta_q2, beta_k2, omega_c):</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Multihead scaled self-attention mechanism.</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> omega_c <span class="op">@</span> np.vstack([</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      (softmax_cols((omega_q1 <span class="op">@</span> X <span class="op">+</span> beta_q1).T <span class="op">@</span> (omega_k1 <span class="op">@</span> X <span class="op">+</span> beta_k1) <span class="op">/</span> np.sqrt(omega_q1.shape[<span class="dv">0</span>])) <span class="op">@</span> (omega_v1 <span class="op">@</span> X <span class="op">+</span> beta_v1).T).T,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      (softmax_cols((omega_q2 <span class="op">@</span> X <span class="op">+</span> beta_q2).T <span class="op">@</span> (omega_k2 <span class="op">@</span> X <span class="op">+</span> beta_k2) <span class="op">/</span> np.sqrt(omega_q2.shape[<span class="dv">0</span>])) <span class="op">@</span> (omega_v2 <span class="op">@</span> X <span class="op">+</span> beta_v2).T).T</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  ])</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> multihead_scaled_self_attention(X,omega_v1, omega_q1, omega_k1, beta_v1, beta_q1, beta_k1, omega_v2, omega_q2, omega_k2, beta_v2, beta_q2, beta_k2, omega_c)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Your answer:"</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"True values:"</span>)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"[[-21.207  -5.373 -20.933  -9.179 -11.319 -17.812]"</span>)</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [ -1.995   7.906 -10.516   3.452   9.863  -7.24 ]"</span>)</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  5.479   1.115   9.244   0.453   5.656   7.089]"</span>)</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [ -7.413  -7.416   0.363  -5.573  -6.736  -0.848]"</span>)</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [-11.261  -9.937  -4.848  -8.915 -13.378  -5.761]"</span>)</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  3.548  10.036  -2.244   1.604  12.113  -2.557]"</span>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  4.888  -5.814   2.407   3.228  -4.232   3.71 ]"</span>)</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  1.248  18.894  -6.409   3.224  19.717  -5.629]]"</span>)</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a><span class="co"># If your answers don't match, then make sure that you are doing the scaling, and make sure the scaling value is correct</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Your answer:
+[[-22.646  -5.784   3.482  -1.692   0.437  -8.298]
+ [ -0.909  -1.243   4.792   8.578   7.136  -7.41 ]
+ [  4.784   2.155   0.244   1.903   5.343   3.26 ]
+ [ -9.995   0.143   0.422  -6.449  -1.252  -2.497]
+ [-12.711  -4.78   -0.733  -6.695  -3.892   0.755]
+ [  1.337  -2.347 -12.407   3.273   3.644  -8.366]
+ [  9.948  -1.418  13.564  -3.171  -4.017   6.666]
+ [ -2.163   5.145 -10.17   14.501  12.527 -10.373]]
+True values:
+[[-21.207  -5.373 -20.933  -9.179 -11.319 -17.812]
+ [ -1.995   7.906 -10.516   3.452   9.863  -7.24 ]
+ [  5.479   1.115   9.244   0.453   5.656   7.089]
+ [ -7.413  -7.416   0.363  -5.573  -6.736  -0.848]
+ [-11.261  -9.937  -4.848  -8.915 -13.378  -5.761]
+ [  3.548  10.036  -2.244   1.604  12.113  -2.557]
+ [  4.888  -5.814   2.407   3.228  -4.232   3.71 ]
+ [  1.248  18.894  -6.409   3.224  19.717  -5.629]]</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

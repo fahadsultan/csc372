@@ -195,6 +195,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./Project6.html">
  <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project7.html">
+ <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -443,25 +447,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Implicit_Regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_smoother_func.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Make function smoother</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Ensembling.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_multiplemodels.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Combine multiple models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Augmentation.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_wider_minima.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Find wider minima</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Bayesian_Approach.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_increase_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Increase Data</span></a>
   </div>
 </li>
@@ -478,14 +482,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dot-product self-attention</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for natural language processing</span></a>
+  <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder-decoder model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -611,18 +627,28 @@ window.Quarto = {
 </header>
 
 
+<p>Transformers were initially developed for text data. Their enormous success in this area led to experimentation on images. This was not obviously a promising idea for two reasons. First, there are many more pixels in an image than words in a sentence, so the quadratic complexity of self-attention poses a practical bottleneck. Second, convolutional nets have a good inductive bias because each layer is equivariant to spatial translation, and takes into account the 2D structure of the image. However, this must be learned in a transformer network.</p>
+<p>Regardless of these apparent disadvantages, transformer networks for images have now eclipsed the performance of convolutional networks for image classification and other tasks. This is partly because of the enormous scale at which they can be constructed and the large amounts of data that can be used to pre-train the networks. This section describes transformer models for images.</p>
 <p><img src="assets/Chap12/TransformerIGPT.svg" style="filter: invert(0);" width="100%"></p>
 <p>ImageGPT. a) Images generated from the autoregressive ImageGPT model. The top-left pixel is drawn from the estimated empirical distribution at this position. Subsequent pixels are generated in turn, conditioned on the previous ones, working along the rows until the bottom-right of the image is reached. For each pixel, the transformer decoder generates a conditional distribution as in equation 12.15, and a sample is drawn. The extended sequence is then fed back into the network to generate the next pixel, and so on. b) Image completion. In each case, the lower half of the image is removed (top row), and ImageGPT completes the remaining part pixel by pixel (three different completions shown). Adapted from https://openai.com/blog/image-gpt/.</p>
 <section id="imagegpt" class="level3">
 <h3 class="anchored" data-anchor-id="imagegpt">ImageGPT</h3>
+<p>ImageGPT is a transformer decoder; it builds an autoregressive model of image pixels that ingests a partial image and predicts the subsequent pixel value. The quadratic complexity of the transformer network means that the largest model (which contained 6.8 billion parameters) could still only operate on 64×64 images. Moreover, to make this tractable, the original 24-bit RGB color space had to be quantized into a nine-bit color space, so the system ingests (and predicts) one of 512 possible tokens at each position.</p>
+<p>Images are naturally 2D objects, but ImageGPT simply learns a different positional encoding at each pixel. Hence it must learn that each pixel has a close relationship with its preceding neighbors and also with nearby pixels in the row above. Figure 12.16 shows example generation results.</p>
+<p>The internal representation of this decoder was used as a basis for image classifi- cation. Each pixel’s final embedding is averaged, and a linear layer maps these values to activations which are passed through a softmax layer to predict class probabilities. The system is pre-trained on a large corpus of web images and then fine-tuned on the ImageNet database resized to 48 ×48 pixels using a loss function that contains both a cross-entropy term for image classification and a generative loss term for predicting the pixels. Despite using a large amount of external training data, the system achieved only a 27.4% top-1 error rate on ImageNet (figure 10.15). This was worse than convolutional architectures of the time (see figure 10.21) but is still impressive given the small input image size; unsurprisingly, it fails where the target object is small or thin.</p>
 </section>
 <section id="vision-transformer-vit" class="level3">
 <h3 class="anchored" data-anchor-id="vision-transformer-vit">Vision Transformer (ViT)</h3>
+<p>The Vision Transformer tackled the problem of image resolution by dividing the image into 16×16 patches (figure 12.17). Each patch is mapped to an input embedding via a learned linear transformation, and these representations are fed into the transformer network. Once again, standard 1D positional encodings are learned. This is an encoder model with a <cls> token (see figures 12.10–12.11). However, unlike BERT, it uses supervised pre-training on a large database of 303 million labeled images from 18,000 classes. The <cls> token is mapped via a final network layer to create activations that are fed into a softmax function to generate class probabilities. After pre-training, the system is applied to the final classification task by replacing this final layer with one that maps to the desired number of classes and is fine-tuned.</cls></cls></p>
+<p>For the ImageNet benchmark, this system achieved an 11.45% top-1 error rate. How- ever, it did not perform as well as the best contemporary convolutional networks without supervised pre-training. The strong inductive bias of convolutional networks can only be superseded by employing extremely large amounts of training data.</p>
 <p><img src="assets/Chap12/TransformerVisionTransformer.svg" style="filter: invert(1);" width="100%"></p>
 <p>Vision transformer. The Vision Transformer (ViT) breaks the image into a grid of patches (16×16 in the original implementation). Each of these is projected via a learned linear transformation to become a patch embedding. These patch embeddings are fed into a transformer encoder network, and the <cls> token is used to predict the class probabilities.</cls></p>
 </section>
 <section id="multi-scale-vision-transformers" class="level3">
 <h3 class="anchored" data-anchor-id="multi-scale-vision-transformers">Multi-scale vision transformers</h3>
+<p>The Vision Transformer differs from convolutional architectures in that it operates on a single scale and has a receptive field that covers the whole image. Several transformer models that process the image at multiple scales have been proposed. Similarly to convolutional networks, these generally start with small high resolution patches and few channels and gradually enlarge the receptive field, decrease the spatial resolution and increase the number of channels (embedding dimension).</p>
+<p>A representative example of a multi-scale transformer is the <mark>shifted-window or SWin transformer</mark>. This is an encoder transformer that divides the image into patches and groups these patches into a grid of windows within which self-attention is applied in- dependently (figure 12.18). These windows are shifted in adjacent transformers, so the effective receptive field at a given patch can expand beyond the window border. The scale is reduced periodically by concatenating features from non-overlapping 2×2 patches and applying a linear transformation that maps these concatenated features to twice the original number of channels. This architecture does not have a <cls> token but instead averages the output features at the last layer. These are then mapped via a linear layer to the desired number of classes and passed through a softmax function to output class probabilities. At the time of writing, the most sophisticated version of this architecture achieves a 9.89% top-1 error rate on the ImageNet database.</cls></p>
+<p>A related idea is periodically to integrate information from across the whole image. <mark>Dual attention vision transformers (DaViT)</mark> alternate two types of transformers. In the first, image patches attend to one another, and the self-attention computation uses all the channels. In the second, the channels attend to one another, and the self-attention computation uses all the image patches. This architecture reaches a 9.60% top-1 error rate on ImageNet and is close to the state-of-the-art at the time of writing</p>
 <p><img src="assets/Chap12/TransformerSWIN.svg" style="filter: invert(1);" width="100%"></p>
 <p>Shifted window (SWin) transformer (Liu et al., 2021c). a) Original image. b) The SWin transformer breaks the image into a grid of windows and each of these windows into a sub-grid of patches. The transformer network applies self-attention to the patches within each window independently (i.e., patches only attend to other patches in the same window). c) Each alternate layer shifts the windows so that the subsets of patches that interact with one another change, and information can propagate across the whole image. d) After several layers, the 2×2 blocks of patch representations are concatenated to increase the effective patch (and window) size. e) Alternate layers use shifted windows at this new lower resolution. f) Eventually, the resolution is such that there is just a single window, and the patches span the entire image.</p>
 <p><img src="assets/Chap12/TransformerRNN.svg" style="filter: invert(1);" width="100%"></p>

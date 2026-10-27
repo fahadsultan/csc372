@@ -229,6 +229,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./Project6.html">
  <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project7.html">
+ <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -477,25 +481,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Implicit_Regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_smoother_func.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Make function smoother</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Ensembling.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_multiplemodels.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Combine multiple models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Augmentation.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_wider_minima.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Find wider minima</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Bayesian_Approach.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_increase_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Increase Data</span></a>
   </div>
 </li>
@@ -512,14 +516,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dot-product self-attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Extentions to dot-product self-attention</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for natural language processing</span></a>
+  <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder model example: BERT</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model example: GPT3</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -645,35 +661,66 @@ window.Quarto = {
 </header>
 
 
+<p>In the previous section, we described self-attention. Here, we introduce three extensions that are almost always used in practice.</p>
 <section id="positional-encoding" class="level3">
 <h3 class="anchored" data-anchor-id="positional-encoding">Positional encoding</h3>
+<p>Observant readers will have noticed that the self-attention mechanism overlooks important information: <mark>the computation does not take into account the order of the inputs <span class="math inline">\(\mathbf{x}_n\)</span></mark>.</p>
+<p>More precisely, it is equivariant with respect to input permutations.</p>
+<p>However, order is important when the inputs correspond to the words in a sentence. The sentence</p>
+<blockquote class="blockquote">
+<p>The woman ate the raccoon</p>
+</blockquote>
+<p>has a different meaning than</p>
+<blockquote class="blockquote">
+<p>The raccoon ate the woman.</p>
+</blockquote>
+<p>There are two main approaches to incorporating position information.</p>
+<p><img src="assets/Chap12/TransformerPE.svg" style="filter: invert(1);" width="40%" align="right"></p>
+<p>Positional encodings. The self-attention architecture is equivariant to permutations of the inputs. To ensure that inputs at different positions are treated differently, a positional encoding matrix Π can be added to the data matrix. Each column is different, so the positions can be distinguished. Here, the position encodings use a predefined procedural sinusoidal pattern (which can be extended to larger values of N if necessary). However, in other cases, they are learned.</p>
 <p><strong>Absolute positional encodings</strong></p>
+<p>A matrix <span class="math inline">\(\Pi\)</span> is added to the input <span class="math inline">\(\mathbf{X}\)</span> that encodes positional information (figure 12.5).</p>
+<p>Each column of <span class="math inline">\(\Pi\)</span> is unique and hence contains information about the absolute position in the input sequence.</p>
+<p>This matrix can be chosen by hand or learned.</p>
+<p>It may be added to the network inputs or at every network layer.</p>
+<p>Sometimes it is added to <span class="math inline">\(\mathbf{X}\)</span> in the computation of the queries and keys but not to the values.</p>
 <p><strong>Relative positional encodings</strong></p>
+<p>The input to a self-attention mechanism may be an entire sentence, many sentences, or just a fragment of a sentence, and the absolute position of a word is much less important than the relative position between two words.</p>
+<p>Of course, this can be recovered if the system knows the absolute position of both, but relative positional encodings encode this information directly.</p>
+<p>Each element of the attention matrix corresponds to a particular offset between key position <span class="math inline">\(a\)</span> and query position <span class="math inline">\(b\)</span>.</p>
+<p>Relative positional encodings learn a parameter <span class="math inline">\(\pi_{a,b}\)</span> for each offset and use this to modify the attention matrix by adding these values, multiplying by them, or using them to alter the attention matrix in some other way.</p>
 </section>
 <section id="scaled-dot-product-self-attention" class="level3">
 <h3 class="anchored" data-anchor-id="scaled-dot-product-self-attention">Scaled dot-product self-attention</h3>
+<p>The dot products in the attention computation can have large magnitudes and move the arguments to the softmax function into a region where the largest value completely dominates.</p>
+<p>Small changes to the inputs to the softmax function now have little effect on the output (i.e., the gradients are very small), making the model diﬀicult to train. To prevent this, the dot products are scaled by the square root of the dimension <span class="math inline">\(D_q\)</span> of the the queries and keys (i.e., the number of rows in <span class="math inline">\(\boldsymbol\Omega_q\)</span> and <span class="math inline">\(\boldsymbol\Omega_k\)</span>, which must be the same):</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right].
 \end{eqnarray}\]</span></p>
+<p>This is known as scaled dot-product self-attention.</p>
 </section>
 <section id="multiple-heads" class="level3">
 <h3 class="anchored" data-anchor-id="multiple-heads">Multiple heads</h3>
+<p>Multiple self-attention mechanisms are usually applied in parallel, and this is known as multi-head self-attention. Now <span class="math inline">\(H\)</span> different sets of values, keys, and queries are computed:</p>
 <p><span class="math display">\[\begin{eqnarray}
 \mathbf{V}_h &amp;=&amp; \boldsymbol\beta_{vh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{vh}}\mathbf{X}\nonumber \\
 \mathbf{Q}_h &amp;=&amp; \boldsymbol\beta_{qh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{qh}}\mathbf{X}\nonumber \\
 \mathbf{K}_h &amp;=&amp; \boldsymbol\beta_{kh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{kh}}\mathbf{X}.
 \end{eqnarray}\]</span></p>
+<p>The <span class="math inline">\(h\)</span>th self-attention mechanism or head can be written as:</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mbox{{\bf Sa}}_{h}[\mathbf{X}] =\mathbf{V}_h\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}_h^{T}\mathbf{Q}_h}{\sqrt{D}_{q}}\right],
 \end{eqnarray}\]</span></p>
+<p>where we have different parameters <span class="math inline">\(\{\boldsymbol\beta_{vh},\boldsymbol\Omega_{vh}\}\)</span>, <span class="math inline">\(\{\boldsymbol\beta_{qh},\boldsymbol\Omega_{qh}\}\)</span>, and <span class="math inline">\(\{\boldsymbol\beta_{kh},\boldsymbol\Omega_{kh}\}\)</span> for each head. Typically, if the dimension of the inputs <span class="math inline">\(\mathbf{x}_m\)</span> is <span class="math inline">\(D\)</span> and there are <span class="math inline">\(H\)</span> heads, the values, queries, and keys will all be of size <span class="math inline">\(D/H\)</span>, as this allows for an eﬀicient implementation. The outputs of these self-attention mechanisms are vertically concatenated, and another linear transform <span class="math inline">\(\boldsymbol\Omega_c\)</span> is applied to combine them (figure 12.6):</p>
 <p><img src="assets/Chap12/TransformerBlockSAMultiHead.svg" style="filter: invert(1);" width="100%"></p>
 <p>Multi-head self-attention. Self-attention occurs in parallel across multiple “heads.” Each has its own queries, keys, and values. Here two heads are depicted, in the cyan and orange boxes, respectively. The outputs are vertically concatenated, and another linear transformation Ωc is used to recombine them.</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mbox{{\bf MhSa}}[\mathbf{X}] = \boldsymbol\Omega_{c}\Bigl[\mbox{{\bf Sa}}_{1}[\mathbf{X}]^T,\mbox{{\bf Sa}}_{2}[\mathbf{X}]^T,\ldots,\mbox{{\bf Sa}}_{H}[\mathbf{X}]^T \Bigr]^T.
 \end{eqnarray}\]</span></p>
+<p>Multiple heads seem to be necessary to make self-attention work well. It has been speculated that they make the self-attention network more robust to bad initializations.</p>
 </section>
 <section id="transformer-layers" class="level2">
 <h2 class="anchored" data-anchor-id="transformer-layers">Transformer layers</h2>
+<p>Self-attention is just one part of a larger transformer layer. This consists of a multi- head self-attention unit (which allows the word representations to interact with each other) followed by a fully connected network <span class="math inline">\(\textbf{mlp}[\mathbf{x}_\bullet]\)</span> (that operates separately on each word). Both units are residual networks (i.e., their output is added back to the original input). In addition, it is typical to add a LayerNorm operation after both the self- attention and fully connected networks. This is similar to BatchNorm but normalizes each embedding in each batch element separately using statistics calculated across its D embedding dimensions (section 11.4 and figure 11.14). The complete layer can be described by the following series of operations (figure 12.7):</p>
 <p><img src="assets/Chap12/TransformerBlock.svg" style="filter: invert(1);" width="100%"></p>
 <p>Transformer layer. The input consists of a D × N matrix containing the D-dimensional word embeddings for each of the N input tokens. The output is a matrix of the same size. The transformer layer consists of a series of operations. First, there is a multi-head attention block, allowing the word embeddings to interact with one another. This forms the processing of a residual block, so the inputs are added back to the output. Second, a LayerNorm operation is applied separately to each embedding. Third, there is a second residual layer where the same fully connected neural network is applied separately to each of the N word representations (columns). Finally, LayerNorm is applied again.</p>
 <p><span class="math display">\[\begin{eqnarray}
@@ -682,6 +729,7 @@ window.Quarto = {
   \mathbf{x}_{n} &amp;\leftarrow&amp; \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
   \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}],
 \end{eqnarray}\]</span></p>
+<p>where the column vectors xn are separately taken from the full data matrix X. In a real network, the data passes through a series of these transformer layers.</p>
 <p>The multihead self-attention mechanism maps <span class="math inline">\(N\)</span> inputs <span class="math inline">\(\mathbf{x_n} \in \mathbb{R}^D\)</span> and returns N outputs <span class="math inline">\(\mathbf{x^{\prime}} \in \mathbb{R}^D\)</span> .</p>
 <div id="1f4c74bf" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
