@@ -444,19 +444,48 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a href="./attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dot-product self-attention</span></a>
+ <span class="menu-text">Self-Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_cross.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_masked.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Masked Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_multihead.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multi-Head Attention</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
@@ -484,7 +513,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoding strategies</span></a>
+ <span class="menu-text">The Illustrated Transformer</span></a>
   </div>
 </li>
       </ul>
@@ -493,11 +522,11 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./llms.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Large Language Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
@@ -528,11 +557,11 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
@@ -595,10 +624,17 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><img src="https://arxiv.org/html/1706.03762v7/Figures/ModalNet-21.png" style="filter: invert(1);" width="50%" align="right"></p>
 <p>In this section, we will discuss encoder-decoder models, which are commonly used for sequence-to-sequence tasks such as machine translation.</p>
-<p>Translation between languages is an example of a sequence-to-sequence task. One com- mon approach uses both an encoder (to compute a good representation of the source sentence) and a decoder (to generate the sentence in the target language). This is aptly called an <mark>encoder-decoder</mark> model.</p>
-<p>Consider translating from English to French. The encoder receives the sentence in English and processes it through a series of transformer layers to create an output representation for each token. During training, the decoder receives the ground truth translation in French and passes it through a series of transformer layers that use masked self-attention and predict the following word at each position. However, the decoder layers also attend to the output of the encoder. Consequently, each French output word is conditioned on the previous output words and the source English sentence (figure 12.13).</p>
+<p>Translation between languages is an example of a sequence-to-sequence task.</p>
+<p>One common approach uses both an encoder (to compute a <mark>good representation of the source sentence</mark>) and a decoder (to <mark>generate the sentence in the target language</mark>). This is aptly called an <mark>encoder-decoder</mark> model.</p>
+<p>Consider translating from English to French. The encoder receives the sentence in English and processes it through a series of transformer layers to create an output representation for each token.</p>
+<p>During training, the decoder receives the ground truth translation in French and passes it through a series of transformer layers that use masked self-attention and predict the following word at each position. However, the decoder layers also attend to the output of the encoder. Consequently, each French output word is conditioned on the previous output words and the source English sentence (figure 12.13).</p>
 <p>This is achieved by modifying the transformer layers in the decoder. Originally, these consisted of a masked self-attention layer followed by a neural network applied individually to each embedding (figure 12.12). A new self-attention layer is added be- tween these two components, in which the decoder embeddings attend to the encoder embeddings. This uses a version of self-attention known as <mark>encoder-decoder attention or cross-attention</mark>, where the queries are computed from the decoder embeddings and the keys and values from the encoder embeddings (figure 12.14).</p>
+<hr>
+<p><img src="assets/Chap12/TransformerEncoderDecoder.svg" style="filter: invert(1);" width="100%"></p>
+<p>Encoder-decoder architecture. Two sentences are passed to the system with the goal of translating the first into the second. a) The first sentence is passed through a standard encoder. b) The second sentence is passed through a decoder that uses masked self-attention but also attends to the output embeddings of the encoder using cross-attention (orange rectangle). The loss function is the same as for the decoder model; we want to maximize the probability of the next word in the output sequence.</p>
+<hr>
 <p><img src="assets/Chap12/TransformerBlockSACross.svg" style="filter: invert(1);" width="100%"></p>
 <p>Cross-attention. The flow of computation is the same as in standard self-attention, but the queries are calculated from the decoder embeddings Xdec, and the keys and values from the encoder embeddings Xenc. For translation tasks, the encoder contains information about the source language statistics, and the decoder contains information about the target language statistics.</p>
 <section id="transformers-for-long-sequences" class="level2">

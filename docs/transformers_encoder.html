@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -507,19 +473,48 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a href="./attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dot-product self-attention</span></a>
+ <span class="menu-text">Self-Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_cross.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_masked.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Masked Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_multihead.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multi-Head Attention</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link active">
@@ -529,13 +524,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoder model example: GPT3</span></a>
+ <span class="menu-text">Decoder model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Encoder-decoder model example: machine translation</span></a>
+ <span class="menu-text">Encoder-decoder model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -547,7 +542,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoding strategies</span></a>
+ <span class="menu-text">The Illustrated Transformer</span></a>
   </div>
 </li>
       </ul>
@@ -556,11 +551,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./llms.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Large Language Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
@@ -591,11 +586,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
@@ -632,8 +627,20 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pre-training" id="toc-pre-training" class="nav-link active" data-scroll-target="#pre-training">Pre-training</a></li>
-  <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning">Fine-tuning</a></li>
+  <li><a href="#pre-training" id="toc-pre-training" class="nav-link active" data-scroll-target="#pre-training">Pre-training</a>
+  <ul class="collapse">
+  <li><a href="#masked-language-modeling" id="toc-masked-language-modeling" class="nav-link" data-scroll-target="#masked-language-modeling">Masked Language Modeling</a></li>
+  <li><a href="#internet-scale-data" id="toc-internet-scale-data" class="nav-link" data-scroll-target="#internet-scale-data">Internet-scale data</a></li>
+  <li><a href="#demo-reproducing-openais-gpt-2" id="toc-demo-reproducing-openais-gpt-2" class="nav-link" data-scroll-target="#demo-reproducing-openais-gpt-2">Demo: Reproducing OpenAI’s GPT-2</a></li>
+  <li><a href="#open-base-models" id="toc-open-base-models" class="nav-link" data-scroll-target="#open-base-models">Open Base Models</a></li>
+  </ul></li>
+  <li><a href="#post-training-supervised-fine-tuning" id="toc-post-training-supervised-fine-tuning" class="nav-link" data-scroll-target="#post-training-supervised-fine-tuning">Post-Training: Supervised Fine-tuning</a>
+  <ul class="collapse">
+  <li><a href="#conversations-data" id="toc-conversations-data" class="nav-link" data-scroll-target="#conversations-data">Conversations Data</a></li>
+  <li><a href="#hallucinations-tool-use-and-memory" id="toc-hallucinations-tool-use-and-memory" class="nav-link" data-scroll-target="#hallucinations-tool-use-and-memory">Hallucinations, Tool Use, and Memory</a></li>
+  <li><a href="#using-tools-to-reduce-hallucinations" id="toc-using-tools-to-reduce-hallucinations" class="nav-link" data-scroll-target="#using-tools-to-reduce-hallucinations">Using Tools to Reduce Hallucinations</a></li>
+  <li><a href="#knowledge-of-self" id="toc-knowledge-of-self" class="nav-link" data-scroll-target="#knowledge-of-self">Knowledge of Self</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -659,139 +666,191 @@ window.Quarto = {
 </header>
 
 
-<p>In this section, we will discuss encoder models, with a focus on BERT (Bidirectional Encoder Representations from Transformers) as an example. We will cover the architecture, pre-training, and fine-tuning processes.</p>
-<p>BERT is an encoder model that uses a vocabulary of 30,000 tokens. Input tokens are converted to 1024-dimensional word embeddings and passed through 24 transformer layers. Each contains a self-attention mechanism with 16 heads. The queries, keys, and values for each head are of dimension 64 (i.e., the matrices <span class="math inline">\(\Omega_{vh}, \Omega_{qh}, \Omega_{kh}\)</span> are 64 ×1024).</p>
-<p>The dimension of the single hidden layer in the fully connected networks is 4096. The total number of parameters is ∼340 million. When BERT was introduced, this was considered large, but it is now much smaller than state-of-the-art models. Encoder models like BERT exploit transfer learning (section 9.3.6). During pre- training, the parameters of the transformer architecture are learned using self-supervision from a large corpus of text. The goal here is for the model to learn general information about the statistics of language. In the fine-tuning stage, the resulting network is adapted to solve a particular task using a smaller body of labelled training data.</p>
-<section id="pre-training" class="level3">
-<h3 class="anchored" data-anchor-id="pre-training">Pre-training</h3>
-<p>In the pre-training stage, the network is trained using self-supervision. This allows the use of enormous amounts of data without the need for manual labels. For BERT, the self- supervision task consists of predicting missing words from sentences from a large internet corpus (figure 12.10).1 During training, the maximum input length is 512 tokens, and the batch size is 256. The system is trained for a million steps, corresponding to roughly 50 epochs of the 3.3-billion word corpus. Predicting missing words forces the transformer network to understand some syntax. For example, it might learn that the adjective red is often found before nouns like house or car but never before a verb like shout. It also allows the model to learn superficial common sense about the world. For example, after training, the model will assign a higher probability to the missing word train in the sentence The <mask> pulled into the station than it would to the word peanut. However, the degree of “understanding” this type of model can ever have is limited.</mask></p>
+<p><img src="encoder.png" style="filter: invert(1);" width="30%" align="right"></p>
+<p>In this section, we will discuss encoder models, with a focus on <mark>BERT (Bidirectional Encoder Representations from Transformers)</mark> as an example. We will cover the architecture, pre-training, and fine-tuning processes.</p>
+<p>BERT is an encoder model that uses a vocabulary of <mark>30,000 tokens</mark>. Input tokens are converted to <mark>1024-dimensional word embeddings</mark> and passed through <mark>24 transformer layers</mark>. Each contains a self-attention mechanism with <mark>16 heads</mark>. The queries, keys, and values for each head are of dimension <mark>64</mark> (i.e., the matrices <mark><span class="math inline">\(\Omega_{vh}, \Omega_{qh}, \Omega_{kh}\)</span> are 64 ×1024</mark>).</p>
+<p>The dimension of the single hidden layer in the fully connected networks is <mark>4096</mark>. The total number of parameters is <mark>∼340 million</mark>. When BERT was introduced, this was considered large, but it is now much smaller than state-of-the-art models.</p>
+<section id="pre-training" class="level2">
+<h2 class="anchored" data-anchor-id="pre-training">Pre-training</h2>
+<p><br></p>
 <p><img src="assets/Chap12/TransformerEncoder.svg" style="filter: invert(1);" width="100%"></p>
-<p>Pre-training for BERT-like encoder. The input tokens (and a special <cls> token denoting the start of the sequence) are converted to word embeddings. Here, these are represented as rows rather than columns, so the box labeled “word embeddings” is XT . These embeddings are passed through a series of transformer layers (orange connections indicate that every token attends to every other token in these layers) to create a set of output embeddings. A small fraction of the input tokens are randomly replaced with a generic <mask> token. In pre-training, the goal is to predict the missing word from the associated output embedding. To this end, the outputs corresponding to the masked tokens are passed through softmax functions, and a multiclass classification loss (section 5.24) is applied to each. This task has the advantage that it uses both the left and right context to predict the missing word but has the disadvantage that it does not make efficient use of data; here, seven tokens need to be processed to add two terms to the loss function.</mask></cls></p>
-<p><img src="assets/Chap12/TransformerEncoderFineTune.svg" style="filter: invert(1);" width="100%"></p>
-<p>After pre-training, the encoder is fine-tuned using manually labeled data to solve a particular task. Usually, a linear transformation or a multi-layer perceptron (MLP) is appended to the encoder to produce whatever output is required. a) Example text classification task. In this sentiment classification task, the <cls> token embedding is used to predict the probability that the review is positive. b) Example word classification task. In this named entity recognition problem, the embedding for each word is used to predict whether the word corresponds to a person, place, or organization, or is not an entity.</cls></p>
+<p>Pre-training for BERT-like encoder. The input tokens (and a special <cls> token denoting the start of the sequence) are converted to word embeddings.</cls></p>
+<p>Here, these are represented as rows rather than columns, so the box labeled “word embeddings” is <span class="math inline">\(\mathbf{X}^T\)</span> . These embeddings are passed through a series of transformer layers (orange connections indicate that every token attends to every other token in these layers) to create a set of output embeddings.</p>
+<p>A small fraction of the input tokens are randomly replaced with a generic <mask> token.</mask></p>
+<p>In pre-training, the goal is to predict the missing word from the associated output embedding.</p>
+<p>To this end, the outputs corresponding to the masked tokens are passed through softmax functions, and a multiclass classification loss is applied to each.</p>
+<p>This task has the advantage that it <mark>uses both the left and right context to predict the missing word</mark> but has the disadvantage that it does not make efficient use of data; here, seven tokens need to be processed to add two terms to the loss function.</p>
+<p>In the pre-training stage, the network is trained using self-supervision. This allows the use of enormous amounts of data without the need for manual labels.</p>
+<p>For BERT, the self-supervision task consists of predicting missing words from sentences from a large internet corpus (figure 12.10).</p>
+<p>During training, <mark>the maximum input length is 512 tokens, and the batch size is 256.</mark></p>
+<p>The system is trained for a million steps, corresponding to roughly <mark>50 epochs of the 3.3-billion word corpus.</mark></p>
+<p>Predicting missing words forces the transformer network to understand some syntax.</p>
+<p>For example, it might learn that the adjective red is often found before nouns like house or car but never before a verb like shout.</p>
+<p>It also allows the model to learn superficial common sense about the world. For example, after training, the model will assign a higher probability to the missing word train in the sentence The <mask> pulled into the station than it would to the word peanut. However, the degree of “understanding” this type of model can ever have is limited.</mask></p>
+<section id="masked-language-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="masked-language-modeling">Masked Language Modeling</h3>
+<p>Masked language modeling (MLM) is a pre-training objective where certain tokens in the input sequence are randomly masked, and the model is trained to predict these masked tokens based on their surrounding context.</p>
+<p>During pre-training, the parameters of the transformer encoder are learned through <strong>self-supervised learning</strong> on a large corpus of text. <mark>The objective is to predict masked tokens using their surrounding context</mark>, allowing the model to learn the statistical patterns and relationships within language.</p>
+<p>The text is first tokenized using a subword tokenization algorithm (such as BPE or WordPiece) and converted into token IDs. <mark>These token IDs are organized into fixed- or variable-length input sequences. For each sequence, <strong>15% of token positions are randomly selected</strong> for prediction.</mark> In the original BERT approach, 80% of these selected tokens are replaced with the special <code>[MASK]</code> token ID, 10% with a random token ID, and 10% are left unchanged.</p>
+<p>The <code>[MASK]</code> token has its own learnable embedding vector in the embedding matrix. The modified sequence is passed through the transformer encoder, which produces a contextualized representation for every token position. At each selected position, the model uses this representation to predict the <strong>original token ID</strong>, which serves as the training label. The prediction error is used to update the model’s parameters through backpropagation.</p>
+<p>The goal here is for the model to learn general information about the statistics of language.</p>
+<p>In the fine-tuning stage, the resulting network is adapted to solve a particular task using a smaller body of labelled training data.</p>
 </section>
-<section id="fine-tuning" class="level3">
-<h3 class="anchored" data-anchor-id="fine-tuning">Fine-tuning</h3>
+<section id="internet-scale-data" class="level3">
+<h3 class="anchored" data-anchor-id="internet-scale-data">Internet-scale data</h3>
+<section id="common-crawl" class="level4">
+<h4 class="anchored" data-anchor-id="common-crawl">Common Crawl</h4>
+<p><strong><a href="https://commoncrawl.org/">Common Crawl</a></strong> is a non-profit organization that crawls the web and freely provides its archives and datasets to the public. It is one of the largest and most comprehensive web crawls available. It has been crawling the web since 2008 and has petabytes (thousands of terabytes) of data.</p>
+<p>The code and data are open source and free to use for anyone. Code can be accessed at <a href="https://github.com/commoncrawl">https://github.com/commoncrawl</a> and the data can be accessed at <a href="https://data.commoncrawl.org/">https://data.commoncrawl.org/</a>.</p>
+<p><strong><a href="https://huggingface.co">HuggingFace</a></strong> is a company and open-source community that provides tools and libraries for natural language processing (NLP) and machine learning. They are most well-known for:</p>
+<ul>
+<li><a href="https://huggingface.co/docs/transformers/en/index">Transformers library</a>, which provides pre-trained models for various NLP tasks.</li>
+<li><a href="https://huggingface.co/datasets">Data Sharing</a> a platform for sharing and discovering datasets, models, and other resources related to NLP.</li>
+<li><a href="https://huggingface.co/models">Model Hub</a>, which hosts thousands of pre-trained models for various NLP tasks.</li>
+</ul>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/ct.png" width="100%" style="filter:invert(1);"></p>
+</section>
+<section id="fineweb" class="level4">
+<h4 class="anchored" data-anchor-id="fineweb">FineWeb</h4>
+<p><strong><a href="https://huggingface.co/datasets/fineweb">Fineweb</a></strong> is a dataset created by Hugging Face that consists of cleaned and filtered web pages from Common Crawl. It is derived from 96 Common Crawl snapshots. Extensive filtering (boilerplate removal, quality heuristics), deduplication, and cleaning to produce higher-quality web text than raw Common Crawl for FineWeb. It is designed to be used for training large language models. The dataset contains over 1.2 billion web pages, making it one of the largest datasets available for this purpose.</p>
+<p>Once cleaned, the data still needs to be compressed into something usable. Instead of feeding raw text into the model, it gets converted into tokens: a structured, numerical representation.</p>
+</section>
+</section>
+<section id="demo-reproducing-openais-gpt-2" class="level3">
+<h3 class="anchored" data-anchor-id="demo-reproducing-openais-gpt-2">Demo: Reproducing OpenAI’s GPT-2</h3>
+<p><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2</a>, released by OpenAI in 2019, was an early example of a transformer-based LLM.</p>
+<p>Here’s what it looked like:</p>
+<ul>
+<li><p><strong>1.6 billion parameters</strong></p></li>
+<li><p><strong>1024-token context length</strong></p></li>
+<li><p><strong>Trained on ~100 billion tokens</strong></p></li>
+<li><p>The original GPT-2 training cost was <strong>$40,000</strong>.</p></li>
+</ul>
+<p>Since then, efficiency has improved dramatically. Andrej Karpathy managed to <strong>reproduce GPT-2</strong> using <a href="https://github.com/karpathy/llm.c/discussions/677">llm.c</a> for just $672. With optimized pipelines, training costs could drop even further to <strong>around $100</strong> .</p>
+<p>Why is it so much cheaper now?</p>
+<ul>
+<li><p><strong>Better pre-training data extraction techniques</strong> → Cleaner datasets mean models learn faster.</p></li>
+<li><p><strong>Stronger hardware and optimized software</strong> → Less computation needed for the same results.</p></li>
+</ul>
+</section>
+<section id="open-base-models" class="level3">
+<h3 class="anchored" data-anchor-id="open-base-models">Open Base Models</h3>
+<pre class="{note}"><code>The models under discussion do not strictly follow the Open Source Initiative (OSI) definitions of open-source AI ([OSI AI Definition](https://opensource.org/ai)). Instead, we use the term open base models to describe models where the weights are publicly accessible, but training data and full reproducibility may not be provided.</code></pre>
+<p>Some companies train massive <strong>language models (LMs)</strong> and <strong>release the base models for free</strong>. A <strong>base model</strong> is essentially a <strong>raw, pre-trained LM</strong>—it still requires <strong>fine-tuning</strong> or <strong>alignment</strong> to be practically useful.</p>
+<ul>
+<li><p>Base models are trained on <strong>unfiltered internet-scale data</strong>, meaning they generate <strong>raw</strong> completions but <strong>lack alignment with human intent</strong>.</p></li>
+<li><p>OpenAI released <a href="https://github.com/openai/gpt-2">GPT-2</a>, an <strong>open-weight and source-available</strong> model, but <strong>not fully open-source</strong> under OSI’s definition since its training data was not released.</p></li>
+<li><p>Meta released <a href="https://arxiv.org/pdf/2407.21783">Llama 3.1 (405B parameters)</a>, an <strong>open-weight</strong> but <strong>not open-source</strong> model.</p></li>
+</ul>
+<p>To release a <strong>base model</strong>, two key components are required:</p>
+<ol type="1">
+<li><p><strong><a href="https://github.com/openai/gpt-2/blob/master/src/model.py">Inference code</a></strong> → Defines the steps the model follows to generate text. Typically written in Python.</p></li>
+<li><p><strong><a href="https://www.kaggle.com/datasets/xhlulu/openai-gpt2-weights">Model weights</a></strong> → The billions of parameters that encode the model’s knowledge. ## The ‘Psychology’ of Base Models</p></li>
+</ol>
+<ul>
+<li><p>Base models can be thoughts of as token-level internet document simulators.</p></li>
+<li><p>Every run produces a <strong>slightly different output</strong> (stochastic behavior).</p></li>
+<li><p>They can <strong>regurgitate</strong> parts of their training data.</p></li>
+<li><p>The parameters are like a <strong>lossy zip file</strong> of internet knowledge.</p></li>
+<li><p>You can already use them for applications like:</p>
+<ul>
+<li><strong>Translation</strong> → Using in-context examples.</li>
+<li><strong>Basic assistants</strong> → Prompting them in a structured way.</li>
+</ul></li>
+</ul>
+<p>Want to experiment with one? Try the <strong>Llama 3 (405B base model)</strong> <a href="https://app.hyperbolic.xyz/models/llama31-405b-base-bf-16">here</a>.</p>
+<p>At its core, a base model is just an <strong>expensive autocomplete</strong>. It still needs fine-tuning.</p>
+</section>
+</section>
+<section id="post-training-supervised-fine-tuning" class="level2">
+<h2 class="anchored" data-anchor-id="post-training-supervised-fine-tuning">Post-Training: Supervised Fine-tuning</h2>
+<p>So far, we’ve looked at <strong>base models</strong>, which are just pre-trained text generators. But <strong>to make an actual assistant</strong>, you need <strong>post-training</strong>.</p>
+<p><strong>Base models hallucinate a lot</strong> → They generate text, but it’s not always useful.</p>
+<p><strong>Post-training fixes this</strong> by fine-tuning the model to respond better.</p>
+<p>The good news? <strong>Post-training is way cheaper than pre-training</strong> (e.g., months vs.&nbsp;hours).</p>
+<p><br></p>
+<p><img src="assets/Chap12/TransformerEncoderFineTune.svg" style="filter: invert(1);" width="100%"></p>
+<p>After pre-training, the encoder is fine-tuned using manually labeled data to solve a particular task. Usually, a linear transformation or a multi-layer perceptron (MLP) is appended to the encoder to produce whatever output is required.</p>
+<ol type="a">
+<li><p>Example text classification task. In this sentiment classification task, the <cls> token embedding is used to predict the probability that the review is positive.</cls></p></li>
+<li><p>Example word classification task. In this named entity recognition problem, the embedding for each word is used to predict whether the word corresponds to a person, place, or organization, or is not an entity.</p></li>
+</ol>
 <p>In the fine-tuning stage, the model parameters are adjusted to specialize the network to a particular task. An extra layer is appended onto the transformer network to convert the output vectors to the desired output format. Examples include:</p>
-<p><strong>Text classification</strong>: In BERT, a special token known as the classification or <code>&lt;cls&gt;</code> token is placed at the start of each string during pre-training. For text classification tasks like <u>sentiment analysis</u> (in which the passage is labeled as having a positive or negative emotional tone), the vector associated with the <code>&lt;cls&gt;</code> token is mapped to a single number and passed through a logistic sigmoid (figure 12.11a). This contributes to a standard binary cross-entropy loss (section 5.4).</p>
-<p><strong>Word classification</strong>: The goal of <u>named entity recognition</u> is to classify each word as an entity type (e.g., person, place, organization, or no-entity). To this end, each input embedding <span class="math inline">\(\mathbf{x}_n\)</span> is mapped to an <span class="math inline">\(E\times 1\)</span> vector where the <span class="math inline">\(E\)</span> entries correspond to the <span class="math inline">\(E\)</span> entity types. This is passed through a softmax function to create probabilities for each class, which contribute to a multiclass cross-entropy loss (figure 12.11b).</p>
-<p><strong>Text span prediction</strong>: In the SQuAD 1.1 question answering task, the question and a passage from Wikipedia containing the answer are concatenated and tokenized. BERT is then used to predict the text span in the passage that contains the answer. Each token maps to two numbers indicating how likely it is that the text span begins and ends at this location. The resulting two sets of numbers are put through two softmax functions. The likelihood of any text span being the answer can be derived by combining the probability of starting and ending at the appropriate places.</p>
-<div id="ece7f980" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re, collections</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"a sailor went to sea sea sea "</span><span class="op">+\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"to see what he could see see see "</span><span class="op">+\</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"but all that he could see see see "</span><span class="op">+\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"was the bottom of the deep blue sea sea sea"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Tokenize the input sentence To begin with the tokens are the individual letters and the whitespace token. So, we represent each word in terms of these tokens with spaces between the tokens to delineate them.</p>
-<p>The tokenized text is stored in a structure that represents each word as tokens together with the count of how often that word occurs. We’ll call this the vocabulary.</p>
-<div id="4feb5f38" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_vocabulary(text):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  vocab <span class="op">=</span> collections.defaultdict(<span class="bu">int</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  words <span class="op">=</span> text.strip().split()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word <span class="kw">in</span> words:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      vocab[<span class="st">' '</span>.join(<span class="bu">list</span>(word)) <span class="op">+</span> <span class="st">' '</span>] <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> vocab</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> initialize_vocabulary(text)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(vocab))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(vocab)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Find all the tokens in the current vocabulary and their frequencies</p>
-<div id="c67e93dc" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_tokens_and_frequencies(vocab):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  tokens <span class="op">=</span> collections.defaultdict(<span class="bu">int</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word, freq <span class="kw">in</span> vocab.items():</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      word_tokens <span class="op">=</span> word.split()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> token <span class="kw">in</span> word_tokens:</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>          tokens[token] <span class="op">+=</span> freq</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> tokens</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> get_tokens_and_frequencies(vocab)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(tokens))</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(tokens)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Find each pair of adjacent tokens in the vocabulary and count them. We will subsequently merge the most frequently occurring pair.</p>
-<div id="92e182ba" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_pairs_and_counts(vocab):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    pairs <span class="op">=</span> collections.defaultdict(<span class="bu">int</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> word, freq <span class="kw">in</span> vocab.items():</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        symbols <span class="op">=</span> word.split()</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(symbols)<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            pairs[symbols[i],symbols[i<span class="op">+</span><span class="dv">1</span>]] <span class="op">+=</span> freq</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pairs</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>pairs <span class="op">=</span> get_pairs_and_counts(vocab)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Pairs: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(pairs))</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of distinct pairs: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(pairs)))</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>most_frequent_pair <span class="op">=</span> <span class="bu">max</span>(pairs, key<span class="op">=</span>pairs.get)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Most frequent pair: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(most_frequent_pair))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Merge the instances of the best pair in the vocabulary</p>
-<div id="66dd2615" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge_pair_in_vocabulary(pair, vocab_in):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    vocab_out <span class="op">=</span> {}</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    bigram <span class="op">=</span> re.escape(<span class="st">' '</span>.join(pair))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r'(?</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="er">vocab = merge_pair_in_vocabulary</span>(most_frequent_pair, vocab)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(vocab))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(vocab)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Update the tokens, which now include the best token ‘se’</p>
-<div id="37e1a1d9" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> get_tokens_and_frequencies(vocab)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(tokens))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(tokens)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now let’s write the full tokenization routine</p>
-<div id="c8a41b0f" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- write this routine by filling in this missing parts,</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># calling the above routines</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tokenize(text, num_merges):</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialize the vocabulary from the input text</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># vocab = (your code here)</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_merges):</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the tokens and how often they occur in the vocabulary</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tokens = (your code here)</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the pairs of adjacent tokens and their counts</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pairs = (your code here)</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the most frequent pair</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># most_frequent_pair = (your code here)</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Most frequent pair: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(most_frequent_pair))</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Merge the code in the vocabulary</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># vocab = (your code here)</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the tokens and how often they occur in the vocabulary one last time</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tokens = (your code here)</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> tokens, vocab</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>tokens, vocab <span class="op">=</span> tokenize(text, num_merges<span class="op">=</span><span class="dv">22</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(tokens))</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(tokens)))</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(vocab))</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(vocab)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>TODO - Consider the input text:</p>
-<p>“How much wood could a woodchuck chuck if a woodchuck could chuck wood”</p>
-<p>How many tokens will there be initially and what will they be? How many tokens will there be if we run the tokenization routine for the maximum number of iterations (merges)?</p>
-<p>When you’ve made your predictions, run the code and see if you are correct.</p>
+<p><mark><strong>Text classification</strong></mark>: In BERT, a special token known as the classification or <code>&lt;cls&gt;</code> token is placed at the start of each string during pre-training. For text classification tasks like <u>sentiment analysis</u> (in which the passage is labeled as having a positive or negative emotional tone), the vector associated with the <code>&lt;cls&gt;</code> token is mapped to a single number and passed through a logistic sigmoid (figure 12.11a). This contributes to a standard binary cross-entropy loss (section 5.4).</p>
+<p><mark><strong>Word classification</strong></mark>: The goal of <u>named entity recognition</u> is to classify each word as an entity type (e.g., person, place, organization, or no-entity). To this end, each input embedding <span class="math inline">\(\mathbf{x}_n\)</span> is mapped to an <span class="math inline">\(E\times 1\)</span> vector where the <span class="math inline">\(E\)</span> entries correspond to the <span class="math inline">\(E\)</span> entity types. This is passed through a softmax function to create probabilities for each class, which contribute to a multiclass cross-entropy loss (figure 12.11b).</p>
+<p><mark><strong>Text span prediction</strong></mark>: In the SQuAD 1.1 question answering task, the question and a passage from Wikipedia containing the answer are concatenated and tokenized. BERT is then used to predict the text span in the passage that contains the answer. Each token maps to two numbers indicating how likely it is that the text span begins and ends at this location. The resulting two sets of numbers are put through two softmax functions. The likelihood of any text span being the answer can be derived by combining the probability of starting and ending at the appropriate places.</p>
+<p><img src="https://heidloff.net/assets/img/2023/02/transformers.png" width="100%" style="filter:invert(1);"></p>
+<ul>
+<li>You can see a production-grade LLM architecture example <a href="https://bbycroft.net/llm">here</a>.</li>
+</ul>
+<section id="conversations-data" class="level3">
+<h3 class="anchored" data-anchor-id="conversations-data">Conversations Data</h3>
+<p>Once the base model is trained on internet data, the next step is <strong>post-training</strong>. This is where we replace the internet dataset with <strong>human/assistant conversations</strong> to make the model more conversational and useful.</p>
+<ul>
+<li><p>Pre-training takes months, but post-training is much faster. It can take as little as a few hours.</p></li>
+<li><p>The model’s algorithm stays the same, we’re just fine-tuning the existing parameters.</p></li>
+</ul>
+<p>To teach a model how to handle back-and-forth conversations, we use chat templates. These define the structure of a conversation and let the model know which part is user input and which part is an assistant response. You can read more about them here.</p>
+<p>Example template:</p>
+<pre><code>&lt;|im_start|&gt;system&lt;|im_sep|&gt;You are a helpful assistant&lt;|im_end|&gt;
+&lt;|im_start|&gt;user&lt;|im_sep|&gt;What is 4 + 4?&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;4 + 4 = 8&lt;|im_end|&gt;</code></pre>
+<ul>
+<li><p>&lt;|im_start|&gt; and &lt;|im_end|&gt; are special tokens that help structure conversations.</p></li>
+<li><p>The model didn’t see these new tokens during pre-training, they’re introduced during post-training.</p></li>
+<li><p>OpenAI has discussed fine-tuning LLMs for conversation in the <a href="">InstructGPT paper</a>.</p></li>
+</ul>
+<p>To visualize this, go to <a href="https://tiktokenizer.vercel.app/">tiktokenizer</a>.</p>
+<p>One such post-training dataset is <a href="https://huggingface.co/datasets/OpenAssistant/oasst1">OASST1</a>. Early post-training datasets were hand-curated by humans. Now, models like <a href="https://github.com/thunlp/UltraChat">UltraChat</a> can generate synthetic conversations, allowing models to improve without as much human input. You can visualize these mostly synthetic datasets <a href="https://atlas.nomic.ai/map/0ce65783-c3a9-40b5-895d-384933f50081/a7b46301-022f-45d8-bbf4-98107eabdbac">here</a>.</p>
+</section>
+<section id="hallucinations-tool-use-and-memory" class="level3">
+<h3 class="anchored" data-anchor-id="hallucinations-tool-use-and-memory">Hallucinations, Tool Use, and Memory</h3>
+<p>One major issue with LLMs is <strong>hallucination</strong>, where the model confidently generates incorrect or made-up information.</p>
+<p>Why does this happen?</p>
+<ul>
+<li><p>During <strong>post-training</strong>, models learn that they must <strong>always</strong> give an answer.</p></li>
+<li><p>Even if the question doesn’t make sense, the model <strong>tries to generate a response</strong> instead of saying, “I don’t know.”</p></li>
+</ul>
+<p>How Meta Deals with Hallucinations</p>
+<p>Meta’s research on <strong>factuality</strong> (from their <a href="https://arxiv.org/pdf/2407.21783">Llama 3 paper</a>) describes a way to improve this:</p>
+<ol type="1">
+<li>Extract a snippet of training data.</li>
+<li>Generate a factual question about it using Llama 3.</li>
+<li>Have Llama 3 generate an answer.</li>
+<li>Score the response against the original data.</li>
+<li>If incorrect, train the model to recognize and refuse incorrect responses.</li>
+</ol>
+<p>Essentially, this process <strong>teaches models to recognize their own knowledge limits</strong>.</p>
+</section>
+<section id="using-tools-to-reduce-hallucinations" class="level3">
+<h3 class="anchored" data-anchor-id="using-tools-to-reduce-hallucinations">Using Tools to Reduce Hallucinations</h3>
+<p>One way to fix hallucinations is to <strong>train models to use tools</strong> when they don’t know the answer. This approach follows the pattern:</p>
+<pre><code>&lt;|im_start|&gt;user&lt;|im_sep|&gt;Who is Orson Kovacs?&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;&lt;SEARCH_START&gt;Who is Orson Kovacs?&lt;SEARCH_END&gt;&lt;|im_end|&gt;
+
+[...search results...]
+
+&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;Orson Kovacs is ....&lt;|im_end|&gt;</code></pre>
+<p>With repeated training, models learn that <strong>if they don’t know something, they should look it up</strong> instead of making things up.</p>
+<p>“Vague Recollection” vs.&nbsp;“Working Memory”</p>
+<ul>
+<li><p><strong>Model parameters store vague recollections</strong> (like remembering something from a month ago).</p></li>
+<li><p><strong>Context tokens function as working memory</strong>, giving models access to fresh information.</p></li>
+</ul>
+<p>This is why <strong>retrieval-augmented generation (RAG)</strong> works so well: if the model has direct access to relevant documents, it <strong>doesn’t need to guess</strong>.</p>
+</section>
+<section id="knowledge-of-self" class="level3">
+<h3 class="anchored" data-anchor-id="knowledge-of-self">Knowledge of Self</h3>
+<p>If you prompt an <strong>untuned base model</strong> about who it is, it will likely hallucinate. For example, a non-OpenAI model might still say it was created by OpenAI simply because most internet data links AI models to OpenAI.</p>
+<p>How to Fix This</p>
+<ul>
+<li><p><strong><a href="https://huggingface.co/datasets/allenai/olmo-2-hard-coded">Hardcode self-identity into training data</a></strong> → Example: <strong><a href="https://huggingface.co/datasets/allenai/tulu-3-sft-olmo-2-mixture">Olmo-2 dataset</a></strong>.</p></li>
+<li><p><strong>Use system messages</strong> → At the start of every conversation, include a reminder of its identity.</p></li>
+</ul>
+<p><strong>By default, LLMs have no real knowledge of themselves</strong>. Without specific training, they default to generic AI responses.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

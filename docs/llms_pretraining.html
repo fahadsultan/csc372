@@ -487,14 +487,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dot-product self-attention</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for natural language processing</span></a>
+  <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder-decoder model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -640,7 +652,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://huggingface.co/datasets">Data Sharing</a> a platform for sharing and discovering datasets, models, and other resources related to NLP.</li>
 <li><a href="https://huggingface.co/models">Model Hub</a>, which hosts thousands of pre-trained models for various NLP tasks.</li>
 </ul>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/ct.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/ct.png" width="100%" style="filter:invert(1);"></p>
 </section>
 <section id="fineweb" class="level3">
 <h3 class="anchored" data-anchor-id="fineweb">FineWeb</h3>
@@ -679,10 +691,7 @@ w i d es t _</code></pre></li>
 <li>Size: manageable number of tokens.</li>
 <li>Coverage: can represent most words.</li>
 </ul>
-<center>
-<img width="60%" src="https://i.ibb.co/3mF4RmrK/Screenshot-2025-09-17-at-10-42-42-PM.png">
-</center>
-<p><br><br></p>
+<!-- <center><img width="60%" src="https://i.ibb.co/3mF4RmrK/Screenshot-2025-09-17-at-10-42-42-PM.png"  width="100%" style="filter:invert(1);"></center><br/><br/> -->
 <p>You can visualize how this works using tools like <a href="https://tiktokenizer.vercel.app/?model=cl100k_base">Tiktokenizer (https://tiktokenizer.vercel.app)</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -762,8 +771,8 @@ w i d es t _</code></pre></li>
 <section id="neural-network-training" class="level2">
 <h2 class="anchored" data-anchor-id="neural-network-training">1.3. Neural Network Training</h2>
 <p>Once the data is tokenized, it’s fed into the neural network. More specifically, a <strong>Transformer</strong> architecture, which is particularly good at handling sequential data like text.</p>
-<p><img src="https://heidloff.net/assets/img/2023/02/transformers.png" width="100%"></p>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/nn-io.png"></p>
+<p><img src="https://heidloff.net/assets/img/2023/02/transformers.png" width="100%" style="filter:invert(1);"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/nn-io.png" width="100%" style="filter:invert(1);"></p>
 <p>Here’s how that process works:</p>
 <ol type="1">
 <li><p>The model takes in a <strong>context window</strong>, a set number of tokens (e.g., 8,000 for some models, up to 128k for GPT-4).</p></li>
@@ -773,7 +782,7 @@ w i d es t _</code></pre></li>
 </ol>
 <p>A longer context window means the model can “remember” more from the input, but it also increases computational cost.</p>
 <p><strong>Neural Network Internals</strong></p>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/nn-internal-math-eq.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/nn-internal-math-eq.png" width="100%" style="filter:invert(1);"></p>
 <p>Inside the model, billions of parameters interact with the input tokens to generate a probability distribution for the next token.</p>
 <ul>
 <li><p>This process is defined by complex mathematical equations optimized for efficiency.</p></li>
@@ -783,7 +792,7 @@ w i d es t _</code></pre></li>
 </section>
 <section id="inference" class="level2">
 <h2 class="anchored" data-anchor-id="inference">1.4. Inference</h2>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/inference.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/inference.png" width="100%" style="filter:invert(1);"></p>
 <p>LLMs don’t generate deterministic outputs, they are <strong>stochastic</strong>. This means the output varies slightly every time you run the model.</p>
 <ul>
 <li><p>The model doesn’t just repeat what it was trained on, it generates responses based on probabilities.</p></li>

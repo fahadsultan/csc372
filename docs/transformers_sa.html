@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dot-product self-attention</title>
+<title>Self-Attention</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -258,7 +258,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformers.html">Transformers</a></li><li class="breadcrumb-item"><a href="./transformers_sa.html">Dot-product self-attention</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./attention.html">Attention</a></li><li class="breadcrumb-item"><a href="./transformers_sa.html">Self-Attention</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -507,8 +507,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
+            <a href="./attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -517,9 +517,38 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Dot-product self-attention</span></a>
+ <span class="menu-text">Self-Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_cross.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_masked.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Masked Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_multihead.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multi-Head Attention</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
@@ -547,7 +576,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoding strategies</span></a>
+ <span class="menu-text">The Illustrated Transformer</span></a>
   </div>
 </li>
       </ul>
@@ -556,11 +585,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./llms.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Large Language Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
@@ -591,11 +620,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
@@ -635,20 +664,19 @@ window.Quarto = {
   <li><a href="#value-vectors" id="toc-value-vectors" class="nav-link active" data-scroll-target="#value-vectors">Value Vectors</a></li>
   <li><a href="#self-attention-block" id="toc-self-attention-block" class="nav-link" data-scroll-target="#self-attention-block">Self-Attention Block</a></li>
   <li><a href="#query-vectors-key-vectors-and-attention-weights" id="toc-query-vectors-key-vectors-and-attention-weights" class="nav-link" data-scroll-target="#query-vectors-key-vectors-and-attention-weights">Query vectors, Key vectors and Attention Weights</a></li>
+  <li><a href="#why-separate-query-and-key-vectors" id="toc-why-separate-query-and-key-vectors" class="nav-link" data-scroll-target="#why-separate-query-and-key-vectors">Why separate query and key vectors?</a></li>
   <li><a href="#non-linearity-in-self-attention" id="toc-non-linearity-in-self-attention" class="nav-link" data-scroll-target="#non-linearity-in-self-attention">Non-linearity in self-attention</a></li>
   <li><a href="#matrix-form" id="toc-matrix-form" class="nav-link" data-scroll-target="#matrix-form">Matrix form</a></li>
   <li><a href="#scaled-dot-product-self-attention" id="toc-scaled-dot-product-self-attention" class="nav-link" data-scroll-target="#scaled-dot-product-self-attention">Scaled dot-product self-attention</a></li>
-  <li><a href="#multiple-heads" id="toc-multiple-heads" class="nav-link" data-scroll-target="#multiple-heads">Multiple heads</a></li>
-  <li><a href="#transformer-layers" id="toc-transformer-layers" class="nav-link" data-scroll-target="#transformer-layers">Transformer layers</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformers.html">Transformers</a></li><li class="breadcrumb-item"><a href="./transformers_sa.html">Dot-product self-attention</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./attention.html">Attention</a></li><li class="breadcrumb-item"><a href="./transformers_sa.html">Self-Attention</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Dot-product self-attention</h1>
+<h1 class="title">Self-Attention</h1>
 </div>
 
 
@@ -665,6 +693,95 @@ window.Quarto = {
 </header>
 
 
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dot Product Primer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<details>
+<summary>
+Click to expand
+</summary>
+<p>In machine learning, data points are often represented as vectors in a high-dimensional space. For example, word embeddings represent words as vectors, with semantically related words often occupying nearby regions of the embedding space. To compare two vectors, we need a way to measure how similar they are.</p>
+<p>Three commonly used measures are <strong>Euclidean distance, cosine similarity, and dot product</strong>. Although closely related mathematically, they capture different aspects of the relationship between vectors.</p>
+<section id="euclidean-distance-how-far-apart-are-two-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="euclidean-distance-how-far-apart-are-two-vectors">1. Euclidean Distance: How Far Apart Are Two Vectors?</h3>
+<p>Euclidean distance measures the straight-line distance between two points in space.</p>
+<p>For two vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>:</p>
+<p><span class="math display">\[
+d(\mathbf{a},\mathbf{b})=\sqrt{\sum_{i=1}^{d}(a_i-b_i)^2}
+\]</span></p>
+<p>A smaller distance indicates that the vectors are closer together. Euclidean distance considers both the direction and magnitude of the vectors.</p>
+</section>
+<section id="cosine-similarity-how-aligned-are-two-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="cosine-similarity-how-aligned-are-two-vectors">2. Cosine Similarity: How Aligned Are Two Vectors?</h3>
+<p>Cosine similarity measures the angle between two nonzero vectors, regardless of their magnitudes.</p>
+<p><span class="math display">\[
+\cos(\theta)=\frac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|\|\mathbf{b}\|}
+\]</span></p>
+<ul>
+<li><strong>1:</strong> Vectors point in the same direction.</li>
+<li><strong>0:</strong> Vectors are perpendicular.</li>
+<li><strong>−1:</strong> Vectors point in opposite directions.</li>
+</ul>
+<p>For example, the vectors <span class="math inline">\([1,2]\)</span> and <span class="math inline">\([10,20]\)</span> have a cosine similarity of 1, even though they are far apart in Euclidean distance.</p>
+<p>Cosine similarity is particularly useful when the direction of a vector is more important than its magnitude.</p>
+</section>
+<section id="dot-product-combining-direction-and-magnitude" class="level3">
+<h3 class="anchored" data-anchor-id="dot-product-combining-direction-and-magnitude">3. Dot Product: Combining Direction and Magnitude</h3>
+<p>The dot product of two vectors is calculated by multiplying corresponding components and summing the results:</p>
+<p><span class="math display">\[
+\mathbf{a}\cdot\mathbf{b}=\sum_{i=1}^{d}a_i b_i
+\]</span></p>
+<p>Geometrically, the dot product can also be expressed as:</p>
+<p><span class="math display">\[
+\mathbf{a}\cdot\mathbf{b}=\|\mathbf{a}\|\|\mathbf{b}\|\cos(\theta)
+\]</span></p>
+<p>This reveals an important relationship: <strong>the dot product combines angular alignment (cosine similarity) with vector magnitudes.</strong></p>
+<p>Two vectors have a large positive dot product when they point in similar directions and have large magnitudes. Their dot product is zero when they are perpendicular and negative when they point in opposing directions.</p>
+<p>Unlike cosine similarity, the dot product is not normalized. Consequently, two vectors can have a high dot product because of their magnitudes, even if they are not especially well aligned.</p>
+</section>
+<section id="comparing-the-three-measures" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-the-three-measures">4. Comparing the Three Measures</h3>
+<p>Consider three vectors:</p>
+<p><span class="math display">\[
+\mathbf{a}=[1,2],\quad \mathbf{b}=[2,4],\quad \mathbf{c}=[-2,1]
+\]</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Comparison</th>
+<th style="text-align: right;">Euclidean Distance</th>
+<th style="text-align: right;">Cosine Similarity</th>
+<th style="text-align: right;">Dot Product</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a vs.&nbsp;b</td>
+<td style="text-align: right;">2.24</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td>a vs.&nbsp;c</td>
+<td style="text-align: right;">3.16</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Vectors <strong>a</strong> and <strong>b</strong> point in exactly the same direction, giving them a cosine similarity of 1, but they have different magnitudes and therefore a nonzero Euclidean distance. Vectors <strong>a</strong> and <strong>c</strong> are perpendicular, so both their cosine similarity and dot product are zero.</p>
+<p><strong>Key takeaway:</strong> Euclidean distance measures <em>proximity</em>, cosine similarity measures <em>directional alignment</em>, and dot product measures <em>alignment weighted by magnitude</em>. For unit-length vectors, dot product and cosine similarity are identical.</p>
+</section></details>
+
+</div>
+</div>
 <p>The previous section argued that a model for processing text will</p>
 <ol type="i">
 <li>use <mark>parameter sharing</mark> to cope with long input passages of differing lengths and</li>
@@ -734,9 +851,12 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
 <section id="query-vectors-key-vectors-and-attention-weights" class="level3">
 <h3 class="anchored" data-anchor-id="query-vectors-key-vectors-and-attention-weights">Query vectors, Key vectors and Attention Weights</h3>
 <p>In the previous section, we saw that the outputs result from two chained linear transformations; the value vectors <span class="math inline">\(\beta_v + \Omega_v \mathbf{x}_m\)</span> are computed independently for each input <span class="math inline">\(\mathbf{x}_m\)</span>, and these vectors are combined linearly by the attention weights <span class="math inline">\(a[\mathbf{x}_m,\mathbf{x}_n]\)</span>.</p>
-<p>However, the overall self-attention computation is nonlinear.</p>
-<p>As we’ll see shortly, the attention weights are themselves nonlinear functions of the input.</p>
-<p>This is an example of a hypernetwork, where one network branch computes the weights of another. To compute the attention, we apply two more linear transformations to the inputs:</p>
+<!-- However, the overall self-attention computation is nonlinear. 
+
+As we’ll see shortly, the attention weights are themselves nonlinear functions of the input. 
+
+This is an example of a hypernetwork, where one network branch computes the weights of another.  -->
+<p>To compute the attention, we apply two more linear transformations to the inputs:</p>
 <p><span class="math display">\[\begin{eqnarray}
   \mathbf{q}_{n} &amp;=&amp; \boldsymbol\beta_{q}+\boldsymbol\Omega_{q}\mathbf{x}_{n}\nonumber \\
   \mathbf{k}_{m} &amp;=&amp; \boldsymbol\beta_{k}+\boldsymbol\Omega_{k}\mathbf{x}_{m},
@@ -748,9 +868,43 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
   &amp;=&amp; \frac{\exp\left[\mathbf{k}_{m}^{T}\mathbf{q}_{n}\right]}{\sum_{m'=1}^{N}\exp\left[\mathbf{k}_{m'}^{T}\mathbf{q}_{n} \right]},
 \end{eqnarray}\]</span></p>
 <p>so for each <span class="math inline">\(\mathbf{x}_n\)</span>, they are positive and sum to one (figure 12.3). For obvious reasons, this is known as <u>dot-product self-attention</u>.</p>
-<p>The names “queries” and “keys” were inherited from the field of information retrieval and have the following interpretation: the dot product operation returns a measure of similarity between its inputs, so the weights <span class="math inline">\(a[\mathbf{x}_\bullet,\mathbf{x}_n]\)</span> depend on the relative similarities between the nth query and all of the keys. The softmax function means that the key vectors “compete” with one another to contribute to the final result. The queries and keys must have the same dimensions. However, these can differ from the dimension of the values, which is usually the same size as the input, so the representation doesn’t change size.</p>
+<p>The names “queries” and “keys” were inherited from the field of information retrieval and have the following interpretation: the dot product operation returns a measure of similarity between its inputs, so the weights <span class="math inline">\(a[\mathbf{x}_\bullet,\mathbf{x}_n]\)</span> depend on the relative similarities between the nth query and all of the keys.</p>
+<p>The softmax function means that the key vectors “compete” with one another to contribute to the final result.</p>
+<p>The queries and keys must have the same dimensions.</p>
+<p>However, these can differ from the dimension of the values, which is usually the same size as the input, so the representation doesn’t change size.</p>
 <p><img src="assets/Chap12/TransformerSA2.svg" style="filter: invert(1);" width="100%"></p>
 <p>Computing attention weights. a) Query vectors qn = βq + Ωqxn and key vectors kn = βk + Ωkxn are computed for each input xn. b) The dot products between each query and the three keys are passed through a softmax function to form non-negative attentions that sum to one. c) These route the value vectors (figure 12.1) via the sparse matrix from figure 12.2c.</p>
+</section>
+<section id="why-separate-query-and-key-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="why-separate-query-and-key-vectors">Why separate query and key vectors?</h3>
+<p>The separation of query and key vectors allows the model to learn different representations for the purpose of matching queries to keys.</p>
+<p>If the same vector were used for both queries and keys, the model would be limited to computing similarities based on a single representation.</p>
+<p>By having separate projections, the model can learn to emphasize different aspects of the input when computing attention scores, leading to more flexible and expressive attention mechanisms.</p>
+<p>Following examples illustrate how separate query and key vectors enable more flexible attention patterns.</p>
+<ol type="1">
+<li><p>Alice told Bob that <mark>he</mark> should leave because <mark>he</mark> was tired.</p>
+<p>Focus on the first <em>he</em>.</p></li>
+</ol>
+<ul>
+<li><p>Query: What does it seek? The first <em>he</em> seeks information about which male person it refers to, potentially Bob.</p></li>
+<li><p>Key: What does it offer? The first <em>he</em> can serve as a useful reference for the second he, which may refer to the same person.</p></li>
+</ul>
+<ol start="2" type="1">
+<li><p>The <mark>cat</mark> with the white paws <mark>is</mark> sleeping.</p>
+<p>Focus on cat.</p></li>
+</ol>
+<ul>
+<li><p>Query: The noun cat may attend to white, paws, and the surrounding phrase to develop a richer representation of which cat is being discussed.</p></li>
+<li><p>Key: The noun cat offers grammatical information to is, including that the subject is singular. Similarly, cat imposes constraints on what can show up later in the sentence. For example, it rules out wings as a possible continuation, since cats do not have wings.</p></li>
+</ul>
+<ol start="3" type="1">
+<li><p>The <mark>chef</mark> carefully <mark>prepared</mark> the <mark>meal</mark>.</p>
+<p>Focus on prepared.</p></li>
+</ol>
+<ul>
+<li><p>Query: The verb may seek its subject (chef) to determine who performed the action.</p></li>
+<li><p>Key: The verb can offer information to meal, identifying the action performed on it.</p></li>
+</ul>
 </section>
 <section id="non-linearity-in-self-attention" class="level3">
 <h3 class="anchored" data-anchor-id="non-linearity-in-self-attention">Non-linearity in self-attention</h3>
@@ -784,12 +938,12 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
 \end{eqnarray}\]</span></p>
 <p><img src="assets/Chap12/TransformerBlockSA.svg" style="filter: invert(1);" width="100%"></p>
 <p>Self-attention in matrix form. Self-attention can be implemented efficiently if we store the N input vectors xn in the columns of the D×N matrix X. The input X is operated on separately by the query matrix Q, key matrix K, and value matrix V. The dot products are then computed using matrix multiplication, and a softmax operation is applied independently to each column of the resulting matrix to calculate the attentions. Finally, the values are post-multiplied by the attentions to create an output of the same size as the input.</p>
-<div id="ef38f072" class="cell" data-execution_count="3">
+<div id="ef38f072" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The self-attention mechanism maps <span class="math inline">\(N\)</span> inputs $ ^D $and returns <span class="math inline">\(x^{\prime} \in \mathbb{R}^D\)</span> outputs .</p>
-<div id="75c930f0" class="cell" data-execution_count="4">
+<div id="75c930f0" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">3</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of inputs</span></span>
@@ -804,20 +958,20 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the list</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(all_x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[array([[ 1.78862847],
-       [ 0.43650985],
-       [ 0.09649747],
-       [-1.8634927 ]]), array([[-0.2773882 ],
-       [-0.35475898],
-       [-0.08274148],
-       [-0.62700068]]), array([[-0.04381817],
-       [-0.47721803],
-       [-1.31386475],
-       [ 0.88462238]])]</code></pre>
+<pre><code>[array([[ 1.789],
+       [ 0.437],
+       [ 0.096],
+       [-1.863]]), array([[-0.277],
+       [-0.355],
+       [-0.083],
+       [-0.627]]), array([[-0.044],
+       [-0.477],
+       [-1.314],
+       [ 0.885]])]</code></pre>
 </div>
 </div>
 <p>We’ll also need the weights and biases for the keys, queries, and values (equations 12.2 and 12.4)</p>
-<div id="a3f70372" class="cell" data-execution_count="5">
+<div id="a3f70372" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -830,7 +984,7 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>beta_v  <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s compute the queries, keys, and values for each input</p>
-<div id="fc14e164" class="cell">
+<div id="fc14e164" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make three lists to store queries, keys, and values</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>all_queries <span class="op">=</span> []</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>all_keys    <span class="op">=</span> []</span>
@@ -847,7 +1001,7 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  all_values.append(value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We’ll need a softmax function (equation 12.5) – here, it will take a list of arbitrary numbers and return a list where the elements are non-negative and sum to one</p>
-<div id="f8d91225" class="cell">
+<div id="f8d91225" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(items_in):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the elements of items_out</span></span>
@@ -857,7 +1011,7 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> items_out <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now compute the self attention values:</p>
-<div id="88c978bb" class="cell">
+<div id="88c978bb" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create emptymlist for output</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>all_x_prime <span class="op">=</span> []</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -896,34 +1050,34 @@ where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains t
 <span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"x_prime_2_true: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Attentions for output  0
-[[[1.24326146e-13]]
+[[[1.243e-13]]
 
- [[9.98281489e-01]]
+ [[9.983e-01]]
 
- [[1.71851130e-03]]]
+ [[1.719e-03]]]
 Attentions for output  1
-[[[2.79525306e-12]]
+[[[2.795e-12]]
 
- [[5.85506360e-03]]
+ [[5.855e-03]]
 
- [[9.94144936e-01]]]
+ [[9.941e-01]]]
 Attentions for output  2
-[[[0.00505708]]
+[[[0.005]]
 
- [[0.00654776]]
+ [[0.007]]
 
- [[0.98839516]]]
-x_prime_0_calculated: [[ 0.94744244 -0.24348429 -0.91310441 -0.44522983]]
+ [[0.988]]]
+x_prime_0_calculated: [[ 0.947 -0.243 -0.913 -0.445]]
 x_prime_0_true: [[ 0.94744244 -0.24348429 -0.91310441 -0.44522983]]
-x_prime_1_calculated: [[ 1.64201168 -0.08470004  4.02764044  2.18690791]]
+x_prime_1_calculated: [[ 1.642 -0.085  4.028  2.187]]
 x_prime_1_true: [[ 1.64201168 -0.08470004  4.02764044  2.18690791]]
-x_prime_2_calculated: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]
+x_prime_2_calculated: [[ 1.619 -0.066  3.969  2.159]]
 x_prime_2_true: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]</code></pre>
 </div>
 </div>
 <p>Now let’s compute the same thing, but using matrix calculations. We’ll store the inputs in the columns of a matrix, using equations 12.6 and 12.7/8.</p>
 <p>Note: The book uses column vectors (for compatibility with the rest of the text), but in the wider literature it is more normal to store the inputs in the rows of a matrix; in this case, the computation is the same, but all the matrices are transposed and the operations proceed in the reverse order.</p>
-<div id="ca41bc2d" class="cell">
+<div id="ca41bc2d" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define softmax operation that works independently on each column</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax_cols(data_in):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Exponentiate all of the values</span></span>
@@ -949,34 +1103,36 @@ x_prime_2_true: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]</code></pre>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  all_queries <span class="op">=</span> (omega_q <span class="op">@</span> X) <span class="op">+</span> beta_q</span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  all_keys    <span class="op">=</span> (omega_k <span class="op">@</span> X) <span class="op">+</span> beta_k</span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  all_values  <span class="op">=</span> (omega_v <span class="op">@</span> X) <span class="op">+</span> beta_v</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> (softmax_cols(all_queries.T <span class="op">@</span> all_keys) <span class="op">@</span> all_values.T).T</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy data into matrix</span></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.zeros((D, N))</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">0</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">0</span>])</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">1</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">1</span>])</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">2</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">2</span>])</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k)</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime)</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># X_prime = all_values @ softmax_cols(all_keys.T @ all_queries)</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> all_values <span class="op">@</span> softmax_cols(all_keys.T <span class="op">@</span> all_queries <span class="op">/</span> np.sqrt(all_keys.shape[<span class="dv">0</span>]))</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy data into matrix</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.zeros((D, N))</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">0</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">0</span>])</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">1</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">1</span>])</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>X[:,<span class="dv">2</span>] <span class="op">=</span> np.squeeze(all_x[<span class="dv">2</span>])</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[[ 0.04934405  1.77317658 -1.94113808]
- [-0.01271124 -0.21651166  3.45551881]
- [-0.048059    2.26943944 -6.01580286]
- [-0.02345359  1.26473743 -2.5239172 ]]</code></pre>
+<pre><code>[[ 0.974  1.596  1.326]
+ [-0.237 -0.095  0.131]
+ [-0.723  3.702  3.024]
+ [-0.344  2.013  1.69 ]]</code></pre>
 </div>
 </div>
 <p>If you did this correctly, the values should be the same as above.</p>
 <p>TODO:</p>
 <p>Print out the attention matrix You will see that the values are quite extreme (one is very close to one and the others are very close to zero. Now we’ll fix this problem by using scaled dot-product attention.</p>
-<div id="53a2c58c" class="cell">
+<div id="53a2c58c" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's compute self attention in matrix form</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scaled_dot_product_self_attention(X,omega_v, omega_q, omega_k, beta_v, beta_q, beta_k):</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1011,175 +1167,94 @@ x_prime_2_true: [[ 1.61949281 -0.06641533  3.96863308  2.15858316]]</code></pre>
 <span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
 <span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[[ 0.13752296  1.48061754 -1.73675795]
- [-0.03523951 -0.1745895   3.43612491]
- [-0.13084049  1.99604787 -5.6596298 ]
- [-0.06373021  1.10938021 -2.32828337]]</code></pre>
+<pre><code>[[ 0.138  1.481 -1.737]
+ [-0.035 -0.175  3.436]
+ [-0.131  1.996 -5.66 ]
+ [-0.064  1.109 -2.328]]</code></pre>
 </div>
 </div>
 </section>
 <section id="scaled-dot-product-self-attention" class="level2">
 <h2 class="anchored" data-anchor-id="scaled-dot-product-self-attention">Scaled dot-product self-attention</h2>
-<p>The dot products in the attention computation can have large magnitudes and move the arguments to the softmax function into a region where the largest value completely dominates.</p>
-<p>Small changes to the inputs to the softmax function now have little effect on the output (i.e., the gradients are very small), making the model diﬀicult to train. To prevent this, the dot products are scaled by the square root of the dimension <span class="math inline">\(D_q\)</span> of the the queries and keys (i.e., the number of rows in <span class="math inline">\(\boldsymbol\Omega_q\)</span> and <span class="math inline">\(\boldsymbol\Omega_k\)</span>, which must be the same):</p>
-<p><span class="math display">\[\begin{eqnarray}
+<!-- The dot products in the attention computation can have large magnitudes and move
+the arguments to the softmax function into a region where the largest value completely
+dominates. 
+
+Small changes to the inputs to the softmax function now have little effect on
+the output (i.e., the gradients are very small), making the model diﬀicult to train. To
+prevent this, the dot products are scaled by the square root of the dimension $D_q$ of the
+the queries and keys (i.e., the number of rows in $\boldsymbol\Omega_q$ and $\boldsymbol\Omega_k$, which must be the same):
+
+\begin{eqnarray}
   \mbox{{\bf Sa}}[\mathbf{X}] =\mathbf{V}\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}^{T}\mathbf{Q}}{\sqrt{D}_{q}}\right].
-\end{eqnarray}\]</span></p>
-<p>This is known as scaled dot-product self-attention.</p>
-</section>
-<section id="multiple-heads" class="level2">
-<h2 class="anchored" data-anchor-id="multiple-heads">Multiple heads</h2>
-<p>Multiple self-attention mechanisms are usually applied in parallel, and this is known as multi-head self-attention. Now <span class="math inline">\(H\)</span> different sets of values, keys, and queries are computed:</p>
-<p><span class="math display">\[\begin{eqnarray}
-\mathbf{V}_h &amp;=&amp; \boldsymbol\beta_{vh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{vh}}\mathbf{X}\nonumber \\
-\mathbf{Q}_h &amp;=&amp; \boldsymbol\beta_{qh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{qh}}\mathbf{X}\nonumber \\
-\mathbf{K}_h &amp;=&amp; \boldsymbol\beta_{kh}\mathbf{1}^{T}+\boldsymbol\Omega_{\mathit{kh}}\mathbf{X}.
-\end{eqnarray}\]</span></p>
-<p>The <span class="math inline">\(h\)</span>th self-attention mechanism or head can be written as:</p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{{\bf Sa}}_{h}[\mathbf{X}] =\mathbf{V}_h\cdot\mbox{\bf Softmax}\left[\frac{\mathbf{K}_h^{T}\mathbf{Q}_h}{\sqrt{D}_{q}}\right],
-\end{eqnarray}\]</span></p>
-<p>where we have different parameters <span class="math inline">\(\{\boldsymbol\beta_{vh},\boldsymbol\Omega_{vh}\}\)</span>, <span class="math inline">\(\{\boldsymbol\beta_{qh},\boldsymbol\Omega_{qh}\}\)</span>, and <span class="math inline">\(\{\boldsymbol\beta_{kh},\boldsymbol\Omega_{kh}\}\)</span> for each head. Typically, if the dimension of the inputs <span class="math inline">\(\mathbf{x}_m\)</span> is <span class="math inline">\(D\)</span> and there are <span class="math inline">\(H\)</span> heads, the values, queries, and keys will all be of size <span class="math inline">\(D/H\)</span>, as this allows for an eﬀicient implementation. The outputs of these self-attention mechanisms are vertically concatenated, and another linear transform <span class="math inline">\(\boldsymbol\Omega_c\)</span> is applied to combine them (figure 12.6):</p>
-<p><img src="assets/Chap12/TransformerBlockSAMultiHead.svg" style="filter: invert(1);" width="100%"></p>
-<p>Multi-head self-attention. Self-attention occurs in parallel across multiple “heads.” Each has its own queries, keys, and values. Here two heads are depicted, in the cyan and orange boxes, respectively. The outputs are vertically concatenated, and another linear transformation Ωc is used to recombine them.</p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mbox{{\bf MhSa}}[\mathbf{X}] = \boldsymbol\Omega_{c}\Bigl[\mbox{{\bf Sa}}_{1}[\mathbf{X}]^T,\mbox{{\bf Sa}}_{2}[\mathbf{X}]^T,\ldots,\mbox{{\bf Sa}}_{H}[\mathbf{X}]^T \Bigr]^T.
-\end{eqnarray}\]</span></p>
-<p>Multiple heads seem to be necessary to make self-attention work well. It has been speculated that they make the self-attention network more robust to bad initializations.</p>
-</section>
-<section id="transformer-layers" class="level2">
-<h2 class="anchored" data-anchor-id="transformer-layers">Transformer layers</h2>
-<p>Self-attention is just one part of a larger transformer layer. This consists of a multi- head self-attention unit (which allows the word representations to interact with each other) followed by a fully connected network <span class="math inline">\(\textbf{mlp}[\mathbf{x}_\bullet]\)</span> (that operates separately on each word). Both units are residual networks (i.e., their output is added back to the original input). In addition, it is typical to add a LayerNorm operation after both the self- attention and fully connected networks. This is similar to BatchNorm but normalizes each embedding in each batch element separately using statistics calculated across its D embedding dimensions (section 11.4 and figure 11.14). The complete layer can be described by the following series of operations (figure 12.7):</p>
-<p><img src="assets/Chap12/TransformerBlock.svg" style="filter: invert(1);" width="100%"></p>
-<p>Transformer layer. The input consists of a D × N matrix containing the D-dimensional word embeddings for each of the N input tokens. The output is a matrix of the same size. The transformer layer consists of a series of operations. First, there is a multi-head attention block, allowing the word embeddings to interact with one another. This forms the processing of a residual block, so the inputs are added back to the output. Second, a LayerNorm operation is applied separately to each embedding. Third, there is a second residual layer where the same fully connected neural network is applied separately to each of the N word representations (columns). Finally, LayerNorm is applied again.</p>
-<p><span class="math display">\[\begin{eqnarray}
-  \mathbf{X} &amp;\leftarrow&amp; \mathbf{X} + \mbox{\bf{MhSa}}[\mathbf{X}] \nonumber \\
-  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}] \hspace{3cm}\nonumber\\
-  \mathbf{x}_{n} &amp;\leftarrow&amp; \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
-  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}],
-\end{eqnarray}\]</span></p>
-<p>where the column vectors xn are separately taken from the full data matrix X. In a real network, the data passes through a series of these transformer layers.</p>
-<p>The multihead self-attention mechanism maps <span class="math inline">\(N\)</span> inputs <span class="math inline">\(\mathbf{x_n} \in \mathbb{R}^D\)</span> and returns N outputs <span class="math inline">\(\mathbf{x^{\prime}} \in \mathbb{R}^D\)</span> .</p>
-<div id="0044d7db" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">3</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of inputs</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">6</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of dimensions of each input</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="dv">8</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,N))</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print X</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[ 1.789  0.437  0.096 -1.863 -0.277 -0.355]
- [-0.083 -0.627 -0.044 -0.477 -1.314  0.885]
- [ 0.881  1.71   0.05  -0.405 -0.545 -1.546]
- [ 0.982 -1.101 -1.185 -0.206  1.486  0.237]
- [-1.024 -0.713  0.625 -0.161 -0.769 -0.23 ]
- [ 0.745  1.976 -1.244 -0.626 -0.804 -2.419]
- [-0.924 -1.024  1.124 -0.132 -1.623  0.647]
- [-0.356 -1.743 -0.597 -0.589 -0.874  0.03 ]]</code></pre>
-</div>
-</div>
-<p>We’ll use two heads. We’ll need the weights and biases for the keys, queries, and values (equations 12.2 and 12.4). We’ll use two heads, and (as in the figure), we’ll make the queries keys and values of size D/H</p>
-<div id="e6d9060f" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of heads</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># QDV dimension</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>H_D <span class="op">=</span> <span class="bu">int</span>(D<span class="op">/</span>H)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed so we get the same random numbers</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters for the first head</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>omega_q1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>omega_k1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>omega_v1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>beta_q1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>beta_k1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>beta_v1 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters for the second head</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>omega_q2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>omega_k2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>omega_v2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,D))</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>beta_q2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>beta_k2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>beta_v2 <span class="op">=</span> np.random.normal(size<span class="op">=</span>(H_D,<span class="dv">1</span>))</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose random values for the parameters</span></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>omega_c <span class="op">=</span> np.random.normal(size<span class="op">=</span>(D,D))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now let’s compute the multiscale self-attention</p>
-<div id="d12fa347" class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define softmax operation that works independently on each column</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax_cols(data_in):</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Exponentiate all of the values</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  exp_values <span class="op">=</span> np.exp(data_in) <span class="op">;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum over columns</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  denom <span class="op">=</span> np.<span class="bu">sum</span>(exp_values, axis <span class="op">=</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute softmax (numpy broadcasts denominator to all rows automatically)</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  softmax <span class="op">=</span> exp_values <span class="op">/</span> denom</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return the answer</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> softmax</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's compute self attention in matrix form</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> multihead_scaled_self_attention(X,omega_v1, omega_q1, omega_k1, beta_v1, beta_q1, beta_k1, omega_v2, omega_q2, omega_k2, beta_v2, beta_q2, beta_k2, omega_c):</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Multihead scaled self-attention mechanism.</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  X_prime <span class="op">=</span> omega_c <span class="op">@</span> np.vstack([</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      (softmax_cols((omega_q1 <span class="op">@</span> X <span class="op">+</span> beta_q1).T <span class="op">@</span> (omega_k1 <span class="op">@</span> X <span class="op">+</span> beta_k1) <span class="op">/</span> np.sqrt(omega_q1.shape[<span class="dv">0</span>])) <span class="op">@</span> (omega_v1 <span class="op">@</span> X <span class="op">+</span> beta_v1).T).T,</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      (softmax_cols((omega_q2 <span class="op">@</span> X <span class="op">+</span> beta_q2).T <span class="op">@</span> (omega_k2 <span class="op">@</span> X <span class="op">+</span> beta_k2) <span class="op">/</span> np.sqrt(omega_q2.shape[<span class="dv">0</span>])) <span class="op">@</span> (omega_v2 <span class="op">@</span> X <span class="op">+</span> beta_v2).T).T</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  ])</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X_prime</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the self attention mechanism</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>X_prime <span class="op">=</span> multihead_scaled_self_attention(X,omega_v1, omega_q1, omega_k1, beta_v1, beta_q1, beta_k1, omega_v2, omega_q2, omega_k2, beta_v2, beta_q2, beta_k2, omega_c)</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the results</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Your answer:"</span>)</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_prime)</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"True values:"</span>)</span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"[[-21.207  -5.373 -20.933  -9.179 -11.319 -17.812]"</span>)</span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [ -1.995   7.906 -10.516   3.452   9.863  -7.24 ]"</span>)</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  5.479   1.115   9.244   0.453   5.656   7.089]"</span>)</span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [ -7.413  -7.416   0.363  -5.573  -6.736  -0.848]"</span>)</span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [-11.261  -9.937  -4.848  -8.915 -13.378  -5.761]"</span>)</span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  3.548  10.036  -2.244   1.604  12.113  -2.557]"</span>)</span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  4.888  -5.814   2.407   3.228  -4.232   3.71 ]"</span>)</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" [  1.248  18.894  -6.409   3.224  19.717  -5.629]]"</span>)</span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a><span class="co"># If your answers don't match, then make sure that you are doing the scaling, and make sure the scaling value is correct</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Your answer:
-[[-22.646  -5.784   3.482  -1.692   0.437  -8.298]
- [ -0.909  -1.243   4.792   8.578   7.136  -7.41 ]
- [  4.784   2.155   0.244   1.903   5.343   3.26 ]
- [ -9.995   0.143   0.422  -6.449  -1.252  -2.497]
- [-12.711  -4.78   -0.733  -6.695  -3.892   0.755]
- [  1.337  -2.347 -12.407   3.273   3.644  -8.366]
- [  9.948  -1.418  13.564  -3.171  -4.017   6.666]
- [ -2.163   5.145 -10.17   14.501  12.527 -10.373]]
-True values:
-[[-21.207  -5.373 -20.933  -9.179 -11.319 -17.812]
- [ -1.995   7.906 -10.516   3.452   9.863  -7.24 ]
- [  5.479   1.115   9.244   0.453   5.656   7.089]
- [ -7.413  -7.416   0.363  -5.573  -6.736  -0.848]
- [-11.261  -9.937  -4.848  -8.915 -13.378  -5.761]
- [  3.548  10.036  -2.244   1.604  12.113  -2.557]
- [  4.888  -5.814   2.407   3.228  -4.232   3.71 ]
- [  1.248  18.894  -6.409   3.224  19.717  -5.629]]</code></pre>
-</div>
-</div>
+ \end{eqnarray}
+
+This is known as scaled dot-product self-attention. -->
+<p>The passage compresses three ideas: why the dot products get large, why large inputs make softmax “saturate,” and why saturation kills gradients. Taking them in order:</p>
+<p><mark>1. Dot products grow with dimension</mark></p>
+<p>Suppose each component of a query <span class="math inline">\(\mathbf{q}\)</span> and a key <span class="math inline">\(\mathbf{k}\)</span> is roughly independent with mean 0 and variance 1. That’s approximately true at initialization with standard weight init and normalized inputs. Their dot product is</p>
+<p><span class="math display">\[\mathbf{q}\cdot\mathbf{k} = \sum_{i=1}^{d_k} q_i k_i\]</span></p>
+<p>Each term <span class="math inline">\(q_i k_i\)</span> has mean 0 and variance 1, and you’re summing <span class="math inline">\(d_k\)</span> of them. So the dot product has <strong>variance <span class="math inline">\(d_k\)</span></strong>, or standard deviation <span class="math inline">\(\sqrt{d_k}\)</span>.</p>
+<p>With <span class="math inline">\(d_k = 64\)</span>, typical attention logits are around ±8. With <span class="math inline">\(d_k = 512\)</span>, they’re around ±23. Nothing has been learned yet; the size comes purely from the dimension.</p>
+<p><mark>2. Large logits make softmax nearly one-hot</mark></p>
+<p>Softmax depends on the <em>differences</em> between its inputs, and it’s exponential in them. Compare one query’s logits against three keys:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>logits</th>
+<th>softmax output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>[8, 0, −8] (unscaled, <span class="math inline">\(d_k=64\)</span>)</td>
+<td>[0.9997, 0.0003, 0.0000001]</td>
+</tr>
+<tr class="even">
+<td>[1, 0, −1] (divided by <span class="math inline">\(\sqrt{64}=8\)</span>)</td>
+<td>[0.665, 0.245, 0.090]</td>
+</tr>
+</tbody>
+</table>
+<p>In the unscaled case, the query attends to one key and ignores everything else. The model never made that decision; it’s an artifact of the logit scale.</p>
+<p><mark>3. A one-hot softmax has near-zero gradients</mark></p>
+<p>This is the key step. Training works by asking: <em>if I nudge this input a little, how much does the output change?</em> That sensitivity is the gradient. If the answer is “barely at all,” the model gets almost no signal about which direction to adjust.</p>
+<p><strong>A nudge experiment.</strong> Take the logits from the example above and increase the second one by 1:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>before nudge</th>
+<th>after nudge</th>
+<th>change in 2nd weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Unscaled</td>
+<td>[8, 0, −8] → weights [0.9997, 0.0003, 0.0000]</td>
+<td>[8, 1, −8] → weights [0.9991, 0.0009, 0.0000]</td>
+<td><strong>+0.0006</strong></td>
+</tr>
+<tr class="even">
+<td>Scaled</td>
+<td>[1, 0, −1] → weights [0.665, 0.245, 0.090]</td>
+<td>[1, 1, −1] → weights [0.468, 0.468, 0.063]</td>
+<td><strong>+0.22</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The same nudge moves the scaled attention weight about 370 times more. When one logit dominates, softmax is “stuck”: the winner already has nearly all the weight and the others have nearly none, so small changes in either direction hardly register.</p>
+<p><mark>4. Why <span class="math inline">\(\sqrt{d_k}\)</span> specifically</mark></p>
+<p>Dividing by <span class="math inline">\(\sqrt{d_k}\)</span> divides by the standard deviation of the dot product, which brings the variance back to 1 regardless of dimension:</p>
+<p><span class="math display">\[\text{Var}\!\left(\frac{\mathbf{q}\cdot\mathbf{k}}{\sqrt{d_k}}\right) = \frac{d_k}{d_k} = 1\]</span></p>
+<p>Dividing by <span class="math inline">\(d_k\)</span> would overshoot: the variance becomes <span class="math inline">\(1/d_k\)</span>, the logits all sit near zero, and attention becomes nearly uniform. Not scaling at all leaves softmax saturated. The <span class="math inline">\(\sqrt{d_k}\)</span> factor is exactly what keeps logits in the range where softmax is sensitive.</p>
 
 
 </section>

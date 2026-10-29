@@ -473,19 +473,48 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./transformers.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Transformers</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a href="./attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dot-product self-attention</span></a>
+ <span class="menu-text">Self-Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_cross.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_masked.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Masked Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_multihead.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multi-Head Attention</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
@@ -513,7 +542,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoding strategies</span></a>
+ <span class="menu-text">The Illustrated Transformer</span></a>
   </div>
 </li>
       </ul>
@@ -522,11 +551,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./llms.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Large Language Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
@@ -557,11 +586,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
@@ -601,8 +630,10 @@ window.Quarto = {
   <li><a href="#tokenization" id="toc-tokenization" class="nav-link active" data-scroll-target="#tokenization">Tokenization</a></li>
   <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings">Embeddings</a></li>
   <li><a href="#positional-encoding" id="toc-positional-encoding" class="nav-link" data-scroll-target="#positional-encoding">Positional encoding</a></li>
-  <li><a href="#transformer-model" id="toc-transformer-model" class="nav-link" data-scroll-target="#transformer-model">Transformer model</a></li>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#types-of-transformers" id="toc-types-of-transformers" class="nav-link" data-scroll-target="#types-of-transformers">Types of Transformers</a></li>
+  <li><a href="#layer-normalization-layernorm" id="toc-layer-normalization-layernorm" class="nav-link" data-scroll-target="#layer-normalization-layernorm">Layer Normalization (LayerNorm)</a></li>
+  <li><a href="#residual-connections" id="toc-residual-connections" class="nav-link" data-scroll-target="#residual-connections">Residual connections</a></li>
+  <li><a href="#transformer-layers" id="toc-transformer-layers" class="nav-link" data-scroll-target="#transformer-layers">Transformer layers</a></li>
   </ul>
 </nav>
     </div>
@@ -645,20 +676,19 @@ Slides
 <p>The paper had the following figure on the overall architecture of the transformer model:</p>
 <p><img src="https://arxiv.org/html/1706.03762v7/Figures/ModalNet-21.png" width="60%" align="right" style="filter:invert(1);"></p>
 <p>Note that we have have already studied the feed forward layers in the figure and are familiar with Linear and Softmax. The modules from the figure that we have not yet covered include the Multi-Head Attention, the Masked Multi-Head Attention and Add &amp; Norm layers.</p>
-<p>Transformers were initially targeted at natural language processing (NLP) problems. The model’s <mark>input is a series of high-dimensional embeddings representing words</mark> or word fragments aka tokens. These tokens are computed using Byte Pair Encoding (BPE) or similar tokenization methods.</p>
+<p>Transformers were initially targeted at natural language processing (NLP) problems. The model’s <mark>input is a series of high-dimensional embeddings representing words</mark> or word fragments aka tokens. Text is split into tokens using a sub-word tokenizer such as BPE (Byte Pair Encoding).</p>
 <p>The embeddings of tokens are passed through a series of transformer layers.</p>
 <p><mark>Natural language datasets have a unique complication that text sequences vary in length, and unlike images, there is no easy way to resize them</mark>.</p>
-<p>We now consider each of these stages in turn.</p>
 <section id="tokenization" class="level2">
 <h2 class="anchored" data-anchor-id="tokenization">Tokenization</h2>
-<p>A text processing pipeline begins with a tokenizer. This splits the text into smaller constituent units (tokens) from a vocabulary of possible tokens. In the discussion above, we have implied that these tokens represent words, but there are several diﬀiculties.</p>
+<p>A text processing pipeline begins with a tokenizer. This splits the text into smaller constituent units (tokens) from a vocabulary of possible tokens. In the discussion above, we have implied that these tokens represent words, but there are several difficulties.</p>
 <ul>
 <li><p>Inevitably, some words (e.g., names) will not be in the vocabulary.</p></li>
 <li><p>It’s unclear how to handle punctuation, but this is important. If a sentence ends in a question mark, we must encode this information.</p></li>
-<li><p>The vocabulary would need different tokens for versions of the same word with different suﬀixes (e.g., walk, walks, walked, walking), and there is no way to clarify that these variations are related.</p></li>
+<li><p>The vocabulary would need different tokens for versions of the same word with different suffixes (e.g., walk, walks, walked, walking), and there is no way to clarify that these variations are related.</p></li>
 </ul>
 <p>One approach would be to use letters and punctuation marks as the vocabulary, but this would mean splitting text into very small parts and requiring the subsequent network to re-learn the relations between them.</p>
-<p>In practice, a compromise between letters and full words is used, and the final vocabulary includes both common words and word fragments from which larger and less frequent words can be composed. The vocabulary is computed using a sub-word tok- enizer such as <mark>Byte Pair Encoding (BPE)</mark> (figure 12.8) that greedily merges commonly occurring sub-strings based on their frequency.</p>
+<p>In practice, a compromise between letters and full words is used, and the final vocabulary includes both common words and word fragments from which larger and less frequent words can be composed. The vocabulary is computed using a sub-word tokenizer such as <mark>Byte Pair Encoding (BPE)</mark> that greedily merges commonly occurring sub-strings based on their frequency.</p>
 <p><img src="assets/Chap12/TransformerBPE.svg" style="filter: invert(1);" width="100%"></p>
 <p>Sub-word tokenization.</p>
 <ol type="a">
@@ -669,11 +699,13 @@ Slides
 <li><p>If we continue this process indefinitely, the tokens eventually represent the full words.</p></li>
 <li><p>Over time, the number of tokens increases as we add word fragments to the letters and then decreases again as we merge these fragments. In a real situation, there would be a very large number of words, and the algorithm would terminate when the vocabulary size (number of tokens) reached a predetermined value. Punctuation and capital letters would also be treated as separate input characters.</p></li>
 </ol>
+<p>You can visualize how this works using tools like <a href="https://tiktokenizer.vercel.app/?model=cl100k_base">Tiktokenizer (https://tiktokenizer.vercel.app)</a>.</p>
+<p>For reference, GPT-3 uses 50,257 tokens and GPT-4 uses 100,277 tokens in its vocabulary.</p>
 </section>
 <section id="embeddings" class="level2">
 <h2 class="anchored" data-anchor-id="embeddings">Embeddings</h2>
 <p>Each token in the vocabulary <span class="math inline">\(\mathcal{V}\)</span> is mapped to a unique word embedding, and the embeddings for the whole vocabulary are stored in a matrix <span class="math inline">\(\Omega_e \in \mathbb{R}^{D \times |\mathcal{V}|}\)</span>.</p>
-<p>To accomplish this, the <span class="math inline">\(N\)</span> input tokens are first encoded in the matrix <span class="math inline">\(T \in \mathbb{R}^{|\mathcal{V}| \times N}\)</span>, where the nth column corresponds to the nth token and is a |V|×1 one-hot vector (i.e., a vector where every entry is zero except for the entry corresponding to the token, which is set to one). The input embeddings are computed as <span class="math inline">\(X= \Omega_e T\)</span>, and <span class="math inline">\(\Omega_e\)</span> is learned like any other network parameter (figure 12.9). A typical embedding size D is 1024, and a typical total vocab- ulary size <span class="math inline">\(|\mathcal{V}|\)</span> is 30,000, so even before the main network, there are many parameters in <span class="math inline">\(\Omega_e\)</span> to learn.</p>
+<p>To accomplish this, the <span class="math inline">\(N\)</span> input tokens are first encoded in the matrix <span class="math inline">\(T \in \mathbb{R}^{|\mathcal{V}| \times N}\)</span>, where the nth column corresponds to the nth token and is a |V|×1 one-hot vector (i.e., a vector where every entry is zero except for the entry corresponding to the token, which is set to one). The input embeddings are computed as <span class="math inline">\(X= \Omega_e T\)</span>, and <span class="math inline">\(\Omega_e\)</span> is learned like any other network parameter. A typical embedding size D is 1024, and a typical total vocabulary size <span class="math inline">\(|\mathcal{V}|\)</span> is 30,000, so even before the main network, there are many parameters in <span class="math inline">\(\Omega_e\)</span> to learn.</p>
 <p><img src="assets/Chap12/TransformerVocabulary.svg" style="filter: invert(1);" width="100%"></p>
 <p>The input embedding matrix <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{D \times N}\)</span> contains N embeddings of length D and is created by multiplying a matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> containing the embeddings that correspond to the word or sub-word indices. The vocabulary matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> is considered a parameter of the model and is learned along with the other parameters. Note that the two embeddings for the word an in <span class="math inline">\(\mathbf{X}\)</span> are the same.</p>
 </section>
@@ -715,33 +747,118 @@ r = a-b.
 <p>The sign indicates whether position <span class="math inline">\(a\)</span> comes before or after position <span class="math inline">\(b\)</span>, and the magnitude indicates the distance between them.</p>
 <p>Although this offset can be computed from absolute positions, relative positional encodings represent it directly. One approach assigns a learned parameter or vector <span class="math inline">\(\pi_r\)</span> to each offset <span class="math inline">\(r\)</span>. The network uses this encoding when combining information from the two positions. Pairs of inputs with the same offset share the same relative positional encoding, regardless of their absolute locations.</p>
 </section>
-<section id="transformer-model" class="level2">
-<h2 class="anchored" data-anchor-id="transformer-model">Transformer model</h2>
+<section id="types-of-transformers" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-transformers">Types of Transformers</h2>
 <p>Finally, the embedding matrix X representing the text is passed through a series of K transformer layers, called a transformer model. There are three types of transformer models:</p>
 <ol type="1">
 <li><p><mark>Encoder</mark>: An encoder transforms the text embeddings into a representation that can support a variety of tasks.</p></li>
 <li><p><mark>Decoder</mark>: A decoder predicts the next token to continue the input text.</p></li>
 <li><p><mark>Encoder-decoder</mark>: Encoder-decoders are used in sequence-to-sequence tasks, where one text string is converted into another (e.g., machine translation).</p></li>
 </ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Architecture</th>
+<th style="text-align: left;">Attention pattern</th>
+<th style="text-align: left;">Example task</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Encoder-only</td>
+<td style="text-align: left;">Usually bidirectional self-attention</td>
+<td style="text-align: left;">Classification or masked-token prediction</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decoder-only</td>
+<td style="text-align: left;">Causal self-attention</td>
+<td style="text-align: left;">Text generation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Encoder–decoder</td>
+<td style="text-align: left;">Encoder self-attention, causal decoder self-attention, and cross-attention</td>
+<td style="text-align: left;">Translation</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="motivation" class="level2">
-<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
-<p>To motivate the transformer, consider the following passage:</p>
-<blockquote class="blockquote">
-<p>The <mark>restaurant</mark> refused to serve me a ham sandwich because <mark>it</mark> only serves vegetarian food. In the end, they just gave me two slices of bread. <mark>Their</mark> ambiance was just as good as the food and service. I am never going back <mark>there</mark> again.</p>
-</blockquote>
-<p>The goal is to design a network to process this text into a representation suitable for downstream tasks.</p>
-<p>For example, it might be used to classify the review as positive or negative or to answer questions such as “Does the restaurant serve steak?”.</p>
-<p>We can make three immediate observations:</p>
-<ol type="1">
-<li><p>First, <mark>the encoded input can be surprisingly large</mark>. In this case, each of the 37 words might be represented by an embedding vector of length 1024, so the encoded input would be of length 37×1024 = <mark>37888 even for this small passage</mark>.</p>
-<p>A more realistically sized body of text might have hundreds or even thousands of words, so fully connected neural networks are impractical.</p></li>
-<li><p>Second, <mark>one of the defining characteristics of NLP problems is that each input (one or more sentences) is of a different length</mark>.</p>
-<p>It is not even obvious how to apply a fully connected network.</p>
-<p>These observations suggest that the <mark>network should share parameters across words at different input positions</mark>.</p></li>
-<li><p>Third, <mark>language is ambiguous</mark>; it is <mark>unclear that the pronoun it refers to the restaurant and not to the ham sandwich</mark>. To understand the text, the word it should somehow be connected to the word restaurant.</p>
-<p>In the parlance of transformers, <mark>the former word should pay attention to the latter</mark>. This implies that there must be <mark>connections between the words</mark> and that the strength of these connections will depend on the words themselves. Moreover, these connections need to extend across large text spans. For example, the word <i><u>their</u></i> in the last sentence also refers to the restaurant.</p></li>
-</ol>
+<section id="layer-normalization-layernorm" class="level2">
+<h2 class="anchored" data-anchor-id="layer-normalization-layernorm">Layer Normalization (LayerNorm)</h2>
+<p>Suppose a token has a four-dimensional embedding:</p>
+<p><span class="math display">\[ x=[2,4,6,8] \]</span></p>
+<p>Its mean is:</p>
+<p><span class="math display">\[ \mu=\frac{2+4+6+8}{4}=5 \]</span></p>
+<p>Its standard deviation is:</p>
+<p><span class="math display">\[ \sigma=\sqrt{\frac{(2-5)^2+(4-5)^2+(6-5)^2+(8-5)^2}{4}}=\sqrt{5} \]</span></p>
+<p>LayerNorm first standardizes the vector:</p>
+<p><span class="math display">\[ \hat{x}=\frac{x-\mu}{\sqrt{\sigma^2+\epsilon}} \]</span></p>
+<p>Ignoring the tiny \(\) for simplicity:</p>
+<p><span class="math display">\[ \hat{x}\approx[-1.34,-0.45,0.45,1.34] \]</span></p>
+<p>Now the vector has approximately:</p>
+<ul>
+<li>Mean = 0</li>
+<li>Standard deviation = 1</li>
+</ul>
+<p>But LayerNorm doesn’t stop there. It also learns a scale and shift for each dimension:</p>
+<p><span class="math display">\[ \boxed{y=\gamma\odot\hat{x}+\beta} \]</span></p>
+<p>Here, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\beta\)</span> are learnable parameters, each with four elements in this example. They allow the network to adjust the standardized representation.</p>
+<p><b><u>What exactly gets normalized in a transformer?</u></b></p>
+<p>Suppose the input has shape:</p>
+<p><span class="math display">\[ (\text{batch},\text{tokens},\text{embedding dimensions}) =(32,64,128) \]</span></p>
+<p>LayerNorm normalizes each token’s 128-dimensional vector independently.</p>
+<p>LayerNorm operates across embedding dimensions</p>
+<p>Each row is normalized separately. The same learned γ and β parameters are shared across token positions.</p>
+<p>This is different from Batch Normalization, which uses statistics across examples in a batch.</p>
+<p><strong><u>Where does LayerNorm appear in our transformer?</u></strong></p>
+<p>Recall our implementation:</p>
+<pre><code>attention_output = self.attention(x)
+x = self.norm1(x + attention_output)
+ff_output = self.feedforward(x)
+x = self.norm2(x + ff_output)</code></pre>
+<p>The first LayerNorm normalizes the result of the attention block plus its residual connection.</p>
+<p>The second normalizes the result of the feed-forward block plus its residual connection.</p>
+<p>This is called a Post-LayerNorm transformer, because normalization happens after each residual addition. Many modern transformer architectures instead use Pre-LayerNorm, which normalizes before each sublayer.</p>
+<p><strong><u>PyTorch implementation</u></strong></p>
+<pre><code>import torch
+import torch.nn as nn
+x = torch.tensor([[2., 4., 6., 8.]])
+norm = nn.LayerNorm(4)
+y = norm(x)
+print(y)</code></pre>
+<p>The important detail is that <code>nn.LayerNorm(4)</code> creates 8 learnable parameters:</p>
+<ul>
+<li>Four scale parameters (\(\))</li>
+<li>Four shift parameters (\(\))</li>
+</ul>
+<p>For our transformer with <code>d_model=128</code>, each LayerNorm has 256 learnable parameters.</p>
+<p><strong><u>Why do we need it?</u></strong></p>
+<p>During training, the outputs of attention and feed-forward layers can change in magnitude as their parameters are updated. LayerNorm helps keep the scale of representations more controlled, making optimization more stable.</p>
+<p>It also helps gradients propagate through deep transformer networks.</p>
+<p>One important distinction: LayerNorm does not make all token embeddings identical or erase their contextual information. It normalizes each vector’s mean and variance, while preserving differences in the relative values of its dimensions.</p>
+<p>In short, self-attention determines what information each token receives; LayerNorm helps keep the resulting representations numerically well-behaved.</p>
+</section>
+<section id="residual-connections" class="level2">
+<h2 class="anchored" data-anchor-id="residual-connections">Residual connections</h2>
+<p>Residual connections are a key component of transformer layers. They allow the network to retain information from earlier layers by adding the input of a layer to its output. This helps mitigate the vanishing gradient problem and enables the training of very deep networks.</p>
+<p>Mathematically, if a layer implements a function <span class="math inline">\(F(\mathbf{X})\)</span>, the residual connection produces an output <span class="math inline">\(\mathbf{X} + F(\mathbf{X})\)</span>. In transformers, both the multi-head self-attention and the feed-forward sub-layers use residual connections.</p>
+</section>
+<section id="transformer-layers" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-layers">Transformer layers</h2>
+<p>Self-attention is just one part of a larger transformer layer. This consists of a multi- head self-attention unit (which allows the word representations to interact with each other) followed by a fully connected network <span class="math inline">\(\textbf{mlp}[\mathbf{x}_\bullet]\)</span> (that operates separately on each word). Both units are residual networks (i.e., their output is added back to the original input). In addition, it is typical to add a LayerNorm operation after both the self- attention and fully connected networks. This is similar to BatchNorm but normalizes each embedding in each batch element separately using statistics calculated across its D embedding dimensions (section 11.4 and figure 11.14). The complete layer can be described by the following series of operations (figure 12.7):</p>
+<p><img src="assets/Chap12/TransformerBlock.svg" style="filter: invert(1);" width="100%"></p>
+<p>Transformer layer. The input consists of a D × N matrix containing the D-dimensional word embeddings for each of the N input tokens. The output is a matrix of the same size. The transformer layer consists of a series of operations. First, there is a multi-head attention block, allowing the word embeddings to interact with one another. This forms the processing of a residual block, so the inputs are added back to the output. Second, a LayerNorm operation is applied separately to each embedding. Third, there is a second residual layer where the same fully connected neural network is applied separately to each of the N word representations (columns). Finally, LayerNorm is applied again.</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{X} &amp;\leftarrow&amp; \mathbf{X} + \mbox{\bf{MhSa}}[\mathbf{X}] \nonumber \\
+  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}] \hspace{3cm}\nonumber\\
+  \mathbf{x}_{n} &amp;\leftarrow&amp; \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
+  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}],
+\end{eqnarray}\]</span></p>
+<p>where the column vectors xn are separately taken from the full data matrix X. In a real network, the data passes through a series of these transformer layers.</p>
 
 
 </section>

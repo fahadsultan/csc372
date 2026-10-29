@@ -166,6 +166,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./Project6.html">
  <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project7.html">
+ <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -414,25 +418,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Implicit_Regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_smoother_func.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Make function smoother</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Ensembling.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_multiplemodels.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Combine multiple models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Augmentation.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_wider_minima.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Find wider minima</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg_Bayesian_Approach.html" class="sidebar-item-text sidebar-link">
+  <a href="./reg_increase_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Increase Data</span></a>
   </div>
 </li>
@@ -449,14 +453,26 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extentions to dot-product self-attention</span></a>
+  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dot-product self-attention</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_nlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for natural language processing</span></a>
+  <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder-decoder model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -580,7 +596,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl.png" width="100%" style="filter:invert(1);"></p>
 <p><br><br></p>
 <p>Once a model is trained on internet data, <strong>it still doesn’t know how to use its knowledge effectively</strong>.</p>
 <ul>
@@ -589,7 +605,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <section id="how-rl-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-rl-works">How RL Works</h2>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl-1.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl-1.png" width="100%" style="filter:invert(1);"></p>
 <p>Instead of relying on human-created datasets, RL lets the model <strong>experiment with different solutions</strong> and figure out what works best.</p>
 <p>Example Process:</p>
 <pre><code>We generated 15 solutions.
@@ -600,10 +616,10 @@ Repeat many, many times.</code></pre>
 <p>No human is involved in this process. The model generates different solutions to the same problem, sometimes they are in millions. Then it compares them to pick the ones that reached the correct answer and then trains on the winning solutions.</p>
 <p>The pre-training and post-training processes are very well defined but the RL process is still under a lot of active research. Andrej talks about it <a href="https://x.com/karpathy/status/1885026028428681698">here</a> as well. Companies like OpenAI do a lot of research on it but it’s not public. That is why the release of DeepSeek was such a big deal. Their <a href="https://arxiv.org/pdf/2501.12948">paper</a> talks more about it. It talks very publicly about RL and FT for LLMs and how it brings out a lot of reasoning capabilities in them.</p>
 <p>An example taken from the Deepseek paper shows us that as the time passes, the model is able to use more tokens to get better at reasoning.</p>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl-2.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl-2.png" width="100%" style="filter:invert(1);"></p>
 <p>You can see that the model has this “aha” moment here, it’s not something that you can explicitly teach the model through just training on a dataset. It’s something that the model has to figure out on it’s own through reinforcement learning. Pros of this technique is, the model is becoming better at reasoning but the con is it’s consuming more and more tokens to do so.</p>
 <p>One thing we can learn from the research paper on <strong><a href="https://discovery.ucl.ac.uk/id/eprint/10045895/1/agz_unformatted_nature.pdf">mastering the game of Go</a></strong> is that RL actually helps the model become better at reasoning than their human counterparts. The model isn’t just trying to imitate the human but it’s coming up with its own strategies through trial and error to win the game.</p>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl-3.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rl-3.png" width="100%" style="filter:invert(1);"></p>
 <p>One very unique thing noted during the AlphaGo’s game was a move called <strong><a href="https://www.youtube.com/watch?v=JNrXgpSEEIE">Move 37</a></strong>. It’s a move that was not part of the training data but the model came up with its own strategy to win the game. The researchers predicted that the chance of it being played by a human would be 1 in 10000. So you can see how the model is capable of coming up with its own strategies.</p>
 <p>RL is still heavily unexplored and there is a lot of research going on in this area. It is entirely possible if given the chance, the LLM might come up with a language of its own to express its thoughts and ideas because it discovered that it’s the best way to express its thoughts and ideas.</p>
 </section>
@@ -613,9 +629,9 @@ Repeat many, many times.</code></pre>
 <p>However, in unverifiable domains, we need to include humans in the loop.</p>
 <p>For example, for a prompt <code>Write a joke about pelicans</code>, it is not very easy to find a way to automatically judge the quality of the joke. The LLM will generate the jokes without issues, but judging their quality at scale is not possible.</p>
 <p>Furthermore, including humans in this process at scale is not feasible. This is where RLHF comes in. You can read more about it in <a href="https://arxiv.org/pdf/1909.08593">this paper</a>.</p>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rlhf-1.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rlhf-1.png" width="100%" style="filter:invert(1);"></p>
 <p>In order to do RLHF at scale, you basically train a separate reward model which could be a transformer without the extra layers surrounding it. You use humans to judge the rank it is giving to the responses and then you use that to train the reward model until you are satisfied with the results. Once that is done, you can use the reward model to judge the quality of the responses generated by the LLM at scale.</p>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rlhf-2.png"></p>
+<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/rlhf-2.png" width="100%" style="filter:invert(1);"></p>
 <p><strong>RLHF Upside</strong></p>
 <ul>
 <li>Enables RL in <strong>unverifiable domains</strong> like joke-writing or summarization.s</li>

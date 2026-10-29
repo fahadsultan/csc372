@@ -507,19 +507,48 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a href="./attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dot-product self-attention</span></a>
+ <span class="menu-text">Self-Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_cross.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_masked.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Masked Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_multihead.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multi-Head Attention</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
@@ -535,7 +564,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Encoder-decoder model example: machine translation</span></a>
+ <span class="menu-text">Encoder-decoder model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -547,7 +576,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoding strategies</span></a>
+ <span class="menu-text">The Illustrated Transformer</span></a>
   </div>
 </li>
       </ul>
@@ -556,11 +585,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./llms.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Large Language Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
@@ -591,11 +620,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
@@ -636,6 +665,12 @@ window.Quarto = {
   <li><a href="#masked-self-attention" id="toc-masked-self-attention" class="nav-link" data-scroll-target="#masked-self-attention">Masked self-attention</a></li>
   <li><a href="#generating-text-from-a-decoder" id="toc-generating-text-from-a-decoder" class="nav-link" data-scroll-target="#generating-text-from-a-decoder">Generating text from a decoder</a></li>
   <li><a href="#gpt3-and-few-shot-learning" id="toc-gpt3-and-few-shot-learning" class="nav-link" data-scroll-target="#gpt3-and-few-shot-learning">GPT3 and few-shot learning</a></li>
+  <li><a href="#decoding-from-gpt2" id="toc-decoding-from-gpt2" class="nav-link" data-scroll-target="#decoding-from-gpt2">Decoding from GPT2</a></li>
+  <li><a href="#sampling" id="toc-sampling" class="nav-link" data-scroll-target="#sampling">Sampling</a></li>
+  <li><a href="#greedy-token-selection" id="toc-greedy-token-selection" class="nav-link" data-scroll-target="#greedy-token-selection">Greedy token selection</a></li>
+  <li><a href="#top-k-sampling" id="toc-top-k-sampling" class="nav-link" data-scroll-target="#top-k-sampling">Top-K sampling</a></li>
+  <li><a href="#nucleus-sampling" id="toc-nucleus-sampling" class="nav-link" data-scroll-target="#nucleus-sampling">Nucleus Sampling</a></li>
+  <li><a href="#beam-search" id="toc-beam-search" class="nav-link" data-scroll-target="#beam-search">Beam Search</a></li>
   </ul>
 </nav>
     </div>
@@ -661,8 +696,13 @@ window.Quarto = {
 </header>
 
 
+<p><img src="decoder.png" width="30%" align="right" style="filter:invert(1)"></p>
 <p>In this section, we will discuss decoder models, with a focus on GPT3 as an example. We will cover the architecture, language modeling, and training process.</p>
-<p>The basic architecture is extremely similar to the encoder model and comprises a series of transformer layers that operate on learned word embeddings. However, the goal is different. The encoder aimed to build a representation of the text that could be fine- tuned to solve a variety of more specific NLP tasks. Conversely, the decoder has one purpose: to generate the next token in a sequence. It can generate a coherent text passage by feeding the extended sequence back into the model.</p>
+<p>The basic architecture is extremely similar to the encoder model and comprises a series of transformer layers that operate on learned word embeddings.</p>
+<p>However, <mark>the goal of the decoder is different from that of the encoder.</mark></p>
+<p>The encoder aimed to build a representation of the text that could be finetuned to solve a variety of more specific NLP tasks.</p>
+<p>Conversely, <mark>the decoder has one purpose: to generate the next token in a sequence.</mark></p>
+<p>It can generate a coherent text passage by feeding the extended sequence back into the model.</p>
 <section id="language-modeling" class="level3">
 <h3 class="anchored" data-anchor-id="language-modeling">Language modeling</h3>
 <p>GPT3 is an autoregressive language model. This is easiest to understand with a concrete example. Consider the sentence</p>
@@ -671,14 +711,18 @@ window.Quarto = {
 </blockquote>
 <p>For simplicity, let’s assume that the tokens are the full words. The probability of the full sentence can be factored as:</p>
 <p><span class="math display">\[\begin{eqnarray}
-  Pr(\mbox{\textcolor{red}{It takes great courage to let yourself appear weak}}) &amp;=&amp;\nonumber\\
-  &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{takes}}|\mbox{\textcolor{red}{It}})\times Pr(\mbox{\textcolor{red}{great}}|\mbox{\textcolor{red}{It takes}})\times Pr(\mbox{\textcolor{red}{courage}}|\mbox{\textcolor{red}{It takes great}})\times\nonumber \\
-  &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{to}}|\mbox{\textcolor{red}{It takes great courage}})\times Pr(\mbox{\textcolor{red}{let}}|\mbox{\textcolor{red}{It takes great courage to}})\times\nonumber\\
-  &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{yourself}}|\mbox{\textcolor{red}{It takes great courage to let}})\times\nonumber\\
-  &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{appear}}|\mbox{\textcolor{red}{It takes great courage to let yourself}})\times\nonumber\\
-  &amp;&amp;\hspace{-8cm}Pr(\mbox{\textcolor{red}{weak}}|\mbox{\textcolor{red}{It takes great courage to let yourself appear}}).
+  Pr(\mbox{It takes great courage to let yourself appear weak}) &amp;=&amp;\nonumber\\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{It})\times \\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{takes}|\mbox{It})\times \\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{great}|\mbox{It takes})\times \\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{courage}|\mbox{It takes great})\times\nonumber \\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{to}|\mbox{It takes great courage})\times \\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{let}|\mbox{It takes great courage to})\times\nonumber\\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{yourself}|\mbox{It takes great courage to let})\times \\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{appear}|\mbox{It takes great courage to let yourself})\times\nonumber\\
+  &amp;&amp;\hspace{-8cm}Pr(\mbox{weak}|\mbox{It takes great courage to let yourself appear}).
 \end{eqnarray}\]</span></p>
-<p>An autoregressive model predicts the conditional distributions <span class="math inline">\(Pr(t_n|t_1,...,t_{n-1})\)</span> of each token given all the prior tokens, and hence indirectly computes the joint proba- bility <span class="math inline">\(Pr(t_1,t_2,...,t_N )\)</span> of all <span class="math inline">\(N\)</span> tokens:</p>
+<p>An autoregressive model predicts the conditional distributions <span class="math inline">\(Pr(t_n|t_1,...,t_{n-1})\)</span> of each token given all the prior tokens, and hence indirectly computes the joint probability <span class="math inline">\(Pr(t_1,t_2,...,t_N )\)</span> of all <span class="math inline">\(N\)</span> tokens:</p>
 <p><span class="math display">\[\begin{eqnarray}\label{eq:transformer_autoregressive}
   Pr(t_{1},t_{2},\ldots, t_{N}) = Pr(t_{1})\prod_{n=2}^{N}Pr(t_{n}|t_{1},\ldots, t_{n-1}).
 \end{eqnarray}\]</span></p>
@@ -686,14 +730,34 @@ window.Quarto = {
 </section>
 <section id="masked-self-attention" class="level3">
 <h3 class="anchored" data-anchor-id="masked-self-attention">Masked self-attention</h3>
-<p>To train a decoder, we seek parameters that maximize the log probability of the input text under the autoregressive model (i.e., that maximize the sum of the log conditional probability terms). Ideally, we would pass in the whole sentence and compute all the log probabilities and gradients in the same forward pass rather than doing a forward pass for each token in the sentence. However, if we pass in the full sentence, the term computing log [Pr(great|It takes)] would have access to both the answer great and the right context courage to let yourself appear weak. Hence, the system can cheat rather than learn to predict the following words and won’t train properly.</p>
-<p>Fortunately, the tokens only interact in the self-attention layers in a transformer network. Hence, the problem can be resolved by ensuring that the attention to the answer and the right context is zero. This can be achieved by setting the corresponding dot products in the self-attention computation (equation 12.5) to negative infinity before they are passed through the <span class="math inline">\(\textbf{softmax[•]}\)</span> function. This is known as masked self-attention. The effect is to make the weight of all the upward-angled arrows in figure 12.1 zero.</p>
-<p>The entire decoder network operates as follows. The input text is tokenized, and the tokens are converted to embeddings. The embeddings are passed into the transformer network, but now the transformer layers use masked self-attention so that they can only attend to the current and previous tokens. Each of the output embeddings can be thought of as representing a partial sentence, and for each, the goal is to predict the next token in the sequence. Consequently, after the transformer layers, a single linear layer maps each output embedding to the size of the vocabulary, followed by a <span class="math inline">\(\textbf{softmax[•]}\)</span> function that converts these values to probabilities. During training, we aim to maximize the sum of the log probabilities of the next token in the ground truth sequence at every position using a standard multiclass cross-entropy loss (figure 12.12).</p>
+<p>To train a decoder, we seek parameters that maximize the log probability of the input text under the autoregressive model (i.e., that maximize the sum of the log conditional probability terms).</p>
+<p>Ideally, we would pass in the whole sentence and compute all the log probabilities and gradients in the same forward pass rather than doing a forward pass for each token in the sentence.</p>
+<p>However, if we pass in the full sentence, the term computing <span class="math inline">\(\text{log} [Pr(\text{great}|\text{It takes})]\)</span> would have access to both the answer <em>“great”</em> and the right context <em>“courage to let yourself appear weak”</em>. Hence, the system can cheat rather than learn to predict the following words and won’t train properly.</p>
+<p>Fortunately, the tokens only interact in the self-attention layers in a transformer network.</p>
+<p>Hence, <mark>the problem can be resolved by ensuring that the attention to the answer and the right context is zero. This can be achieved by setting the corresponding dot products in the self-attention computation to negative infinity before they are passed through the <span class="math inline">\(\textbf{softmax[•]}\)</span> function</mark>.</p>
+<p>This is known as Masked Self-Attention.</p>
+<!-- The effect is to make the weight of all the upward-angled arrows in figure 12.1 zero. -->
+<p>The entire decoder network operates as follows.</p>
+<ol type="1">
+<li><p>The input text is tokenized, and the tokens are converted to embeddings.</p></li>
+<li><p>The embeddings are passed into the transformer network, but now the transformer layers use masked self-attention so that they can only attend to the current and previous tokens.</p></li>
+<li><p>Each of the output embeddings can be thought of as representing a partial sentence, and for each, the goal is to predict the next token in the sequence.</p></li>
+<li><p>Consequently, after the transformer layers, a single linear layer maps each output embedding to the size of the vocabulary, followed by a <span class="math inline">\(\textbf{softmax[•]}\)</span> function that converts these values to probabilities.</p></li>
+</ol>
+<p>During training, we aim to maximize the sum of the log probabilities of the next token in the ground truth sequence at every position using a standard multiclass cross-entropy loss (figure 12.12).</p>
 </section>
 <section id="generating-text-from-a-decoder" class="level3">
 <h3 class="anchored" data-anchor-id="generating-text-from-a-decoder">Generating text from a decoder</h3>
-<p>The autoregressive language model is the first example of a generative model discussed in this book. Since it defines a probability model over text sequences, it can be used to sample new examples of plausible text. To generate from the model, we start with an input sequence of text (which might be just the special <start> token indicating the beginning of the sequence) and feed this into the network, which then outputs the probabilities over possible subsequent tokens. We can then either pick the most likely token or sample from this probability distribution. The new extended sequence can be fed back into the decoder network to yield the probability distribution over the next token. By repeating this process, we can generate large bodies of text. The computation can be made quite eﬀicient as prior embeddings do not depend on subsequent ones due to the masked self-attention. Hence, much of the earlier computation can be recycled as we generate subsequent tokens.</start></p>
-<p>In practice, many strategies can make the output text more coherent. For example, <mark>beam search</mark> keeps track of multiple possible sentence completions to find the overall most likely sequence of words (which is not necessarily found by greedily choosing the most likely word at each step). <mark>Top-k sampling</mark> randomly draws the next word from only the top-K most likely possibilities to prevent the system from accidentally choosing from the long tail of low-probability tokens and leading to an unnecessary linguistic dead end.</p>
+<p>The autoregressive language model is the first example of a generative model discussed in this book.</p>
+<p>Since it defines a probability model over text sequences, it can be used to sample new examples of plausible text.</p>
+<p>To generate from the model, we start with an input sequence of text (which might be just the special <start> token indicating the beginning of the sequence) and feed this into the network, which then outputs the probabilities over possible subsequent tokens.</start></p>
+<p>We can then either pick the most likely token or sample from this probability distribution.</p>
+<p>The new extended sequence can be fed back into the decoder network to yield the probability distribution over the next token.</p>
+<p>By repeating this process, we can generate large bodies of text.</p>
+<p>The computation can be made quite eﬀicient as prior embeddings do not depend on subsequent ones due to the masked self-attention. Hence, much of the earlier computation can be recycled as we generate subsequent tokens.</p>
+<p>In practice, many strategies can make the output text more coherent.</p>
+<p>For example, <mark>beam search</mark> keeps track of multiple possible sentence completions to find the overall most likely sequence of words (which is not necessarily found by greedily choosing the most likely word at each step).</p>
+<p><mark>Top-k sampling</mark> randomly draws the next word from only the top-K most likely possibilities to prevent the system from accidentally choosing from the long tail of low-probability tokens and leading to an unnecessary linguistic dead end.</p>
 <p><img src="assets/Chap12/TransformerDecoder.svg" style="filter: invert(1);" width="100%"></p>
 <p>Training GPT3-type decoder network. The tokens are mapped to word embeddings with a special <start> token at the beginning of the sequence. The embeddings are passed through a series of transformer layers that use masked self-attention. Here, each position in the sentence can only attend to its own embedding and those of tokens earlier in the sequence (orange connections). The goal at each position is to maximize the probability of the following ground truth token in the sequence. In other words, at position one, we want to maximize the probability of the token It; at position two, we want to maximize the probability of the token takes; and so on. Masked self-attention ensures the system cannot cheat by looking at subsequent inputs. The autoregressive task has the advantage of making efficient use of the data since every word contributes a term to the loss function. However, it only exploits the left context of each word.</start></p>
 </section>
@@ -724,122 +788,355 @@ Good English output: <font color="cyan">I’d be more than happy to work with yo
 (result from Brown et al., 2020)</p>
 </blockquote>
 <p>Here, the text containing the paired examples in orange was provided as context for GPT3, and the system then generated the correct answer in <font color="cyan">cyan</font>. This phenomenon extends to many situations, including generating code snippets based on natural language descriptions, arithmetic, translating between languages, and answering questions about text passages. Consequently, it is argued that enormous language models are <mark>few-shot learners</mark>; they can learn to do novel tasks based on just a few examples. However, performance is erratic in practice, and the extent to which it is extrapolating from learned examples rather than merely interpolating or copying verbatim is unclear.</p>
-<p><img src="assets/Chap12/TransformerEncoderDecoder.svg" style="filter: invert(1);" width="100%"></p>
-<p>Encoder-decoder architecture. Two sentences are passed to the system with the goal of translating the first into the second. a) The first sentence is passed through a standard encoder. b) The second sentence is passed through a decoder that uses masked self-attention but also attends to the output embeddings of the encoder using cross-attention (orange rectangle). The loss function is the same as for the decoder model; we want to maximize the probability of the next word in the output sequence.</p>
-<div id="ece7f980" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re, collections</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"a sailor went to sea sea sea "</span><span class="op">+\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"to see what he could see see see "</span><span class="op">+\</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"but all that he could see see see "</span><span class="op">+\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"was the bottom of the deep blue sea sea sea"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- ## Decoding strategies -->
+<div id="b7b549d3" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install transformers</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> GPT2LMHeadModel, GPT2Tokenizer, set_seed</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Load model and tokenizer</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> GPT2LMHeadModel.from_pretrained(<span class="st">'gpt2'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> GPT2Tokenizer.from_pretrained(<span class="st">'gpt2'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Tokenize the input sentence To begin with the tokens are the individual letters and the whitespace token. So, we represent each word in terms of these tokens with spaces between the tokens to delineate them.</p>
-<p>The tokenized text is stored in a structure that represents each word as tokens together with the count of how often that word occurs. We’ll call this the vocabulary.</p>
-<div id="4feb5f38" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_vocabulary(text):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  vocab <span class="op">=</span> collections.defaultdict(<span class="bu">int</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  words <span class="op">=</span> text.strip().split()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word <span class="kw">in</span> words:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      vocab[<span class="st">' '</span>.join(<span class="bu">list</span>(word)) <span class="op">+</span> <span class="st">' '</span>] <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> vocab</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> initialize_vocabulary(text)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(vocab))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(vocab)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="decoding-from-gpt2" class="level3">
+<h3 class="anchored" data-anchor-id="decoding-from-gpt2">Decoding from GPT2</h3>
+<p>This tutorial investigates how to use GPT2 (the forerunner of GPT3) to generate text. There are a number of ways to do this that trade-off the realism of the text against the amount of variation.</p>
+<p>At every stage, GPT2 takes an input string and returns a probability for each of the possible subsequent tokens. We can choose what to do with these probability. We could always greedily choose the most likely next token, or we could draw a sample randomly according to the probabilities. There are also intermediate strategies such as top-k sampling and nucleus sampling, that have some controlled randomness.</p>
+<p>We’ll also investigate beam search – the idea is that rather than greedily take the next best token at each stage, we maintain a set of hypotheses (beams)as we add each subsequent token and return the most likely overall hypothesis. This is not necessarily the same result we get from greedily choosing the next token.</p>
+<p>First, let’s investigate the token themselves. The code below prints out the vocabulary size and shows 20 random tokens.</p>
+<div id="c67cdd79" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of tokens in dictionary = </span><span class="sc">%d</span><span class="st">"</span><span class="op">%</span>(tokenizer.vocab_size))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  index <span class="op">=</span> np.random.randint(tokenizer.vocab_size)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Token: </span><span class="sc">%d</span><span class="st"> "</span><span class="op">%</span>(index)<span class="op">+</span>tokenizer.decode(torch.tensor(index), skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Find all the tokens in the current vocabulary and their frequencies</p>
-<div id="c67e93dc" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_tokens_and_frequencies(vocab):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  tokens <span class="op">=</span> collections.defaultdict(<span class="bu">int</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> word, freq <span class="kw">in</span> vocab.items():</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      word_tokens <span class="op">=</span> word.split()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> token <span class="kw">in</span> word_tokens:</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>          tokens[token] <span class="op">+=</span> freq</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> tokens</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> get_tokens_and_frequencies(vocab)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(tokens))</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(tokens)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sampling" class="level3">
+<h3 class="anchored" data-anchor-id="sampling">Sampling</h3>
+<p>Each time we run GPT2 it will take in a set of tokens, and return a probability over each of the possible next tokens. The simplest thing we could do is to just draw a sample from this probability distribution each time.</p>
+<div id="4ce6da18" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_next_token(input_tokens, model, tokenizer):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run model to get prediction over next output</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  outputs <span class="op">=</span> model(input_ids <span class="op">=</span> input_tokens[<span class="st">'input_ids'</span>], attention_mask <span class="op">=</span> input_tokens[<span class="st">'attention_mask'</span>])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find prediction</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  prob_over_tokens <span class="op">=</span> F.softmax(outputs.logits, dim<span class="op">=-</span><span class="dv">1</span>).detach().numpy()[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Draw a random token according to the probabilities</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># next_token should be an array with an sole integer in it (as below)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use:  https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  next_token <span class="op">=</span> [<span class="dv">5000</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append token to sentence</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  output_tokens <span class="op">=</span> input_tokens</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">"input_ids"</span>] <span class="op">=</span> torch.cat((output_tokens[<span class="st">'input_ids'</span>],torch.tensor([next_token])),dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">'attention_mask'</span>] <span class="op">=</span> torch.cat((output_tokens[<span class="st">'attention_mask'</span>],torch.tensor([[<span class="dv">1</span>]])),dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">'last_token_prob'</span>] <span class="op">=</span> prob_over_tokens[next_token]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> output_tokens</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected output:</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># "The best thing about Bath is that they don't even change or shrink anymore."</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>set_seed(<span class="dv">0</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> sample_next_token(input_tokens, model, tokenizer)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> Modify the code below by changing the number of tokens generated and the initial sentence</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># to get a feel for how well this works.  Since I didn't reset the seed, it will give a different</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># answer every time that you run it.</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> Experiment with changing this line:</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> Experiment with changing this line:</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> sample_next_token(input_tokens, model, tokenizer)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Find each pair of adjacent tokens in the vocabulary and count them. We will subsequently merge the most frequently occurring pair.</p>
-<div id="92e182ba" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_pairs_and_counts(vocab):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    pairs <span class="op">=</span> collections.defaultdict(<span class="bu">int</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> word, freq <span class="kw">in</span> vocab.items():</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        symbols <span class="op">=</span> word.split()</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(symbols)<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            pairs[symbols[i],symbols[i<span class="op">+</span><span class="dv">1</span>]] <span class="op">+=</span> freq</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pairs</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>pairs <span class="op">=</span> get_pairs_and_counts(vocab)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Pairs: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(pairs))</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of distinct pairs: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(pairs)))</span>
+</section>
+<section id="greedy-token-selection" class="level3">
+<h3 class="anchored" data-anchor-id="greedy-token-selection">Greedy token selection</h3>
+<p>You probably (correctly) got the impression that the text from pure sampling of the probability model can be kind of random. How about if we choose most likely token at each step?</p>
+<div id="33462f54" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_best_next_token(input_tokens, model, tokenizer):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run model to get prediction over next output</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  outputs <span class="op">=</span> model(input_ids <span class="op">=</span> input_tokens[<span class="st">'input_ids'</span>], attention_mask <span class="op">=</span> input_tokens[<span class="st">'attention_mask'</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find prediction</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  prob_over_tokens <span class="op">=</span> F.softmax(outputs.logits, dim<span class="op">=-</span><span class="dv">1</span>).detach().numpy()[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- find the token index with the maximum probability</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># It should be returns as a list (i.e., put squared brackets around it)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use https://numpy.org/doc/stable/reference/generated/numpy.argmax.html</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  next_token <span class="op">=</span> [<span class="dv">5000</span>]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>most_frequent_pair <span class="op">=</span> <span class="bu">max</span>(pairs, key<span class="op">=</span>pairs.get)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Most frequent pair: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(most_frequent_pair))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append token to sentence</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  output_tokens <span class="op">=</span> input_tokens</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">"input_ids"</span>] <span class="op">=</span> torch.cat((output_tokens[<span class="st">'input_ids'</span>],torch.tensor([next_token])),dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">'attention_mask'</span>] <span class="op">=</span> torch.cat((output_tokens[<span class="st">'attention_mask'</span>],torch.tensor([[<span class="dv">1</span>]])),dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">'last_token_prob'</span>] <span class="op">=</span> prob_over_tokens[next_token]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> output_tokens</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected output:</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The best thing about Bath is that it's a place where you can go to</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>set_seed(<span class="dv">0</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_best_next_token(input_tokens, model, tokenizer)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> Modify the code below by changing the number of tokens generated and the initial sentence</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co"># to get a feel for how well this works.</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> Experiment with changing this line:</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> Experiment with changing this line:</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_best_next_token(input_tokens, model, tokenizer)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Merge the instances of the best pair in the vocabulary</p>
-<div id="66dd2615" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge_pair_in_vocabulary(pair, vocab_in):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    vocab_out <span class="op">=</span> {}</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    bigram <span class="op">=</span> re.escape(<span class="st">' '</span>.join(pair))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r'(?</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="er">vocab = merge_pair_in_vocabulary</span>(most_frequent_pair, vocab)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(vocab))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(vocab)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="top-k-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="top-k-sampling">Top-K sampling</h3>
+<p>You probably noticed that the greedy strategy produces quite realistic text, but it’s kind of boring. It produces generic answers. Also, if this was a chatbot, then we wouldn’t necessarily want it to produce the same answer to a question each time.</p>
+<p>Top-K sampling is a compromise strategy that samples randomly from the top K most probable tokens. We could just choose them with a uniform distribution, or (as here) we could sample them according to their original probabilities.</p>
+<div id="9fccc08a" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_k_token(input_tokens, model, tokenizer, k<span class="op">=</span><span class="dv">20</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run model to get prediction over next output</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  outputs <span class="op">=</span> model(input_ids <span class="op">=</span> input_tokens[<span class="st">'input_ids'</span>], attention_mask <span class="op">=</span> input_tokens[<span class="st">'attention_mask'</span>])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find prediction</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  prob_over_tokens <span class="op">=</span> F.softmax(outputs.logits, dim<span class="op">=-</span><span class="dv">1</span>).detach().numpy()[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Draw a sample from the top K most likely tokens.</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Take copy of the probabilities and sort from largest to smallest (use np.sort)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- replace this line</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  sorted_prob_over_tokens <span class="op">=</span>  prob_over_tokens</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the probability at the k'th position</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- replace this line</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  kth_prob_value <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set all probabilities below this value to zero</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  prob_over_tokens[prob_over_tokens <span class="op">&lt;</span> kth_prob_value] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected output:</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># The best thing about Bath is that you get to see all the beautiful faces of</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>set_seed(<span class="dv">0</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_top_k_token(input_tokens, model, tokenizer, k<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Experiment with different values of k</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># If you set it to a lower number (say 3) the text will be less random</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># If you set it to a higher number (say 5000) the text will be more random</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>set_seed(<span class="dv">0</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_top_k_token(input_tokens, model, tokenizer, k<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Update the tokens, which now include the best token ‘se’</p>
-<div id="37e1a1d9" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> get_tokens_and_frequencies(vocab)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(tokens))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(tokens)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="nucleus-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="nucleus-sampling">Nucleus Sampling</h3>
+<p>Top-K sampling has the disadvantage that sometimes there are only a few plausible next tokens, and sometimes there are a lot. How do we adapt to this situation? One way is to sample from a fixed proportion of the probability mass. That is we order the tokens in terms of probability and cut off the possibility of sampling when the cumulative sum is greater than a threshold.</p>
+<p>This way, we adapt the number of possible tokens that we can choose.</p>
+<div id="49b844fa" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_nucleus_sampling_token(input_tokens, model, tokenizer, thresh<span class="op">=</span><span class="fl">0.25</span>):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run model to get prediction over next output</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  outputs <span class="op">=</span> model(input_ids <span class="op">=</span> input_tokens[<span class="st">'input_ids'</span>], attention_mask <span class="op">=</span> input_tokens[<span class="st">'attention_mask'</span>])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find prediction</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  prob_over_tokens <span class="op">=</span> F.softmax(outputs.logits, dim<span class="op">=-</span><span class="dv">1</span>).detach().numpy()[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the most likely tokens that make up the first (thresh) of the probability</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- sort the probabilities in decreasing order</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  sorted_probs_decreasing <span class="op">=</span> prob_over_tokens</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> -- compute the cumulative sum of these probabilities</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  cum_sum_probs <span class="op">=</span> sorted_probs_decreasing</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find index where that the cumulative sum is greater than the threshold</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  thresh_index <span class="op">=</span> np.argmax(cum_sum_probs<span class="op">&gt;</span>thresh)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Choosing from </span><span class="sc">%d</span><span class="st"> tokens"</span><span class="op">%</span>(thresh_index))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co">:  Find the probability value to threshold</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line:</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  thresh_prob <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set any probabilities less than this to zero</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  prob_over_tokens[prob_over_tokens <span class="op">&lt;</span> thresh_prob] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected output:</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># The best thing about Bath is that it's not a city that has been around</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>set_seed(<span class="dv">0</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_nucleus_sampling_token(input_tokens, model, tokenizer, thresh <span class="op">=</span> <span class="fl">0.2</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- experiment with setting the threshold probability to larger or smaller values</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_nucleus_sampling_token(input_tokens, model, tokenizer, thresh <span class="op">=</span> <span class="fl">0.2</span>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now let’s write the full tokenization routine</p>
-<div id="c8a41b0f" class="cell" data-vscode="{&quot;languageId&quot;:&quot;plaintext&quot;}">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- write this routine by filling in this missing parts,</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># calling the above routines</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tokenize(text, num_merges):</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialize the vocabulary from the input text</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># vocab = (your code here)</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_merges):</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the tokens and how often they occur in the vocabulary</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tokens = (your code here)</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the pairs of adjacent tokens and their counts</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pairs = (your code here)</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the most frequent pair</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># most_frequent_pair = (your code here)</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Most frequent pair: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(most_frequent_pair))</span>
+</section>
+<section id="beam-search" class="level3">
+<h3 class="anchored" data-anchor-id="beam-search">Beam Search</h3>
+<p>All of the methods we’ve seen so far choose the tokens one by one. But this isn’t necessarily sensible. Even greedily choosing the best token doesn’t necessarily retrieve the sequence with the highest probability. It might be that the most likely token only has very unlikely tokens following it.</p>
+<p>Beam search maintains hypotheses about the best possible continuation. It starts with the top continuations. Then for each of those, it finds the top K continuations, giving hypotheses. Then it retains just the top of these so that the number of hypotheses stays the same.</p>
+<div id="d83a6f0b" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This routine returns the k'th most likely next token.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># If k =0 then it returns the most likely token, if k=1 it returns the next most likely and so on</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We will need this for beam search</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_kth_most_likely_token(input_tokens, model, tokenizer, k):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run model to get prediction over next output</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  outputs <span class="op">=</span> model(input_ids <span class="op">=</span> input_tokens[<span class="st">'input_ids'</span>], attention_mask <span class="op">=</span> input_tokens[<span class="st">'attention_mask'</span>])</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find prediction</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  prob_over_tokens <span class="op">=</span> F.softmax(outputs.logits, dim<span class="op">=-</span><span class="dv">1</span>).detach().numpy()[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the k'th most likely token</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Sort the probabilities from largest to smallest</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line:</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  sorted_prob_over_tokens <span class="op">=</span> prob_over_tokens</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> Find the k'th sorted probability</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace this line</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  kth_prob_value <span class="op">=</span> prob_over_tokens[<span class="dv">0</span>]</span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Merge the code in the vocabulary</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># vocab = (your code here)</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the tokens and how often they occur in the vocabulary one last time</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tokens = (your code here)</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> tokens, vocab</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>tokens, vocab <span class="op">=</span> tokenize(text, num_merges<span class="op">=</span><span class="dv">22</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(tokens))</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of tokens: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(tokens)))</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(vocab))</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Size of vocabulary: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">len</span>(vocab)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find position of this token.</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  next_token <span class="op">=</span> np.where(prob_over_tokens <span class="op">==</span> kth_prob_value)[<span class="dv">0</span>]</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append token to sentence</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  output_tokens <span class="op">=</span> input_tokens</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">"input_ids"</span>] <span class="op">=</span> torch.cat((output_tokens[<span class="st">'input_ids'</span>],torch.tensor([next_token])),dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">'attention_mask'</span>] <span class="op">=</span> torch.cat((output_tokens[<span class="st">'attention_mask'</span>],torch.tensor([[<span class="dv">1</span>]])),dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">'last_token_prob'</span>] <span class="op">=</span> prob_over_tokens[next_token]</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  output_tokens[<span class="st">'log_prob'</span>] <span class="op">=</span> output_tokens[<span class="st">'log_prob'</span>] <span class="op">+</span> np.log(prob_over_tokens[next_token])</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> output_tokens</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># We can test this code and see that if we choose the 2nd most likely (K=1) token each time</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co"># then we get much better generation results than if we choose the 2001st most likely token</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected output:</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># The best thing about Bath is the way you get the most bang outta the</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>set_seed(<span class="dv">0</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>input_tokens[<span class="st">'log_prob'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_kth_most_likely_token(input_tokens, model, tokenizer, k<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected output:</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="co"># The best thing about Bath is mixed profits partnerships» buy generic+ Honda throttlecont</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>input_tokens[<span class="st">'log_prob'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    input_tokens <span class="op">=</span> get_kth_most_likely_token(input_tokens, model, tokenizer, k<span class="op">=</span><span class="dv">2000</span>)</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tokenizer.decode(input_tokens[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co"> -- play around with different values of K</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out each beam plus the log probability</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_beams(beams):</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> index,beam <span class="kw">in</span> <span class="bu">enumerate</span>(beams):</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Beam </span><span class="sc">%d</span><span class="st">, Prob </span><span class="sc">%3.3f</span><span class="st">: "</span><span class="op">%</span>(index,beam[<span class="st">'log_prob'</span>])<span class="op">+</span>tokenizer.decode(beam[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">'---'</span>)</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">:  Read this code carefully!</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> do_beam_search(input_tokens_in, model, tokenizer, n_beam<span class="op">=</span><span class="dv">5</span>, beam_length<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store beams in a list</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>  input_tokens[<span class="st">'log_prob'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialize with n_beam most likely continuations</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>  beams <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> n_beam</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> c_k <span class="kw">in</span> <span class="bu">range</span>(n_beam):</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>    beams[c_k] <span class="op">=</span> <span class="bu">dict</span>(input_tokens_in)</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>    beams[c_k] <span class="op">=</span> get_kth_most_likely_token(beams[c_k], model, tokenizer, c_k)</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>  print_beams(beams)</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  <span class="co"># For each token in the sequence we will add</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> c_pos <span class="kw">in</span> <span class="bu">range</span>(beam_length<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Now for each beam, we continue it in the most likely ways, making n_beam*n_beam type hypotheses</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    beams_all <span class="op">=</span> [<span class="va">None</span>] <span class="op">*</span> (n_beam<span class="op">*</span>n_beam)</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    log_probs_all <span class="op">=</span> np.zeros(n_beam<span class="op">*</span>n_beam)</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For each current hypothesis</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c_beam <span class="kw">in</span> <span class="bu">range</span>(n_beam):</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>      <span class="co"># For each continuation</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> c_k <span class="kw">in</span> <span class="bu">range</span>(n_beam):</span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store the continuation and the probability</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>        beams_all[c_beam <span class="op">*</span> n_beam <span class="op">+</span> c_k] <span class="op">=</span> <span class="bu">dict</span>(get_kth_most_likely_token(beams[c_beam], model, tokenizer, c_k))</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>        log_probs_all[c_beam <span class="op">*</span> n_beam <span class="op">+</span> c_k] <span class="op">=</span> beams_all[c_beam <span class="op">*</span> n_beam <span class="op">+</span> c_k][<span class="st">'log_prob'</span>]</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep the best n_beams sequences with the highest probabilities</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>    sorted_index <span class="op">=</span> np.argsort(np.array(log_probs_all)<span class="op">*-</span><span class="dv">1</span>)</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c_k <span class="kw">in</span> <span class="bu">range</span>(n_beam):</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>      beams[c_k] <span class="op">=</span> <span class="bu">dict</span>(beams_all[sorted_index[c_k]])</span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the beams</span></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>    print_beams(beams)</span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> beams[<span class="dv">0</span>]</span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected output:</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="co"># The best thing about Bath is that it's a place where you don't have to</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>set_seed(<span class="dv">0</span>)</span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>input_txt <span class="op">=</span> <span class="st">"The best thing about Bath is"</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>input_tokens <span class="op">=</span> tokenizer(input_txt, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Now let's call the beam search</span></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="co"># It takes a while as it has to run the model multiple times to add a token</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>n_beams <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>best_beam <span class="op">=</span> do_beam_search(input_tokens,model,tokenizer)</span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Beam search result:"</span>)</span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokenizer.decode(best_beam[<span class="st">"input_ids"</span>][<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="co"># You should see that the best answer is not the same as the greedy solution we found above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>TODO - Consider the input text:</p>
-<p>“How much wood could a woodchuck chuck if a woodchuck could chuck wood”</p>
-<p>How many tokens will there be initially and what will they be? How many tokens will there be if we run the tokenization routine for the maximum number of iterations (merges)?</p>
-<p>When you’ve made your predictions, run the code and see if you are correct.</p>
 
 
 </section>
