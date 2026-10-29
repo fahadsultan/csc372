@@ -52,6 +52,7 @@ website:
         - Project5.ipynb
         - Project6.ipynb
         - Project7.ipynb
+        - Project_8.ipynb
     - id: content
       background: "#2d2d2d"
       style: "floating"
