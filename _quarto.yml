@@ -107,9 +107,15 @@ website:
           - reg_multiplemodels.ipynb
           - reg_wider_minima.ipynb
           - reg_increase_data.ipynb
+        - section: attention.ipynb
+          contents:
+          - attention_self.ipynb
+          - attention_scaled.ipynb
+          - attention_cross.ipynb
+          - attention_masked.ipynb
+          - attention_multihead.ipynb
         - section: transformers.ipynb
           contents:
-          - transformers_sa.ipynb
           - transformers_encoder.ipynb
           - transformers_decoder.ipynb
           - transformers_encoderdecoder.ipynb
