@@ -233,6 +233,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./Project7.html">
  <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_8.html">
+ <span class="dropdown-text">Masked Language Modeling</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -544,6 +548,12 @@ window.Quarto = {
  <span class="menu-text">Multi-Head Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./BertVis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualization of BERT Attention Mechanisms</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -667,9 +677,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#value-vectors" id="toc-value-vectors" class="nav-link active" data-scroll-target="#value-vectors">Value Vectors</a></li>
+  <li><a href="#inputs-and-outputs" id="toc-inputs-and-outputs" class="nav-link active" data-scroll-target="#inputs-and-outputs">Inputs and Outputs</a></li>
+  <li><a href="#self-attention-as-weighted-sum" id="toc-self-attention-as-weighted-sum" class="nav-link" data-scroll-target="#self-attention-as-weighted-sum">Self-Attention as weighted sum</a></li>
+  <li><a href="#value-vectors" id="toc-value-vectors" class="nav-link" data-scroll-target="#value-vectors">Value Vectors</a></li>
   <li><a href="#self-attention-block" id="toc-self-attention-block" class="nav-link" data-scroll-target="#self-attention-block">Self-Attention Block</a></li>
   <li><a href="#query-vectors-key-vectors-and-attention-weights" id="toc-query-vectors-key-vectors-and-attention-weights" class="nav-link" data-scroll-target="#query-vectors-key-vectors-and-attention-weights">Query vectors, Key vectors and Attention Weights</a></li>
+  <li><a href="#self-attention-in-detail" id="toc-self-attention-in-detail" class="nav-link" data-scroll-target="#self-attention-in-detail">Self-Attention in Detail</a></li>
   <li><a href="#why-separate-query-and-key-vectors" id="toc-why-separate-query-and-key-vectors" class="nav-link" data-scroll-target="#why-separate-query-and-key-vectors">Why separate query and key vectors?</a></li>
   <li><a href="#non-linearity-in-self-attention" id="toc-non-linearity-in-self-attention" class="nav-link" data-scroll-target="#non-linearity-in-self-attention">Non-linearity in self-attention</a></li>
   <li><a href="#matrix-form" id="toc-matrix-form" class="nav-link" data-scroll-target="#matrix-form">Matrix form</a></li>
@@ -712,6 +725,35 @@ transformation followed by an activation function like a ReLU, so:
  \end{eqnarray}
 
 where $\boldsymbol\beta$ contains the biases, and $\boldsymbol\Omega$ contains the weights. -->
+<section id="inputs-and-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="inputs-and-outputs">Inputs and Outputs</h3>
+<p>The input to the self-attention mechanism is a sequence of N token embeddings, each of dimension D and not containing any context information:</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N \in \mathbb{R}^{D}
+\end{eqnarray}\]</span></p>
+<p>The output of the self-attention mechanism are a sequence of N context-aware representations, also of dimension D:</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{z}_1, \mathbf{z}_2, \ldots, \mathbf{z}_N \in \mathbb{R}^{D}
+\end{eqnarray}\]</span></p>
+<p>So the self-attention mechanism transforms a sequence of input token embeddings into a sequence of context-aware representations of the same dimension.</p>
+<p><img src="sablock.png" style="filter: invert(1);" width="100%"></p>
+</section>
+<section id="self-attention-as-weighted-sum" class="level3">
+<h3 class="anchored" data-anchor-id="self-attention-as-weighted-sum">Self-Attention as weighted sum</h3>
+<p>The following equation is not correct, but it is useful in that it illustrates the idea that each output representation <span class="math inline">\(\mathbf{z}_m\)</span> is computed as a weighted sum of the value vectors <span class="math inline">\(\mathbf{x}_n\)</span>:</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{z}_n = \sum_{m=1}^{N} \omega_{mn}~~\mathbf{x}_m
+\end{eqnarray}\]</span></p>
+<p>In this equation, <span class="math inline">\(\omega_{mn}\)</span> represents the attention weight that determines how much influence the input token <span class="math inline">\(\mathbf{x}_m\)</span> has on the output representation <span class="math inline">\(\mathbf{z}_n\)</span>.</p>
+<p>Note that this uses the same idea as word2vec, where we could do basic arithmetic operations on the embeddings to capture relationships like “king - man + woman = queen”.</p>
+<p><img src="sa_weightedsum.png" style="filter: invert(1);" width="100%"></p>
+<p>In the equation <span class="math inline">\(\mathbf{z}_n = \sum_{m=1}^{N} \omega_{mn}~~\mathbf{x}_m\)</span>, we are going to make the following changes to make it compatible with the self-attention mechanism:</p>
+<ol type="1">
+<li><p>Replace <span class="math inline">\(\mathbf{z}_n\)</span> with the output of the self-attention mechanism <span class="math inline">\(\mathbf{sa_n[x_1, x_2, \ldots, x_N]}\)</span>. Note the subscript <span class="math inline">\(n\)</span> indicating that this is the output of SA block corresponding to the nth input token.</p></li>
+<li><p>Replace <span class="math inline">\(\omega_{mn}\)</span> with the attention weights notation <span class="math inline">\(a[x_m, x_n]\)</span>, which are computed by the softmax of the dot product between the query vector of the nth token and the key vector of the mth token.</p></li>
+<li><p>Replace the input token embeddings <span class="math inline">\(\mathbf{x}_m\)</span> with value vectors <span class="math inline">\(\mathbf{v}_m\)</span>, which are linear transformations of the input embeddings. This allows the model to learn how to represent the information of each token in a way that is suitable for the attention mechanism.</p></li>
+</ol>
+</section>
 <section id="value-vectors" class="level3">
 <h3 class="anchored" data-anchor-id="value-vectors">Value Vectors</h3>
 <p>Value vectors in the context of self-attention are adjusted embeddings of the input tokens, capturing their information or semantics in a form that can be effectively combined with other tokens’ information (through the attention mechanism). In other words, the value vector still satisfy the property that similar input tokens have similar value vectors.</p>
@@ -791,6 +833,26 @@ This is an example of a hypernetwork, where one network branch computes the weig
 <p><img src="assets/Chap12/TransformerSA2.svg" style="filter: invert(1);" width="100%"></p>
 <p>Computing attention weights. a) Query vectors qn = βq + Ωqxn and key vectors kn = βk + Ωkxn are computed for each input xn. b) The dot products between each query and the three keys are passed through a softmax function to form non-negative attentions that sum to one. c) These route the value vectors (figure 12.1) via the sparse matrix from figure 12.2c.</p>
 </section>
+<section id="self-attention-in-detail" class="level3">
+<h3 class="anchored" data-anchor-id="self-attention-in-detail">Self-Attention in Detail</h3>
+<p>Let’s first look at how to calculate self-attention using vectors, then proceed to look at how it’s actually implemented – using matrices.</p>
+<p>The <strong>first step</strong> in calculating self-attention is to create three vectors from each of the encoder’s input vectors (in this case, the embedding of each word). So for each word, we create a Query vector, a Key vector, and a Value vector. These vectors are created by multiplying the embedding by three matrices that we trained during the training process.</p>
+<p>Notice that these new vectors are smaller in dimension than the embedding vector. Their dimensionality is 64, while the embedding and encoder input/output vectors have dimensionality of 512. They don’t HAVE to be smaller, this is an architecture choice to make the computation of multiheaded attention (mostly) constant.</p>
+<p><img src="https://jalammar.github.io/images/t/transformer_self_attention_vectors.png" style="filter: invert(1);" width="100%"></p>
+<p>Multiplying x1 by the WQ weight matrix produces q1, the “query” vector associated with that word. We end up creating a “query”, a “key”, and a “value” projection of each word in the input sentence.</p>
+<p>What are the “query”, “key”, and “value” vectors?</p>
+<p>They’re abstractions that are useful for calculating and thinking about attention. Once you proceed with reading how attention is calculated below, you’ll know pretty much all you need to know about the role each of these vectors plays.</p>
+<p>The <strong>second step</strong> in calculating self-attention is to calculate a score. Say we’re calculating the self-attention for the first word in this example, “Thinking”. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.</p>
+<p>The score is calculated by taking the dot product of the query vector with the key vector of the respective word we’re scoring. So if we’re processing the self-attention for the word in position #1, the first score would be the dot product of q1 and k1. The second score would be the dot product of q1 and k2.</p>
+<p><img src="https://jalammar.github.io/images/t/transformer_self_attention_score.png" style="filter: invert(1);" width="100%"></p>
+<p>The <strong>third and fourth steps</strong> are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.</p>
+<p><img src="https://jalammar.github.io/images/t/self-attention_softmax.png" style="filter: invert(1);" width="100%"></p>
+<p>This softmax score determines how much each word will be expressed at this position. Clearly the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word.</p>
+<p>The <strong>fifth step</strong> is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).</p>
+<p>The <strong>sixth step</strong> is to sum up the weighted value vectors. This produces the output of the self-attention layer at this position (for the first word).</p>
+<p><img src="https://jalammar.github.io/images/t/self-attention-output.png" style="filter: invert(1);" width="100%"></p>
+<p>That concludes the self-attention calculation. The resulting vector is one we can send along to the feed-forward neural network. In the actual implementation, however, this calculation is done in matrix form for faster processing. So let’s look at that now that we’ve seen the intuition of the calculation on the word level.</p>
+</section>
 <section id="why-separate-query-and-key-vectors" class="level3">
 <h3 class="anchored" data-anchor-id="why-separate-query-and-key-vectors">Why separate query and key vectors?</h3>
 <p>The separation of query and key vectors allows the model to learn different representations for the purpose of matching queries to keys.</p>
@@ -827,13 +889,9 @@ This is an example of a hypernetwork, where one network branch computes the weig
 <p>Self-attention does not require an explicit activation function such as ReLU to introduce non-linearity. Although the queries, keys, and values are computed using linear transformations, the attention weights depend nonlinearly on the inputs.</p>
 <p>Non-linearity enters in two places:</p>
 <ul>
-<li><strong>Dot-product scores.</strong> Each score combines a query and a key, both of which depend on <span class="math inline">\(\mathbf{X}\)</span>. Consequently, <span class="math inline">\(\mathbf{Q}\mathbf{K}^{\mathsf T}\)</span> is quadratic in the input, rather than linear.</li>
-<li><strong>Softmax weights.</strong> Softmax exponentiates the scores and normalizes them so that the weights in each row sum to one. This is a nonlinear transformation of the scores.</li>
+<li><p><strong>Dot-product scores.</strong> Each score combines a query and a key, both of which depend on <span class="math inline">\(\mathbf{X}\)</span>. Consequently, <span class="math inline">\(\mathbf{Q}\mathbf{K}^{\mathsf T}\)</span> is quadratic in the input, rather than linear.</p></li>
+<li><p><strong>Softmax weights.</strong> Softmax exponentiates the scores and normalizes them so that the weights in each row sum to one. This is a nonlinear transformation of the scores.</p></li>
 </ul>
-<p>Each output is a weighted sum of value vectors:</p>
-<p><span class="math display">\[
-\mathbf{y}_i=\sum_j \alpha_{ij}(\mathbf{X})\,\mathbf{v}_j.
-\]</span></p>
 <p>For fixed weights <span class="math inline">\(\alpha_{ij}\)</span>, this sum would be linear in the values. In self-attention, however, the weights themselves change with the input. Changing a word can therefore change both its value vector and how information is combined across the sequence. This dependence makes the overall mapping nonlinear.</p>
 </section>
 <section id="matrix-form" class="level3">
@@ -854,6 +912,34 @@ This is an example of a hypernetwork, where one network branch computes the weig
 \end{eqnarray}\]</span></p>
 <p><img src="assets/Chap12/TransformerBlockSA.svg" style="filter: invert(1);" width="100%"></p>
 <p>Self-attention in matrix form. Self-attention can be implemented efficiently if we store the N input vectors xn in the columns of the D×N matrix X. The input X is operated on separately by the query matrix Q, key matrix K, and value matrix V. The dot products are then computed using matrix multiplication, and a softmax operation is applied independently to each column of the resulting matrix to calculate the attentions. Finally, the values are post-multiplied by the attentions to create an output of the same size as the input.</p>
+<p><strong>The first step</strong> is to calculate the Query, Key, and Value matrices. We do that by packing our embeddings into a matrix X, and multiplying it by the weight matrices we’ve trained (WQ, WK, WV).</p>
+<p><img src="https://jalammar.github.io/images/t/self-attention-matrix-calculation.png" style="filter: invert(1);" width="100%"></p>
+<p>Every row in the X matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure), and the q/k/v vectors (64, or 3 boxes in the figure)</p>
+<p><strong>Finally</strong>, since we’re dealing with matrices, we can condense steps two through six in one formula to calculate the outputs of the self-attention layer.</p>
+<p><img src="https://jalammar.github.io/images/t/self-attention-matrix-calculation-2.png" style="filter: invert(1);" width="100%"></p>
+<p>The self-attention calculation in matrix form</p>
+<!-- 
+## Self-Attention at a High Level
+
+Don’t be fooled by me throwing around the word “self-attention” like it’s a concept everyone should be familiar with. I had personally never came across the concept until reading the Attention is All You Need paper. Let us distill how it works.
+
+Say the following sentence is an input sentence we want to translate:
+
+”`The animal didn't cross the street because it was too tired`”
+
+What does “it” in this sentence refer to? Is it referring to the street or to the animal? It’s a simple question to a human, but not as simple to an algorithm.
+
+When the model is processing the word “it”, self-attention allows it to associate “it” with “animal”.
+
+As the model processes each word (each position in the input sequence), self attention allows it to look at other positions in the input sequence for clues that can help lead to a better encoding for this word.
+
+If you’re familiar with RNNs, think of how maintaining a hidden state allows an RNN to incorporate its representation of previous words/vectors it has processed with the current one it’s processing. Self-attention is the method the Transformer uses to bake the “understanding” of other relevant words into the one we’re currently processing.
+
+<img src="https://jalammar.github.io/images/t/transformer_self-attention_visualization.png" style="filter: invert(1);" width="100%">
+
+As we are encoding the word "it" in encoder #5 (the top encoder in the stack), part of the attention mechanism was focusing on "The Animal", and baked a part of its representation into the encoding of "it".
+
+Be sure to check out the [Tensor2Tensor notebook](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb) where you can load a Transformer model, and examine it using this interactive visualization. -->
 <div id="ef38f072" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

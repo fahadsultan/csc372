@@ -199,6 +199,10 @@ window.Quarto = {
     <a class="dropdown-item" href="./Project7.html">
  <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_8.html">
+ <span class="dropdown-text">Masked Language Modeling</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -510,6 +514,12 @@ window.Quarto = {
  <span class="menu-text">Multi-Head Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./BertVis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualization of BERT Attention Mechanisms</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -641,6 +651,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#dot-products-grow-with-dimension" id="toc-dot-products-grow-with-dimension" class="nav-link" data-scroll-target="#dot-products-grow-with-dimension">1. Dot products grow with dimension</a></li>
   <li><a href="#large-logits-make-softmax-nearly-one-hot" id="toc-large-logits-make-softmax-nearly-one-hot" class="nav-link" data-scroll-target="#large-logits-make-softmax-nearly-one-hot">2. Large logits make softmax nearly one-hot</a></li>
+  <li><a href="#why-sqrtd_k-specifically" id="toc-why-sqrtd_k-specifically" class="nav-link" data-scroll-target="#why-sqrtd_k-specifically">4. Why <span class="math inline">\(\sqrt{d_k}\)</span> specifically</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -808,7 +819,8 @@ d(\mathbf{a},\mathbf{b})=\sqrt{\sum_{i=1}^{d}(a_i-b_i)^2}
 </tbody>
 </table>
 <p>In the unscaled case, the query attends to one key and ignores everything else. The model never made that decision; it’s an artifact of the logit scale.</p>
-<p><mark>3. A one-hot softmax has near-zero gradients</mark></p>
+<section id="a-one-hot-softmax-has-near-zero-gradients" class="level4">
+<h4 class="anchored" data-anchor-id="a-one-hot-softmax-has-near-zero-gradients">3. A one-hot softmax has near-zero gradients</h4>
 <p>This is the key step. Training works by asking: <em>if I nudge this input a little, how much does the output change?</em> That sensitivity is the gradient. If the answer is “barely at all,” the model gets almost no signal about which direction to adjust.</p>
 <p><strong>A nudge experiment.</strong> Take the logits from the example above and increase the second one by 1:</p>
 <table class="caption-top table">
@@ -842,7 +854,10 @@ d(\mathbf{a},\mathbf{b})=\sqrt{\sum_{i=1}^{d}(a_i-b_i)^2}
 </tbody>
 </table>
 <p>The same nudge moves the scaled attention weight about 370 times more. When one logit dominates, softmax is “stuck”: the winner already has nearly all the weight and the others have nearly none, so small changes in either direction hardly register.</p>
-<p><mark>4. Why <span class="math inline">\(\sqrt{d_k}\)</span> specifically</mark></p>
+</section>
+</section>
+<section id="why-sqrtd_k-specifically" class="level3">
+<h3 class="anchored" data-anchor-id="why-sqrtd_k-specifically">4. Why <span class="math inline">\(\sqrt{d_k}\)</span> specifically</h3>
 <p>Dividing by <span class="math inline">\(\sqrt{d_k}\)</span> divides by the standard deviation of the dot product, which brings the variance back to 1 regardless of dimension:</p>
 <p><span class="math display">\[\text{Var}\!\left(\frac{\mathbf{q}\cdot\mathbf{k}}{\sqrt{d_k}}\right) = \frac{d_k}{d_k} = 1\]</span></p>
 <p>Dividing by <span class="math inline">\(d_k\)</span> would overshoot: the variance becomes <span class="math inline">\(1/d_k\)</span>, the logits all sit near zero, and attention becomes nearly uniform. Not scaling at all leaves softmax saturated. The <span class="math inline">\(\sqrt{d_k}\)</span> factor is exactly what keeps logits in the range where softmax is sensitive.</p>

@@ -170,6 +170,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./Project7.html">
  <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_8.html">
+ <span class="dropdown-text">Masked Language Modeling</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -453,8 +457,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_sa.html" class="sidebar-item-text sidebar-link">
+  <a href="./attention_self.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Self-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_scaled.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scaled Dot-Product Attention</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -473,6 +483,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./attention_multihead.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multi-Head Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./BertVis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualization of BERT Attention Mechanisms</span></a>
   </div>
 </li>
       </ul>
@@ -601,9 +617,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#a-high-level-look" id="toc-a-high-level-look" class="nav-link active" data-scroll-target="#a-high-level-look">A High-Level Look</a></li>
   <li><a href="#bringing-the-tensors-into-the-picture" id="toc-bringing-the-tensors-into-the-picture" class="nav-link" data-scroll-target="#bringing-the-tensors-into-the-picture">Bringing The Tensors Into The Picture</a></li>
   <li><a href="#now-were-encoding" id="toc-now-were-encoding" class="nav-link" data-scroll-target="#now-were-encoding">Now We’re Encoding!</a></li>
-  <li><a href="#self-attention-at-a-high-level" id="toc-self-attention-at-a-high-level" class="nav-link" data-scroll-target="#self-attention-at-a-high-level">Self-Attention at a High Level</a></li>
-  <li><a href="#self-attention-in-detail" id="toc-self-attention-in-detail" class="nav-link" data-scroll-target="#self-attention-in-detail">Self-Attention in Detail</a></li>
-  <li><a href="#matrix-calculation-of-self-attention" id="toc-matrix-calculation-of-self-attention" class="nav-link" data-scroll-target="#matrix-calculation-of-self-attention">Matrix Calculation of Self-Attention</a></li>
   <li><a href="#the-beast-with-many-heads" id="toc-the-beast-with-many-heads" class="nav-link" data-scroll-target="#the-beast-with-many-heads">The Beast With Many Heads</a></li>
   <li><a href="#representing-the-order-of-the-sequence-using-positional-encoding" id="toc-representing-the-order-of-the-sequence-using-positional-encoding" class="nav-link" data-scroll-target="#representing-the-order-of-the-sequence-using-positional-encoding">Representing The Order of The Sequence Using Positional Encoding</a></li>
   <li><a href="#the-residuals" id="toc-the-residuals" class="nav-link" data-scroll-target="#the-residuals">The Residuals</a></li>
@@ -675,49 +688,78 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="now-were-encoding">Now We’re Encoding!</h2>
 <p>As we’ve mentioned already, an encoder receives a list of vectors as input. It processes this list by passing these vectors into a ‘self-attention’ layer, then into a feed-forward neural network, then sends out the output upwards to the next encoder.</p>
 <p><img src="https://jalammar.github.io/images/t/encoder_with_tensors_2.png" style="filter: invert(1);" width="100%"></p>
-<p>The word at each position passes through a self-attention process. Then, they each pass through a feed-forward neural network – the exact same network with each vector flowing through it separately.</p>
-</section>
-<section id="self-attention-at-a-high-level" class="level2">
-<h2 class="anchored" data-anchor-id="self-attention-at-a-high-level">Self-Attention at a High Level</h2>
-<p>Don’t be fooled by me throwing around the word “self-attention” like it’s a concept everyone should be familiar with. I had personally never came across the concept until reading the Attention is All You Need paper. Let us distill how it works.</p>
-<p>Say the following sentence is an input sentence we want to translate:</p>
-<p>”<code>The animal didn't cross the street because it was too tired</code>”</p>
-<p>What does “it” in this sentence refer to? Is it referring to the street or to the animal? It’s a simple question to a human, but not as simple to an algorithm.</p>
-<p>When the model is processing the word “it”, self-attention allows it to associate “it” with “animal”.</p>
-<p>As the model processes each word (each position in the input sequence), self attention allows it to look at other positions in the input sequence for clues that can help lead to a better encoding for this word.</p>
-<p>If you’re familiar with RNNs, think of how maintaining a hidden state allows an RNN to incorporate its representation of previous words/vectors it has processed with the current one it’s processing. Self-attention is the method the Transformer uses to bake the “understanding” of other relevant words into the one we’re currently processing.</p>
-<p><img src="https://jalammar.github.io/images/t/transformer_self-attention_visualization.png" style="filter: invert(1);" width="100%"></p>
-<p>As we are encoding the word “it” in encoder #5 (the top encoder in the stack), part of the attention mechanism was focusing on “The Animal”, and baked a part of its representation into the encoding of “it”.</p>
-<p>Be sure to check out the <a href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Tensor2Tensor notebook</a> where you can load a Transformer model, and examine it using this interactive visualization.</p>
-</section>
-<section id="self-attention-in-detail" class="level2">
-<h2 class="anchored" data-anchor-id="self-attention-in-detail">Self-Attention in Detail</h2>
-<p>Let’s first look at how to calculate self-attention using vectors, then proceed to look at how it’s actually implemented – using matrices.</p>
-<p>The <strong>first step</strong> in calculating self-attention is to create three vectors from each of the encoder’s input vectors (in this case, the embedding of each word). So for each word, we create a Query vector, a Key vector, and a Value vector. These vectors are created by multiplying the embedding by three matrices that we trained during the training process.</p>
-<p>Notice that these new vectors are smaller in dimension than the embedding vector. Their dimensionality is 64, while the embedding and encoder input/output vectors have dimensionality of 512. They don’t HAVE to be smaller, this is an architecture choice to make the computation of multiheaded attention (mostly) constant.</p>
-<p><img src="https://jalammar.github.io/images/t/transformer_self_attention_vectors.png" style="filter: invert(1);" width="100%"></p>
-<p>Multiplying x1 by the WQ weight matrix produces q1, the “query” vector associated with that word. We end up creating a “query”, a “key”, and a “value” projection of each word in the input sentence.</p>
-<p>What are the “query”, “key”, and “value” vectors?</p>
-<p>They’re abstractions that are useful for calculating and thinking about attention. Once you proceed with reading how attention is calculated below, you’ll know pretty much all you need to know about the role each of these vectors plays.</p>
-<p>The <strong>second step</strong> in calculating self-attention is to calculate a score. Say we’re calculating the self-attention for the first word in this example, “Thinking”. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.</p>
-<p>The score is calculated by taking the dot product of the query vector with the key vector of the respective word we’re scoring. So if we’re processing the self-attention for the word in position #1, the first score would be the dot product of q1 and k1. The second score would be the dot product of q1 and k2.</p>
-<p><img src="https://jalammar.github.io/images/t/transformer_self_attention_score.png" style="filter: invert(1);" width="100%"></p>
-<p>The <strong>third and fourth steps</strong> are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.</p>
-<p><img src="https://jalammar.github.io/images/t/self-attention_softmax.png" style="filter: invert(1);" width="100%"></p>
-<p>This softmax score determines how much each word will be expressed at this position. Clearly the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word.</p>
-<p>The <strong>fifth step</strong> is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).</p>
-<p>The <strong>sixth step</strong> is to sum up the weighted value vectors. This produces the output of the self-attention layer at this position (for the first word).</p>
-<p><img src="https://jalammar.github.io/images/t/self-attention-output.png" style="filter: invert(1);" width="100%"></p>
-<p>That concludes the self-attention calculation. The resulting vector is one we can send along to the feed-forward neural network. In the actual implementation, however, this calculation is done in matrix form for faster processing. So let’s look at that now that we’ve seen the intuition of the calculation on the word level.</p>
-</section>
-<section id="matrix-calculation-of-self-attention" class="level2">
-<h2 class="anchored" data-anchor-id="matrix-calculation-of-self-attention">Matrix Calculation of Self-Attention</h2>
-<p><strong>The first step</strong> is to calculate the Query, Key, and Value matrices. We do that by packing our embeddings into a matrix X, and multiplying it by the weight matrices we’ve trained (WQ, WK, WV).</p>
-<p><img src="https://jalammar.github.io/images/t/self-attention-matrix-calculation.png" style="filter: invert(1);" width="100%"></p>
-<p>Every row in the X matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure), and the q/k/v vectors (64, or 3 boxes in the figure)</p>
-<p><strong>Finally</strong>, since we’re dealing with matrices, we can condense steps two through six in one formula to calculate the outputs of the self-attention layer.</p>
-<p><img src="https://jalammar.github.io/images/t/self-attention-matrix-calculation-2.png" style="filter: invert(1);" width="100%"></p>
-<p>The self-attention calculation in matrix form</p>
+<p>The word at each position passes through a self-attention process. Then, they each pass through a feed-forward neural network – the exact same network with each vector flowing through it separately. <!-- 
+## Self-Attention at a High Level
+
+Don’t be fooled by me throwing around the word “self-attention” like it’s a concept everyone should be familiar with. I had personally never came across the concept until reading the Attention is All You Need paper. Let us distill how it works.
+
+Say the following sentence is an input sentence we want to translate:
+
+”`The animal didn't cross the street because it was too tired`”
+
+What does “it” in this sentence refer to? Is it referring to the street or to the animal? It’s a simple question to a human, but not as simple to an algorithm.
+
+When the model is processing the word “it”, self-attention allows it to associate “it” with “animal”.
+
+As the model processes each word (each position in the input sequence), self attention allows it to look at other positions in the input sequence for clues that can help lead to a better encoding for this word.
+
+If you’re familiar with RNNs, think of how maintaining a hidden state allows an RNN to incorporate its representation of previous words/vectors it has processed with the current one it’s processing. Self-attention is the method the Transformer uses to bake the “understanding” of other relevant words into the one we’re currently processing.
+
+<img src="https://jalammar.github.io/images/t/transformer_self-attention_visualization.png" style="filter: invert(1);" width="100%">
+
+As we are encoding the word "it" in encoder #5 (the top encoder in the stack), part of the attention mechanism was focusing on "The Animal", and baked a part of its representation into the encoding of "it".
+
+Be sure to check out the [Tensor2Tensor notebook](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb) where you can load a Transformer model, and examine it using this interactive visualization.
+
+## Self-Attention in Detail
+
+Let’s first look at how to calculate self-attention using vectors, then proceed to look at how it’s actually implemented – using matrices.
+
+The **first step** in calculating self-attention is to create three vectors from each of the encoder’s input vectors (in this case, the embedding of each word). So for each word, we create a Query vector, a Key vector, and a Value vector. These vectors are created by multiplying the embedding by three matrices that we trained during the training process.
+
+Notice that these new vectors are smaller in dimension than the embedding vector. Their dimensionality is 64, while the embedding and encoder input/output vectors have dimensionality of 512. They don’t HAVE to be smaller, this is an architecture choice to make the computation of multiheaded attention (mostly) constant.
+
+<img src="https://jalammar.github.io/images/t/transformer_self_attention_vectors.png" style="filter: invert(1);" width="100%">
+
+Multiplying x1 by the WQ weight matrix produces q1, the "query" vector associated with that word. We end up creating a "query", a "key", and a "value" projection of each word in the input sentence.
+
+What are the “query”, “key”, and “value” vectors?
+
+They’re abstractions that are useful for calculating and thinking about attention. Once you proceed with reading how attention is calculated below, you’ll know pretty much all you need to know about the role each of these vectors plays.
+
+The **second step** in calculating self-attention is to calculate a score. Say we’re calculating the self-attention for the first word in this example, “Thinking”. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.
+
+The score is calculated by taking the dot product of the query vector with the key vector of the respective word we’re scoring. So if we’re processing the self-attention for the word in position #1, the first score would be the dot product of q1 and k1. The second score would be the dot product of q1 and k2.
+
+<img src="https://jalammar.github.io/images/t/transformer_self_attention_score.png" style="filter: invert(1);" width="100%">
+
+The **third and fourth steps** are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.
+
+<img src="https://jalammar.github.io/images/t/self-attention_softmax.png" style="filter: invert(1);" width="100%">
+
+This softmax score determines how much each word will be expressed at this position. Clearly the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word.
+
+The **fifth step** is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).
+
+The **sixth step** is to sum up the weighted value vectors. This produces the output of the self-attention layer at this position (for the first word).
+
+<img src="https://jalammar.github.io/images/t/self-attention-output.png" style="filter: invert(1);" width="100%">
+
+That concludes the self-attention calculation. The resulting vector is one we can send along to the feed-forward neural network. In the actual implementation, however, this calculation is done in matrix form for faster processing. So let’s look at that now that we’ve seen the intuition of the calculation on the word level.
+
+## Matrix Calculation of Self-Attention
+
+**The first step** is to calculate the Query, Key, and Value matrices. We do that by packing our embeddings into a matrix X, and multiplying it by the weight matrices we’ve trained (WQ, WK, WV).
+
+<img src="https://jalammar.github.io/images/t/self-attention-matrix-calculation.png" style="filter: invert(1);" width="100%">
+
+Every row in the X matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure), and the q/k/v vectors (64, or 3 boxes in the figure)
+
+**Finally**, since we’re dealing with matrices, we can condense steps two through six in one formula to calculate the outputs of the self-attention layer.
+
+<img src="https://jalammar.github.io/images/t/self-attention-matrix-calculation-2.png" style="filter: invert(1);" width="100%">
+
+The self-attention calculation in matrix form --></p>
 </section>
 <section id="the-beast-with-many-heads" class="level2">
 <h2 class="anchored" data-anchor-id="the-beast-with-many-heads">The Beast With Many Heads</h2>

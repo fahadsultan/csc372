@@ -115,6 +115,7 @@ website:
           - attention_cross.ipynb
           - attention_masked.ipynb
           - attention_multihead.ipynb
+          - BertVis.ipynb
         - section: transformers.ipynb
           contents:
           - transformers_encoder.ipynb

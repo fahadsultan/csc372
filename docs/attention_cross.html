@@ -170,6 +170,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./Project7.html">
  <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_8.html">
+ <span class="dropdown-text">Masked Language Modeling</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -481,6 +485,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Multi-Head Attention</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./BertVis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualization of BERT Attention Mechanisms</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -624,8 +634,24 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="assets/Chap12/TransformerBlockSACross.svg" style="filter: invert(1);" width="100%"></p>
-<p>Cross-attention. The flow of computation is the same as in standard self-attention, but the queries are calculated from the decoder embeddings Xdec, and the keys and values from the encoder embeddings Xenc. For translation tasks, the encoder contains information about the source language statistics, and the decoder contains information about the target language statistics.</p>
+<p><img src="assets/Chap12/TransformerBlockSACross.svg" style="filter: invert(1);" width="100%"> Cross-attention. The flow of computation is the same as in standard self-attention, but the queries are calculated from the decoder embeddings Xdec, and the keys and values from the encoder embeddings Xenc. For translation tasks, the encoder contains information about the source language statistics, and the decoder contains information about the target language statistics.</p>
+<hr>
+<p><strong>Cross-attention</strong> connects the target-language translation being generated with the source-language sentence. The computation follows the same steps as self-attention, but the inputs come from two different places:</p>
+<ul>
+<li><strong>Queries</strong> come from representations of the <strong>target-language words generated so far</strong>.</li>
+<li><strong>Keys and values</strong> come from representations of the <strong>source-language sentence</strong>.</li>
+</ul>
+<p>Think of a query as a question: <strong>“What information from the source sentence would help me predict the next target-language word?”</strong> The model compares each query with the source-language keys. These comparisons produce attention weights, which indicate how much attention to give each source position. The model then uses those weights to combine the corresponding values.</p>
+<p>For example, suppose we are translating the English sentence “The cat is sleeping” into French. When predicting the French word “chat,” the model can give more attention to the representation of “cat” in the English sentence. When predicting another word, it can focus on a different part of the sentence. Attention can also be spread across several words when their combined meaning is useful.</p>
+<p>The key difference is <strong>where the model looks</strong>. Self-attention over the target language looks at the translation generated so far. Cross-attention looks at the source-language sentence. Together, these help the model produce a translation that makes sense in the target language while preserving the meaning of the source.</p>
+<p>During training, the model learns patterns in both languages. During translation, cross-attention connects information about the <strong>actual source sentence</strong> with the <strong>target-language translation generated so far</strong>.</p>
+<!-- <img src="assets/Chap12/TransformerBlockSACross.svg" style="filter: invert(1);" width="100%">
+
+Cross-attention. The flow of computation is the same as in standard
+self-attention, but the queries are calculated from the decoder embeddings Xdec,
+and the keys and values from the encoder embeddings Xenc. For translation
+tasks, the encoder contains information about the source language statistics, and
+the decoder contains information about the target language statistics. -->
 
 
 
