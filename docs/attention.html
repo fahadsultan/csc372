@@ -643,16 +643,48 @@ ul.task-list li input[type="checkbox"] {
 <center>
 <img src="https://benjaminwarner.dev/img/2023/transformers-from-scratch/single-headed-attention-output.png" width="70%" style="filter:invert(1);">
 </center>
-<p>We can make three immediate observations:</p>
+<p>Three properties of language motivate attention:</p>
 <ol type="1">
-<li><p>First, <mark>the encoded input can be surprisingly large</mark>. In this case, each of the 37 words might be represented by an embedding vector of length 1024, so the encoded input would be of length 37×1024 = <mark>37888 even for this small passage</mark>.</p>
-<p>A more realistically sized body of text might have hundreds or even thousands of words, so fully connected neural networks are impractical.</p></li>
-<li><p>Second, <mark>one of the defining characteristics of NLP problems is that each input (one or more sentences) is of a different length</mark>.</p>
-<p>It is not even obvious how to apply a fully connected network.</p>
-<p>These observations suggest that the <mark>network should share parameters across words at different input positions</mark>.</p></li>
-<li><p>Third, <mark>language is ambiguous</mark>; it is <mark>unclear that the pronoun it refers to the restaurant and not to the ham sandwich</mark>. To understand the text, the word it should somehow be connected to the word restaurant.</p>
-<p>In the parlance of transformers, <mark>the former word should pay attention to the latter</mark>. This implies that there must be <mark>connections between the words</mark> and that the strength of these connections will depend on the words themselves. Moreover, these connections need to extend across large text spans. For example, the word <i><u>their</u></i> in the last sentence also refers to the restaurant.</p></li>
+<li><p><mark>Inputs vary in length.</mark> <strong>A model should process both a short sentence and a long passage using the same learned parameters.</strong></p></li>
+<li><p><mark>Meaning depends on context.</mark> A token embedding initially represents a token without incorporating the surrounding passage. To interpret “it” in this example, the model needs information about “restaurant.”</p></li>
+<li><p><mark>Relevant information can be far away.</mark> “Their” in the final sentence refers back to “restaurant.” The model needs a way to combine information across positions, even when those positions are separated by many tokens.</p></li>
 </ol>
+<p>A naive approach would flatten all token embeddings into one large vector and pass it through a fully connected network. This ties the architecture to a particular input length and can require many parameters. Attention instead applies shared transformations at every position and learns how to combine information from different positions.</p>
+<p>Attention produces a new representation for each token by taking a weighted sum of information from other tokens. The weights depend on the input: a token can draw on different parts of the passage in different contexts.</p>
+<p>Parameter sharing does not eliminate every computational cost. Standard dense self-attention computes a score for every pair of positions, so the number of scores grows quadratically with sequence length.</p>
+<p>The following pages develop four complementary ideas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Idea</th>
+<th>What changes?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><mark>Self-attention and cross-attention</mark></td>
+<td><mark>Where queries, keys, and values come from</mark></td>
+</tr>
+<tr class="even">
+<td><mark>Scaled dot-product attention</mark></td>
+<td><mark>How matching scores become attention weights</mark></td>
+</tr>
+<tr class="odd">
+<td><mark>Masking</mark></td>
+<td><mark>Which positions are allowed to contribute</mark></td>
+</tr>
+<tr class="even">
+<td><mark>Multi-head attention</mark></td>
+<td><mark>How several attention operations run in parallel</mark></td>
+</tr>
+</tbody>
+</table>
+<p><br> <br></p>
+<p>The following table illustrates various linguistic phenomena and how they connect to what a model needs to learn in order to handle them correctly.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 37%">

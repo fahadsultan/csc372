@@ -646,17 +646,8 @@ window.Quarto = {
   <li><a href="#pre-training" id="toc-pre-training" class="nav-link active" data-scroll-target="#pre-training">Pre-training</a>
   <ul class="collapse">
   <li><a href="#masked-language-modeling" id="toc-masked-language-modeling" class="nav-link" data-scroll-target="#masked-language-modeling">Masked Language Modeling</a></li>
-  <li><a href="#internet-scale-data" id="toc-internet-scale-data" class="nav-link" data-scroll-target="#internet-scale-data">Internet-scale data</a></li>
-  <li><a href="#demo-reproducing-openais-gpt-2" id="toc-demo-reproducing-openais-gpt-2" class="nav-link" data-scroll-target="#demo-reproducing-openais-gpt-2">Demo: Reproducing OpenAI’s GPT-2</a></li>
-  <li><a href="#open-base-models" id="toc-open-base-models" class="nav-link" data-scroll-target="#open-base-models">Open Base Models</a></li>
   </ul></li>
-  <li><a href="#post-training-supervised-fine-tuning" id="toc-post-training-supervised-fine-tuning" class="nav-link" data-scroll-target="#post-training-supervised-fine-tuning">Post-Training: Supervised Fine-tuning</a>
-  <ul class="collapse">
-  <li><a href="#conversations-data" id="toc-conversations-data" class="nav-link" data-scroll-target="#conversations-data">Conversations Data</a></li>
-  <li><a href="#hallucinations-tool-use-and-memory" id="toc-hallucinations-tool-use-and-memory" class="nav-link" data-scroll-target="#hallucinations-tool-use-and-memory">Hallucinations, Tool Use, and Memory</a></li>
-  <li><a href="#using-tools-to-reduce-hallucinations" id="toc-using-tools-to-reduce-hallucinations" class="nav-link" data-scroll-target="#using-tools-to-reduce-hallucinations">Using Tools to Reduce Hallucinations</a></li>
-  <li><a href="#knowledge-of-self" id="toc-knowledge-of-self" class="nav-link" data-scroll-target="#knowledge-of-self">Knowledge of Self</a></li>
-  </ul></li>
+  <li><a href="#post-training-supervised-fine-tuning" id="toc-post-training-supervised-fine-tuning" class="nav-link" data-scroll-target="#post-training-supervised-fine-tuning">Post-Training: Supervised Fine-tuning</a></li>
   </ul>
 </nav>
     </div>
@@ -686,6 +677,18 @@ window.Quarto = {
 <p>In this section, we will discuss encoder models, with a focus on <mark>BERT (Bidirectional Encoder Representations from Transformers)</mark> as an example. We will cover the architecture, pre-training, and fine-tuning processes.</p>
 <p>BERT is an encoder model that uses a vocabulary of <mark>30,000 tokens</mark>. Input tokens are converted to <mark>1024-dimensional word embeddings</mark> and passed through <mark>24 transformer layers</mark>. Each contains a self-attention mechanism with <mark>16 heads</mark>. The queries, keys, and values for each head are of dimension <mark>64</mark> (i.e., the matrices <mark><span class="math inline">\(\Omega_{vh}, \Omega_{qh}, \Omega_{kh}\)</span> are 64 ×1024</mark>).</p>
 <p>The dimension of the single hidden layer in the fully connected networks is <mark>4096</mark>. The total number of parameters is <mark>∼340 million</mark>. When BERT was introduced, this was considered large, but it is now much smaller than state-of-the-art models.</p>
+<hr>
+<p>Both units are residual networks (i.e., their output is added back to the original input). In addition, it is typical to add a LayerNorm operation after both the self- attention and fully connected networks. This is similar to BatchNorm but normalizes each embedding in each batch element separately using statistics calculated across its D embedding dimensions (section 11.4 and figure 11.14). The complete layer can be described by the following series of operations (figure 12.7):</p>
+<p><img src="assets/Chap12/TransformerBlock.svg" style="filter: invert(1);" width="100%"></p>
+<p>Transformer layer. The input consists of a D × N matrix containing the D-dimensional word embeddings for each of the N input tokens. The output is a matrix of the same size. The transformer layer consists of a series of operations. First, there is a multi-head attention block, allowing the word embeddings to interact with one another. This forms the processing of a residual block, so the inputs are added back to the output. Second, a LayerNorm operation is applied separately to each embedding. Third, there is a second residual layer where the same fully connected neural network is applied separately to each of the N word representations (columns). Finally, LayerNorm is applied again.</p>
+<p><span class="math display">\[\begin{eqnarray}
+  \mathbf{X} &amp;\leftarrow&amp; \mathbf{X} + \mbox{\bf{MhSa}}[\mathbf{X}] \nonumber \\
+  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}] \hspace{3cm}\nonumber\\
+  \mathbf{x}_{n} &amp;\leftarrow&amp; \mathbf{x}_{n}+\mbox{\bf{mlp}}[\mathbf{x}_{n}] \hspace{3.6cm}\forall\; n\in\{1,\ldots, N\}\nonumber\\
+  \mathbf{X} &amp;\leftarrow&amp; \mbox{\bf{LayerNorm}}[\mathbf{X}],
+\end{eqnarray}\]</span></p>
+<p>where the column vectors xn are separately taken from the full data matrix X. In a real network, the data passes through a series of these transformer layers.</p>
+<hr>
 <section id="pre-training" class="level2">
 <h2 class="anchored" data-anchor-id="pre-training">Pre-training</h2>
 <p><br></p>
@@ -712,71 +715,6 @@ window.Quarto = {
 <p>The goal here is for the model to learn general information about the statistics of language.</p>
 <p>In the fine-tuning stage, the resulting network is adapted to solve a particular task using a smaller body of labelled training data.</p>
 </section>
-<section id="internet-scale-data" class="level3">
-<h3 class="anchored" data-anchor-id="internet-scale-data">Internet-scale data</h3>
-<section id="common-crawl" class="level4">
-<h4 class="anchored" data-anchor-id="common-crawl">Common Crawl</h4>
-<p><strong><a href="https://commoncrawl.org/">Common Crawl</a></strong> is a non-profit organization that crawls the web and freely provides its archives and datasets to the public. It is one of the largest and most comprehensive web crawls available. It has been crawling the web since 2008 and has petabytes (thousands of terabytes) of data.</p>
-<p>The code and data are open source and free to use for anyone. Code can be accessed at <a href="https://github.com/commoncrawl">https://github.com/commoncrawl</a> and the data can be accessed at <a href="https://data.commoncrawl.org/">https://data.commoncrawl.org/</a>.</p>
-<p><strong><a href="https://huggingface.co">HuggingFace</a></strong> is a company and open-source community that provides tools and libraries for natural language processing (NLP) and machine learning. They are most well-known for:</p>
-<ul>
-<li><a href="https://huggingface.co/docs/transformers/en/index">Transformers library</a>, which provides pre-trained models for various NLP tasks.</li>
-<li><a href="https://huggingface.co/datasets">Data Sharing</a> a platform for sharing and discovering datasets, models, and other resources related to NLP.</li>
-<li><a href="https://huggingface.co/models">Model Hub</a>, which hosts thousands of pre-trained models for various NLP tasks.</li>
-</ul>
-<p><img src="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/ct.png" width="100%" style="filter:invert(1);"></p>
-</section>
-<section id="fineweb" class="level4">
-<h4 class="anchored" data-anchor-id="fineweb">FineWeb</h4>
-<p><strong><a href="https://huggingface.co/datasets/fineweb">Fineweb</a></strong> is a dataset created by Hugging Face that consists of cleaned and filtered web pages from Common Crawl. It is derived from 96 Common Crawl snapshots. Extensive filtering (boilerplate removal, quality heuristics), deduplication, and cleaning to produce higher-quality web text than raw Common Crawl for FineWeb. It is designed to be used for training large language models. The dataset contains over 1.2 billion web pages, making it one of the largest datasets available for this purpose.</p>
-<p>Once cleaned, the data still needs to be compressed into something usable. Instead of feeding raw text into the model, it gets converted into tokens: a structured, numerical representation.</p>
-</section>
-</section>
-<section id="demo-reproducing-openais-gpt-2" class="level3">
-<h3 class="anchored" data-anchor-id="demo-reproducing-openais-gpt-2">Demo: Reproducing OpenAI’s GPT-2</h3>
-<p><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2</a>, released by OpenAI in 2019, was an early example of a transformer-based LLM.</p>
-<p>Here’s what it looked like:</p>
-<ul>
-<li><p><strong>1.6 billion parameters</strong></p></li>
-<li><p><strong>1024-token context length</strong></p></li>
-<li><p><strong>Trained on ~100 billion tokens</strong></p></li>
-<li><p>The original GPT-2 training cost was <strong>$40,000</strong>.</p></li>
-</ul>
-<p>Since then, efficiency has improved dramatically. Andrej Karpathy managed to <strong>reproduce GPT-2</strong> using <a href="https://github.com/karpathy/llm.c/discussions/677">llm.c</a> for just $672. With optimized pipelines, training costs could drop even further to <strong>around $100</strong> .</p>
-<p>Why is it so much cheaper now?</p>
-<ul>
-<li><p><strong>Better pre-training data extraction techniques</strong> → Cleaner datasets mean models learn faster.</p></li>
-<li><p><strong>Stronger hardware and optimized software</strong> → Less computation needed for the same results.</p></li>
-</ul>
-</section>
-<section id="open-base-models" class="level3">
-<h3 class="anchored" data-anchor-id="open-base-models">Open Base Models</h3>
-<pre class="{note}"><code>The models under discussion do not strictly follow the Open Source Initiative (OSI) definitions of open-source AI ([OSI AI Definition](https://opensource.org/ai)). Instead, we use the term open base models to describe models where the weights are publicly accessible, but training data and full reproducibility may not be provided.</code></pre>
-<p>Some companies train massive <strong>language models (LMs)</strong> and <strong>release the base models for free</strong>. A <strong>base model</strong> is essentially a <strong>raw, pre-trained LM</strong>—it still requires <strong>fine-tuning</strong> or <strong>alignment</strong> to be practically useful.</p>
-<ul>
-<li><p>Base models are trained on <strong>unfiltered internet-scale data</strong>, meaning they generate <strong>raw</strong> completions but <strong>lack alignment with human intent</strong>.</p></li>
-<li><p>OpenAI released <a href="https://github.com/openai/gpt-2">GPT-2</a>, an <strong>open-weight and source-available</strong> model, but <strong>not fully open-source</strong> under OSI’s definition since its training data was not released.</p></li>
-<li><p>Meta released <a href="https://arxiv.org/pdf/2407.21783">Llama 3.1 (405B parameters)</a>, an <strong>open-weight</strong> but <strong>not open-source</strong> model.</p></li>
-</ul>
-<p>To release a <strong>base model</strong>, two key components are required:</p>
-<ol type="1">
-<li><p><strong><a href="https://github.com/openai/gpt-2/blob/master/src/model.py">Inference code</a></strong> → Defines the steps the model follows to generate text. Typically written in Python.</p></li>
-<li><p><strong><a href="https://www.kaggle.com/datasets/xhlulu/openai-gpt2-weights">Model weights</a></strong> → The billions of parameters that encode the model’s knowledge. ## The ‘Psychology’ of Base Models</p></li>
-</ol>
-<ul>
-<li><p>Base models can be thoughts of as token-level internet document simulators.</p></li>
-<li><p>Every run produces a <strong>slightly different output</strong> (stochastic behavior).</p></li>
-<li><p>They can <strong>regurgitate</strong> parts of their training data.</p></li>
-<li><p>The parameters are like a <strong>lossy zip file</strong> of internet knowledge.</p></li>
-<li><p>You can already use them for applications like:</p>
-<ul>
-<li><strong>Translation</strong> → Using in-context examples.</li>
-<li><strong>Basic assistants</strong> → Prompting them in a structured way.</li>
-</ul></li>
-</ul>
-<p>Want to experiment with one? Try the <strong>Llama 3 (405B base model)</strong> <a href="https://app.hyperbolic.xyz/models/llama31-405b-base-bf-16">here</a>.</p>
-<p>At its core, a base model is just an <strong>expensive autocomplete</strong>. It still needs fine-tuning.</p>
-</section>
 </section>
 <section id="post-training-supervised-fine-tuning" class="level2">
 <h2 class="anchored" data-anchor-id="post-training-supervised-fine-tuning">Post-Training: Supervised Fine-tuning</h2>
@@ -795,78 +733,8 @@ window.Quarto = {
 <p><mark><strong>Text classification</strong></mark>: In BERT, a special token known as the classification or <code>&lt;cls&gt;</code> token is placed at the start of each string during pre-training. For text classification tasks like <u>sentiment analysis</u> (in which the passage is labeled as having a positive or negative emotional tone), the vector associated with the <code>&lt;cls&gt;</code> token is mapped to a single number and passed through a logistic sigmoid (figure 12.11a). This contributes to a standard binary cross-entropy loss (section 5.4).</p>
 <p><mark><strong>Word classification</strong></mark>: The goal of <u>named entity recognition</u> is to classify each word as an entity type (e.g., person, place, organization, or no-entity). To this end, each input embedding <span class="math inline">\(\mathbf{x}_n\)</span> is mapped to an <span class="math inline">\(E\times 1\)</span> vector where the <span class="math inline">\(E\)</span> entries correspond to the <span class="math inline">\(E\)</span> entity types. This is passed through a softmax function to create probabilities for each class, which contribute to a multiclass cross-entropy loss (figure 12.11b).</p>
 <p><mark><strong>Text span prediction</strong></mark>: In the SQuAD 1.1 question answering task, the question and a passage from Wikipedia containing the answer are concatenated and tokenized. BERT is then used to predict the text span in the passage that contains the answer. Each token maps to two numbers indicating how likely it is that the text span begins and ends at this location. The resulting two sets of numbers are put through two softmax functions. The likelihood of any text span being the answer can be derived by combining the probability of starting and ending at the appropriate places.</p>
-<p><img src="https://heidloff.net/assets/img/2023/02/transformers.png" width="100%" style="filter:invert(1);"></p>
-<ul>
-<li>You can see a production-grade LLM architecture example <a href="https://bbycroft.net/llm">here</a>.</li>
-</ul>
-<section id="conversations-data" class="level3">
-<h3 class="anchored" data-anchor-id="conversations-data">Conversations Data</h3>
-<p>Once the base model is trained on internet data, the next step is <strong>post-training</strong>. This is where we replace the internet dataset with <strong>human/assistant conversations</strong> to make the model more conversational and useful.</p>
-<ul>
-<li><p>Pre-training takes months, but post-training is much faster. It can take as little as a few hours.</p></li>
-<li><p>The model’s algorithm stays the same, we’re just fine-tuning the existing parameters.</p></li>
-</ul>
-<p>To teach a model how to handle back-and-forth conversations, we use chat templates. These define the structure of a conversation and let the model know which part is user input and which part is an assistant response. You can read more about them here.</p>
-<p>Example template:</p>
-<pre><code>&lt;|im_start|&gt;system&lt;|im_sep|&gt;You are a helpful assistant&lt;|im_end|&gt;
-&lt;|im_start|&gt;user&lt;|im_sep|&gt;What is 4 + 4?&lt;|im_end|&gt;
-&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;4 + 4 = 8&lt;|im_end|&gt;</code></pre>
-<ul>
-<li><p>&lt;|im_start|&gt; and &lt;|im_end|&gt; are special tokens that help structure conversations.</p></li>
-<li><p>The model didn’t see these new tokens during pre-training, they’re introduced during post-training.</p></li>
-<li><p>OpenAI has discussed fine-tuning LLMs for conversation in the <a href="">InstructGPT paper</a>.</p></li>
-</ul>
-<p>To visualize this, go to <a href="https://tiktokenizer.vercel.app/">tiktokenizer</a>.</p>
-<p>One such post-training dataset is <a href="https://huggingface.co/datasets/OpenAssistant/oasst1">OASST1</a>. Early post-training datasets were hand-curated by humans. Now, models like <a href="https://github.com/thunlp/UltraChat">UltraChat</a> can generate synthetic conversations, allowing models to improve without as much human input. You can visualize these mostly synthetic datasets <a href="https://atlas.nomic.ai/map/0ce65783-c3a9-40b5-895d-384933f50081/a7b46301-022f-45d8-bbf4-98107eabdbac">here</a>.</p>
-</section>
-<section id="hallucinations-tool-use-and-memory" class="level3">
-<h3 class="anchored" data-anchor-id="hallucinations-tool-use-and-memory">Hallucinations, Tool Use, and Memory</h3>
-<p>One major issue with LLMs is <strong>hallucination</strong>, where the model confidently generates incorrect or made-up information.</p>
-<p>Why does this happen?</p>
-<ul>
-<li><p>During <strong>post-training</strong>, models learn that they must <strong>always</strong> give an answer.</p></li>
-<li><p>Even if the question doesn’t make sense, the model <strong>tries to generate a response</strong> instead of saying, “I don’t know.”</p></li>
-</ul>
-<p>How Meta Deals with Hallucinations</p>
-<p>Meta’s research on <strong>factuality</strong> (from their <a href="https://arxiv.org/pdf/2407.21783">Llama 3 paper</a>) describes a way to improve this:</p>
-<ol type="1">
-<li>Extract a snippet of training data.</li>
-<li>Generate a factual question about it using Llama 3.</li>
-<li>Have Llama 3 generate an answer.</li>
-<li>Score the response against the original data.</li>
-<li>If incorrect, train the model to recognize and refuse incorrect responses.</li>
-</ol>
-<p>Essentially, this process <strong>teaches models to recognize their own knowledge limits</strong>.</p>
-</section>
-<section id="using-tools-to-reduce-hallucinations" class="level3">
-<h3 class="anchored" data-anchor-id="using-tools-to-reduce-hallucinations">Using Tools to Reduce Hallucinations</h3>
-<p>One way to fix hallucinations is to <strong>train models to use tools</strong> when they don’t know the answer. This approach follows the pattern:</p>
-<pre><code>&lt;|im_start|&gt;user&lt;|im_sep|&gt;Who is Orson Kovacs?&lt;|im_end|&gt;
-&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;&lt;SEARCH_START&gt;Who is Orson Kovacs?&lt;SEARCH_END&gt;&lt;|im_end|&gt;
-
-[...search results...]
-
-&lt;|im_start|&gt;assistant&lt;|im_sep|&gt;Orson Kovacs is ....&lt;|im_end|&gt;</code></pre>
-<p>With repeated training, models learn that <strong>if they don’t know something, they should look it up</strong> instead of making things up.</p>
-<p>“Vague Recollection” vs.&nbsp;“Working Memory”</p>
-<ul>
-<li><p><strong>Model parameters store vague recollections</strong> (like remembering something from a month ago).</p></li>
-<li><p><strong>Context tokens function as working memory</strong>, giving models access to fresh information.</p></li>
-</ul>
-<p>This is why <strong>retrieval-augmented generation (RAG)</strong> works so well: if the model has direct access to relevant documents, it <strong>doesn’t need to guess</strong>.</p>
-</section>
-<section id="knowledge-of-self" class="level3">
-<h3 class="anchored" data-anchor-id="knowledge-of-self">Knowledge of Self</h3>
-<p>If you prompt an <strong>untuned base model</strong> about who it is, it will likely hallucinate. For example, a non-OpenAI model might still say it was created by OpenAI simply because most internet data links AI models to OpenAI.</p>
-<p>How to Fix This</p>
-<ul>
-<li><p><strong><a href="https://huggingface.co/datasets/allenai/olmo-2-hard-coded">Hardcode self-identity into training data</a></strong> → Example: <strong><a href="https://huggingface.co/datasets/allenai/tulu-3-sft-olmo-2-mixture">Olmo-2 dataset</a></strong>.</p></li>
-<li><p><strong>Use system messages</strong> → At the start of every conversation, include a reminder of its identity.</p></li>
-</ul>
-<p><strong>By default, LLMs have no real knowledge of themselves</strong>. Without specific training, they default to generic AI responses.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

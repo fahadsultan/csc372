@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -617,6 +646,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#preview-of-things-to-come" id="toc-preview-of-things-to-come" class="nav-link active" data-scroll-target="#preview-of-things-to-come">Preview of Things to Come</a></li>
   <li><a href="#keeping-track-of-llms" id="toc-keeping-track-of-llms" class="nav-link" data-scroll-target="#keeping-track-of-llms">Keeping Track of LLMs</a></li>
   <li><a href="#where-to-find-llms" id="toc-where-to-find-llms" class="nav-link" data-scroll-target="#where-to-find-llms">Where to Find LLMs</a></li>
+  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization">Tokenization</a></li>
+  <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings">Embeddings</a></li>
   </ul>
 </nav>
     </div>
@@ -680,6 +711,36 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Run Locally</strong> → Use <a href="https://ollama.com/">Ollama</a> or <a href="https://lmstudio.ai/">LM Studio</a>.</li>
 <li><strong>Base Models</strong> → Explore <a href="https://app.hyperbolic.xyz/">Hyperbolic</a>.</li>
 </ul>
+</section>
+<section id="tokenization" class="level2">
+<h2 class="anchored" data-anchor-id="tokenization">Tokenization</h2>
+<p>A text processing pipeline begins with a tokenizer. This splits the text into smaller constituent units (tokens) from a vocabulary of possible tokens. In the discussion above, we have implied that these tokens represent words, but there are several difficulties.</p>
+<ul>
+<li><p>Inevitably, some words (e.g., names) will not be in the vocabulary.</p></li>
+<li><p>It’s unclear how to handle punctuation, but this is important. If a sentence ends in a question mark, we must encode this information.</p></li>
+<li><p>The vocabulary would need different tokens for versions of the same word with different suffixes (e.g., walk, walks, walked, walking), and there is no way to clarify that these variations are related.</p></li>
+</ul>
+<p>One approach would be to use letters and punctuation marks as the vocabulary, but this would mean splitting text into very small parts and requiring the subsequent network to re-learn the relations between them.</p>
+<p>In practice, a compromise between letters and full words is used, and the final vocabulary includes both common words and word fragments from which larger and less frequent words can be composed. The vocabulary is computed using a sub-word tokenizer such as <mark>Byte Pair Encoding (BPE)</mark> that greedily merges commonly occurring sub-strings based on their frequency.</p>
+<p><img src="assets/Chap12/TransformerBPE.svg" style="filter: invert(1);" width="100%"></p>
+<p>Sub-word tokenization.</p>
+<ol type="a">
+<li><p>A passage of text from a nursery rhyme. The tokens are initially just the characters and whitespace (represented by an underscore), and their frequencies are displayed in the table.</p></li>
+<li><p>At each iteration, the sub-word tokenizer looks for the most commonly occurring adjacent pair of tokens (in this case, se) and merges them. This creates a new token and decreases the counts for the original tokens s and e. Note that the last character of the first token to be merged cannot be whitespace, which prevents merging across words.</p></li>
+<li><p>At the second iteration, the algorithm merges e and the whitespace character_.</p></li>
+<li><p>After 23 iterations, the tokens consist of a mix of letters, word fragments, and commonly occurring words.</p></li>
+<li><p>If we continue this process indefinitely, the tokens eventually represent the full words.</p></li>
+<li><p>Over time, the number of tokens increases as we add word fragments to the letters and then decreases again as we merge these fragments. In a real situation, there would be a very large number of words, and the algorithm would terminate when the vocabulary size (number of tokens) reached a predetermined value. Punctuation and capital letters would also be treated as separate input characters.</p></li>
+</ol>
+<p>You can visualize how this works using tools like <a href="https://tiktokenizer.vercel.app/?model=cl100k_base">Tiktokenizer (https://tiktokenizer.vercel.app)</a>.</p>
+<p>For reference, GPT-3 uses 50,257 tokens and GPT-4 uses 100,277 tokens in its vocabulary.</p>
+</section>
+<section id="embeddings" class="level2">
+<h2 class="anchored" data-anchor-id="embeddings">Embeddings</h2>
+<p>Each token in the vocabulary <span class="math inline">\(\mathcal{V}\)</span> is mapped to a unique word embedding, and the embeddings for the whole vocabulary are stored in a matrix <span class="math inline">\(\Omega_e \in \mathbb{R}^{D \times |\mathcal{V}|}\)</span>.</p>
+<p>To accomplish this, the <span class="math inline">\(N\)</span> input tokens are first encoded in the matrix <span class="math inline">\(T \in \mathbb{R}^{|\mathcal{V}| \times N}\)</span>, where the nth column corresponds to the nth token and is a |V|×1 one-hot vector (i.e., a vector where every entry is zero except for the entry corresponding to the token, which is set to one). The input embeddings are computed as <span class="math inline">\(X= \Omega_e T\)</span>, and <span class="math inline">\(\Omega_e\)</span> is learned like any other network parameter. A typical embedding size D is 1024, and a typical total vocabulary size <span class="math inline">\(|\mathcal{V}|\)</span> is 30,000, so even before the main network, there are many parameters in <span class="math inline">\(\Omega_e\)</span> to learn.</p>
+<p><img src="assets/Chap12/TransformerVocabulary.svg" style="filter: invert(1);" width="100%"></p>
+<p>The input embedding matrix <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{D \times N}\)</span> contains N embeddings of length D and is created by multiplying a matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> containing the embeddings that correspond to the word or sub-word indices. The vocabulary matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> is considered a parameter of the model and is learned along with the other parameters. Note that the two embeddings for the word an in <span class="math inline">\(\mathbf{X}\)</span> are the same.</p>
 
 
 </section>
