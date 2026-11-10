@@ -234,7 +234,11 @@ window.Quarto = {
  <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./Project_8.html">
+    <a class="dropdown-item" href="./Project8.html">
+ <span class="dropdown-text">Self-Attention from Scratch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project9.html">
  <span class="dropdown-text">Masked Language Modeling</span></a>
   </li>  
     </ul>
@@ -687,6 +691,10 @@ window.Quarto = {
   <li><a href="#top-k-sampling" id="toc-top-k-sampling" class="nav-link" data-scroll-target="#top-k-sampling">Top-K sampling</a></li>
   <li><a href="#nucleus-sampling" id="toc-nucleus-sampling" class="nav-link" data-scroll-target="#nucleus-sampling">Nucleus Sampling</a></li>
   <li><a href="#beam-search" id="toc-beam-search" class="nav-link" data-scroll-target="#beam-search">Beam Search</a></li>
+  <li><a href="#greedy-decoding" id="toc-greedy-decoding" class="nav-link" data-scroll-target="#greedy-decoding">Greedy decoding</a></li>
+  <li><a href="#top-k-sampling-1" id="toc-top-k-sampling-1" class="nav-link" data-scroll-target="#top-k-sampling-1">Top-<span class="math inline">\(k\)</span> sampling</a></li>
+  <li><a href="#nucleus-sampling-top-p" id="toc-nucleus-sampling-top-p" class="nav-link" data-scroll-target="#nucleus-sampling-top-p">Nucleus sampling (top-<span class="math inline">\(p\)</span>)</a></li>
+  <li><a href="#beam-search-1" id="toc-beam-search-1" class="nav-link" data-scroll-target="#beam-search-1">Beam search</a></li>
   </ul>
 </nav>
     </div>
@@ -1153,6 +1161,61 @@ Good English output: <font color="cyan">I’d be more than happy to work with yo
 <span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="co"># You should see that the best answer is not the same as the greedy solution we found above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>At each decoding step, a language model takes the text so far and gives you a probability distribution over the <strong>next token</strong>. The decoding method decides how to use that distribution. After a token is chosen, the model uses the extended text to predict what comes next.</p>
+<p>Suppose the prompt is <strong>“I’ll have a cup of”</strong> and the model gives this simplified distribution:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Next token</th>
+<th style="text-align: right;">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>coffee</code></td>
+<td style="text-align: right;">0.45</td>
+</tr>
+<tr class="even">
+<td><code>tea</code></td>
+<td style="text-align: right;">0.30</td>
+</tr>
+<tr class="odd">
+<td><code>water</code></td>
+<td style="text-align: right;">0.15</td>
+</tr>
+<tr class="even">
+<td><code>milk</code></td>
+<td style="text-align: right;">0.07</td>
+</tr>
+<tr class="odd">
+<td><code>juice</code></td>
+<td style="text-align: right;">0.03</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="greedy-decoding" class="level3">
+<h3 class="anchored" data-anchor-id="greedy-decoding">Greedy decoding</h3>
+<p><strong>Always choose the most probable next token.</strong> Here, greedy decoding chooses <code>coffee</code>. It repeats that rule at every step. It’s deterministic given the same model scores and tie-breaking rule. It can miss a better overall continuation because it commits to each token before evaluating what could follow.</p>
+</section>
+<section id="top-k-sampling-1" class="level3">
+<h3 class="anchored" data-anchor-id="top-k-sampling-1">Top-<span class="math inline">\(k\)</span> sampling</h3>
+<p><strong>Keep the <span class="math inline">\(k\)</span> most probable tokens, then sample from them.</strong> With <span class="math inline">\(k=2\)</span>, keep <code>coffee</code> and <code>tea</code>. Their original probabilities sum to <span class="math inline">\(0.75\)</span>, so after renormalizing, you sample <code>coffee</code> with probability <span class="math inline">\(0.45/0.75=0.60\)</span> and <code>tea</code> with probability <span class="math inline">\(0.30/0.75=0.40\)</span>. The number of eligible tokens stays fixed at each step.</p>
+</section>
+<section id="nucleus-sampling-top-p" class="level3">
+<h3 class="anchored" data-anchor-id="nucleus-sampling-top-p">Nucleus sampling (top-<span class="math inline">\(p\)</span>)</h3>
+<p><strong>Keep the smallest set of highest-probability tokens whose combined probability reaches <span class="math inline">\(p\)</span>, then sample from that set.</strong> With <span class="math inline">\(p=0.80\)</span>, <code>coffee</code> and <code>tea</code> together reach <span class="math inline">\(0.75\)</span>. Adding <code>water</code> brings the total to <span class="math inline">\(0.90\)</span>, so you renormalize and sample from those three.</p>
+<p>The number of eligible tokens adapts to the model’s confidence. If the most likely token alone had probability <span class="math inline">\(0.85\)</span>, top-<span class="math inline">\(p\)</span> with <span class="math inline">\(p=0.80\)</span> would keep only that token. A flatter distribution would generally keep more.</p>
+</section>
+<section id="beam-search-1" class="level3">
+<h3 class="anchored" data-anchor-id="beam-search-1">Beam search</h3>
+<p><strong>Keep several partial continuations and compare their cumulative scores.</strong> With beam width <span class="math inline">\(2\)</span>, the first step keeps both <code>coffee</code> and <code>tea</code>. At the next step, the model predicts possible tokens for <strong>each</strong> continuation. Suppose:</p>
+<ul>
+<li>After <code>coffee</code>, the probability of a period is <span class="math inline">\(0.20\)</span>. The continuation <code>coffee.</code> has score <span class="math inline">\(0.45\times0.20=0.09\)</span>.</li>
+<li>After <code>tea</code>, the probability of a period is <span class="math inline">\(0.60\)</span>. The continuation <code>tea.</code> has score <span class="math inline">\(0.30\times0.60=0.18\)</span>.</li>
+</ul>
+<p>Among those two continuations, <code>tea.</code> scores higher even though <code>tea</code> was less likely at the first step. Beam search ranks all the candidate extensions together and keeps the best two at that step. In practice, it usually adds log probabilities instead of multiplying probabilities. A finite beam can still discard a prefix that would have led to the highest-scoring full continuation.</p>
+<p>So <strong>greedy decoding commits to one token</strong>, <strong>top-<span class="math inline">\(k\)</span> and top-<span class="math inline">\(p\)</span> sample one token from a filtered set</strong>, and <strong>beam search carries several possible continuations forward</strong>.</p>
 
 
 </section>
