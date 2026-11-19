@@ -54,6 +54,7 @@ website:
         - Project7.ipynb
         - Project8.ipynb
         - Project9.ipynb
+        - Project10.ipynb
     - id: content
       background: "#2d2d2d"
       style: "floating"
@@ -122,20 +123,23 @@ website:
           - transformers_encoder.ipynb
           - transformers_decoder.ipynb
           - transformers_encoderdecoder.ipynb
-          - transformers_others.ipynb
+          # - transformers_others.ipynb
           - transformers_decoding.ipynb
         - section: llms.ipynb
           contents: 
           - llms_pretraining.ipynb
           - llms_finetuning.ipynb
           - llms_rlhf.ipynb
-        - unsupervised.md
-        - section: diffusion.ipynb
-          contents: 
-          - diffusion_encoder.ipynb 
-          - diffusion_decoder.ipynb
-          - diffusion_reparameterization.ipynb
-          - diffusion_family.ipynb
+          - rlhf.ipynb
+          - preference_optimization.ipynb
+          - training_overview.ipynb
+        # - unsupervised.md
+        # - section: diffusion.ipynb
+        #   contents: 
+        #   - diffusion_encoder.ipynb 
+        #   - diffusion_decoder.ipynb
+        #   - diffusion_reparameterization.ipynb
+        #   - diffusion_family.ipynb
 
 format:
   html:

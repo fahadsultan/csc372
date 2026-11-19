@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. Post-Training: Supervised Fine-Tuning</title>
+<title>2. Post-Training: Instruction / Supervised Fine-Tuning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -171,8 +205,16 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./Project_8.html">
+    <a class="dropdown-item" href="./Project8.html">
+ <span class="dropdown-text">Self-Attention from Scratch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project9.html">
  <span class="dropdown-text">Masked Language Modeling</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project10.html">
+ <span class="dropdown-text">Causal Language Modeling</span></a>
   </li>  
     </ul>
   </li>
@@ -199,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Large Language Models</a></li><li class="breadcrumb-item"><a href="./llms_finetuning.html">2. Post-Training: Supervised Fine-Tuning</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Post-Training, Chatbots and Agents</a></li><li class="breadcrumb-item"><a href="./llms_finetuning.html">2. Post-Training: Instruction / Supervised Fine-Tuning</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -522,12 +564,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for images</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Illustrated Transformer</span></a>
   </div>
@@ -537,7 +573,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./llms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large Language Models</span></a>
+ <span class="menu-text">Post-Training, Chatbots and Agents</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -552,7 +588,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+ <span class="menu-text">2. Post-Training: Instruction / Supervised Fine-Tuning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -561,45 +597,22 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unsupervised learning</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Encoder (forward process)</span></a>
+  <a href="./rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reinforcement Learning with Human Feedback (RLHF)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./diffusion_decoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoder model (reverse process)</span></a>
+  <a href="./preference_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preference Optimization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reparameterization of loss function</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Families of diffusion models</span></a>
+  <a href="./training_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training Overview</span></a>
   </div>
 </li>
       </ul>
@@ -615,19 +628,22 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#conversations-data" id="toc-conversations-data" class="nav-link active" data-scroll-target="#conversations-data">2.1. Conversations Data</a></li>
+  <li><a href="#chat-templates-and-the-structure-of-instructions" id="toc-chat-templates-and-the-structure-of-instructions" class="nav-link" data-scroll-target="#chat-templates-and-the-structure-of-instructions">Chat Templates and the Structure of Instructions</a></li>
   <li><a href="#hallucinations-tool-use-and-memory" id="toc-hallucinations-tool-use-and-memory" class="nav-link" data-scroll-target="#hallucinations-tool-use-and-memory">2.2. Hallucinations, Tool Use, and Memory</a></li>
   <li><a href="#using-tools-to-reduce-hallucinations" id="toc-using-tools-to-reduce-hallucinations" class="nav-link" data-scroll-target="#using-tools-to-reduce-hallucinations">2.3. Using Tools to Reduce Hallucinations</a></li>
   <li><a href="#knowledge-of-self" id="toc-knowledge-of-self" class="nav-link" data-scroll-target="#knowledge-of-self">2.4. Knowledge of Self</a></li>
   <li><a href="#models-need-tokens-to-think" id="toc-models-need-tokens-to-think" class="nav-link" data-scroll-target="#models-need-tokens-to-think">2.5. Models Need Tokens to Think</a></li>
+  <li><a href="#best-practices-for-instruction-tuning" id="toc-best-practices-for-instruction-tuning" class="nav-link" data-scroll-target="#best-practices-for-instruction-tuning">Best Practices for Instruction Tuning</a></li>
+  <li><a href="#implementation-details" id="toc-implementation-details" class="nav-link" data-scroll-target="#implementation-details">Implementation Details</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Large Language Models</a></li><li class="breadcrumb-item"><a href="./llms_finetuning.html">2. Post-Training: Supervised Fine-Tuning</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Post-Training, Chatbots and Agents</a></li><li class="breadcrumb-item"><a href="./llms_finetuning.html">2. Post-Training: Instruction / Supervised Fine-Tuning</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">2. Post-Training: Supervised Fine-Tuning</h1>
+<h1 class="title">2. Post-Training: Instruction / Supervised Fine-Tuning</h1>
 </div>
 
 
@@ -650,6 +666,15 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Post-training fixes this</strong> by fine-tuning the model to respond better.</p></li>
 <li><p>The good news? <strong>Post-training is way cheaper than pre-training</strong> (e.g., months vs.&nbsp;hours).</p></li>
 </ul>
+<p>Early large pretrained language models were trained with a next-token prediction objective and, by default, did not come with an explicit interface for following instructions.</p>
+<p>Around the release of GPT-3 (Brown et al., 2020), prompting and in-context learning became a widely used way to adapt a single model to many tasks. <mark>In-context learning is a model’s ability to pick up a new task just from examples or instructions in the prompt, with no weight updates. The “learning” happens entirely inside a single forward pass, and once the prompt is gone, so is the skill</mark>. A classic example:</p>
+<pre><code>sea otter → loutre de mer
+cheese → fromage
+peppermint → menthe poivrée
+plush giraffe → </code></pre>
+<p>A practical next step was instruction fine-tuning, which teaches the model to respond in an instruction-response format rather than just continuing text.</p>
+<p><mark>For example, given the prompt “What is the capital of France?”, a base model might continue with “What is the capital of Germany? What is the capital of Italy?…” — simply extending the pattern of questions — while an instruction-tuned model would respond with “The capital of France is Paris.”</mark></p>
+<p>Since its discovery, instruction fine-tuning, also called colloquially just instruction tuning, is the simplest method for adapting language models to a desired task distribution. It serves as the foundation for RLHF by preparing the model for a format of instructions that is known as question-answering, and it is the first tool used by those attempting to apply modern techniques to new domains. Without a basic level of instruction-following abilities, most of the pipelines we discuss in this book—from preference data collection to online RLHF optimization—cannot be performed.</p>
 <section id="conversations-data" class="level2">
 <h2 class="anchored" data-anchor-id="conversations-data">2.1. Conversations Data</h2>
 <p>Once the base model is trained on internet data, the next step is <strong>post-training</strong>. This is where we replace the internet dataset with <strong>human/assistant conversations</strong> to make the model more conversational and useful.</p>
@@ -669,6 +694,78 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>To visualize this, go to <a href="https://tiktokenizer.vercel.app/">tiktokenizer</a>.</p>
 <p>One such post-training dataset is <a href="https://huggingface.co/datasets/OpenAssistant/oasst1">OASST1</a>. Early post-training datasets were hand-curated by humans. Now, models like <a href="https://github.com/thunlp/UltraChat">UltraChat</a> can generate synthetic conversations, allowing models to improve without as much human input. You can visualize these mostly synthetic datasets <a href="https://atlas.nomic.ai/map/0ce65783-c3a9-40b5-895d-384933f50081/a7b46301-022f-45d8-bbf4-98107eabdbac">here</a>.</p>
+</section>
+<section id="chat-templates-and-the-structure-of-instructions" class="level2">
+<h2 class="anchored" data-anchor-id="chat-templates-and-the-structure-of-instructions">Chat Templates and the Structure of Instructions</h2>
+<p>Instruction fine-tuning is supervised learning at its core and the practical details that matter most for RLHF is how training data is formatted and structured.</p>
+<p>The post-training process begins with defining a pattern to format user queries so that they are easily readable by a language model that processes information through a tokenizer.</p>
+<p>When using a pretrained language model, the prompting is quite simple. The model only knows a few tokens: a beginning-of-sequence token (e.g., <code>&lt;bos_token&gt;</code>), an end-of-sequence token (e.g., <code>&lt;eos_token&gt;</code>), and a padding token (to manage training on batches with empty components). This means, to prompt a base model, the user inputs a sequence of tokens for the model to continue from, such as:</p>
+<p><code>&lt;bos_token&gt; The capital of the United States is</code></p>
+<p>Then, the model would generate tokens until it runs out of its context window, or it generates the end-of-sequence token.</p>
+<p>All post-training stages, from instruction tuning to RLHF and other methods, rely on this formatting to train the model. The tool that handles the structure of the interaction with the user is called the chat template.</p>
+<p>An example which we will break down is below:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode php code-with-copy"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>{<span class="op">%</span> <span class="cf">if</span> messages[<span class="dv">0</span>][<span class="st">'role'</span>] <span class="op">==</span> <span class="st">'system'</span> <span class="op">%</span>}</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    {<span class="co"># If the conversation begins with a system message, treat it as a special first turn.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>       We set an offset so the user<span class="op">/</span>assistant alternation check lines up correctly<span class="op">.</span> <span class="co">#}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    {<span class="op">%</span> set offset <span class="op">=</span> <span class="dv">1</span> <span class="op">%</span>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>{<span class="op">%</span> <span class="cf">else</span> <span class="op">%</span>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    {<span class="co"># No system message: user should be the first non-empty turn. #}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    {<span class="op">%</span> set offset <span class="op">=</span> <span class="dv">0</span> <span class="op">%</span>}</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>{<span class="op">%</span> <span class="cf">endif</span> <span class="op">%</span>}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>{<span class="co"># Emit the beginning-of-sequence token (model-specific). #}</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>{{ bos_token }}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>{<span class="co"># Serialize each message into the model's chat-markup tokens. #}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>{<span class="op">%</span> <span class="cf">for</span> message in messages <span class="op">%</span>}</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    {<span class="co"># Enforce role alternation: (system), user, assistant, user, assistant, ...</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>       The boolean expression compares <span class="st">"is this a user message?"</span> against whether the</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>       <span class="fu">current</span> index (plus offset) is expected to be user <span class="op">or</span> assistant<span class="op">.</span> <span class="co">#}</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    {<span class="op">%</span> <span class="cf">if</span> (message[<span class="st">'role'</span>] <span class="op">==</span> <span class="st">'user'</span>) <span class="op">!=</span> (loop<span class="op">.</span>index0 <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> offset) <span class="op">%</span>}</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        {{ raise_exception(<span class="st">'Conversation roles must alternate user/assistant/user/assistant/...'</span>) }}</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    {<span class="op">%</span> <span class="cf">endif</span> <span class="op">%</span>}</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    {<span class="co"># Wrap each message with special tokens:</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>       <span class="op">-</span> <span class="op">&lt;|</span>im_start<span class="op">|&gt;&lt;</span>role<span class="op">&gt;</span>\n</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>       <span class="op">-</span> message content (trimmed)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>       <span class="op">-</span> <span class="op">&lt;|</span>im_end<span class="op">|&gt;</span>\n</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>       This produces a single flat token <span class="cn">sequence</span> the <span class="cn">LM</span> can train on<span class="op">.</span> <span class="co">#}</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    {{ <span class="st">'&lt;|im_start|&gt;'</span> <span class="op">+</span> message[<span class="st">'role'</span>] <span class="op">+</span> <span class="st">'\n'</span> <span class="op">+</span> message[<span class="st">'content'</span>] <span class="op">|</span> <span class="fu">trim</span> <span class="op">+</span> <span class="st">'&lt;|im_end|&gt;\n'</span> }}</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>{<span class="op">%</span> <span class="cf">endfor</span> <span class="op">%</span>}</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>{<span class="co"># Optionally append an "assistant" start tag with no content.</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>   This cues generation to <span class="cf">continue</span> from the assistant role<span class="op">.</span> <span class="co">#}</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>{<span class="op">%</span> <span class="cf">if</span> add_generation_prompt <span class="op">%</span>}</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    {{ <span class="st">'&lt;|im_start|&gt;assistant\n'</span> }}</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>{<span class="op">%</span> <span class="cf">endif</span> <span class="op">%</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is the raw code for transforming a list of dictionaries in Python containing messages and roles into tokens that a language model can predict from.</p>
+<p>All information passed into models is assigned a role. The traditional three roles are <code>system</code>, <code>user</code>, and <code>assistant</code>.</p>
+<p>The <code>system</code> tag is only used for the first message of the conversation; it holds instructions for the agent in text that will not be received from or exposed to the user. These system prompts are used to provide additional context to the models, such as the date and time, or to patch behaviors. As a fun example, models can be told things such as “You are a friendly chatbot who always responds in the style of a pirate.”</p>
+<p>Next, the two other roles are straightforward:</p>
+<ul>
+<li><code>user</code> holds the messages from the person using the AI, and</li>
+<li><code>assistant</code> holds the responses from the model (that is, engaging as an AI assistant).</li>
+</ul>
+<p>In order to translate all this information into tokens, we use the code listing above that we started with. The model has a series of special tokens that separate the various messages from each other. If we run the above code with the example query “How many helicopters can a human eat in one sitting?”, the token sequence passed into the model would look as follows:</p>
+<pre><code>&lt;|im_start|&gt;system
+You are a friendly chatbot who always responds in the style of a pirate&lt;|im_end|&gt;
+&lt;|im_start|&gt;user
+How many helicopters can a human eat in one sitting?&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant</code></pre>
+<p>Notice how the final tokens in the sequence are <code>&lt;|im_start|&gt;assistant</code>. This is how the model knows to continue generating tokens until it finally generates its end-of-sequence token, which in this case is <code>&lt;|im_end|&gt;</code>.</p>
+<p>By packing all question-answer pair data (and downstream preference tuning data) into this format, modern language models follow it with perfect consistency. This is the language that instruction-tuned models use to exchange information with users and the models running on GPUs or other computing devices.</p>
+<p>The behavior can be extended naively to multiple turns, as shown below:</p>
+<pre><code>&lt;|im_start|&gt;system
+You are a friendly chatbot who always responds in the style of a pirate&lt;|im_end|&gt;
+&lt;|im_start|&gt;user
+How many helicopters can a human eat in one sitting?&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant
+Oh just 6.&lt;|im_end|&gt;
+&lt;|im_start|&gt;user
+Are you sure about that?&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant</code></pre>
+<p>In the open ecosystem, the standard method for applying the chat template to a list of messages uses a Jinja snippet stored in the tokenizer configuration, as <code>apply_chat_template</code>.</p>
+<p>The above chat template is a derivative of OpenAI’s Chat Markup Language (ChatML), which was an early attempt to standardize message formatting. Now, OpenAI and other model providers use a hierarchical system where the user can configure a system message, yet there are higher-level instructions that may or may not be revealed to the user [6].</p>
 </section>
 <section id="hallucinations-tool-use-and-memory" class="level2">
 <h2 class="anchored" data-anchor-id="hallucinations-tool-use-and-memory">2.2. Hallucinations, Tool Use, and Memory</h2>
@@ -733,6 +830,28 @@ ul.task-list li input[type="checkbox"] {
 <li><p>The model <strong>breaks down the problem into smaller steps</strong>. Since there are finite layers in the model, one token output cannot be processed indefinitely. Breaking down the problem into smaller steps allows the model to process the problem in a way that is more likely to yield the correct answer.</p></li>
 </ul>
 <p>For <strong>math and logic tasks</strong>, it’s best to ask the model to <strong>use external tools</strong> rather than relying on its own reasoning.</p>
+</section>
+<section id="best-practices-for-instruction-tuning" class="level2">
+<h2 class="anchored" data-anchor-id="best-practices-for-instruction-tuning">Best Practices for Instruction Tuning</h2>
+<p>Instruction tuning as the foundation of post-training and creating helpful language models is well-established. There are many ways to achieve successful instruction tuning. For example, efficient fine-tuning with quantization of some model parameters makes training very accessible [8]. Also, in narrow domains such as chat alignment, i.e., without harder skills such as math or code, small, focused datasets can achieve strong performance [9].</p>
+<p>Soon after the release of ChatGPT, human datasets with as few as 10K samples such as No Robots were state-of-the-art [10]. Years later, large-scale synthetic datasets work best [11] on most tasks.</p>
+<p>A few principles remain:</p>
+<ul>
+<li>High-quality data is key to performance. The completions are what the model actually learns from (in many cases the prompts are not predicted over so the model does not learn to predict prompts).</li>
+<li>Around 1M prompts can be used to create a model capable of excellent RLHF and post-training. Further scaling can still help, but returns diminish quickly.</li>
+<li>The best prompts are those in a similar distribution to downstream tasks of interest.</li>
+<li>If multiple stages of training are done after instruction tuning, the models can recover from some noise in the instruction-tuning data. Crafting the overall optimization is more important than fixating on each individual stage.</li>
+</ul>
+</section>
+<section id="implementation-details" class="level2">
+<h2 class="anchored" data-anchor-id="implementation-details">Implementation Details</h2>
+<p>While the loss function is the same as that used in pretraining, there are a few key implementation details that differ from the setting used for pretraining. Many practices, such as deciding on the types of parallelism used to shard models across many GPUs, are the same as pretraining, but the total number of machines used is often lower (for the first technical change listed below):</p>
+<ul>
+<li><p>Smaller batch sizes: Compared to pretraining, instruction tuning (and other post-training techniques such as preference fine-tuning) use substantially smaller batch sizes to optimize well on a narrower data distribution while preserving the model’s generalization from pretraining. For example, OLMo 2 uses a batch size of 1024 packed-rows for the 7B and 2048 for the 13B pretraining, where these models have a total context length of 4096 tokens, and each row in the batch is a combination of documents that fills the sequence length. For post-training, both these models only use a batch size of 256 prompts [12], without filling to the full sequence length (for far fewer non-masked tokens per batch). The smaller batch sizes mean that these training jobs cannot be sharded across as many devices as during pretraining – in practice, distributed training setups have minimum per-device batch sizes, so if you’re trying to retain a smaller global batch size for SFT you can use cumulatively fewer GPUs. In practice the batch size forcing a smaller concurrent GPU allotment per training job is not a limiting factor because the training token counts for SFT are much smaller than in pretraining, and training for multiple seeds is needed in post-training to obtain the best final performance.</p></li>
+<li><p>Prompt masking: When pretraining, every token in the batch is predicted autoregressively and the loss is then applied to them. For instruction tuning, the prompt tokens are masked out so the model isn’t learning to accurately predict user queries – just responses. The same applies to other post-training algorithms.</p></li>
+<li><p>Multi-turn masking: For multi-turn conversations, there are two common masking choices. (1) Final-turn only: only the tokens in the final assistant turn are included in the loss, while all earlier context (including earlier assistant turns) is masked. Long conversations can still be “unrolled” into multiple training samples: for a conversation of 𝑁 turns, each example predicts one assistant response while masking all prior context and excluding any future turns. (2) Mask user turns only: all user turns are masked, but every assistant turn is included in the loss. You can still unroll in this setting if you want more (shorter) training examples, but the key difference is that intermediate assistant replies are trained on directly. Same loss function as pretraining: Instruction tuning uses the same autoregressive loss function used in pretraining language models, but with substantially different data and masking (training only on full sequences, whereas pretraining documents can be split across batches), etc.</p></li>
+<li><p>Learning rate: SFT typically uses a learning rate one to two orders of magnitude smaller than pretraining to best manage the different optimization dynamics (smaller datasets, smaller batches, and a strong pretrained initialization all favor more conservative updates). For example, OLMo 2 uses a peak learning rate of 3 ×10−4 for pretraining but 1 ×10−5 for SFT [12]. Olmo 3 uses a higher SFT learning rate of 5-8 ×10−5 [13], in part because its training infrastructure uses sequence packing, which fits multiple examples into each training sequence and increases the effective batch size measured in useful tokens. Larger batches produce lower-variance gradient estimates, which in turn supports a higher learning rate without destabilizing training – a relationship known as the linear scaling rule. The learning rate is commonly warmed up over a small fraction of training steps before decaying linearly. In practice, teams often sweep over multiple learning rates and select the best checkpoint on a held-out evaluation suite [13].</p></li>
+</ul>
 
 
 </section>

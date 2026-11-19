@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Reinforcement Learning with Human Feedback (RLHF)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./logo.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-syllabus" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Syllabus</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-syllabus">    
+        <li>
+    <a class="dropdown-item" href="./syllabus/about.html">
+ <span class="dropdown-text">Course Description and Goals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/grading.html">
+ <span class="dropdown-text">Grading</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/academic_success.html">
+ <span class="dropdown-text">Center for Academic Success</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/textbook.html">
+ <span class="dropdown-text">Textbooks &amp; Other Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/integrity.html">
+ <span class="dropdown-text">Academic Integrity</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/mental_health.html">
+ <span class="dropdown-text">Mental Health Resources</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/accomodations.html">
+ <span class="dropdown-text">Accomodations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/title_9.html">
+ <span class="dropdown-text">Nondiscrimination Policy and Sexual Misconduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./syllabus/aipolicy.html">
+ <span class="dropdown-text">AI Policy</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="./CSC_372_Project_Part_1.html">
+ <span class="dropdown-text"><strong>Byte Pair Encoding (BPE)</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project2.html">
+ <span class="dropdown-text">PyTorch: A Modern Deep Learning Library</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project3.html">
+ <span class="dropdown-text">Word2Vec, Embeddings and Representation Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_Part_4.html">
+ <span class="dropdown-text">Gradient Descent</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project5.html">
+ <span class="dropdown-text">Compute Graph, Autograd and Backprop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project6.html">
+ <span class="dropdown-text">Module, Neuron, Layer and Multilayer Perceptron (MLP)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project7.html">
+ <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project8.html">
+ <span class="dropdown-text">Self-Attention from Scratch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project9.html">
+ <span class="dropdown-text">Masked Language Modeling</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project10.html">
+ <span class="dropdown-text">Causal Language Modeling</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://courses.furman.edu/course/view.php?id=23022"> 
+<span class="menu-text">Moodle Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syllabus/appointment.html"> 
+<span class="menu-text">Office Hours</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://calendly.com/ssultan-dpq/"> 
+<span class="menu-text">Set an Appointment</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Post-Training, Chatbots and Agents</a></li><li class="breadcrumb-item"><a href="./rlhf.html">Reinforcement Learning with Human Feedback (RLHF)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linearregression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./snn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple inputs / outputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./snn_activations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activations Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./dnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_clipping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dnn_deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shallow vs.&nbsp;Deep neural networks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./loss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loss Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1: univariate regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2: binary classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loss_multiclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3: multiclass classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./gradientdescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradient Descent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_sgd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic gradient descent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_momentum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Momentum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gradientdescent_adam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adam</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./backprop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backpropagation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_algo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Backprop for NN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter Initialization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backprop_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Algorithmic differentiation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Performance</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_biasvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources of error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_doubledescent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducing error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./performance_highdimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing hyperparameters</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Selection</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./reg_Regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regularization</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_smoother_func.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Make function smoother</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_multiplemodels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combine multiple models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_wider_minima.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Find wider minima</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg_increase_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Increase Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attention</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_self.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Self-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_scaled.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scaled Dot-Product Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_cross.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cross-Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_masked.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Masked Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./attention_multihead.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multi-Head Attention</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./BertVis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualization of BERT Attention Mechanisms</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transformers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_encoderdecoder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Encoder-decoder model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Illustrated Transformer</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Post-Training, Chatbots and Agents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_pretraining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Pretraining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Post-Training: Instruction / Supervised Fine-Tuning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llms_rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rlhf.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Reinforcement Learning with Human Feedback (RLHF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preference_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preference Optimization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./training_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training Overview</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rlhf-in-three-steps" id="toc-rlhf-in-three-steps" class="nav-link active" data-scroll-target="#rlhf-in-three-steps">RLHF in Three Steps</a></li>
+  <li><a href="#what-does-rlhf-do" id="toc-what-does-rlhf-do" class="nav-link" data-scroll-target="#what-does-rlhf-do">What Does RLHF Do?</a></li>
+  <li><a href="#walkthrough-of-an-rlhf-recipe" id="toc-walkthrough-of-an-rlhf-recipe" class="nav-link" data-scroll-target="#walkthrough-of-an-rlhf-recipe">Walkthrough of an RLHF Recipe</a></li>
+  <li><a href="#an-intuition-for-post-training" id="toc-an-intuition-for-post-training" class="nav-link" data-scroll-target="#an-intuition-for-post-training">An Intuition for Post-Training</a></li>
+  <li><a href="#how-we-got-here" id="toc-how-we-got-here" class="nav-link" data-scroll-target="#how-we-got-here">How We Got Here</a></li>
+  <li><a href="#scope-of-this-book" id="toc-scope-of-this-book" class="nav-link" data-scroll-target="#scope-of-this-book">Scope of This Book</a>
+  <ul class="collapse">
+  <li><a href="#chapter-summaries" id="toc-chapter-summaries" class="nav-link" data-scroll-target="#chapter-summaries">Chapter Summaries</a></li>
+  <li><a href="#target-audience" id="toc-target-audience" class="nav-link" data-scroll-target="#target-audience">Target Audience</a></li>
+  <li><a href="#how-to-use-this-book" id="toc-how-to-use-this-book" class="nav-link" data-scroll-target="#how-to-use-this-book">How to Use This Book</a></li>
+  <li><a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About the Author</a></li>
+  </ul></li>
+  <li><a href="#future-of-rlhf" id="toc-future-of-rlhf" class="nav-link" data-scroll-target="#future-of-rlhf">Future of RLHF</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Post-Training, Chatbots and Agents</a></li><li class="breadcrumb-item"><a href="./rlhf.html">Reinforcement Learning with Human Feedback (RLHF)</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Reinforcement Learning with Human Feedback (RLHF)</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Reinforcement learning from human feedback (RLHF) is a technique used to incorporate human information into AI systems.</p>
+<p>With systems that are designed to be used by humans directly, problems emerge all the time due to the often inexpressible nature of an individual’s preferences. RLHF emerged primarily as a method to solve such problems.</p>
+<section id="rlhf-in-three-steps" class="level2">
+<h2 class="anchored" data-anchor-id="rlhf-in-three-steps">RLHF in Three Steps</h2>
+<p>The basic pipeline for RLHF involves three steps:</p>
+<ol type="1">
+<li><p>A language model that can follow user questions must be trained.</p></li>
+<li><p>Human preference data must be collected for the training of a reward model of human preferences.</p></li>
+<li><p>The language model can be optimized with an RL optimizer of choice, by sampling generations and rating them with respect to the reward model (see Chapters 3 and 6).</p></li>
+</ol>
+<hr>
+<img src="https://rlhfbook.com/c/images/rlhf-basic.png" width="100%" style="filter:invert(1)">
+<center>
+<em>A rendition of the early, three stage RLHF process with SFT, a reward model, and then optimization.</em>
+</center>
+<hr>
+<p>In modern language model training, RLHF is one component of post-training.</p>
+<p>Post-training is a more complete set of techniques and best practices to make language models more useful for downstream tasks.</p>
+<p>Post-training can be summarized as a many-stage training process using three optimization methods:</p>
+<ol type="1">
+<li><p><mark>Instruction / Supervised Fine-tuning (IFT/SFT)</mark>, where we teach formatting and form the base of instruction-following abilities. This is largely about learning features in language.</p></li>
+<li><p><mark>Preference Fine-tuning (PreFT)</mark>, where we align to human preferences via RLHF and related methods (and get a smaller bump in capabilities at the same time). This is largely about style of language and subtle human preferences that are hard to quantify.</p></li>
+<li><p><mark>Reinforcement Learning with Verifiable Rewards (RLVR)</mark>, the newest type of post-training that boosts performance on verifiable domains with more RL training.</p></li>
+</ol>
+</section>
+<section id="what-does-rlhf-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-rlhf-do">What Does RLHF Do?</h2>
+<p>The biggest question around RLHF, yet one that is still hard to answer, is “What does RLHF training offer models?” In recent years, language models have shifted from academic experiments studied in the purview of benchmarks to general-purpose technology. RLHF is at the core of this transition.</p>
+<p>To start, let us consider how a language model at the end of autoregressive pretraining answers a query. A strong model, Llama 3.1 405B Base, will continue from “The president of the united states in 2006 was”:</p>
+<blockquote class="blockquote">
+<p><strong>Response</strong>: George W. Bush, the governor of Florida in 2006 was Jeb Bush, and John McCain was an Arizona senator in 2006 - who later lost to obama. September 1 – U.S. President Bush signs an executive order to provide more options for faith-based organizations when delivering social services that are paid for with federal funds. January 1 – The current deadline set by United States Congress in the Unlawful Internet Gambling Enforcement Act, aka UIGEA. search: Amendments to the 1961 International Convention for the Protection of New Varieties of Plants require plant breeders’ rights include farmer’s privilege. 2009 was a common year starting on Thursday of the Gregorian calendar, the 2009th year of the Common Era (ce) and Anno Domini (ad) designations, the 9th year of the 3rd millennium, the 9th year of the 21st century, and the 10th and last year of the 2000s decade.</p>
+</blockquote>
+<p>What is clear is that this model is completing the sentence and adding other common internet metadata.</p>
+<p>In contrast, a model trained with RLHF (and other post-training tools) would answer the question very differently. Asking Tülu 3 405B the same question “The president of the united states in 2006 was,” it says concisely:</p>
+<blockquote class="blockquote">
+<p><strong>Response</strong>: George W. Bush was the president of the United States in 2006. He served two terms in office, from January 20, 2001, to January 20, 2009.</p>
+</blockquote>
+<p>This change in style is downstream of the post-training methods described in this book.</p>
+<p>The most compelling view of how RLHF works is to consider how <em>style</em> applies to interactions you have with language models. The style, closely related to tone or format, of information presented is crucial to how it is learned. Style is often used to describe the manner of the model. To see the difference, consider two example responses to the following question:</p>
+<blockquote class="blockquote">
+<p><strong>User</strong>: Help, I have to give a presentation tomorrow and I’m panicking.</p>
+</blockquote>
+<p>A blunt, low-empathy style:</p>
+<blockquote class="blockquote">
+<p><strong>Response</strong>: You’ll be fine. Practice your slides a few times, get some sleep, and stop overthinking it. Just present what you know and move on.</p>
+</blockquote>
+<p>A warmer, more supportive style:</p>
+<blockquote class="blockquote">
+<p><strong>Response</strong>: That sounds really stressful, and it’s a normal reaction. If you can, do one quick practice run now, pick the one or two points you most want people to remember, and then give yourself permission to rest—being clear and calm tomorrow will matter more than cramming tonight.</p>
+</blockquote>
+<p>On the other hand, format is how the answer is structured. Modern models are known to use extensive Markdown formatting with lists, line breaks, and emojis. Consider two answers to the following question that are very different:</p>
+<blockquote class="blockquote">
+<p><strong>User</strong>: How can I improve my sleep quality?</p>
+</blockquote>
+<p>The simple answer, from an early language model:</p>
+<blockquote class="blockquote">
+<p><strong>Response</strong>: Try to go to bed at the same time each night, avoid caffeine late in the day, and keep your bedroom quiet and dark.</p>
+</blockquote>
+<p>Or a complex, richer answer:</p>
+<blockquote class="blockquote">
+<p><strong>Response</strong>: Better sleep, in practice</p>
+<p><strong>Goal</strong>: make your schedule predictable and your environment boring enough that your brain gives up.</p>
+<p><strong>Tonight (quick wins)</strong>:</p>
+<ol type="1">
+<li>Dim lights for the last hour before bed.</li>
+<li>No caffeine after lunch; keep alcohol minimal.</li>
+<li>If you’re stuck awake, get up and do something quiet until sleepy again.</li>
+</ol>
+<p><strong>Daily basics (most impact)</strong>:</p>
+<ul>
+<li>Same wake time (even weekends) –&gt; anchors your body clock.</li>
+<li>Morning light for 5-10 minutes –&gt; helps set circadian rhythm.</li>
+<li>Cool, dark room (fan/eye mask) –&gt; easier to stay asleep.</li>
+</ul>
+<p><strong>If you want a simple rule</strong>: <code>wake time fixed + caffeine cutoff + wind-down routine</code></p>
+<p>If sleep problems are persistent or severe, it can be worth talking with a clinician—many issues are very treatable.</p>
+</blockquote>
+<p>Instruction fine-tuning would provide the basic ability for models to respond reliably in the question-answering format, and RLHF is what takes these answers and crafts them into the reliable, warm, and engaging answers we now expect from language models.</p>
+<p>Modern research has established RLHF as a general method to integrate subtle stylistic and related behavioral features into the models. An early, popular example of the utility of RLHF was in the application to safety <span class="citation" data-cites="dai2023safe">[@dai2023safe]</span> <span class="citation" data-cites="bai2022training">[@bai2022training]</span>, where RLHF enabled models to be both helpful and harmless across varied datasets. Compared to other techniques for post-training, such as instruction fine-tuning, RLHF generalizes far better across domains <span class="citation" data-cites="kirk2023understanding">[@kirk2023understanding]</span> <span class="citation" data-cites="chu2025sft">[@chu2025sft]</span> – helping create effective general-purpose models.</p>
+<p>Intuitively, this can be seen in how the optimization techniques are applied. Instruction fine-tuning trains the model to predict the next token when the text preceding is close to examples it has seen. It is optimizing the model to more regularly output specific features in text. This is a per-token update.</p>
+<p>RLHF on the other hand tunes completions on the response level rather than looking at the next token specifically. Additionally, it is telling the model what a <em>better</em> response looks like, rather than a specific response it should learn. RLHF also shows a model which types of responses it should avoid, i.e.&nbsp;negative feedback. The training to achieve this is often called a <em>contrastive</em> loss function (one whose loss is computed from the comparison between two or more examples, rather than from each example independently) and is referenced throughout this book.</p>
+<p>While this flexibility is a major advantage of RLHF, it comes with implementation challenges. Largely, these center on <em>how to control the optimization.</em> As we will cover in this book, implementing RLHF often requires training a reward model, but best practices for doing so are not strongly established and depend on the area of application. With this, the optimization itself is prone to <em>over-optimization</em> because our reward signal is at best a proxy objective, requiring regularization. With these limitations, effective RLHF requires a strong starting point, so RLHF cannot be a solution to every problem alone and needs to be approached through a broader lens of post-training.</p>
+<p>Due to this complexity, implementing RLHF is far more costly than simple instruction fine-tuning and can come with unexpected challenges such as length bias <span class="citation" data-cites="singhal2023long">[@singhal2023long]</span> <span class="citation" data-cites="park2024disentangling">[@park2024disentangling]</span>. For model training efforts where absolute performance matters, RLHF is established as being crucial to achieving a strong fine-tuned model, but it is more expensive in compute, data costs, and time. Through the early history of RLHF after ChatGPT, there were many research papers that showed approximate solutions to RLHF via limited instruction fine-tuning, but as the literature matured it has been repeated time and again that RLHF and related methods are core stages of model performance that cannot be easily dispensed with.</p>
+</section>
+<section id="walkthrough-of-an-rlhf-recipe" class="level2">
+<h2 class="anchored" data-anchor-id="walkthrough-of-an-rlhf-recipe">Walkthrough of an RLHF Recipe</h2>
+<p>To set the stage for the book, it’s important to understand what “doing RLHF” can look like, as a minimal example, without any of the technical jargon that can be hard to grasp before solidifying fundamental intuitions. This section follows what is described as the canonical, three-stage RLHF recipe, as established with OpenAI’s InstructGPT model in 2022 <span class="citation" data-cites="ouyang2022training">[@ouyang2022training]</span>.</p>
+<p>The first step of the process is to transition the model from a base model that completes text to an instruction-following model that can operate in a question-answering format. This is done by using the same next-token prediction loss function on a set of carefully crafted datapoints where the model is shown <em>only</em> data in this question-answering format. After the model is shown these high-quality responses, the model can now be prompted with a specific sequence of tokens to know that it should answer any query with a more defined, assistant persona.</p>
+<p>With this foundation of <em>the shape of how the model should answer</em>, the next two steps work together to improve the overall quality of the answers. These two steps serve to set up a problem where we can use reinforcement learning to update the model and make it more helpful.</p>
+<p>The first of these two steps is to train a reward model that captures human preferences. In order to apply reinforcement learning to a problem, you need a reward function that indicates quality. The goal of a reward model is to create a scalar signal that can then later be optimized with RL. In practice, this involves fine-tuning a language model (it is usually the same instruction-tuned model from the previous step) on a dataset of preference relations between pieces of text. This dataset is collected across a variety of prompts, model completions, and labelers to try and capture a robust signal of what is a better answer from a language model. The reward model learns which features in the text are better than others, so when it is used at inference-time (and during RL as the reward signal) it scores any piece of input text on how good it is.</p>
+<p>With these two pieces, a question-answering model and a reward model, we have everything we need to put together the pieces and actually do reinforcement learning from human feedback (RLHF). The actual RLHF stage proceeds by taking prompts representative of tasks the model should be good at, generating a bunch of completions, having the reward model rank them, and then using RL to figure out how to change the model and make it better. The basic primitive is that reinforcement learning is given a signal of which actions are good, in the form of tokens that a language model generates, and derives update rules that attribute different actions to different parameters in the model. The final RLHF stage shifts parameters to make good tokens more likely, and does so iteratively to maintain the general capabilities of the initial model.</p>
+<p>Once RL is complete, and performance has saturated, this is often the final model served to the user.</p>
+<p>Throughout this book, we’ll cover many recipes for how to do RLHF, and more related optimization methods that make up the broader suite of post-training. These all emerge to solve more challenging problems facing language models, and to make the strengths of the original RLHF approaches more powerful.</p>
+</section>
+<section id="an-intuition-for-post-training" class="level2">
+<h2 class="anchored" data-anchor-id="an-intuition-for-post-training">An Intuition for Post-Training</h2>
+<p>We’ve established that RLHF specifically and post-training generally are crucial to the performance of the latest models and how they change the models’ outputs, but not why RLHF works. Here’s a simple analogy for how so many gains can be made on benchmarks on top of any base model.</p>
+<p>The way I’ve been describing the potential of post-training is called the elicitation interpretation of post-training, where all we are doing is extracting potential by amplifying valuable behaviors in the base model.</p>
+<p>To make this example click, we make the analogy between the base model – the language model that comes out of the large-scale, next-token prediction pretraining – and other foundational components in building complex systems. We use the example of the chassis of a car, which defines the space around which a car can be built. Consider Formula 1 (F1): most teams begin each year with a new chassis and engine. Then, they spend all year on aerodynamics and systems changes (of course, it is a minor oversimplification), and can dramatically improve the performance of the car. The best F1 teams improve far more during a season than chassis-to-chassis.</p>
+<p>The same is true for post-training, where one can extract a ton of performance out of a static base model as they learn more about its quirks and tendencies. The best post-training teams extract a ton of performance in a very short time frame. The set of techniques includes everything close to and after the end of pretraining: “mid-training” like annealing / high-quality end of pretraining web data, instruction tuning, RLVR, preference-tuning, etc. A good example is the change from the first version of the Allen Institute for AI’s fully-open, small Mixture-of-Experts (MoE) model OLMoE Instruct to the second. The first model was released in the fall of 2024 <span class="citation" data-cites="muennighoff2024olmoe">[@muennighoff2024olmoe]</span>, and with the second version only updating the post-training, the evaluation average on popular benchmarks went from 35 to 48 without changing the majority of pretraining <span class="citation" data-cites="ai2_olmoe_ios_2025">[@ai2_olmoe_ios_2025]</span>.</p>
+<p>The idea is that there is a lot of intelligence and ability within base models, but because they can only answer in next-token prediction and not question-answering format, it takes a lot of work building around them, through post-training, in order to make excellent final models.</p>
+<p>Then, when you look at models such as OpenAI’s GPT-4.5 released in February 2025, which was largely a failure of a consumer product due to being too large of a base model to serve to millions of users, you can see this as a far more dynamic and exciting base for OpenAI to build onto. With this intuition, base models determine the vast majority of the potential of a final model, and post-training’s job is to cultivate all of it.</p>
+<p>I’ve described this intuition as the Elicitation Theory of Post-training. This theory folds in with the reality that the majority of gains users are seeing are from post-training because it implies that there is more latent potential in a model pretrained on the internet than we can simply teach the model — such as by passing certain narrow samples in repeatedly during early types of post-training (i.e.&nbsp;only instruction tuning). The challenge of post-training is to reshape models from next-token prediction to conversation question-answering, while extracting all of this knowledge and intelligence from pretraining.</p>
+<p>A related idea to this theory is the Superficial Alignment Hypothesis, coined in the paper LIMA: Less is More for Alignment <span class="citation" data-cites="zhou2023lima">[@zhou2023lima]</span>. This paper is getting some important intuitions right but for the wrong reasons in the big picture. The authors state:</p>
+<blockquote class="blockquote">
+<p>A model’s knowledge and capabilities are learnt almost entirely during pretraining, while alignment teaches it which subdistribution of formats should be used when interacting with users. If this hypothesis is correct, and alignment is largely about learning style, then a corollary of the Superficial Alignment Hypothesis is that one could sufficiently tune a pretrained language model with a rather small set of examples.</p>
+</blockquote>
+<p>All of the successes of deep learning should have taught you that scaling data is important to performance. Here, the major difference is that the authors are discussing alignment and style, the focus of academic post-training at the time. With a few thousand samples for instruction fine-tuning, you can change a model substantially and improve a narrow set of evaluations, such as AlpacaEval, MT-Bench, Arena (formerly Chatbot Arena, a platform where users compare anonymous model responses head-to-head), and the like. These do not always translate to more challenging capabilities, which is why Meta wouldn’t train its Llama Chat models on just this dataset. Academic results have lessons, but need to be interpreted carefully if you are trying to understand the big picture of the technological arc.</p>
+<p>What this paper is showing is that you can change models substantially with a few samples. We knew this, and it is important to the short-term adaptation of new models, but their argument for performance leaves the casual readers with the wrong lessons.</p>
+<p>If we change the data, the impact could be far higher on the model’s performance and behavior, but it is far from “superficial.” Base language models today (with no post-training) can be trained on some mathematics problems with reinforcement learning, learn to output full chain-of-thought reasoning, and then score higher on a full suite of reasoning evaluations like BigBenchHard, Zebra Logic, AIME, etc.</p>
+<p>The superficial alignment hypothesis is wrong for the same reason that people who think RLHF and post-training are just for vibes are still wrong. This was a field-wide lesson we had to overcome in 2023 (although many AI observers are still rooted in this belief). Post-training has far outgrown that, and we are coming to see that the style of models operates on top of behavior — such as the now popular long chain of thought.</p>
+<p>As the AI community shifts post-training further into the era of agentic and reasoning models, the superficial alignment hypothesis breaks down further. RL methods are becoming an increasingly large share of the compute needed to train frontier language models. In the short time since reinforcement learning with verifiable rewards (RLVR) was coined in our work on Tülu 3 in the fall of 2024 <span class="citation" data-cites="lambert2024t">[@lambert2024t]</span>, the scale of compute used for post-training has grown dramatically. DeepSeek R1, famous for popularizing RLVR, used only about 5% of their overall compute in post-training – 147K H800 GPU hours for RL training on R1 <span class="citation" data-cites="guo2025deepseek">[@guo2025deepseek]</span>, relative to 2.8M GPU hours for pretraining the underlying DeepSeek V3 base model <span class="citation" data-cites="deepseekai2025deepseekv3technicalreport">[@deepseekai2025deepseekv3technicalreport]</span>.</p>
+<p>The science studying the core methods of scaling RL as of 2026 shows that individual ablation runs can take 10-100K GPU hours <span class="citation" data-cites="khatri2025art">[@khatri2025art]</span>, the equivalent of the compute used for the RL stage of Olmo 3.1 Think 32B (released in December of 2025), which trained for 4 weeks on 200 GPUs <span class="citation" data-cites="teamolmo2025olmo3">[@teamolmo2025olmo3]</span>. The science of scaled post-training is in its very early stages as of 2026, adopting ideas and methods from pretraining language models and applying them in this new domain, so the exact GPU hours used will change, but the trend of increased compute on post-training will continue. Altogether, the elicitation theory of post-training is likely to become the correct view only when applying a lighter post-training recipe – something useful for specializing a model – relative to the compute-intensive frontier models.</p>
+</section>
+<section id="how-we-got-here" class="level2">
+<h2 class="anchored" data-anchor-id="how-we-got-here">How We Got Here</h2>
+<p>Why does this book make sense now? How much will change in the future?</p>
+<p>Post-training, the craft of eliciting powerful behaviors from a raw pretrained language model, has gone through many seasons and moods since the release of ChatGPT that sparked the renewed interest in RLHF. In the era of Alpaca <span class="citation" data-cites="alpaca">[@alpaca]</span>, Vicuna <span class="citation" data-cites="vicuna2023">[@vicuna2023]</span>, Koala <span class="citation" data-cites="koala_blogpost_2023">[@koala_blogpost_2023]</span>, and Dolly <span class="citation" data-cites="DatabricksBlog2023DollyV1">[@DatabricksBlog2023DollyV1]</span>, a limited number of human datapoints with extended synthetic data in the style of Self-Instruct were used to fine-tune the original LLaMA to get similar behavior to ChatGPT. The benchmark for these early models was fully vibes (and human evaluation) as we were all so captivated by the fact that these small models can have such impressive behaviors across domains. It was justified excitement.</p>
+<p>Open post-training was moving faster, releasing more models, and making more noise than its closed counterparts. Companies were scrambling, e.g.&nbsp;DeepMind merging with Google Brain or new labs being started, and taking time to follow it up. There are phases of open recipes surging and then lagging behind.</p>
+<p>The era following Alpaca et al., the first lag in open recipes, was one defined by skepticism and doubt about reinforcement learning from human feedback (RLHF), the technique OpenAI highlighted as crucial to the success of the first ChatGPT. Many companies doubted that they needed to do RLHF. A common phrase – “instruction tuning is enough for alignment” – was so popular then that it still carries weight today despite obvious evidence against it.</p>
+<p>This doubt about RLHF lasted, especially in the open where groups cannot afford data budgets on the order of $100K to $1M. The companies that embraced it early ended up winning out. Anthropic published extensive research on RLHF through 2022 and now has arguably the best post-training <span class="citation" data-cites="askell2021general">[@askell2021general]</span> <span class="citation" data-cites="bai2022training">[@bai2022training]</span> <span class="citation" data-cites="bai2022constitutional">[@bai2022constitutional]</span>. The delta between open groups, struggling to reproduce or even know of basic closed techniques, and leading closed models is a common theme.</p>
+<p>The first shift in open alignment methods and post-training was the story of Direct Preference Optimization (DPO) <span class="citation" data-cites="rafailov2024direct">[@rafailov2024direct]</span>, which showed that you can solve the same optimization problem as RLHF with fewer moving parts by taking gradient steps directly on pairwise preference data. The DPO paper, posted in May of 2023, didn’t have any clearly impactful models trained with it through the fall of 2023. This changed with the releases of a few breakthrough DPO models – all contingent on finding a better, lower learning rate. Zephyr-Beta <span class="citation" data-cites="tunstall2023zephyr">[@tunstall2023zephyr]</span>, Tülu 2 <span class="citation" data-cites="ivison2023camels">[@ivison2023camels]</span>, and many other models showed that the DPO era of post-training had begun. Chris Manning literally thanked me for “saving DPO.”</p>
+<p>Preference-tuning was something you needed to do to meet the table stakes of releasing a good model since late 2023. The DPO era continued through 2024, in the form of never-ending variants on the algorithm, but we were very far into another slump in open recipes. Open post-training recipes had saturated the extent of knowledge and resources available.<br>
+A year after Zephyr and Tülu 2, the same breakout dataset, UltraFeedback is arguably still state-of-the-art for preference tuning in open recipes <span class="citation" data-cites="cui2023ultrafeedback">[@cui2023ultrafeedback]</span>.</p>
+<p>At the same time, the Llama 3.1 <span class="citation" data-cites="dubey2024llama">[@dubey2024llama]</span> and Nemotron 4 340B <span class="citation" data-cites="adler2024nemotron">[@adler2024nemotron]</span> reports gave us substantive hints that large-scale post-training is much more complex and impactful. The closed labs are doing full post-training – a large multi-stage process of instruction tuning, RLHF, prompt design, etc. – where academic papers are just scratching the surface. Tülu 3 represented a comprehensive, open effort to build the foundation of future academic post-training research <span class="citation" data-cites="lambert2024t">[@lambert2024t]</span>.</p>
+<p>Post-training is a complex process involving the aforementioned training objectives applied in various orders to target specific capabilities. This book is designed to provide a platform for understanding all of these techniques, and as the field matures the best practices for how to interleave them will emerge.</p>
+<p>The primary areas of innovation in post-training are now in reinforcement learning with verifiable rewards (RLVR), reasoning training generally, and related ideas. These newer methods build extensively on the infrastructure and ideas of RLHF, but are evolving far faster. This book is written to capture the first stable literature for RLHF after its initial period of rapid change.</p>
+</section>
+<section id="scope-of-this-book" class="level2">
+<h2 class="anchored" data-anchor-id="scope-of-this-book">Scope of This Book</h2>
+<p>This book hopes to touch on each of the core steps of doing canonical RLHF implementations. It will not cover all the history of the components nor recent research methods, just techniques, problems, and trade-offs that have been proven to occur again and again.</p>
+<section id="chapter-summaries" class="level3">
+<h3 class="anchored" data-anchor-id="chapter-summaries">Chapter Summaries</h3>
+<p>This book has the following chapters:</p>
+<section id="introductions" class="level4">
+<h4 class="anchored" data-anchor-id="introductions">Introductions</h4>
+<p>Reference material and context useful throughout the book.</p>
+<ol type="1">
+<li>Introduction: Overview of RLHF and what this book provides.</li>
+<li>A Tiny History of RLHF: Key models and papers in the history of RLHF techniques.</li>
+<li>Training Overview: How the training objective for RLHF is designed and basics of understanding it.</li>
+</ol>
+</section>
+<section id="core-training-pipeline" class="level4">
+<h4 class="anchored" data-anchor-id="core-training-pipeline">Core Training Pipeline</h4>
+<p>The suite of techniques used to optimize language models to align them to human preferences.</p>
+<ol start="4" type="1">
+<li>Instruction Fine-Tuning: Adapting language models to the question-answer format.</li>
+<li>Reward Modeling: Training reward models from preference data that act as an optimization target for RL training (or for use in data filtering).</li>
+<li>Reinforcement Learning: The core RL techniques used to optimize reward models (and other signals) throughout RLHF.</li>
+<li>Reasoning and Inference-Time Scaling: The role of new RL training methods for inference-time scaling with respect to post-training and RLHF.</li>
+<li>Direct-Alignment Algorithms: Algorithms that optimize the RLHF objective directly from pairwise preference data rather than learning a reward model first.</li>
+<li>Rejection Sampling: A basic technique for using a reward model with instruction tuning to align models.</li>
+</ol>
+</section>
+<section id="data-preferences" class="level4">
+<h4 class="anchored" data-anchor-id="data-preferences">Data &amp; Preferences</h4>
+<p>Context for the data that fuels RLHF and the big picture problem it is trying to solve.</p>
+<ol start="10" type="1">
+<li>The Nature of Preferences: Why human preference data is needed to fuel and understand RLHF.</li>
+<li>Preference Data: How preference data is collected for RLHF.</li>
+<li>Synthetic Data: The shift away from human to synthetic data, how AI feedback works, and how distilling from other models is used.</li>
+<li>Tool Use and Function Calling: The basics of training models to call functions or tools in their outputs.</li>
+</ol>
+</section>
+<section id="practical-considerations" class="level4">
+<h4 class="anchored" data-anchor-id="practical-considerations">Practical Considerations</h4>
+<p>Fundamental problems and discussions for implementing and evaluating RLHF.</p>
+<ol start="14" type="1">
+<li>Over-Optimization: Qualitative observations of why RLHF goes wrong and why over-optimization is inevitable with a soft optimization target in reward models.</li>
+<li>Regularization: Tools to constrain these optimization tools to effective regions of the parameter space.</li>
+<li>Evaluation: The ever evolving role of evaluation (and prompting) in language models.</li>
+<li>Crafting Model Character and Products: How RLHF is shifting in its applicability as major AI laboratories use it to subtly match their models to their products.</li>
+</ol>
+</section>
+<section id="appendices" class="level4">
+<h4 class="anchored" data-anchor-id="appendices">Appendices</h4>
+<p>Reference material for definitions and extended discussions.</p>
+<ul>
+<li>Appendix A - Definitions: Mathematical definitions for RL, language modeling, and other ML techniques leveraged in this book.</li>
+<li>Appendix B - Beyond “Just Style”: How RLHF is often underestimated in its role in improving the user experience of models due to the crucial role that style plays in information sharing.</li>
+</ul>
+</section>
+</section>
+<section id="target-audience" class="level3">
+<h3 class="anchored" data-anchor-id="target-audience">Target Audience</h3>
+<p>This book is intended for audiences with entry level experience with language modeling, reinforcement learning, and general machine learning. It will not have exhaustive documentation for all the techniques, but just those crucial to understanding RLHF.</p>
+</section>
+<section id="how-to-use-this-book" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-use-this-book">How to Use This Book</h3>
+<p>This book was largely created because there were no canonical references for important topics in the RLHF workflow. Given the pace of progress on LLMs overall, combined with the complex nature of collecting and using human data, RLHF is an unusually academic field where published results are often noisy and hard to reproduce across multiple settings. To develop strong intuitions, readers are encouraged to read multiple papers on each topic rather than taking any single result as definitive. To facilitate this, the book includes numerous, academic-style citations to the canonical reference for a claim.</p>
+<p>The contributions of this book are supposed to give you the minimum knowledge needed to try a toy implementation or dive into the literature. This is <em>not</em> a comprehensive textbook, but rather a quick book for reminders and getting started.</p>
+<p>The print edition of this book was published by Manning in July 2026, while the web version continues to collect minor improvements and errata fixes. If you spot a typo or an important omission, please contribute a fix or suggestion on <a href="https://github.com/natolambert/rlhf-book">GitHub</a>.</p>
+</section>
+<section id="about-the-author" class="level3">
+<h3 class="anchored" data-anchor-id="about-the-author">About the Author</h3>
+<p>Dr.&nbsp;Nathan Lambert is a researcher and writer focusing on building the open science of language models. He came here through a Ph.D.&nbsp;in robotics and building an RLHF team shortly after the release of ChatGPT. He has released many models trained with RLHF, their subsequent datasets, and training codebases in his time at the Allen Institute for AI (Ai2) and Hugging Face. Examples include <a href="https://huggingface.co/HuggingFaceH4/zephyr-7b-beta">Zephyr-Beta</a>, <a href="https://huggingface.co/allenai/tulu-2-dpo-70b">Tülu 2</a>, <a href="https://huggingface.co/allenai/OLMo-7B-Instruct">OLMo</a>, <a href="https://github.com/huggingface/trl">TRL</a>, <a href="https://github.com/allenai/open-instruct">Open Instruct</a>, and many more. He has written extensively on RLHF, including <a href="https://www.interconnects.ai/t/rlhf">many blog posts</a> and <a href="https://scholar.google.com/citations?hl=en&amp;user=O4jW7BsAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">academic papers</a>.</p>
+</section>
+</section>
+<section id="future-of-rlhf" class="level2">
+<h2 class="anchored" data-anchor-id="future-of-rlhf">Future of RLHF</h2>
+<p>With the investment in language modeling, many variations on the traditional RLHF methods emerged. RLHF colloquially has become synonymous with multiple overlapping approaches. RLHF is a subset of preference fine-tuning (PreFT) techniques, including Direct Alignment Algorithms (See Chapter 8), which are the class of methods downstream of DPO that solve the preference learning problem by taking gradient steps directly on preference data, rather than learning an intermediate reward model. RLHF is the tool most associated with rapid progress in “post-training” of language models, which encompasses all training after the large-scale autoregressive training on primarily web data. This textbook is a broad overview of RLHF and its directly neighboring methods, such as instruction tuning and other implementation details needed to set up a model for RLHF training.</p>
+<p>As more successes of fine-tuning language models with RL emerge, such as OpenAI’s o1 reasoning models, RLHF will be seen as the bridge that enabled further investment of RL methods for fine-tuning large base models. At the same time, while the spotlight of focus may be more intense on the RL portion of RLHF in the near future – as a way to maximize performance on valuable tasks – the core of RLHF is that it is a lens for studying the grand problems facing modern forms of AI. How do we map the complexities of human values and objectives into systems we use on a regular basis? This book hopes to be the foundation of decades of research and lessons on these problems.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

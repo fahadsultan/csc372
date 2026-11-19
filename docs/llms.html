@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Large Language Models</title>
+<title>llms</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -200,8 +200,16 @@ window.Quarto = {
  <span class="dropdown-text">Overfitting, Regularization and Generalization</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./Project_8.html">
+    <a class="dropdown-item" href="./Project8.html">
+ <span class="dropdown-text">Self-Attention from Scratch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project9.html">
  <span class="dropdown-text">Masked Language Modeling</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Project10.html">
+ <span class="dropdown-text">Causal Language Modeling</span></a>
   </li>  
     </ul>
   </li>
@@ -228,7 +236,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Large Language Models</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llms.html">Post-Training, Chatbots and Agents</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -551,12 +559,6 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transformers_others.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Transformers for images</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./transformers_decoding.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Illustrated Transformer</span></a>
   </div>
@@ -566,7 +568,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./llms.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Large Language Models</span></a>
+ <span class="menu-text">Post-Training, Chatbots and Agents</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -581,7 +583,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./llms_finetuning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Post-Training: Supervised Fine-Tuning</span></a>
+ <span class="menu-text">2. Post-Training: Instruction / Supervised Fine-Tuning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -590,45 +592,22 @@ window.Quarto = {
  <span class="menu-text">3. Post-Training: Reinforcement Learning</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./unsupervised.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unsupervised learning</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./diffusion_encoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Encoder (forward process)</span></a>
+  <a href="./rlhf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reinforcement Learning with Human Feedback (RLHF)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./diffusion_decoder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Decoder model (reverse process)</span></a>
+  <a href="./preference_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preference Optimization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./diffusion_reparameterization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reparameterization of loss function</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diffusion_family.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Families of diffusion models</span></a>
+  <a href="./training_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training Overview</span></a>
   </div>
 </li>
       </ul>
@@ -643,106 +622,595 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#preview-of-things-to-come" id="toc-preview-of-things-to-come" class="nav-link active" data-scroll-target="#preview-of-things-to-come">Preview of Things to Come</a></li>
+  <li><a href="#post-training-chatbots-and-agents" id="toc-post-training-chatbots-and-agents" class="nav-link active" data-scroll-target="#post-training-chatbots-and-agents">Post-Training, Chatbots and Agents</a>
+  <ul class="collapse">
+  <li><a href="#pre-attention-history" id="toc-pre-attention-history" class="nav-link" data-scroll-target="#pre-attention-history">0. Pre-Attention History</a></li>
+  <li><a href="#transformer-2017" id="toc-transformer-2017" class="nav-link" data-scroll-target="#transformer-2017">1. Transformer (2017)</a></li>
+  <li><a href="#gpt-1-2018" id="toc-gpt-1-2018" class="nav-link" data-scroll-target="#gpt-1-2018">2. GPT-1 (2018)</a></li>
+  <li><a href="#gpt-2-2019" id="toc-gpt-2-2019" class="nav-link" data-scroll-target="#gpt-2-2019">3. GPT-2 (2019)</a></li>
+  <li><a href="#scaling-laws-2020" id="toc-scaling-laws-2020" class="nav-link" data-scroll-target="#scaling-laws-2020">4. Scaling Laws (2020)</a>
+  <ul class="collapse">
+  <li><a href="#flops" id="toc-flops" class="nav-link" data-scroll-target="#flops">FLOPs</a></li>
+  </ul></li>
+  <li><a href="#gpt-3-2020" id="toc-gpt-3-2020" class="nav-link" data-scroll-target="#gpt-3-2020">5. GPT-3 (2020)</a></li>
+  <li><a href="#chinchilla-2022" id="toc-chinchilla-2022" class="nav-link" data-scroll-target="#chinchilla-2022">6. Chinchilla (2022)</a></li>
+  <li><a href="#instructgpt-2022" id="toc-instructgpt-2022" class="nav-link" data-scroll-target="#instructgpt-2022">7. InstructGPT (2022)</a></li>
+  <li><a href="#chatgpt-2022" id="toc-chatgpt-2022" class="nav-link" data-scroll-target="#chatgpt-2022">8. ChatGPT (2022)</a></li>
+  <li><a href="#gpt-4-2023" id="toc-gpt-4-2023" class="nav-link" data-scroll-target="#gpt-4-2023">9. GPT-4 (2023)</a></li>
+  <li><a href="#o1-and-reasoning-models-2024" id="toc-o1-and-reasoning-models-2024" class="nav-link" data-scroll-target="#o1-and-reasoning-models-2024">10. o1 and Reasoning Models (2024)</a></li>
+  <li><a href="#o3-and-arc-agi-2025" id="toc-o3-and-arc-agi-2025" class="nav-link" data-scroll-target="#o3-and-arc-agi-2025">11. o3 and ARC-AGI (2025)</a></li>
   <li><a href="#keeping-track-of-llms" id="toc-keeping-track-of-llms" class="nav-link" data-scroll-target="#keeping-track-of-llms">Keeping Track of LLMs</a></li>
   <li><a href="#where-to-find-llms" id="toc-where-to-find-llms" class="nav-link" data-scroll-target="#where-to-find-llms">Where to Find LLMs</a></li>
-  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization">Tokenization</a></li>
-  <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings">Embeddings</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Large Language Models</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
+<!-- # Large Language Models -->
+<section id="post-training-chatbots-and-agents" class="level1">
+<h1>Post-Training, Chatbots and Agents</h1>
+<!-- ::: {.callout-tip}
+# Acknowledgement
+The following tutorial is a summary of Andrej Karpathy's video [A Deep Dive into Large Language Models like ChatGPT](https://www.youtube.com/watch?v=Te5rOTcE3FQ). I highly recommend watching the video, as it contains a lot of useful information and visualizations that are hard to capture in text.
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>The following tutorial is a summary of Andrej Karpathy’s video <a href="https://www.youtube.com/watch?v=Te5rOTcE3FQ">A Deep Dive into Large Language Models like ChatGPT</a>. I highly recommend watching the video, as it contains a lot of useful information and visualizations that are hard to capture in text.</p>
-<p>Why should you read this?</p>
+Note: If you are looking for the excalidraw diagram that Andrej made for the video, you can download it [here](https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/LLMIntro-2024-07-22-1743.excalidraw). He shared it through Google Drive and it invalidates the link after a certain time. That's why I have decided to host it on my CDN as well.
+:::  -->
+<p>Everything we have covered in the course so far is generally referred to as Pre-Training. In fact, the P in GPT stands for Pre-training.</p>
+<p>Despite the fact that the pre-training phase is quite intensive, it does not necessarily produce a model that is useful for real-world applications. The model needs to be adapted to specific tasks or objectives, which is where Post-Training comes in.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Pillar</th>
+<th style="text-align: center;">Foundational publication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Architecture</td>
+<td style="text-align: center;">Attention Is All You Need</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Pre-training</td>
+<td style="text-align: center;">GPT-1, GPT-2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Scaling</td>
+<td style="text-align: center;">Scaling Laws, GPT-3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Post-training</td>
+<td style="text-align: center;">InstructGPT, ChatGPT</td>
+</tr>
+</tbody>
+</table>
+<p>There are a lot of terms thrown around in the context of large language models (LLMs) like ChatGPT. In this tutorial, we will try to clarify some of these terms and concepts.</p>
+<p>Both GPT-1 and GPT-2 were accompanied by research papers published by OpenAI.</p>
+<p>There is a particularly interesting historical arc here:</p>
 <ul>
-<li><p>You want to understand how LLMs actually work not just at the surface level.</p></li>
-<li><p>You want to understand confusing fine-tuning terms like chat_template and ChatML (especially if you’re using Axolotl).</p></li>
-<li><p>You want to get better at prompt engineering by understanding why some prompts work better than others.</p></li>
-<li><p>You’re trying to reduce hallucinations and want to know how to keep LLMs from making things up.</p></li>
-<li><p>You want to understand why DeepSeek-R1 is such a big deal right now.</p></li>
+<li>GPT-1: Pre-train a model and fine-tune it for each task.</li>
+<li>GPT-2: Pre-train a sufficiently large model and attempt tasks without fine-tuning.</li>
+<li>GPT-3: Teach the model new tasks through examples in the prompt.</li>
+<li>InstructGPT: Fine-tune the model to follow instructions generally, rather than for one specific task.</li>
+<li>ChatGPT: Adapt the model into a general-purpose conversational assistant.</li>
 </ul>
-<p>Note: If you are looking for the excalidraw diagram that Andrej made for the video, you can download it <a href="https://cdn.anfalmushtaq.com/static/imgs/blog/2025-02-08-deep-dive-into-llms-like-chatgpt-tldr/LLMIntro-2024-07-22-1743.excalidraw">here</a>. He shared it through Google Drive and it invalidates the link after a certain time. That’s why I have decided to host it on my CDN as well.</p>
-<section id="preview-of-things-to-come" class="level2">
-<h2 class="anchored" data-anchor-id="preview-of-things-to-come">Preview of Things to Come</h2>
-<p>Future LLMs will expand in several key areas:</p>
+<p>In some ways, InstructGPT represents a return to the pre-training and fine-tuning paradigm of GPT-1, but with a fundamentally different objective for fine-tuning.</p>
+<section id="pre-attention-history" class="level2">
+<h2 class="anchored" data-anchor-id="pre-attention-history">0. Pre-Attention History</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Year</th>
+<th>Concept</th>
+<th>Publication / Resource</th>
+<th>Main Contributors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1805</td>
+<td>Least Squares</td>
+<td><a href="https://archive.org/search?query=Legendre+Nouvelles+methodes+1805">Nouvelles méthodes pour la détermination des orbites des comètes</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Adrien-Marie_Legendre">Adrien-Marie Legendre</a></td>
+</tr>
+<tr class="even">
+<td>1809</td>
+<td>Least Squares</td>
+<td><a href="https://archive.org/search?query=Gauss+Theoria+Motus+1809">Theoria Motus Corporum Coelestium</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss">Carl Friedrich Gauss</a></td>
+</tr>
+<tr class="odd">
+<td>1847</td>
+<td>Gradient Descent</td>
+<td><a href="https://scholar.google.com/scholar?q=Cauchy+1847+Methode+generale+resolution">Méthode générale pour la résolution des systèmes d’équations simultanées</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy">Augustin-Louis Cauchy</a></td>
+</tr>
+<tr class="even">
+<td>1886</td>
+<td>Linear Regression</td>
+<td><a href="https://doi.org/10.2307/2841583">Regression Towards Mediocrity in Hereditary Stature</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Francis_Galton">Francis Galton</a></td>
+</tr>
+<tr class="odd">
+<td>1943</td>
+<td>Artificial Neuron</td>
+<td><a href="https://doi.org/10.1007/BF02478259">A Logical Calculus of the Ideas Immanent in Nervous Activity</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Warren_McCulloch">Warren McCulloch</a>, <a href="https://en.wikipedia.org/wiki/Walter_Pitts">Walter Pitts</a></td>
+</tr>
+<tr class="even">
+<td>1948</td>
+<td>Entropy and Information Theory</td>
+<td><a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">A Mathematical Theory of Communication</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Claude_Shannon">Claude Shannon</a></td>
+</tr>
+<tr class="odd">
+<td>1951</td>
+<td>KL Divergence and Cross-Entropy Foundations</td>
+<td><a href="https://doi.org/10.1214/aoms/1177729694">On Information and Sufficiency</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Solomon_Kullback">Solomon Kullback</a>, <a href="https://en.wikipedia.org/wiki/Richard_Leibler">Richard Leibler</a></td>
+</tr>
+<tr class="even">
+<td>1951</td>
+<td>Stochastic Gradient Descent Foundations</td>
+<td><a href="https://doi.org/10.1214/aoms/1177729586">A Stochastic Approximation Method</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Herbert_Robbins">Herbert Robbins</a>, <a href="https://en.wikipedia.org/w/index.php?search=Sutton+Monro">Sutton Monro</a></td>
+</tr>
+<tr class="odd">
+<td>1958</td>
+<td>Perceptron</td>
+<td><a href="https://doi.org/10.1037/h0042519">The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Frank_Rosenblatt">Frank Rosenblatt</a></td>
+</tr>
+<tr class="even">
+<td>1962</td>
+<td>Multi-Layer Perceptron Foundations</td>
+<td><a href="https://archive.org/search?query=Rosenblatt+Principles+of+Neurodynamics">Principles of Neurodynamics</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Frank_Rosenblatt">Frank Rosenblatt</a></td>
+</tr>
+<tr class="odd">
+<td>1970</td>
+<td>Reverse-Mode Automatic Differentiation</td>
+<td><a href="https://doi.org/10.1007/BF01931367">The Representation of the Cumulative Rounding Error of an Algorithm as a Taylor Expansion</a> (1976 English publication)</td>
+<td><a href="https://en.wikipedia.org/wiki/Seppo_Linnainmaa">Seppo Linnainmaa</a></td>
+</tr>
+<tr class="even">
+<td>1974</td>
+<td>Backpropagation Foundations</td>
+<td><a href="https://scholar.google.com/scholar?q=Paul+Werbos+Beyond+Regression+1974">Beyond Regression: New Tools for Prediction and Analysis in the Behavioral Sciences</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Paul_Werbos">Paul Werbos</a></td>
+</tr>
+<tr class="odd">
+<td>1986</td>
+<td>Backpropagation</td>
+<td><a href="https://doi.org/10.1038/323533a0">Learning Representations by Back-Propagating Errors</a></td>
+<td><a href="https://en.wikipedia.org/wiki/David_Rumelhart">David Rumelhart</a>, <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton">Geoffrey Hinton</a>, <a href="https://en.wikipedia.org/wiki/Ronald_J._Williams">Ronald Williams</a></td>
+</tr>
+<tr class="even">
+<td>1989</td>
+<td>Universal Approximation Theorem</td>
+<td><a href="https://doi.org/10.1007/BF02551274">Approximation by Superpositions of a Sigmoidal Function</a></td>
+<td><a href="https://en.wikipedia.org/wiki/George_Cybenko">George Cybenko</a></td>
+</tr>
+<tr class="odd">
+<td>1998</td>
+<td>Transfer Learning</td>
+<td><a href="https://doi.org/10.1007/978-1-4615-5529-2">Learning to Learn</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Sebastian_Thrun">Sebastian Thrun</a>, <a href="https://en.wikipedia.org/wiki/Lorien_Pratt">Lorien Pratt</a></td>
+</tr>
+<tr class="even">
+<td>1998</td>
+<td>Convolutional Neural Networks (LeNet)</td>
+<td><a href="https://doi.org/10.1109/5.726791">Gradient-Based Learning Applied to Document Recognition</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Yann_LeCun">Yann LeCun</a>, <a href="https://en.wikipedia.org/wiki/L%C3%A9on_Bottou">Léon Bottou</a>, <a href="https://en.wikipedia.org/wiki/Yoshua_Bengio">Yoshua Bengio</a>, <a href="https://en.wikipedia.org/w/index.php?search=Patrick+Haffner">Patrick Haffner</a></td>
+</tr>
+<tr class="odd">
+<td>2007</td>
+<td>Scikit-learn (Initial Development)</td>
+<td><a href="https://scikit-learn.org/stable/about.html">Scikit-learn: Project History</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=David+Cournapeau">David Cournapeau</a></td>
+</tr>
+<tr class="even">
+<td>2010</td>
+<td>Transfer Learning Survey</td>
+<td><a href="https://doi.org/10.1109/TKDE.2009.191">A Survey on Transfer Learning</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Sinno+Jialin+Pan">Sinno Jialin Pan</a>, <a href="https://en.wikipedia.org/wiki/Qiang_Yang_(computer_scientist)">Qiang Yang</a></td>
+</tr>
+<tr class="odd">
+<td>2010</td>
+<td>ReLU</td>
+<td><a href="https://www.cs.toronto.edu/~hinton/absps/reluICML.pdf">Rectified Linear Units Improve Restricted Boltzmann Machines</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Vinod+Nair+computer+scientist">Vinod Nair</a>, <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton">Geoffrey Hinton</a></td>
+</tr>
+<tr class="even">
+<td>2011</td>
+<td>ReLU in Deep Feedforward Networks</td>
+<td><a href="https://proceedings.mlr.press/v15/glorot11a.html">Deep Sparse Rectifier Neural Networks</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Xavier+Glorot">Xavier Glorot</a>, <a href="https://en.wikipedia.org/w/index.php?search=Antoine+Bordes">Antoine Bordes</a>, <a href="https://en.wikipedia.org/wiki/Yoshua_Bengio">Yoshua Bengio</a></td>
+</tr>
+<tr class="odd">
+<td>2011</td>
+<td>Scikit-learn</td>
+<td><a href="https://jmlr.org/papers/v12/pedregosa11a.html">Scikit-learn: Machine Learning in Python</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Fabian+Pedregosa">Fabian Pedregosa</a> et al.</td>
+</tr>
+<tr class="even">
+<td>2012</td>
+<td>Dropout</td>
+<td><a href="https://arxiv.org/abs/1207.0580">Improving Neural Networks by Preventing Co-adaptation of Feature Detectors</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton">Geoffrey Hinton</a> et al.</td>
+</tr>
+<tr class="odd">
+<td>2012</td>
+<td>AlexNet and GPU-Accelerated Deep Learning</td>
+<td><a href="https://proceedings.neurips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">ImageNet Classification with Deep Convolutional Neural Networks</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Alex_Krizhevsky">Alex Krizhevsky</a>, <a href="https://en.wikipedia.org/wiki/Ilya_Sutskever">Ilya Sutskever</a>, <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton">Geoffrey Hinton</a></td>
+</tr>
+<tr class="even">
+<td>2014</td>
+<td>Dropout</td>
+<td><a href="https://jmlr.org/papers/v15/srivastava14a.html">Dropout: A Simple Way to Prevent Neural Networks from Overfitting</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Nitish+Srivastava">Nitish Srivastava</a> et al.</td>
+</tr>
+<tr class="odd">
+<td>2014</td>
+<td>Transfer Learning in Deep Neural Networks</td>
+<td><a href="https://arxiv.org/abs/1411.1792">How Transferable Are Features in Deep Neural Networks?</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Jason+Yosinski">Jason Yosinski</a> et al.</td>
+</tr>
+<tr class="even">
+<td>2014</td>
+<td>Adam Optimizer</td>
+<td><a href="https://arxiv.org/abs/1412.6980">Adam: A Method for Stochastic Optimization</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Diederik_P._Kingma">Diederik P. Kingma</a>, <a href="https://en.wikipedia.org/wiki/Jimmy_Ba">Jimmy Ba</a></td>
+</tr>
+<tr class="odd">
+<td>2014</td>
+<td>Neural Attention</td>
+<td><a href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Dzmitry+Bahdanau">Dzmitry Bahdanau</a>, <a href="https://en.wikipedia.org/wiki/Kyunghyun_Cho">Kyunghyun Cho</a>, <a href="https://en.wikipedia.org/wiki/Yoshua_Bengio">Yoshua Bengio</a></td>
+</tr>
+<tr class="even">
+<td>2015</td>
+<td>Batch Normalization</td>
+<td><a href="https://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Sergey+Ioffe">Sergey Ioffe</a>, <a href="https://en.wikipedia.org/wiki/Christian_Szegedy">Christian Szegedy</a></td>
+</tr>
+<tr class="odd">
+<td>2015</td>
+<td>Residual Connections</td>
+<td><a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Kaiming_He">Kaiming He</a> et al.</td>
+</tr>
+<tr class="even">
+<td>2016</td>
+<td>Layer Normalization</td>
+<td><a href="https://arxiv.org/abs/1607.06450">Layer Normalization</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Jimmy_Ba">Jimmy Ba</a>, <a href="https://en.wikipedia.org/w/index.php?search=Jamie+Ryan+Kiros">Jamie Kiros</a>, <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton">Geoffrey Hinton</a></td>
+</tr>
+<tr class="odd">
+<td>2017</td>
+<td>PyTorch (Initial Release)</td>
+<td><a href="https://github.com/pytorch/pytorch">PyTorch GitHub Repository</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Meta_AI">Facebook AI Research</a>, <a href="https://en.wikipedia.org/w/index.php?search=Adam+Paszke">Adam Paszke</a>, <a href="https://en.wikipedia.org/wiki/Soumith_Chintala">Soumith Chintala</a></td>
+</tr>
+<tr class="even">
+<td>2017</td>
+<td>Transformer</td>
+<td><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Ashish_Vaswani">Ashish Vaswani</a>, <a href="https://en.wikipedia.org/wiki/Noam_Shazeer">Noam Shazeer</a>, <a href="https://en.wikipedia.org/wiki/Niki_Parmar">Niki Parmar</a>, <a href="https://en.wikipedia.org/wiki/Jakob_Uszkoreit">Jakob Uszkoreit</a>, <a href="https://en.wikipedia.org/wiki/Llion_Jones">Llion Jones</a>, <a href="https://en.wikipedia.org/wiki/Aidan_Gomez">Aidan Gomez</a>, <a href="https://en.wikipedia.org/wiki/%C5%81ukasz_Kaiser">Łukasz Kaiser</a>, <a href="https://en.wikipedia.org/wiki/Illia_Polosukhin">Illia Polosukhin</a></td>
+</tr>
+<tr class="odd">
+<td>2017</td>
+<td>AdamW Optimizer</td>
+<td><a href="https://arxiv.org/abs/1711.05101">Decoupled Weight Decay Regularization</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Ilya+Loshchilov">Ilya Loshchilov</a>, <a href="https://en.wikipedia.org/wiki/Frank_Hutter">Frank Hutter</a></td>
+</tr>
+<tr class="even">
+<td>2018</td>
+<td>Generative Pre-Training (GPT-1)</td>
+<td><a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">Improving Language Understanding by Generative Pre-Training</a></td>
+<td><a href="https://en.wikipedia.org/wiki/Alec_Radford">Alec Radford</a>, <a href="https://en.wikipedia.org/w/index.php?search=Karthik+Narasimhan">Karthik Narasimhan</a>, <a href="https://en.wikipedia.org/w/index.php?search=Tim+Salimans">Tim Salimans</a>, <a href="https://en.wikipedia.org/wiki/Ilya_Sutskever">Ilya Sutskever</a></td>
+</tr>
+<tr class="odd">
+<td>2019</td>
+<td>PyTorch</td>
+<td><a href="https://arxiv.org/abs/1912.01703">PyTorch: An Imperative Style, High-Performance Deep Learning Library</a></td>
+<td><a href="https://en.wikipedia.org/w/index.php?search=Adam+Paszke">Adam Paszke</a>, <a href="https://en.wikipedia.org/w/index.php?search=Sam+Gross+PyTorch">Sam Gross</a>, <a href="https://en.wikipedia.org/wiki/Soumith_Chintala">Soumith Chintala</a> et al.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="transformer-2017" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-2017">1. Transformer (2017)</h2>
+<p><img src="https://arxiv.org/html/1706.03762v7/Figures/ModalNet-21.png" width="40%" align="right" style="filter: invert(1);"></p>
+<p><em><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></em> Vaswani et al.&nbsp;— June 2017, published at NeurIPS 2017. Authors from Google Brain and Google Research.</p>
+<p>Key contributions:</p>
 <ul>
-<li><strong>Multimodal Capabilities</strong> → Not just text, but also understanding and generating images, audio, and video.</li>
-<li><strong>Agent-Based Models</strong> → Moving beyond single tasks to long-term memory, reasoning, and correction of mistakes.</li>
-<li><strong>Pervasive &amp; Invisible AI</strong> → AI will be integrated into workflows in a way that becomes second nature.</li>
-<li><strong>Computer-Using AI</strong> → AI models that interact with software and take actions beyond just text generation.</li>
-<li><strong>Test-Time Training</strong> → AI adapting itself in real-time to improve accuracy on the fly.</li>
+<li><p>Introduced the transformer architecture.</p></li>
+<li><p>Replaced recurrence and convolution with attention mechanisms.</p></li>
+<li><p>Introduced multi-head attention and positional encodings.</p></li>
+<li><p>Used an encoder-decoder architecture for machine translation.</p></li>
+<li><p>Enabled more parallelizable training than recurrent neural networks.</p></li>
 </ul>
+</section>
+<section id="gpt-1-2018" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-1-2018">2. GPT-1 (2018)</h2>
+<p><img src="gpt1.png" width="25%" align="right" style="filter: invert(1);"></p>
+<p><em><a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf?utm_source=chatgpt.com">Improving Language Understanding by Generative Pre-Training</a></em> Radford, Narasimhan, Salimans, and Sutskever — June 2018. Authors from OpenAI.</p>
+<p>Key contributions:</p>
+<ul>
+<li><p>Introduced the Generative Pre-trained Transformer (GPT).</p></li>
+<li><p>Used a decoder-only transformer with 117 million parameters, trained on the BooksCorpus dataset (7,000 unpublished books). Layers = 12, Hidden size = 768, Attention heads = 12.</p></li>
+<li><p>Combined self-supervised pre-training with <mark>task-specific supervised fine-tuning</mark>.</p></li>
+<li><p>Demonstrated the <mark>effectiveness of transfer learning</mark> for natural language processing.</p></li>
+</ul>
+</section>
+<section id="gpt-2-2019" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-2-2019">3. GPT-2 (2019)</h2>
+<p><em><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf?utm_source=chatgpt.com">Language Models are Unsupervised Multitask Learners</a></em> Radford et al.&nbsp;— February 2019. Authors from OpenAI.</p>
+<p>Key contributions:</p>
+<ul>
+<li><p>Scaled GPT to 1.5 billion parameters (12 layers, 48 attention heads).</p></li>
+<li><p>Introduced the WebText training dataset.</p></li>
+<li><p>Demonstrated zero-shot learning across multiple NLP tasks.</p></li>
+</ul>
+<p>Zero-shot learning refers to the ability of a model to perform a task without having seen any examples of that task during training. In the context of GPT-2, this means that the model can generate text or answer questions about topics it has never been explicitly trained on, simply by leveraging its understanding of language and context learned during pre-training.</p>
+<ul>
+<li>Showed that language models could perform certain downstream tasks without task-specific fine-tuning.</li>
+</ul>
+</section>
+<section id="scaling-laws-2020" class="level2">
+<h2 class="anchored" data-anchor-id="scaling-laws-2020">4. Scaling Laws (2020)</h2>
+<p><em><a href="https://arxiv.org/abs/2001.08361">Scaling Laws for Neural Language Models</a></em>, Kaplan et al.&nbsp;— January 2020.</p>
+<p>Key contributions:</p>
+<ul>
+<li><p>Demonstrated that language model performance improves predictably with scale.</p></li>
+<li><p>Showed that architectural details such as depth and width have relatively little impact within a broad range, compared to overall scale.</p></li>
+<li><p>Investigated optimal allocation of computational resources during training.</p></li>
+<li><p>Provided a scientific foundation for training increasingly large language models</p></li>
+<li><p>Established empirical power-law relationships between language modeling loss and three fundamental quantities:</p>
+<ol type="1">
+<li><p>Model size (number of parameters).</p></li>
+<li><p>Training dataset size (number of tokens).</p></li>
+<li><p>Computational budget (FLOPs).</p></li>
+</ol></li>
+</ul>
+<p><img src="scaling_laws1.png" width="100%" style="filter: invert(1)"></p>
+<p>In the Kaplan et al.&nbsp;(2020) paper, <a href="https://arxiv.org/abs/2001.08361?utm_source=chatgpt.com">Scaling Laws for Neural Language Models</a>, the plots use three main quantities:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>\(N\)</td>
+<td>Number of non-embedding model parameters</td>
+</tr>
+<tr class="even">
+<td>\(D\)</td>
+<td>Dataset size in tokens</td>
+</tr>
+<tr class="odd">
+<td>\(C\)</td>
+<td>Compute budget in FLOPs</td>
+</tr>
+<tr class="even">
+<td>\(L\)</td>
+<td>Cross-entropy loss</td>
+</tr>
+</tbody>
+</table>
+<p>The legends often distinguish different model sizes or compute budgets. Each curve represents training under a particular configuration.</p>
+<p>The straight lines on log-log plots indicate a power-law relationship between loss and the quantity being scaled.</p>
+<p>For example:</p>
+<p><span class="math display">\[ L(N)=\left(\frac{N_c}{N}\right)^{\alpha_N} \]</span></p>
+<p>Here, <span class="math inline">\(N_c\)</span> is a fitted scaling constant and <span class="math inline">\(\alpha_N\)</span> is the scaling exponent, which determines how quickly loss decreases as model size increases.</p>
+<p>If you mean a specific figure’s legend, send me the plot and I can explain each entry precisely.</p>
+<p>The plots above show the relationship between Test Loss and Compute (left panel), Dataset Size (center panel) and Model Size (right panel). The plots are log-log plots, which means that the axes are logarithmic. This is important because it means that the relationship between the variables is not linear, but rather follows a power law.</p>
+<p>Generally: <span class="math display">\[
+\text{Compute} \approx 6 \times N \times D \times E
+\]</span></p>
+<p>where (N) is parameter count, (D) is dataset size in tokens, and (E) is the number of epochs.</p>
+<p><img src="scaling_laws2.png" width="45%" style="filter: invert(1)" align="right"></p>
+<p>Compute here refers to the total number of floating point operations (FLOPs) used to train the model. Dataset Size refers to the number of tokens in the training dataset, and Model Size refers to the number of parameters in the model. The PF-days on the x-axis of the left panel refers to petaFLOP-days, which is a measure of computational cost. One petaFLOP-day is equal to 10^15 floating point operations per day.</p>
+<p>The plot on the right shows sample efficiency curves for different model sizes. The x-axis is the number of training tokens, and the y-axis is the test loss. Each curve corresponds to a different model size, and we can see that <mark>larger models tend to perform better (lower test loss) than smaller models, given the same amount of training data</mark>.</p>
+<section id="flops" class="level3">
+<h3 class="anchored" data-anchor-id="flops">FLOPs</h3>
+<p>Floating Point Operations (FLOPs) are a measure of computational cost. They count the number of arithmetic operations (additions, multiplications, etc.) that a model performs during training or inference. FLOPs give us a hardware-independent way to answer questions like <em>“How expensive is it to train this model?”</em> or <em>“How much compute does one response cost?”</em></p>
+<p>FLOPs is easy to confuse with FLOPS</p>
+<ul>
+<li><strong>FLOPs</strong> (lowercase <em>s</em>) → a <em>quantity</em>: the total number of operations. Example: “Training this model took <span class="math inline">\(10^{23}\)</span> FLOPs.”</li>
+<li><strong>FLOPS</strong> or <strong>FLOP/s</strong> → a <em>rate</em>: operations per second, a property of hardware. Example: “This GPU delivers about <span class="math inline">\(10^{15}\)</span> FLOP/s.”</li>
+</ul>
+<p>Dividing the first by the second gives you time: <span class="math inline">\(\text{time} = \text{FLOPs} / \text{FLOP/s}\)</span>.</p>
+<p>Almost all the compute in a Transformer is matrix multiplication. Multiplying an <span class="math inline">\(m \times k\)</span> matrix by a <span class="math inline">\(k \times n\)</span> matrix produces <span class="math inline">\(m \times n\)</span> outputs, and each output is a dot product of length <span class="math inline">\(k\)</span> (<span class="math inline">\(k\)</span> multiplications and roughly <span class="math inline">\(k\)</span> additions). So:</p>
+<p><span class="math display">\[
+\text{FLOPs}(\text{matmul}) \approx 2mnk
+\]</span></p>
+<p><strong>Example:</strong> Passing a batch of <span class="math inline">\(B\)</span> token vectors of size <span class="math inline">\(d_{in}\)</span> through a linear layer with weight matrix <span class="math inline">\(d_{in} \times d_{out}\)</span> costs <span class="math inline">\(2 \cdot B \cdot d_{in} \cdot d_{out}\)</span> FLOPs.</p>
+<p>Notice that <span class="math inline">\(d_{in} \cdot d_{out}\)</span> is just the number of parameters in that layer. This leads to a very useful rule of thumb.</p>
+<p>For a model with <span class="math inline">\(N\)</span> parameters:</p>
+<ul>
+<li><strong>Forward pass:</strong> each parameter is used in about one multiply and one add per token, so <span class="math display">\[\text{FLOPs}_{\text{forward}} \approx 2N \text{ per token}\]</span></li>
+<li><strong>Backward pass:</strong> we compute gradients with respect to both the activations and the weights, which costs about twice the forward pass: <span class="math display">\[\text{FLOPs}_{\text{backward}} \approx 4N \text{ per token}\]</span></li>
+</ul>
+<p>Adding them together gives the most important formula in this section:</p>
+<p><span class="math display">\[
+\boxed{C_{\text{train}} \approx 6ND}
+\]</span></p>
+<p>where <span class="math inline">\(C\)</span> is the total training compute in FLOPs, <span class="math inline">\(N\)</span> is the number of parameters, and <span class="math inline">\(D\)</span> is the number of training tokens.</p>
+<p>For <strong>inference</strong>, there is no backward pass, so generating each token costs roughly <span class="math inline">\(2N\)</span> FLOPs.</p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> This approximation ignores the attention score computation (<span class="math inline">\(QK^\top\)</span> and the weighted sum over <span class="math inline">\(V\)</span>), which grows with context length. For typical context lengths it is a small fraction of the total, but for very long contexts it becomes significant.</p>
+</blockquote>
+<p>How much compute does it take to train a 7-billion-parameter model on 2 trillion tokens?</p>
+<p><span class="math display">\[
+C \approx 6 \times (7 \times 10^9) \times (2 \times 10^{12}) = 8.4 \times 10^{22} \text{ FLOPs}
+\]</span></p>
+<p><strong>Converting to time:</strong> An NVIDIA H100 GPU has a peak of roughly <span class="math inline">\(10^{15}\)</span> FLOP/s for dense BF16 math. In practice, real training runs reach only about 30–50% of peak. This fraction is called <strong>Model FLOPs Utilization (MFU)</strong>, and it is lower because of memory movement, communication between GPUs, and other overhead. Assuming 40% MFU:</p>
+<p><span class="math display">\[
+\text{effective throughput} \approx 0.4 \times 10^{15} = 4 \times 10^{14} \text{ FLOP/s}
+\]</span></p>
+<p><span class="math display">\[
+\text{GPU-seconds} \approx \frac{8.4 \times 10^{22}}{4 \times 10^{14}} \approx 2.1 \times 10^{8} \text{ s} \approx 58{,}000 \text{ GPU-hours}
+\]</span></p>
+<p>On a cluster of 1,000 GPUs, that’s about <strong>2.5 days</strong> of training.</p>
+<p>FLOPs are the currency of scaling laws. Given a fixed compute budget <span class="math inline">\(C\)</span>, we have to decide how to split it between a bigger model (larger <span class="math inline">\(N\)</span>) and more data (larger <span class="math inline">\(D\)</span>), since <span class="math inline">\(C \approx 6ND\)</span>.</p>
+</section>
+</section>
+<section id="gpt-3-2020" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-3-2020">5. GPT-3 (2020)</h2>
+<p><a href="https://arxiv.org/abs/2005.14165?utm_source=chatgpt.com">Language Models are Few-Shot Learners</a></p>
+<p>Brown et al.&nbsp;— May 2020, subsequently published at NeurIPS 2020.</p>
+<p>Key contributions:</p>
+<ul>
+<li><p>Scaled GPT to 175 billion parameters, layer depth of 96, and context length of 2,048 tokens.</p></li>
+<li><p>Demonstrated in-context learning.</p></li>
+<li><p>Established that models could learn new tasks from examples provided in the prompt without updating model parameters.</p></li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 22%">
+<col style="width: 24%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>GPT-1</th>
+<th>GPT-2</th>
+<th>GPT-3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Year</td>
+<td>2018</td>
+<td>2019</td>
+<td>2020</td>
+</tr>
+<tr class="even">
+<td>Parameters</td>
+<td>117M</td>
+<td>1.5B</td>
+<td>175B</td>
+</tr>
+<tr class="odd">
+<td>Transformer layers</td>
+<td>12</td>
+<td>48</td>
+<td>96</td>
+</tr>
+<tr class="even">
+<td>Context length</td>
+<td>512</td>
+<td>1,024</td>
+<td>2,048</td>
+</tr>
+<tr class="odd">
+<td>Defining contribution</td>
+<td>Transfer learning</td>
+<td>Zero-shot learning</td>
+<td>Few-shot learning</td>
+</tr>
+<tr class="even">
+<td>Task adaptation</td>
+<td>Fine-tuning</td>
+<td>Prompting</td>
+<td>In-context learning</td>
+</tr>
+</tbody>
+</table>
+<p><img src="gpt3.png" width="100%" style="filter: invert(1)"></p>
+</section>
+<section id="chinchilla-2022" class="level2">
+<h2 class="anchored" data-anchor-id="chinchilla-2022">6. Chinchilla (2022)</h2>
+<p><em><a href="https://arxiv.org/abs/2203.15556?utm_source=chatgpt.com">Training Compute-Optimal Large Language Models</a></em> Hoffmann et al.&nbsp;— March 2022, published at ICLR 2022. Authors from DeepMind.</p>
+<p>Challenged the conclusions of Kaplan et al., 2020, which suggested that larger models should be trained on more data. Instead, <mark>Chinchilla found that smaller models trained on more data could outperform larger models trained on less data, given the same compute budget</mark>.</p>
+<p>Compute budget refers to the total number of floating point operations (FLOPs) used to train the model. The Chinchilla paper claims that the optimal model size and dataset size should be balanced, with approximately <mark>20 tokens per parameter</mark>.</p>
+<p>The <strong>Chinchilla</strong> study (Hoffmann et al., 2022) found that compute-optimal training uses roughly <strong>20 tokens per parameter</strong>:</p>
+<p><span class="math display">\[
+D_{\text{optimal}} \approx 20N
+\]</span></p>
+<p>For example, Chinchilla itself was a 70B-parameter model trained on 1.4T tokens. Many modern models deliberately train on far <em>more</em> tokens than this. That costs extra compute during training but produces a smaller model that is cheaper to run at inference time, where costs are paid every time a user sends a request.</p>
+<p><img src="chinchilla.png" width="100%" style="filter: invert(1)"></p>
+<p>Chinchilla (Hoffmann et al., 2022) is a follow-up to Kaplan et al., 2020, which showed that language-model loss falls as a smooth power law in model size, data, and compute, and <mark>concluded that most of any extra compute should go to making models bigger rather than training them on more data</mark>. Chinchilla revisited this with more careful experiments (notably, adjusting the learning-rate schedule to each run’s length) and found that parameters and training tokens should grow in roughly equal proportion, about 20 tokens per parameter. <mark>To show this, they trained Chinchilla (70B parameters) with the same compute as their own 280B-parameter Gopher model, and Chinchilla outperformed it, which meant many earlier large models had been undertrained</mark>.</p>
+</section>
+<section id="instructgpt-2022" class="level2">
+<h2 class="anchored" data-anchor-id="instructgpt-2022">7. InstructGPT (2022)</h2>
+<p><em><a href="https://arxiv.org/pdf/2203.02155">Training Language Models to Follow Instructions with Human Feedback</a></em> Ouyang et al.&nbsp;— March 2022, published at NeurIPS 2022.</p>
+<p>Key contributions:</p>
+<ul>
+<li><p>Fine-tuned GPT-3 to follow natural language instructions.</p></li>
+<li><p>Established a three-stage post-training pipeline:</p>
+<ul>
+<li><p>Supervised fine-tuning (SFT).</p></li>
+<li><p>Reward modeling (RM).</p></li>
+<li><p>Reinforcement learning using PPO.</p></li>
+</ul></li>
+<li><p>Demonstrated that a 1.3-billion-parameter aligned model was preferred by human evaluators over the 175-billion-parameter GPT-3 base model.</p></li>
+<li><p>Established the importance of aligning language models with human intent rather than simply increasing model size.</p></li>
+</ul>
+<p><img src="instructgpt.png" width="100%" style="filter: invert(1)"></p>
+</section>
+<section id="chatgpt-2022" class="level2">
+<h2 class="anchored" data-anchor-id="chatgpt-2022">8. ChatGPT (2022)</h2>
+<p><em><a href="https://openai.com/index/chatgpt/?utm_source=chatgpt.com">Introducing ChatGPT</a></em> OpenAI — November 30, 2022.</p>
+<p>Key contributions:</p>
+<ul>
+<li><p>Adapted GPT-3.5 into a general-purpose conversational assistant.</p></li>
+<li><p>Extended the InstructGPT training methodology to multi-turn dialogue.</p></li>
+<li><p>Incorporated human-generated conversations into supervised fine-tuning.</p></li>
+<li><p>Used reinforcement learning from human feedback (RLHF) to improve conversational behavior.</p></li>
+<li><p>Made large language models accessible to the general public through a conversational interface.</p></li>
+</ul>
+</section>
+<section id="gpt-4-2023" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-4-2023">9. GPT-4 (2023)</h2>
+</section>
+<section id="o1-and-reasoning-models-2024" class="level2">
+<h2 class="anchored" data-anchor-id="o1-and-reasoning-models-2024">10. o1 and Reasoning Models (2024)</h2>
+<p>OpenAI o1 (September 2024): a new scaling axis. Until then, “scaling” meant bigger models, more data and more training compute.</p>
+<p><mark>o1 showed a second axis, test-time compute: letting the model think longer before answering improves accuracy smoothly and predictably, the same way training compute does</mark>.</p>
+<p>Its gains on competition math and coding were large. OpenAI published few details about how it was trained.</p>
+</section>
+<section id="o3-and-arc-agi-2025" class="level2">
+<h2 class="anchored" data-anchor-id="o3-and-arc-agi-2025">11. o3 and ARC-AGI (2025)</h2>
+<p>Test-time scaling on unfamiliar problems.</p>
+<p>ARC-AGI is a puzzle benchmark designed to resist memorization, and earlier LLMs did very poorly on it.</p>
+<p>o3 scored dramatically higher, but only by spending a very large amount of compute per task.</p>
+<p>That made it both an impressive demonstration and a cautionary example of how expensive test-time scaling can get.</p>
+<hr>
 </section>
 <section id="keeping-track-of-llms" class="level2">
 <h2 class="anchored" data-anchor-id="keeping-track-of-llms">Keeping Track of LLMs</h2>
 <p>If you’re interested in following developments in this space, here are some great resources:</p>
 <ul>
-<li><a href="https://lmarena.ai/">LM Arena</a> → Benchmarking new language models.</li>
-<li><a href="https://news.smol.ai/">AI News</a> → A newsletter covering AI research.</li>
+<li><a href="https://lmarena.ai/">Arena</a> (formerly LMArena / Chatbot Arena) → Crowdsourced, blind head-to-head rankings of language models.</li>
+<li><a href="https://artificialanalysis.ai/">Artificial Analysis</a> → Benchmark scores, speed, and pricing across models.</li>
+<li><a href="https://news.smol.ai/">AI News</a> → A daily newsletter summarizing AI research and discussion.</li>
 </ul>
 </section>
 <section id="where-to-find-llms" class="level2">
 <h2 class="anchored" data-anchor-id="where-to-find-llms">Where to Find LLMs</h2>
 <p>Want to try different LLMs? Here’s where to find them:</p>
 <ul>
-<li><strong>Proprietary Models</strong> → OpenAI (GPT-4), Google (Gemini), Anthropic (Claude), etc.</li>
-<li><strong>Open-Weight Models</strong> → DeepSeek, Meta (Llama), etc. Try them via Together.ai.</li>
+<li><strong>Proprietary Models</strong> → OpenAI (GPT), Google (Gemini), Anthropic (Claude), etc.</li>
+<li><strong>Open-Weight Models</strong> → DeepSeek, Qwen, Kimi, GLM, Gemma, gpt-oss, Mistral, etc. Try them via <a href="https://www.together.ai/">Together.ai</a> or <a href="https://openrouter.ai/">OpenRouter</a>.</li>
 <li><strong>Run Locally</strong> → Use <a href="https://ollama.com/">Ollama</a> or <a href="https://lmstudio.ai/">LM Studio</a>.</li>
-<li><strong>Base Models</strong> → Explore <a href="https://app.hyperbolic.xyz/">Hyperbolic</a>.</li>
+<li><strong>Base Models</strong> → Download base checkpoints (e.g., Qwen or OLMo base models) from <a href="https://huggingface.co/models">Hugging Face</a> and compare them with their instruct versions.</li>
 </ul>
-</section>
-<section id="tokenization" class="level2">
-<h2 class="anchored" data-anchor-id="tokenization">Tokenization</h2>
-<p>A text processing pipeline begins with a tokenizer. This splits the text into smaller constituent units (tokens) from a vocabulary of possible tokens. In the discussion above, we have implied that these tokens represent words, but there are several difficulties.</p>
-<ul>
-<li><p>Inevitably, some words (e.g., names) will not be in the vocabulary.</p></li>
-<li><p>It’s unclear how to handle punctuation, but this is important. If a sentence ends in a question mark, we must encode this information.</p></li>
-<li><p>The vocabulary would need different tokens for versions of the same word with different suffixes (e.g., walk, walks, walked, walking), and there is no way to clarify that these variations are related.</p></li>
-</ul>
-<p>One approach would be to use letters and punctuation marks as the vocabulary, but this would mean splitting text into very small parts and requiring the subsequent network to re-learn the relations between them.</p>
-<p>In practice, a compromise between letters and full words is used, and the final vocabulary includes both common words and word fragments from which larger and less frequent words can be composed. The vocabulary is computed using a sub-word tokenizer such as <mark>Byte Pair Encoding (BPE)</mark> that greedily merges commonly occurring sub-strings based on their frequency.</p>
-<p><img src="assets/Chap12/TransformerBPE.svg" style="filter: invert(1);" width="100%"></p>
-<p>Sub-word tokenization.</p>
-<ol type="a">
-<li><p>A passage of text from a nursery rhyme. The tokens are initially just the characters and whitespace (represented by an underscore), and their frequencies are displayed in the table.</p></li>
-<li><p>At each iteration, the sub-word tokenizer looks for the most commonly occurring adjacent pair of tokens (in this case, se) and merges them. This creates a new token and decreases the counts for the original tokens s and e. Note that the last character of the first token to be merged cannot be whitespace, which prevents merging across words.</p></li>
-<li><p>At the second iteration, the algorithm merges e and the whitespace character_.</p></li>
-<li><p>After 23 iterations, the tokens consist of a mix of letters, word fragments, and commonly occurring words.</p></li>
-<li><p>If we continue this process indefinitely, the tokens eventually represent the full words.</p></li>
-<li><p>Over time, the number of tokens increases as we add word fragments to the letters and then decreases again as we merge these fragments. In a real situation, there would be a very large number of words, and the algorithm would terminate when the vocabulary size (number of tokens) reached a predetermined value. Punctuation and capital letters would also be treated as separate input characters.</p></li>
-</ol>
-<p>You can visualize how this works using tools like <a href="https://tiktokenizer.vercel.app/?model=cl100k_base">Tiktokenizer (https://tiktokenizer.vercel.app)</a>.</p>
-<p>For reference, GPT-3 uses 50,257 tokens and GPT-4 uses 100,277 tokens in its vocabulary.</p>
-</section>
-<section id="embeddings" class="level2">
-<h2 class="anchored" data-anchor-id="embeddings">Embeddings</h2>
-<p>Each token in the vocabulary <span class="math inline">\(\mathcal{V}\)</span> is mapped to a unique word embedding, and the embeddings for the whole vocabulary are stored in a matrix <span class="math inline">\(\Omega_e \in \mathbb{R}^{D \times |\mathcal{V}|}\)</span>.</p>
-<p>To accomplish this, the <span class="math inline">\(N\)</span> input tokens are first encoded in the matrix <span class="math inline">\(T \in \mathbb{R}^{|\mathcal{V}| \times N}\)</span>, where the nth column corresponds to the nth token and is a |V|×1 one-hot vector (i.e., a vector where every entry is zero except for the entry corresponding to the token, which is set to one). The input embeddings are computed as <span class="math inline">\(X= \Omega_e T\)</span>, and <span class="math inline">\(\Omega_e\)</span> is learned like any other network parameter. A typical embedding size D is 1024, and a typical total vocabulary size <span class="math inline">\(|\mathcal{V}|\)</span> is 30,000, so even before the main network, there are many parameters in <span class="math inline">\(\Omega_e\)</span> to learn.</p>
-<p><img src="assets/Chap12/TransformerVocabulary.svg" style="filter: invert(1);" width="100%"></p>
-<p>The input embedding matrix <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{D \times N}\)</span> contains N embeddings of length D and is created by multiplying a matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> containing the embeddings that correspond to the word or sub-word indices. The vocabulary matrix <span class="math inline">\(\mathbf{\Omega_e}\)</span> is considered a parameter of the model and is learned along with the other parameters. Note that the two embeddings for the word an in <span class="math inline">\(\mathbf{X}\)</span> are the same.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
